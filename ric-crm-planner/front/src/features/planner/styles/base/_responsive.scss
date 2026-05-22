@@ -1,0 +1,34 @@
+﻿@media (max-width: 900px) {
+  .planner-grid--3,
+  .planner-grid--4 {
+    grid-template-columns: 1fr;
+  }
+
+  .planner-grid--parent-create,
+  .planner-inline-form,
+  .planner-grid--team-from-project {
+    grid-template-columns: 1fr;
+  }
+
+  .planner-grid--parent-create .primary,
+  .planner-inline-form .primary,
+  .planner-grid--team-from-project .primary {
+    width: 100%;
+    min-width: 0;
+    justify-self: stretch;
+  }
+
+  .planner-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .planner-head .planner-label {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .planner-row--right {
+    justify-content: flex-start;
+  }
+}

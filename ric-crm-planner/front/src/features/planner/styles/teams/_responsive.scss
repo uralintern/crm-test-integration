@@ -1,0 +1,57 @@
+﻿@media (max-width: 1180px) {
+  .teams-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .teams-panel--selection {
+    position: static;
+    max-height: none;
+    overflow: visible;
+  }
+}
+
+@media (max-width: 900px) {
+  .teams-panel {
+    padding: 14px;
+  }
+
+  .teams-panel-head {
+    flex-direction: column;
+  }
+
+  .teams-panel-head .primary {
+    width: 100%;
+  }
+
+  .planner-members-list,
+  .team-meta-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .planner-applicant-columns,
+  .planner-applicant-columns--compact {
+    grid-template-columns: 1fr;
+  }
+
+  .planner-source-summary {
+    padding: 10px 12px;
+    flex-wrap: wrap;
+  }
+
+  .planner-source-summary-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .planner-source-content {
+    padding: 8px 10px 10px;
+  }
+
+  .team-actions {
+    justify-content: flex-start;
+  }
+
+  .team-curator-assign {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,313 @@
+﻿.wizard-close.app-button.ant-btn {
+  position: absolute;
+  right: 16px;
+  top: 12px;
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  padding: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  font-size: 0;
+  line-height: 1;
+  cursor: pointer;
+  color: #4b5563 !important;
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: none !important;
+  z-index: 5;
+  transition: background 0.14s ease, color 0.14s ease;
+}
+
+.wizard-close.app-button.ant-btn > span {
+  display: none;
+}
+
+.wizard-close.app-button.ant-btn::before {
+  content: "×";
+  display: block;
+  font-size: 26px;
+  font-weight: 400;
+  line-height: 1;
+  transform: translateY(-1px);
+}
+
+.wizard-close.app-button.ant-btn:hover,
+.wizard-close.app-button.ant-btn:focus {
+  background: rgba(15, 23, 42, 0.07) !important;
+  color: #111827 !important;
+}
+
+.tags { display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; }
+.tag { background:#f3f3f3; padding:6px 10px; border-radius:8px; display:flex; gap:6px; align-items:center; }
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+input,
+textarea,
+select {
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+input:not(.ant-select-selection-search-input):not(.ant-input):focus,
+textarea:focus,
+select:focus {
+  border-color: var(--wizard-accent);
+  box-shadow: 0 0 0 4px var(--wizard-focus-shadow);
+}
+
+.date-row {
+  display: grid;
+  grid-template-columns: minmax(380px, 470px) minmax(220px, 280px);
+  gap: 14px;
+  align-items: end;
+  justify-content: start;
+}
+
+.date-row > * {
+  min-width: 0;
+}
+
+.date-row .app-date-range-field {
+  max-width: 470px;
+}
+
+.date-row .app-date-field {
+  max-width: 280px;
+}
+
+.date-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.date-field .date-input {
+  position: relative;
+}
+
+.date-field .calendar-btn {
+  position: absolute;
+  right: 12px;
+  top: 40%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.date-field .calendar-btn img {
+  width: 25px;
+  height: 25px;
+  opacity: 0.6;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.date-field .calendar-btn:hover img {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 10px;
+  border: 1px solid #e1e1e1;
+  border-radius: 12px;
+}
+
+.tag {
+  border-radius: 10px;
+  padding: 6px 6px 6px 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  max-width: 100%;
+  text-align: left;
+  line-height: 1.2;
+}
+
+.tag .tag-edit.app-button.ant-btn {
+  width: auto;
+  flex: 1 1 auto;
+  min-width: 0;
+  height: auto;
+  padding: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  color: inherit !important;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  text-align: left;
+  overflow: hidden;
+  box-shadow: none !important;
+}
+
+.tag-title,
+.tag-description,
+.tag-meta {
+  display: block;
+  max-width: min(100%, 1080px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tag-title {
+  line-height: 1.12;
+}
+
+.tag-description,
+.tag-meta {
+  opacity: 0.8;
+  font-size: 13px;
+}
+
+.tag .tag-edit.app-button.ant-btn:hover,
+.tag .tag-edit.app-button.ant-btn:focus {
+  background: transparent !important;
+  color: inherit !important;
+  transform: none !important;
+}
+
+.tag .tag-remove.app-button.ant-btn {
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  padding: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  color: inherit !important;
+  text-align: center;
+  white-space: nowrap;
+  box-shadow: none !important;
+  border-radius: 7px;
+  flex: 0 0 22px;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+
+.tag .tag-remove.app-button.ant-btn > span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-size: 0;
+  line-height: 1;
+}
+
+.tag .tag-remove.app-button.ant-btn > span::before {
+  content: "×";
+  font-size: 16px;
+  line-height: 1;
+}
+
+.tag .tag-remove.app-button.ant-btn:hover,
+.tag .tag-remove.app-button.ant-btn:focus {
+  background: rgba(17, 24, 39, 0.08) !important;
+  color: #111827 !important;
+  transform: none !important;
+}
+
+.wizard-inline-add-row {
+  display: grid;
+  gap: 10px;
+  align-items: stretch;
+}
+
+.wizard-inline-add-row--specializations {
+  grid-template-columns: minmax(0, 1fr) 112px;
+}
+
+.wizard-inline-add-row--entity {
+  grid-template-columns: minmax(0, 1fr) 132px;
+}
+
+.wizard-inline-add-button {
+  min-height: 46px;
+  padding: 0 18px !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.wizard-inline-add-button.primary {
+  border: 1px solid var(--wizard-accent) !important;
+  background: #fff !important;
+  color: var(--wizard-accent) !important;
+}
+
+.wizard-inline-add-button.primary:hover,
+.wizard-inline-add-button.primary:focus {
+  background: var(--wizard-accent) !important;
+  color: #fff !important;
+  border-color: var(--wizard-accent) !important;
+}
+
+.wizard-inline-add-button--secondary {
+  border-color: #3557b7 !important;
+  background: #fff !important;
+  color: #3557b7 !important;
+}
+
+.wizard-inline-add-button--secondary:hover {
+  background: #3557b7 !important;
+  color: #fff !important;
+  border-color: #3557b7 !important;
+}
+
+.event-apply-placeholder {
+  display: block;
+  min-height: 40px;
+}
+
+.field-wrap.error input,
+.field-wrap.error textarea,
+.field-wrap.error select {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 4px rgba(239,68,68,0.06);
+}
+
+.field-wrap.error .app-date-picker.ant-picker {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 4px rgba(239,68,68,0.06);
+}
+
+.field-error {
+  color: #7f1d1d;
+  font-size: 13px;
+  margin-top: 6px;
+  font-weight: 600;
+}
+
+.danger-outline {
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: #fff !important;
+  color: #e53935 !important;
+  border: 1px solid #e53935 !important;
+  cursor: pointer;
+  transition: background .12s ease, color .12s ease;
+  
+}
+
+.danger-outline:hover,
+.danger-outline:focus {
+  background: #e53935 !important;
+  color: #fff !important;
+  border-color: #e53935 !important;
+}
+

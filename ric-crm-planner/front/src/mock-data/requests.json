@@ -1,0 +1,222 @@
+[
+  {
+    "id": 1,
+    "studentName": "Алина Воронова",
+    "telegram": "@alina_voronova",
+    "university": "УрФУ",
+    "course": "3",
+    "eventId": 1,
+    "eventTitle": "Практика 2025",
+    "specializationId": 101,
+    "specialization": "Frontend разработчик",
+    "about": "Хочу работать над клиентской частью CRM и внутренними интерфейсами РИЦ.",
+    "customFields": {
+      "about": "Хочу работать над клиентской частью CRM и внутренними интерфейсами РИЦ.",
+      "experienceLevel": "Учебные проекты",
+      "portfolio": "https://github.com/alina_voronova"
+    },
+    "status": "Приступил к ПШ",
+    "ownerId": 101,
+    "createdAt": "2025-06-01T09:00:00.000Z",
+    "directionId": 101,
+    "directionTitle": "Цифровые сервисы для самозанятых"
+  },
+  {
+    "id": 2,
+    "studentName": "Михаил Громов",
+    "telegram": "@mihail_gromov",
+    "university": "УрФУ",
+    "course": "4",
+    "eventId": 1,
+    "eventTitle": "Практика 2025",
+    "specializationId": 102,
+    "specialization": "Backend разработчик",
+    "about": "Интересуют backend-задачи, интеграции и проектирование API.",
+    "customFields": {
+      "about": "Интересуют backend-задачи, интеграции и проектирование API.",
+      "experienceLevel": "Коммерческий опыт",
+      "portfolio": "https://github.com/mihail_gromov"
+    },
+    "status": "Приступил к ПШ",
+    "ownerId": 102,
+    "createdAt": "2025-06-01T09:20:00.000Z",
+    "directionId": 101,
+    "directionTitle": "Цифровые сервисы для самозанятых"
+  },
+  {
+    "id": 3,
+    "studentName": "Софья Ершова",
+    "telegram": "@sofia_ershova",
+    "university": "ИТМО",
+    "course": "3",
+    "eventId": 1,
+    "eventTitle": "Практика 2025",
+    "specializationId": 103,
+    "specialization": "Fullstack разработчик",
+    "about": "Хочу собирать MVP целиком и быстро доводить проект до рабочего состояния.",
+    "customFields": {
+      "about": "Хочу собирать MVP целиком и быстро доводить проект до рабочего состояния.",
+      "experienceLevel": "Учебные проекты",
+      "portfolio": "https://github.com/sofia_ershova"
+    },
+    "status": "Приступил к ПШ",
+    "ownerId": 103,
+    "createdAt": "2025-06-01T09:40:00.000Z",
+    "directionId": 101,
+    "directionTitle": "Цифровые сервисы для самозанятых"
+  },
+  {
+    "id": 4,
+    "studentName": "Павел Киселёв",
+    "telegram": "@pavel_kiselev",
+    "university": "СПбГУ",
+    "course": "2",
+    "eventId": 1,
+    "eventTitle": "Практика 2025",
+    "specializationId": 104,
+    "specialization": "Веб-дизайнер",
+    "about": "Готов заняться UI-kit, макетами и полировкой пользовательских сценариев.",
+    "customFields": {
+      "about": "Готов заняться UI-kit, макетами и полировкой пользовательских сценариев.",
+      "experienceLevel": "Учебные проекты",
+      "portfolio": "https://github.com/pavel_kiselev"
+    },
+    "status": "Приступил к ПШ",
+    "ownerId": 104,
+    "createdAt": "2025-06-01T10:00:00.000Z",
+    "directionId": 101,
+    "directionTitle": "Цифровые сервисы для самозанятых"
+  },
+  {
+    "id": 5,
+    "studentName": "Дарья Лукина",
+    "telegram": "@darya_lukina",
+    "university": "ВШЭ",
+    "course": "4",
+    "eventId": 1,
+    "eventTitle": "Практика 2025",
+    "specializationId": 204,
+    "specialization": "Аналитик",
+    "about": "Сильна в сборе требований, описании процессов и проектной аналитике.",
+    "customFields": {
+      "about": "Сильна в сборе требований, описании процессов и проектной аналитике.",
+      "experienceLevel": "Коммерческий опыт",
+      "portfolio": "https://github.com/darya_lukina"
+    },
+    "status": "Приступил к ПШ",
+    "ownerId": 105,
+    "createdAt": "2025-06-01T10:15:00.000Z",
+    "directionId": 101,
+    "directionTitle": "Цифровые сервисы для самозанятых"
+  },
+  {
+    "id": 6,
+    "studentName": "Кирилл Макаров",
+    "telegram": "@kirill_makarov",
+    "university": "УрФУ",
+    "course": "3",
+    "eventId": 1,
+    "eventTitle": "Практика 2025",
+    "specializationId": 302,
+    "specialization": "Тестировщик",
+    "about": "Возьму на себя тест-планы, регресс и стабилизацию выпуска.",
+    "customFields": {
+      "about": "Возьму на себя тест-планы, регресс и стабилизацию выпуска.",
+      "experienceLevel": "Учебные проекты",
+      "portfolio": "https://github.com/kirill_makarov"
+    },
+    "status": "Приступил к ПШ",
+    "ownerId": 106,
+    "createdAt": "2025-06-01T10:30:00.000Z",
+    "directionId": 101,
+    "directionTitle": "Цифровые сервисы для самозанятых"
+  },
+  {
+    "id": 7,
+    "studentName": "Марина Орехова",
+    "telegram": "@marina_orekhova",
+    "university": "РТУ МИРЭА",
+    "course": "2",
+    "eventId": 1,
+    "eventTitle": "Практика 2025",
+    "specializationId": 101,
+    "specialization": "Frontend разработчик",
+    "about": "Хочу развивать интерфейсы для планировщика и внутренних сервисов команды.",
+    "customFields": {
+      "about": "Хочу развивать интерфейсы для планировщика и внутренних сервисов команды.",
+      "experienceLevel": "Без опыта",
+      "portfolio": "https://github.com/marina_orekhova"
+    },
+    "status": "Приступил к ПШ",
+    "ownerId": 107,
+    "createdAt": "2025-06-01T10:50:00.000Z",
+    "directionId": 102,
+    "directionTitle": "Внутренние сервисы проектной школы"
+  },
+  {
+    "id": 8,
+    "studentName": "Илья Савельев",
+    "telegram": "@ilya_savelev",
+    "university": "КФУ",
+    "course": "4",
+    "eventId": 1,
+    "eventTitle": "Практика 2025",
+    "specializationId": 102,
+    "specialization": "Backend разработчик",
+    "about": "Интересен внутренний планировщик, командные права и связка с данными CRM.",
+    "customFields": {
+      "about": "Интересен внутренний планировщик, командные права и связка с данными CRM.",
+      "experienceLevel": "Коммерческий опыт",
+      "portfolio": "https://github.com/ilya_savelev"
+    },
+    "status": "Приступил к ПШ",
+    "ownerId": 108,
+    "createdAt": "2025-06-01T11:05:00.000Z",
+    "directionId": 102,
+    "directionTitle": "Внутренние сервисы проектной школы"
+  },
+  {
+    "id": 9,
+    "studentName": "Полина Черкасова",
+    "telegram": "@polina_cherkasova",
+    "university": "ТГУ",
+    "course": "3",
+    "eventId": 2,
+    "eventTitle": "Стажировка",
+    "specializationId": 103,
+    "specialization": "Fullstack разработчик",
+    "about": "Интересен модуль тестирования",
+    "customFields": {
+      "about": "Интересен модуль тестирования",
+      "employmentFormat": "Гибрид",
+      "comment": "Хочу попасть в команду развития модуля тестирования и внутренних сервисов."
+    },
+    "status": "Прохождение тестирования",
+    "ownerId": 109,
+    "createdAt": "2026-04-10T09:10:00.000Z",
+    "directionId": 201,
+    "directionTitle": "CRM и обработка заявок"
+  },
+  {
+    "id": 10,
+    "studentName": "Тимур Фомин",
+    "telegram": "@timur_fomin",
+    "university": "МАИ",
+    "course": "4",
+    "eventId": 2,
+    "eventTitle": "Стажировка",
+    "specializationId": 106,
+    "specialization": "DevOps",
+    "about": "Хочу работать с планировщиком",
+    "customFields": {
+      "about": "Хочу работать с планировщиком",
+      "employmentFormat": "Удаленно",
+      "comment": "Интересуют инфраструктурные задачи, окружения и автоматизация релизов."
+    },
+    "status": "Прислал заявку",
+    "ownerId": 110,
+    "createdAt": "2026-04-10T09:35:00.000Z",
+    "directionId": 202,
+    "directionTitle": "Командные инструменты и аналитика"
+  }
+]

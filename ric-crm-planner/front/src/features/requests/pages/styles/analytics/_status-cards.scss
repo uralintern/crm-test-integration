@@ -1,0 +1,187 @@
+﻿.requests-analytics__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: start;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.requests-status-card {
+  position: relative;
+  padding: 16px;
+  border: 1px solid #e4ebf7;
+  border-radius: 22px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(248, 251, 255, 0.96) 100%);
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.05);
+  overflow: hidden;
+}
+
+.requests-status-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 4px;
+  background: var(--status-color, var(--event-color, #6495ed));
+}
+
+.requests-status-card__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.requests-status-card__label-dot {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #334155;
+  font-weight: 600;
+}
+
+.requests-status-card__label-dot::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--status-color, var(--event-color, #6495ed));
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--status-color, #6495ed) 18%, transparent);
+}
+
+.requests-status-card__top strong {
+  color: #111827;
+  font-size: 22px;
+  line-height: 1;
+}
+
+.requests-status-card__actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+
+.requests-status-card__toggle {
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(100, 149, 237, 0.24);
+  border-radius: 999px;
+  background: #f8fbff;
+  color: var(--event-color, #6495ed);
+  cursor: pointer;
+  transition: background 0.16s ease, border-color 0.16s ease, color 0.16s ease, transform 0.18s ease;
+}
+
+.requests-status-card__toggle:hover,
+.requests-status-card__toggle:focus {
+  border-color: var(--event-color, #6495ed);
+  background: var(--event-color, #6495ed);
+  color: #fff;
+}
+
+.requests-status-card__toggle .anticon {
+  transition: transform 0.18s ease;
+}
+
+.requests-status-card__toggle.is-open .anticon {
+  transform: rotate(180deg);
+}
+
+.requests-status-card__circle {
+  display: grid;
+  place-items: center;
+  margin: 8px 0 12px;
+}
+
+.requests-status-card__circle .ant-progress-text {
+  color: #172033 !important;
+}
+
+.requests-status-card__bar {
+  margin: 10px 0 12px;
+}
+
+.requests-status-card__bar .ant-progress-line {
+  display: block;
+}
+
+.requests-status-card__bar .ant-progress-inner {
+  border-radius: 999px;
+  background: #eef2f7;
+}
+
+.requests-status-card__circle-label {
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+}
+
+.requests-status-card__circle-label strong {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.requests-status-card__circle-label span {
+  color: #667085;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.requests-status-card small {
+  display: block;
+  margin-top: 9px;
+  color: #667085;
+}
+
+.requests-status-card__students {
+  display: grid;
+  gap: 8px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px dashed #dbe5f2;
+}
+
+.requests-status-card__student {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 9px 10px;
+  border-radius: 12px;
+  background: #f8fafc;
+  color: #1f2937;
+}
+
+.requests-status-card__student-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.requests-status-card__student-status {
+  flex: 0 0 auto;
+  max-width: 52%;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #eef3ff;
+  color: #3d5f9f;
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.requests-status-card__empty {
+  padding: 10px;
+  border-radius: 12px;
+  background: #f8fafc;
+  color: #7b8794;
+  text-align: center;
+}
+

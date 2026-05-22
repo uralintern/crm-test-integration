@@ -1,0 +1,85 @@
+﻿.requests-view-toggle.ant-segmented {
+  justify-self: center;
+  padding: 4px;
+  border: 1px solid rgba(100, 149, 237, 0.28);
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+}
+
+.requests-view-toggle.ant-segmented .ant-segmented-item {
+  border-radius: 999px;
+  color: #506078;
+  font-weight: 600;
+}
+
+.requests-view-toggle.ant-segmented .ant-segmented-item-selected {
+  color: #fff;
+  background: var(--event-color, #6495ed);
+}
+
+.requests-view-toggle.ant-segmented .ant-segmented-thumb {
+  border-radius: 999px;
+  background: var(--event-color, #6495ed);
+}
+
+.request-status-option {
+  --status-bg: color-mix(in srgb, var(--status-color, #94a3b8) 78%, white);
+
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+  width: 100%;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: var(--status-bg);
+  color: #fff;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.status-select.app-select.ant-select {
+  --request-status-bg: color-mix(in srgb, var(--request-status-color, #94a3b8) 78%, white);
+  --app-select-accent: var(--request-status-color, #94a3b8);
+  --app-select-hover: var(--request-status-color, #94a3b8);
+  --app-select-focus: color-mix(in srgb, var(--request-status-color, #94a3b8) 28%, transparent);
+  --app-select-soft: color-mix(in srgb, var(--request-status-color, #94a3b8) 18%, white);
+  border-color: var(--request-status-bg) !important;
+  background: var(--request-status-bg) !important;
+}
+
+.status-select.app-select.ant-select .ant-select-selector {
+  background: transparent !important;
+  color: #fff !important;
+}
+
+.status-select.app-select.ant-select .ant-select-selection-item {
+  color: #fff !important;
+  font-weight: 700;
+}
+
+.status-select.app-select.ant-select-single .ant-select-selector .ant-select-selection-item,
+.status-select.app-select.ant-select-single .ant-select-selector .ant-select-selection-item span,
+.status-select .request-status-selected-label {
+  color: #fff !important;
+}
+
+.status-select.app-select.ant-select .ant-select-selection-placeholder {
+  color: rgba(255, 255, 255, 0.86) !important;
+}
+
+.status-select.app-select.ant-select .ant-select-arrow {
+  color: #fff !important;
+}
+
+.status-select.app-select.ant-select .ant-select-suffix,
+.status-select.app-select.ant-select .ant-select-suffix .anticon,
+.status-select.app-select.ant-select .ant-select-suffix svg,
+.status-select.app-select.ant-select .ant-select-suffix path,
+.status-select.app-select.ant-select .ant-select-arrow .anticon,
+.status-select.app-select.ant-select .ant-select-arrow svg,
+.status-select.app-select.ant-select .ant-select-arrow path {
+  color: #fff !important;
+  fill: #fff !important;
+}
+

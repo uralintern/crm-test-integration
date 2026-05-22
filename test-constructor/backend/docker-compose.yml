@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:18
+    environment:
+      POSTGRES_DB: testconstructor
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: "host=postgres user=postgres dbname=testconstructor port=5432 sslmode=disable"
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:

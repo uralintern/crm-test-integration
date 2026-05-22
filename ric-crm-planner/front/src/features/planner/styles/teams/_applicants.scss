@@ -1,0 +1,142 @@
+﻿.planner-members-list,
+.planner-selected-list {
+  margin-top: 2px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.planner-applicant-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 52px;
+  padding: 9px 10px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background: #f8fafc;
+  gap: 12px;
+  justify-content: flex-start;
+  align-items: center;
+  transition: border-color 0.12s ease, background 0.12s ease;
+}
+
+.planner-applicant-row--header {
+  padding: 0 10px;
+  border: 0;
+  background: transparent;
+}
+
+.planner-applicant-row--header:hover {
+  border-color: transparent;
+  background: transparent;
+}
+
+.planner-applicant-row--modal {
+  grid-template-columns: auto minmax(0, 1fr);
+}
+
+.planner-applicant-row--selected {
+  border-color: #bfdbfe;
+  background: #f8fbff;
+}
+
+.planner-applicant-row:hover {
+  border-color: #bfdbfe;
+  background: #fff;
+}
+
+.planner-applicant-row .app-switch.ant-switch {
+  flex: 0 0 auto;
+}
+
+.planner-applicant-columns {
+  display: grid;
+  grid-template-columns: minmax(130px, 1.1fr) minmax(120px, 0.8fr) minmax(150px, 1fr);
+  gap: 8px;
+  align-items: start;
+  min-width: 0;
+  color: #0f172a;
+  line-height: 1.25;
+  text-align: left;
+}
+
+.planner-applicant-columns--compact {
+  grid-template-columns: minmax(130px, 1.1fr) minmax(120px, 0.8fr);
+}
+
+.planner-applicant-columns--header {
+  color: #64748b;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.planner-applicant-switch-placeholder {
+  width: 52px;
+  height: 1px;
+}
+
+.planner-applicant-name {
+  color: #0f172a;
+  font-weight: 600;
+}
+
+.planner-applicant-specialization {
+  color: #334155;
+}
+
+.planner-applicant-directions {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: #64748b;
+  font-size: 12px;
+}
+
+.planner-applicant-directions span {
+  display: block;
+}
+
+.planner-team-builder-form {
+  margin-top: 12px;
+  padding: 10px;
+  border: 1px dashed #bfdbfe;
+  border-radius: 12px;
+  background: #f8fbff;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  align-items: center;
+}
+
+.planner-team-builder-form .app-input.ant-input,
+.planner-team-builder-form .app-select.ant-select,
+.planner-team-builder-form .primary.ant-btn {
+  width: 100%;
+  height: 42px !important;
+  min-height: 42px !important;
+}
+
+.planner-team-builder-form .app-input.ant-input {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.planner-team-builder-form .app-select.ant-select .ant-select-selector {
+  height: 40px !important;
+  min-height: 40px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.planner-team-builder-form .app-select.ant-select-single .ant-select-selector .ant-select-selection-item,
+.planner-team-builder-form .app-select.ant-select-single .ant-select-selector .ant-select-selection-placeholder {
+  min-height: 40px;
+  line-height: 40px !important;
+}
+
+.planner-team-builder-form .primary.ant-btn {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+

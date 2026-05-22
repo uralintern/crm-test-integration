@@ -1,0 +1,730 @@
+body {
+    background: #F0E8D5;
+}
+.event-config-page {
+    display: flex;
+    background: #F0E8D5;
+    width: 1200px;
+    overflow-x: auto;
+    justify-content: center;
+    padding: 0;
+    margin: 0 auto;
+}
+.event-config-sidebar {
+    flex: 1;
+    background: #2F4156;
+    padding: 20px;
+    color: #F0E8D5;
+    border-radius: 30px 0 0 30px;
+    margin-right: 5px;
+}
+.event-config-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+.event-config-header p {
+    margin: 0;
+    color: #F0E8D5;
+    font-size: 20px;
+    font-weight: 700;
+    position: relative;   /* нужно для ::after */
+    display: inline-block; /* чтобы линия ровно по ширине текста */
+    padding-bottom: 6px;  /* отступ вниз, чтобы линия была чуть ниже текста */
+}
+.event-config-header p::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #F0E8D5;
+    bottom: 0;
+}
+
+.event-config-back-btn {
+    background: transparent;
+    border: none;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start; /* ключ: прижать кнопку к верхнему краю ряда */
+    cursor: pointer;
+}
+
+.event-config-back-btn:focus {
+    outline: 2px solid #F0E8D5; /* или другой цвет фокусного состояния */
+    border-radius: 16px;
+}
+
+.event-config-back-icon {
+    width: 40px;
+    height: 40px;
+    display: block;
+}
+/* Кнопка "Добавить тесты" — текст слева, иконка справа */
+.add-tests-btn {
+    width: 100%;
+    background: #C8D9E6;
+    color: #2F4156;
+    border: none;
+    border-radius: 24px;
+    padding: 12px;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 16px;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center; /* центрируем текст+иконку внутри кнопки */
+    gap: 8px;
+}
+.add-tests-plus {
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    margin-left: 16px;
+}
+.event-config-tests-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border-radius: 20px;
+}
+.event-config-test-item {
+    background: #F0E8D5;
+    color: #2F4156;
+    border-radius: 16px;
+    padding: 8px 12px;
+    font-size: 16px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.test-title {
+    flex: 1;
+    text-align: center;
+    margin: 0 5px;
+}
+.test-delete-btn {
+    background: transparent;
+    border: none;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    flex: 0 0 auto;
+    margin-right: 16px;
+    margin-top: 0;
+}
+.test-delete-btn img {
+    width: 30px;
+    height: 30px;
+    display: block;
+}
+
+.event-config-test-item {
+    background: #F0E8D5;
+    color: #2F4156;
+    border-radius: 24px;
+    margin-bottom: 8px;
+    padding: 0 12px;
+    font-size: 12px;
+}
+.event-config-main {
+    flex: 3;
+    padding: 30px 30px;
+    background: #2F4156;
+    color: #F0E8D5;
+    border-radius: 0px 30px 30px 0px;
+    border-right: 8px solid #F0E8D5;
+}
+.criteria-table-title {
+    background: #C8D9E6;
+    color: #2F4156;
+
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    padding: 12px 0;
+    border-radius: 32px 32px 0 0;
+}
+.fail-message-block {
+    margin: 1px 0 16px 0;
+    background: #F0E8D5;
+    color: #2F4156;
+    border-radius: 0px 0px 16px 16px;
+    padding-bottom: 16px;
+
+}
+
+.fail-message-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 12px 0px 160px;
+}
+
+.fail-message-icon {
+    width: 24px;
+    height: 24px;
+    margin-top: 2px; /* Небольшое выравнивание */
+}
+
+.fail-message-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+    line-height: 1.3;
+    flex: 1;
+}
+
+.fail-message-block input {
+    width: calc(100% - 24px);
+    margin: 12px 12px 12px 12px; /* Увеличен отступ сверху, чтобы "отлипнуть" от нижнего края текста */
+    border-radius: 16px;
+    border: 1px solid #2F4156;
+    padding: 10px 12px; /* Делаем поле ввода выше */
+    font-size: 16px;
+    background: #C8D9E6;
+    box-sizing: border-box;
+}
+.save-btn {
+    width: 100%;
+    background: #C8D9E6;
+    color: #2F4156;
+    border: none;
+    border-radius: 36px;
+    padding: 16px 0;
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 24px;
+    cursor: pointer;
+}
+
+.time-box1{
+    background: #C8D9E6;
+    color: #2F4156;
+    border: 1px solid #2F4156;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 12px 0;
+    border-radius: 32px 32px 0 0;
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+.time-box1 img {
+    width: 32px;
+    height: 32px;
+    display: block;
+    flex: 0 0 32px;
+}
+.time-box {
+
+}
+.time-box p {
+    margin: 0;
+}
+.time-box-inner1{
+    background: #F0E8D5;
+    border: 1px solid #2F4156;
+    border-radius: 0 0 32px 32px;
+    padding: 0 16px 16px 16px;
+}
+.time-input-box{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+
+}
+.time-inputs-box {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+.time-input-box input::placeholder {
+    color: #F0E8D5; /* или любой другой цвет */
+    opacity: 1; /* Для Firefox */
+    text-indent: 25px;
+}
+.time-input-box input {
+    flex: 1;
+    border-radius: 24px;
+    padding: 12px 50px;
+    font-size: 16px;
+    background: #2F4156;
+    color: #F0E8D5;
+    margin-left: 20px;
+    margin-right: 20px
+
+}
+.time-input-box button {
+
+    background: #2F4156;
+    color: #F0E8D5;
+    border: none;
+    border-radius: 24px;
+    padding: 20px 20px;
+    cursor: pointer;
+
+}
+
+
+.share-link-box {
+    margin-bottom: 16px;
+}
+.share-link-box-inner p {
+    margin: 0;
+}
+.share-link-box-inner {
+    background: #C8D9E6;
+    color: #2F4156;
+    border: 1px solid #2F4156;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 12px 16px;
+    border-radius: 32px 32px 0 0;
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+.share-link-box-inner img {
+    width: 32px;
+    height: 32px;
+    display: block;
+    flex: 0 0 32px;
+}
+.share-link-box-inner1{
+    background: #F0E8D5;
+    border: 1px solid #2F4156;
+    border-radius: 0 0 32px 32px;
+    padding: 0 16px 16px 16px;
+}
+.share-link-input-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+}
+.share-link-input-box input {
+    flex: 1;
+    border-radius: 16px;
+    border: 1px solid #ccc;
+    padding: 12px 12px;
+    font-size: 16px;
+    background: #FFFBF2;
+}
+
+.share-link-input-box button {
+    background: #2F4156;
+    color: #FFFBF2;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 6px 8px 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.specialization-select {
+    position: relative;
+    margin-bottom: 16px;
+    width: 100%;
+}
+
+.specialization-select-button {
+    width: 100%;
+    background: #F0E8D5;
+    color: #2F4156;
+    border-radius: 16px;
+    padding: 12px 50px 12px 16px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background 1s ease, border-color 1s ease, box-shadow 1s ease;
+    position: relative;
+    z-index: 10;
+}
+
+.specialization-select-button:hover {
+    border-color: #1976D2;
+    background-color: #E8DEC8;
+}
+
+.specialization-select-button:focus {
+    outline: none;
+    border-color: #F0E8D5;
+    box-shadow: 0 0 0 0 rgba(25, 118, 210, 0.1);
+}
+
+
+/* Убрать rounded corners снизу когда селект открыт */
+.specialization-select.open .specialization-select-button {
+    border-radius: 16px 16px 0 0;
+}
+
+/* Текст выбранной специализации */
+.specialization-select-value {
+    flex: 1;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Кастомная стрелочка */
+.select-arrow {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    background: #C8D9E6;
+    border: 1px solid #2F4156;
+    border-radius: 6px;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Стрелочка внутри (треугольник) */
+.select-arrow::after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 8px solid #2F4156;
+    transition: transform 0.3s ease;
+}
+
+/* Анимация стрелочки при открытии */
+.specialization-select.open .select-arrow::after {
+    transform: rotate(180deg);
+}
+
+
+.specialization-select-list {
+    position: relative;
+    margin-top: 0;
+    background: #F0E8D5;
+    border-top: none;
+    border-radius: 0 0 16px 16px;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.35s ease, opacity 0.25s ease;
+    z-index: 0;
+}
+.specialization-select.open .specialization-select-list {
+    max-height: 400px;
+    overflow-y: auto;
+    opacity: 1;
+}
+.specialization-select-list::-webkit-scrollbar {
+    display: none;
+}
+.specialization-select-list {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.specialization-select.open .specialization-select-button {
+    border-radius: 16px 16px 0 0;
+    border-bottom: none;
+}
+
+
+/* Контейнер с опциями */
+.specialization-select-options {
+    padding: 8px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Каждая опция (специализация) */
+.specialization-option {
+    border-radius: 10px;
+    background: transparent;
+    padding: 12px 16px;
+    font-size: 16px;
+    color: #2F4156;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 500;
+    position: relative;
+    margin: 10px 10px 10px 10px;
+}
+
+
+.specialization-option:hover:not(.disabled) {
+    background: #CCCCCC;
+    border: 1px solid #2F4156;
+}
+
+.specialization-option.selected {
+    background: #C8D9E6;
+    font-weight: bold;
+    padding-left: 16px;
+    border: 1px solid #2F4156;
+
+}
+
+.specialization-option.selected::before {
+    content: none;
+}
+
+.specialization-option.disabled {
+    color: #999;
+    cursor: not-allowed;
+    padding: 12px 16px;
+}
+
+
+.criteria-table-block {
+    background: #F0E8D5;
+    color: #2F4156;
+    margin-top: 2px;
+    width: 100%;
+    padding-bottom: 1px;
+}
+
+
+.criteria-table-header {
+    display: grid;
+    grid-template-columns: 2fr 3fr 3fr 70px;
+
+    border-bottom: 1px solid #2F4156;
+    font-weight: 700;
+}
+
+.criteria-table-header div {
+    padding: 6px;
+    border-right: 1px solid #2F4156;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+    margin: 0;
+
+}
+
+.criteria-table-header div:last-child {
+    border-right: none;
+}
+
+/* Строки */
+.criteria-table-row {
+    display: grid;
+    grid-template-columns: 2fr 3fr 3fr 70px;
+
+    border-bottom: 1px solid #2F4156;
+
+}
+
+.criteria-table-row:last-child {
+    border-bottom: none;
+}
+
+/* Ячейки */
+.criteria-table-row > * {
+    padding: 16px;
+    border-right: 1px solid #2F4156;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.criteria-table-row > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.criteria-table-row > *:last-child {
+    border-right: none;
+}
+
+.criteria-input {
+    width: 100%;
+    height: 20px;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #2F4156;
+    font-size: 18px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    margin-top: 0;
+}
+/* Кнопка добавления */
+.criteria-add-test-btn {
+    align-self: center;
+    background: transparent;
+    border: none;
+    color: #2F4156;
+    font-size: 18px;
+    font-weight: 550;
+    cursor: pointer;
+    margin-top: 5px;
+
+
+    display: flex;           /* 👈 ДОБАВИТЬ */
+    align-items: center;     /* 👈 ДОБАВИТЬ — выравнивает по вертикали */
+    white-space: nowrap;
+}
+.criteria-add-test-btn img {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+}
+/* Кнопка добавления критерия */
+.criteria-add-btn {
+    width: 50%;
+    margin: 20px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    background: #B8C7D9;
+    border: 1px solid #2F4156;
+    border-radius: 40px;
+    color: #2F4156;
+    font-size: 20px;
+    font-weight: 700;
+    cursor: pointer;
+
+}
+
+.criteria-add-btn img {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+}
+.criteria-tests-cell {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    gap: 12px;
+    padding: 16px !important;
+}
+
+.criteria-test-item {
+    width: auto;
+    min-width: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px;              /* 👈 ИЗМЕНИТЬ с 10px 18px на 8px 16px */
+    background: #B8C7D9;
+    border: 1px solid #2F4156;
+    border-radius: 30px;
+    color: #2F4156;
+    font-weight: 700;
+    height: 44Px;            /* 👈 ДОБАВИТЬ — минимальная высота как у кнопки */
+}
+.criteria-test-item span{
+    margin-left: 16px;
+}
+/* Кнопка удаления */
+.criteria-delete-test-btn {
+    background: transparent;
+    border: none;
+
+    cursor: pointer;
+    font-size: 18px;
+    margin-top: 0;
+}
+
+
+.criteria-message-input {
+    width: 100%;
+
+    background: transparent;
+    border: none;
+    outline: none;
+    resize: none;
+
+    overflow: hidden;
+
+    color: #2F4156;
+    font-size: 18px;
+
+    text-align: center;
+
+    min-height: 40px;
+
+    font-family: inherit;
+}
+
+.criteria-threshold-input {
+    width: 100%;
+
+    background: transparent;
+    border: none;
+    outline: none;
+    resize: none;
+
+    overflow: hidden;
+
+    color: #2F4156;
+    font-size: 18px;
+    font-family: inherit;
+
+    text-align: center;
+
+    min-height: 40px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0;
+}
+.criteria-delete-btn,
+.criteria-delete-test-btn {
+    background: transparent;
+
+    border: none;
+
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.criteria-delete-btn img,
+.criteria-delete-test-btn img {
+    width: 28px;
+    height: 28px;
+}
+
+/* DELETE COLUMN */
+
+.criteria-delete-cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

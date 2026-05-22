@@ -1,0 +1,197 @@
+﻿.wizard-content {
+  flex: 1;
+  padding: 30px;
+  overflow-y: auto;
+
+  input:not(.ant-select-selection-search-input):not(.ant-input),
+  textarea:not(.ant-input),
+  select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    color: #222;
+    background: #fff;
+  }
+
+  .row { display: flex; gap: 10px; }
+}
+
+.wizard-content .ant-picker .ant-picker-input > input {
+  width: auto !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.wizard-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.wizard-form .app-input,
+.wizard-form .app-textarea {
+  --app-input-accent: var(--wizard-accent);
+  --app-input-focus: var(--wizard-focus-shadow);
+  --app-input-hover: var(--wizard-accent);
+}
+
+.wizard-form .app-date-field,
+.wizard-form .app-date-range-field {
+  --app-date-accent: var(--wizard-accent);
+  --app-date-focus: var(--wizard-focus-shadow);
+  --app-date-hover: var(--wizard-accent);
+}
+
+.wizard-form .app-input.ant-input:focus,
+.wizard-form .app-input.ant-input-affix-wrapper-focused,
+.wizard-form .app-input.ant-input-affix-wrapper:focus-within,
+.wizard-form .app-textarea.ant-input:focus,
+.wizard-form .app-date-picker.ant-picker.ant-picker-focused,
+.wizard-form .app-date-picker.ant-picker:focus-within {
+  border-color: var(--wizard-accent) !important;
+  box-shadow: 0 0 0 4px var(--wizard-focus-shadow) !important;
+}
+
+.wizard-form .app-select.ant-select {
+  --app-select-hover: var(--wizard-accent);
+}
+
+.wizard-form .app-select.ant-select .ant-select-selection-search,
+.wizard-form .app-select.ant-select input,
+.wizard-form .app-select.ant-select .ant-select-selection-search-input,
+.wizard-form .app-select.ant-select input.ant-select-selection-search-input,
+.field-wrap.error .app-select.ant-select .ant-select-selection-search-input {
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.wizard-form label.text-small {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  line-height: 1.25;
+}
+
+.wizard-field-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.wizard-field-label {
+  display: block;
+  margin: 0;
+  padding: 0;
+  line-height: 16px;
+}
+
+.wizard-form > .text-small {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.wizard-form-list {
+  display: grid;
+  gap: 12px;
+}
+
+.wizard-item-card {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid var(--wizard-soft-border);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.wizard-item-card__header {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+}
+
+.wizard-item-card__badge {
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: var(--wizard-soft-bg);
+  color: var(--wizard-accent);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.wizard-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.wizard-actions .primary {
+  border: 1px solid var(--wizard-accent) !important;
+  background: #fff !important;
+  color: var(--wizard-accent) !important;
+  border-radius: 10px;
+  padding: 10px 16px;
+  cursor: pointer;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+}
+
+.wizard-actions .primary .anticon {
+  margin-right: 6px;
+}
+
+.wizard-actions .primary:hover,
+.wizard-actions .primary:focus {
+  background: var(--wizard-accent) !important;
+  color: #fff !important;
+  border-color: var(--wizard-accent) !important;
+}
+
+.wizard-actions .primary:disabled,
+.wizard-actions .primary.ant-btn-disabled,
+.wizard-actions .primary.ant-btn-disabled:hover,
+.wizard-actions .primary.ant-btn-disabled:focus {
+  border-color: rgba(100, 149, 237, 0.38) !important;
+  background: rgba(100, 149, 237, 0.08) !important;
+  color: var(--wizard-accent) !important;
+  opacity: 1;
+  cursor: default;
+  box-shadow: none;
+}
+
+.wizard-actions .secondary {
+  background: transparent;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+}
+
+.wizard-actions .wizard-settings-btn {
+  border-color: var(--wizard-accent) !important;
+  background: #fff !important;
+  color: var(--wizard-accent) !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.wizard-actions .wizard-settings-btn:hover,
+.wizard-actions .wizard-settings-btn:focus {
+  background: var(--wizard-accent) !important;
+  color: #fff !important;
+  border-color: var(--wizard-accent) !important;
+}
+

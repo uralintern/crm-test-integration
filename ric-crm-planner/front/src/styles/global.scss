@@ -1,0 +1,46 @@
+@use "./variables.scss" as *;
+@use "./typography.scss";
+@use "./responsive/index.scss";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+body {
+  background: #f5f5f5;
+  color: #222;
+}
+
+a {
+  color: $primary;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.content {
+  margin-left: 220px;
+  margin-top: 70px;
+  padding: 20px;
+}
+
+.page {
+  padding: 20px;
+}
+
+.table-placeholder {
+  width: 100%;
+  padding: 40px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  text-align: center;
+  color: #888;
+  font-size: 16px;
+}
+

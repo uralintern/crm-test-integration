@@ -1,0 +1,178 @@
+﻿.head-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 46px;
+
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid #e6e6e6;
+
+  background: white;
+  cursor: pointer;
+
+  .anticon {
+    font-size: 18px;
+    line-height: 1;
+  }
+}
+
+.head-btn.ant-btn:focus:not(:focus-visible) {
+  box-shadow: none !important;
+}
+
+.head-btn--muted {
+  border-color: #d1d5db !important;
+  background: #fff !important;
+  color: #111827 !important;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.head-btn--muted .anticon {
+  color: #111827;
+}
+
+.head-btn--muted:hover,
+.head-btn--muted:focus-visible {
+  background: var(--event-color) !important;
+  color: #fff !important;
+  border-color: var(--event-color) !important;
+}
+
+.head-btn--muted:hover .anticon,
+.head-btn--muted:focus-visible .anticon {
+  color: #fff;
+}
+
+.head-btn--planner {
+  border-color: var(--event-color) !important;
+  background: #fff !important;
+  color: var(--event-color) !important;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.head-btn--planner .anticon {
+  color: var(--event-color);
+}
+
+.head-btn--planner:hover,
+.head-btn--planner:focus-visible {
+  background: var(--event-color) !important;
+  color: #fff !important;
+  border-color: var(--event-color) !important;
+}
+
+.head-btn--planner:hover .anticon,
+.head-btn--planner:focus-visible .anticon {
+  color: #fff;
+}
+
+.head-btn--testing {
+  position: relative;
+  border-color: #38bdf8 !important;
+  background: linear-gradient(180deg, #f7fcff 0%, #eef8ff 100%) !important;
+  color: #0369a1 !important;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.head-btn--testing .anticon {
+  color: #0369a1;
+}
+
+.head-btn--testing:hover,
+.head-btn--testing:focus-visible {
+  background: #0284c7 !important;
+  color: #fff !important;
+  border-color: #0284c7 !important;
+}
+
+.head-btn--testing:hover .anticon,
+.head-btn--testing:focus-visible .anticon {
+  color: #fff;
+}
+
+.head-btn__external-icon {
+  position: absolute;
+  top: 5px;
+  right: 6px;
+  font-size: 10px !important;
+  opacity: 0.86;
+}
+
+.head-btn--automation {
+  border-color: #93c5fd !important;
+  background: #f8fbff !important;
+  color: #1d4ed8 !important;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.head-btn--automation .anticon {
+  color: #1d4ed8;
+}
+
+.head-btn--automation:hover,
+.head-btn--automation:focus-visible {
+  background: #1d4ed8 !important;
+  color: #fff !important;
+  border-color: #1d4ed8 !important;
+}
+
+.head-btn--automation:hover .anticon,
+.head-btn--automation:focus-visible .anticon {
+  color: #fff;
+}
+
+.head-btn--danger {
+  border-color: #ff3d3d !important;
+  background: #fff !important;
+  color: #ff3d3d !important;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.head-btn--danger .anticon {
+  color: #ff3d3d;
+}
+
+.head-btn--danger:hover,
+.head-btn--danger:focus-visible {
+  background: rgba(255, 61, 61, 0.14) !important;
+  color: #111 !important;
+  border-color: #ff3d3d !important;
+}
+
+.head-btn--danger:hover .anticon,
+.head-btn--danger:focus-visible .anticon {
+  color: #111;
+}
+
+.head-btn--notify {
+  position: relative;
+  border-color: #d1d5db !important;
+  background: #fff !important;
+  color: #111827 !important;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.head-btn--notify:hover,
+.head-btn--notify:focus-visible {
+  border-color: var(--event-color) !important;
+  background: var(--event-color) !important;
+  color: #fff !important;
+}
+
+.notification-badge {
+  display: inline-flex;
+  line-height: 1;
+}
+
+.notification-badge .anticon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.notification-badge .ant-badge-dot {
+  top: 1px !important;
+  right: 1px !important;
+  box-shadow: 0 0 0 2px #fff;
+}
+

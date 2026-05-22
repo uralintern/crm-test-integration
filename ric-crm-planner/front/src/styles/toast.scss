@@ -1,0 +1,26 @@
+.app-notification {
+  --app-notification-progress-color: #2f6bea;
+}
+
+.app-notification--success {
+  --app-notification-progress-color: #22c55e;
+}
+
+.app-notification--error {
+  --app-notification-progress-color: #ef4444;
+}
+
+.app-notification--info {
+  --app-notification-progress-color: #2f6bea;
+}
+
+.app-notification .ant-notification-notice-message {
+  color: #13233f;
+  font-weight: 600;
+}
+
+.app-notification .ant-notification-notice-progress,
+.app-notification .ant-notification-notice-progress-bar,
+.app-notification .ant-notification-notice-progress > div {
+  background: var(--app-notification-progress-color) !important;
+}

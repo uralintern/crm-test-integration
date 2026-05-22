@@ -1,0 +1,192 @@
+@media (max-width: 1024px) {
+  body .wizard {
+    width: 96%;
+    height: 92%;
+  }
+
+  body .date-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  body .date-row .app-date-range-field,
+  body .date-row .app-date-field {
+    max-width: none;
+  }
+
+  body .modal {
+    width: min(560px, calc(100% - 20px));
+    padding: 18px;
+  }
+
+}
+
+@media (max-width: 768px) {
+  body .modal-bg {
+    align-items: flex-end;
+    padding: 10px;
+    background: rgba(15, 23, 42, 0.48);
+  }
+
+  body .modal {
+    width: 100%;
+    max-width: none;
+    max-height: min(88dvh, 720px);
+    padding: 18px 14px 14px;
+    border-radius: 24px 24px 18px 18px;
+    box-shadow: 0 -18px 48px rgba(15, 23, 42, 0.24);
+  }
+
+  body .modal::before {
+    content: "";
+    width: 42px;
+    height: 4px;
+    margin: 0 auto 12px;
+    border-radius: 999px;
+    background: #d6deec;
+    flex: 0 0 auto;
+  }
+
+  body .modal-close.app-button.ant-btn {
+    top: 14px;
+    right: 14px;
+    z-index: 5;
+    background: rgba(248, 251, 255, 0.92) !important;
+    border: 1px solid #e1e8f5 !important;
+  }
+
+  body .modal-title {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    margin: 0 -2px 12px;
+    padding: 0 44px 12px 2px;
+    background: #fff;
+  }
+
+  body .modal-content {
+    padding-right: 2px;
+    overscroll-behavior: contain;
+  }
+
+  body .wizard-overlay {
+    align-items: stretch;
+    padding: 0;
+    background: rgba(15, 23, 42, 0.46);
+  }
+
+  body .wizard {
+    width: 100%;
+    height: 100%;
+    max-height: 100dvh;
+    border-radius: 0;
+    display: flex;
+    flex-direction: column;
+    background:
+      radial-gradient(circle at 100% 0%, var(--wizard-soft-bg), transparent 36%),
+      linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+  }
+
+  body .wizard-close.app-button.ant-btn {
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    z-index: 80;
+    display: inline-flex;
+    background: rgba(255, 255, 255, 0.94) !important;
+    border: 1px solid #e1e8f5 !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  }
+
+  body .wizard-nav {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid rgba(137, 166, 222, 0.24);
+    padding: 56px 12px 12px;
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(14px);
+    scrollbar-width: none;
+    position: sticky;
+    top: 0;
+    z-index: 30;
+  }
+
+  body .wizard-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  body .wizard-nav .wizard-nav-btn {
+    width: auto;
+    flex: 0 0 auto;
+    white-space: nowrap;
+    min-height: 42px;
+    padding: 9px 12px;
+    border: 1px solid var(--wizard-soft-border) !important;
+    background: #fff !important;
+    color: #334155 !important;
+    font-size: 13px;
+    font-weight: 700;
+    box-shadow: 0 8px 22px rgba(15, 23, 42, 0.05);
+  }
+
+  body .wizard-nav .wizard-nav-btn.active {
+    transform: none;
+    color: #fff !important;
+    background: var(--wizard-accent) !important;
+    border-color: var(--wizard-accent) !important;
+  }
+
+  body .wizard-content {
+    padding: 16px 14px calc(18px + env(safe-area-inset-bottom));
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  body .date-row {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  body .wizard-actions {
+    position: sticky;
+    bottom: -1px;
+    z-index: 10;
+    margin: 18px -14px -16px;
+    padding: 12px 14px calc(12px + env(safe-area-inset-bottom));
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: 8px;
+    border-top: 1px solid rgba(137, 166, 222, 0.24);
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(14px);
+  }
+
+  body .wizard-actions .primary,
+  body .wizard-actions .secondary,
+  body .danger-outline {
+    width: 100%;
+  }
+
+  body .modal-title {
+    font-size: 18px;
+    padding-right: 44px;
+  }
+
+  body .apply-form {
+    padding: 12px;
+  }
+
+  body .apply-actions,
+  body .confirm-actions {
+    flex-direction: column-reverse;
+  }
+
+  body .btn-cancel,
+  body .btn-send,
+  body .close-btn {
+    width: 100%;
+  }
+}

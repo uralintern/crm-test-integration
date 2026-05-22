@@ -1,0 +1,149 @@
+﻿@use "../variables.scss" as *;
+
+.ui-button {
+  padding: 10px 18px;
+  background: $primary;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.2s;
+
+  &:hover {
+    background: $primary-hover;
+  }
+}
+
+.app-button.ant-btn {
+  height: auto;
+  min-width: 0;
+  line-height: normal;
+  box-shadow: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-button.ant-btn > span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: inherit;
+}
+
+.primary-btn.ant-btn,
+.primary-btn {
+  border: 1px solid var(--event-color, #6495ed) !important;
+  background: #fff !important;
+  color: var(--event-color, #6495ed) !important;
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-weight: 600;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.primary-btn.ant-btn:hover,
+.primary-btn.ant-btn:focus,
+.primary-btn:hover,
+.primary-btn:focus {
+  background: var(--event-color, #6495ed) !important;
+  color: #fff !important;
+  border-color: var(--event-color, #6495ed) !important;
+}
+
+.app-switch.ant-switch {
+  --ant-switch-track-height: 28px;
+  --ant-switch-track-min-width: 50px;
+  --ant-switch-track-padding: 4px;
+  --ant-switch-handle-size: 20px;
+  --ant-switch-inner-min-margin: 8px;
+  --ant-switch-inner-max-margin: 26px;
+  min-width: var(--ant-switch-track-min-width);
+  height: var(--ant-switch-track-height);
+  border-radius: 999px;
+  background: #dbe3ef !important;
+  box-shadow: none !important;
+  transition: background 0.16s ease, box-shadow 0.16s ease;
+}
+
+.app-switch.ant-switch:hover {
+  background: #cfd8e6 !important;
+}
+
+.app-switch.ant-switch.ant-switch-checked {
+  background: #2563eb !important;
+}
+
+.app-switch.ant-switch.ant-switch-checked:hover {
+  background: #1d4ed8 !important;
+}
+
+.app-switch.ant-switch.ant-switch-focused {
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.16) !important;
+}
+
+.app-switch.ant-switch .ant-switch-handle {
+  top: var(--ant-switch-track-padding);
+  width: var(--ant-switch-handle-size);
+  height: var(--ant-switch-handle-size);
+}
+
+.app-switch.ant-switch .ant-switch-inner {
+  min-height: var(--ant-switch-track-height);
+}
+
+.app-switch.ant-switch .ant-switch-inner-checked,
+.app-switch.ant-switch .ant-switch-inner-unchecked {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.app-switch.ant-switch .ant-switch-inner .anticon {
+  font-size: 12px;
+}
+
+.app-switch--compact.ant-switch {
+  --ant-switch-track-height: 24px;
+  --ant-switch-track-min-width: 48px;
+  --ant-switch-track-padding: 3px;
+  --ant-switch-handle-size: 18px;
+  --ant-switch-inner-min-margin: 7px;
+  --ant-switch-inner-max-margin: 24px;
+  min-width: var(--ant-switch-track-min-width);
+  height: var(--ant-switch-track-height);
+}
+
+.app-switch--compact.ant-switch .ant-switch-handle {
+  top: var(--ant-switch-track-padding);
+  width: var(--ant-switch-handle-size);
+  height: var(--ant-switch-handle-size);
+}
+
+.app-switch--compact.ant-switch .ant-switch-inner {
+  min-height: var(--ant-switch-track-height);
+}
+
+.app-switch--compact.ant-switch .ant-switch-inner .anticon {
+  font-size: 11px;
+}
+
+.danger-outline.ant-btn,
+.danger-outline {
+  border-color: #ef4444 !important;
+  background: #fff !important;
+  color: #b91c1c !important;
+}
+
+.danger-outline.ant-btn:hover,
+.danger-outline.ant-btn:focus,
+.danger-outline:hover,
+.danger-outline:focus {
+  border-color: #ef4444 !important;
+  background: #ef4444 !important;
+  color: #fff !important;
+}
+
+

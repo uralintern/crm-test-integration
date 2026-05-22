@@ -1,0 +1,100 @@
+﻿{
+  "1": {
+    "email": "org@mail.ru",
+    "telegram": "@denis_smirnov",
+    "vk": "vk.com/denis_smirnov",
+    "about": "Координирует набор, распределение студентов и работу проектных команд.",
+    "job": "Руководитель практики и стажировки",
+    "workplace": "НПЦ РИЦ"
+  },
+  "101": {
+    "email": "alina.voronova@student.local",
+    "telegram": "@alina_voronova",
+    "vk": "vk.com/alina_voronova",
+    "about": "Берёт на себя интерфейсы, прототипы экранов и сборку клиентских сценариев.",
+    "university": "УрФУ",
+    "course": "3",
+    "specialty": "Frontend разработчик"
+  },
+  "102": {
+    "email": "mihail.gromov@student.local",
+    "telegram": "@mihail_gromov",
+    "vk": "vk.com/mihail_gromov",
+    "about": "Проектирует API, модели данных и интеграционные сценарии.",
+    "university": "УрФУ",
+    "course": "4",
+    "specialty": "Backend разработчик"
+  },
+  "103": {
+    "email": "sofia.ershova@student.local",
+    "telegram": "@sofia_ershova",
+    "vk": "vk.com/sofia_ershova",
+    "about": "Закрывает fullstack-задачи и быстро собирает рабочие MVP.",
+    "university": "ИТМО",
+    "course": "3",
+    "specialty": "Fullstack разработчик"
+  },
+  "104": {
+    "email": "pavel.kiselev@student.local",
+    "telegram": "@pavel_kiselev",
+    "vk": "vk.com/pavel_kiselev",
+    "about": "Отвечает за визуальную систему продукта, UI-kit и кликабельные прототипы.",
+    "university": "СПбГУ",
+    "course": "2",
+    "specialty": "Веб-дизайнер"
+  },
+  "105": {
+    "email": "darya.lukina@student.local",
+    "telegram": "@darya_lukina",
+    "vk": "vk.com/darya_lukina",
+    "about": "Собирает требования, описывает процессы и ведёт проектную аналитику.",
+    "university": "ВШЭ",
+    "course": "4",
+    "specialty": "Аналитик"
+  },
+  "106": {
+    "email": "kirill.makarov@student.local",
+    "telegram": "@kirill_makarov",
+    "vk": "vk.com/kirill_makarov",
+    "about": "Собирает тест-кейсы, проверяет релизы и помогает стабилизировать продукт.",
+    "university": "УрФУ",
+    "course": "3",
+    "specialty": "Тестировщик"
+  },
+  "107": {
+    "email": "marina.orekhova@student.local",
+    "telegram": "@marina_orekhova",
+    "vk": "vk.com/marina_orekhova",
+    "about": "Делает интерфейсы сложных экранов и следит за адаптивностью сервиса.",
+    "university": "РТУ МИРЭА",
+    "course": "2",
+    "specialty": "Frontend разработчик"
+  },
+  "108": {
+    "email": "ilya.savelev@student.local",
+    "telegram": "@ilya_savelev",
+    "vk": "vk.com/ilya_savelev",
+    "about": "Ведёт серверную часть внутренних сервисов и поддерживает бизнес-логику.",
+    "university": "КФУ",
+    "course": "4",
+    "specialty": "Backend разработчик"
+  },
+  "109": {
+    "email": "polina.cherkasova@student.local",
+    "telegram": "@polina_cherkasova",
+    "vk": "vk.com/polina_cherkasova",
+    "about": "Подключается к внутренним продуктам и любит быстро собирать цельный флоу.",
+    "university": "ТГУ",
+    "course": "3",
+    "specialty": "Fullstack разработчик"
+  },
+  "110": {
+    "email": "timur.fomin@student.local",
+    "telegram": "@timur_fomin",
+    "vk": "vk.com/timur_fomin",
+    "about": "Настраивает окружение, деплой, CI/CD и помогает команде с инфраструктурой.",
+    "university": "МАИ",
+    "course": "4",
+    "specialty": "DevOps"
+  }
+}

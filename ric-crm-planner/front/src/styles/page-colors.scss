@@ -1,0 +1,35 @@
+.page--events {
+  --row-border-color: #6495ed;
+  --badge-bg: rgba(100,149,237,0.08);
+  --table-grid: 305px 370px 455px 375px 230px 0px;
+  --search-button-bg: #6495ed;
+  --search-button-hover-bg: #4d82e6;
+  --search-button-color: #ffffff;
+}
+
+.page--directions {
+  --row-border-color: #6fbf73;
+  --badge-bg: rgba(229, 248, 228, 0.58);
+  --table-grid: 785px 945px 0px;
+  --search-button-bg: #6fbf73;
+  --search-button-hover-bg: #5faf62;
+  --search-button-color: #ffffff;
+}
+
+.page--projects {
+  --row-border-color: #b77bdc;
+  --badge-bg: rgba(240,221,255,0.55);
+  --table-grid: 615px 540px 570px 0px;
+  --search-button-bg: #b77bdc;
+  --search-button-hover-bg: #a969d4;
+  --search-button-color: #ffffff;
+}
+
+:root {
+  --event-color: #6495ed;
+  --directions-color: #6fbf73;
+  --projects-color: #b77bdc;
+  --search-button-bg: #6495ed;
+  --search-button-hover-bg: #4d82e6;
+  --search-button-color: #ffffff;
+}

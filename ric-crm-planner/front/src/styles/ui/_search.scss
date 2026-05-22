@@ -1,0 +1,112 @@
+﻿.app-search.ant-input-search {
+  --app-search-accent: var(--row-border-color, var(--event-color, #6495ed));
+  --app-search-button-bg: var(--search-button-bg, #6495ed);
+  --app-search-button-hover-bg: var(--search-button-hover-bg, #4d82e6);
+  --app-search-button-color: var(--search-button-color, #ffffff);
+  display: flex !important;
+  align-items: stretch !important;
+  gap: 0 !important;
+  width: 100%;
+}
+
+.page--events .app-search.ant-input-search {
+  --app-search-accent: var(--event-color, #6495ed);
+  --app-search-button-bg: var(--event-color, #6495ed);
+  --app-search-button-hover-bg: #4d82e6;
+  --app-search-button-color: #ffffff;
+}
+
+.page--directions .app-search.ant-input-search {
+  --app-search-accent: var(--directions-color, #6fbf73);
+  --app-search-button-bg: var(--directions-color, #6fbf73);
+  --app-search-button-hover-bg: #5faf62;
+  --app-search-button-color: #ffffff;
+}
+
+.page--projects .app-search.ant-input-search {
+  --app-search-accent: var(--projects-color, #b77bdc);
+  --app-search-button-bg: var(--projects-color, #b77bdc);
+  --app-search-button-hover-bg: #a969d4;
+  --app-search-button-color: #ffffff;
+}
+
+.app-search.ant-input-search > .ant-input-affix-wrapper {
+  min-height: 40px;
+  padding: 0 12px !important;
+  border: 1px solid #d9d9d9 !important;
+  border-right: 0 !important;
+  border-radius: 10px 0 0 10px !important;
+  background: #fff !important;
+  box-shadow: none !important;
+  flex: 1 1 auto;
+}
+
+.app-search.ant-input-search > .ant-input-affix-wrapper .ant-input {
+  background: transparent !important;
+  font-size: 14px;
+}
+
+.app-search.ant-input-search > .ant-input-affix-wrapper:hover,
+.app-search.ant-input-search > .ant-input-affix-wrapper.ant-input-affix-wrapper-focused,
+.app-search.ant-input-search > .ant-input-affix-wrapper:focus-within {
+  border-color: var(--app-search-accent) !important;
+  box-shadow: none !important;
+}
+
+.app-search.ant-input-search:focus-within > .ant-input-affix-wrapper {
+  border-color: var(--app-search-accent) !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--app-search-accent) 14%, transparent) !important;
+}
+
+.app-search.ant-input-search > .ant-btn.ant-input-search-btn {
+  min-width: 44px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid var(--app-search-button-bg) !important;
+  border-left: 0 !important;
+  border-radius: 0 10px 10px 0 !important;
+  background: var(--app-search-button-bg) !important;
+  background-color: var(--app-search-button-bg) !important;
+  color: var(--app-search-button-color) !important;
+  box-shadow: none !important;
+}
+
+.app-search.ant-input-search > .ant-btn.ant-input-search-btn.ant-btn-color-primary,
+.app-search.ant-input-search > .ant-btn.ant-input-search-btn.ant-btn-variant-solid,
+.app-search.ant-input-search > .ant-btn.ant-input-search-btn.ant-btn-default {
+  border-color: var(--app-search-button-bg) !important;
+  background: var(--app-search-button-bg) !important;
+  background-color: var(--app-search-button-bg) !important;
+  color: var(--app-search-button-color) !important;
+}
+
+.app-search.ant-input-search > .ant-btn.ant-input-search-btn:hover,
+.app-search.ant-input-search > .ant-btn.ant-input-search-btn:focus {
+  border-color: var(--app-search-button-hover-bg) !important;
+  background: var(--app-search-button-hover-bg) !important;
+  background-color: var(--app-search-button-hover-bg) !important;
+  color: var(--app-search-button-color) !important;
+}
+
+.app-search.ant-input-search > .ant-btn.ant-input-search-btn.ant-btn-color-primary:hover,
+.app-search.ant-input-search > .ant-btn.ant-input-search-btn.ant-btn-color-primary:focus,
+.app-search.ant-input-search > .ant-btn.ant-input-search-btn.ant-btn-variant-solid:hover,
+.app-search.ant-input-search > .ant-btn.ant-input-search-btn.ant-btn-variant-solid:focus,
+.app-search.ant-input-search > .ant-btn.ant-input-search-btn.ant-btn-default:hover,
+.app-search.ant-input-search > .ant-btn.ant-input-search-btn.ant-btn-default:focus {
+  border-color: var(--app-search-button-hover-bg) !important;
+  background: var(--app-search-button-hover-bg) !important;
+  background-color: var(--app-search-button-hover-bg) !important;
+  color: var(--app-search-button-color) !important;
+}
+
+.app-search.ant-input-search:focus-within > .ant-btn.ant-input-search-btn {
+  border-color: var(--app-search-accent) !important;
+  background: var(--app-search-button-bg) !important;
+  background-color: var(--app-search-button-bg) !important;
+}
+
+.app-search.ant-input-search > .ant-btn.ant-input-search-btn .anticon {
+  font-size: 16px;
+}
+

@@ -1,0 +1,124 @@
+﻿.automation-settings-modal .ant-modal-content {
+  border-radius: 22px;
+  overflow: hidden;
+}
+
+.automation-settings-modal .ant-modal-body {
+  max-height: min(76vh, 760px);
+  overflow: auto;
+  padding: 18px;
+  background: #f5f8fc;
+}
+
+.automation-settings-modal .ant-modal-footer {
+  margin-top: 0;
+  padding: 12px 18px 16px;
+  border-top: 1px solid rgba(137, 166, 222, 0.24);
+  background: #fff;
+}
+
+.automation-settings-modal__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.automation-settings-modal .automation-panel {
+  box-shadow: none;
+}
+
+.automation-settings-modal .automation-panel--modal .automation-panel__head {
+  padding-right: 48px;
+}
+
+@media (max-width: 768px) {
+  .automation-settings-modal.ant-modal {
+    top: 0;
+    max-width: 100vw;
+    margin: 0;
+    padding-bottom: 0;
+  }
+
+  .automation-settings-modal .ant-modal-content {
+    min-height: 100dvh;
+    border-radius: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .automation-settings-modal .ant-modal-header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    margin: 0;
+    padding: 16px 48px 14px 16px;
+    border-bottom: 1px solid rgba(137, 166, 222, 0.24);
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(14px);
+  }
+
+  .automation-settings-modal .ant-modal-title {
+    font-size: 18px;
+    line-height: 1.2;
+  }
+
+  .automation-settings-modal .ant-modal-close {
+    top: 12px;
+    right: 12px;
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+    color: #475569;
+  }
+
+  .automation-settings-modal .ant-modal-close-x {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .automation-settings-modal .ant-modal-close .anticon {
+    font-size: 18px;
+  }
+
+  .automation-settings-modal .ant-modal-body {
+    flex: 1;
+    max-height: none;
+    padding: 12px;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .automation-settings-modal .ant-modal-footer {
+    position: sticky;
+    bottom: 0;
+    z-index: 20;
+    padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+  }
+
+  .automation-settings-modal__footer {
+    flex-direction: column-reverse;
+  }
+
+  .automation-settings-modal__footer .app-button {
+    width: 100%;
+  }
+
+  .automation-settings-modal .automation-side__close {
+    width: auto;
+    min-width: 94px;
+    padding: 0 10px !important;
+    font-size: 0;
+  }
+
+  .automation-settings-modal .automation-side__close .anticon {
+    display: none;
+  }
+
+  .automation-settings-modal .automation-side__close::after {
+    content: "К списку";
+    font-size: 13px;
+    font-weight: 800;
+  }
+}
+

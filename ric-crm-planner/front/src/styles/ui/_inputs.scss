@@ -1,0 +1,60 @@
+﻿.app-input.ant-input,
+.app-input.ant-input-affix-wrapper,
+.app-textarea.ant-input {
+  --app-input-accent: #6495ed;
+  --app-input-focus: rgba(100, 149, 237, 0.16);
+  --app-input-hover: #b8cae8;
+  width: 100%;
+  min-height: 42px;
+  border: 1px solid #d6dfec !important;
+  border-radius: 14px !important;
+  background: #f7f9fc !important;
+  color: #111827;
+  font-size: 14px;
+  box-shadow: none !important;
+  transition: border-color 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+}
+
+.app-input.ant-input,
+.app-textarea.ant-input {
+  padding: 9px 12px !important;
+}
+
+.app-input.ant-input-affix-wrapper {
+  padding: 4px 12px !important;
+}
+
+.app-input.ant-input-affix-wrapper .ant-input {
+  background: transparent !important;
+}
+
+.app-textarea.ant-input {
+  min-height: 86px;
+  resize: vertical;
+}
+
+.app-input.ant-input:hover,
+.app-input.ant-input-affix-wrapper:hover,
+.app-textarea.ant-input:hover {
+  border-color: var(--app-input-hover) !important;
+  background: #fff !important;
+}
+
+.app-input.ant-input:focus,
+.app-input.ant-input-focused,
+.app-input.ant-input-affix-wrapper-focused,
+.app-input.ant-input-affix-wrapper:focus-within,
+.app-textarea.ant-input:focus {
+  border-color: var(--app-input-accent) !important;
+  background: #fff !important;
+  box-shadow: 0 0 0 4px var(--app-input-focus) !important;
+}
+
+.app-input.ant-input-disabled,
+.app-input.ant-input-affix-wrapper-disabled,
+.app-textarea.ant-input-disabled {
+  border-color: #e5e7eb !important;
+  background: #f3f5f8 !important;
+  color: #6b7280 !important;
+}
+

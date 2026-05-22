@@ -1,0 +1,138 @@
+.app-date-field,
+.app-date-range-field {
+  --app-date-accent: #6495ed;
+  --app-date-focus: rgba(100, 149, 237, 0.16);
+  --app-date-hover: #6495ed;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.app-date-picker.ant-picker {
+  width: 100%;
+  min-height: 42px;
+  padding: 0 12px;
+  border: 1px solid #d6dfec !important;
+  border-radius: 14px !important;
+  background: #fff !important;
+  box-shadow: none !important;
+  transition: border-color 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+}
+
+.app-date-picker.ant-picker:hover {
+  border-color: var(--app-date-hover) !important;
+  background: #fff !important;
+}
+
+.app-date-picker.ant-picker.ant-picker-focused,
+.app-date-picker.ant-picker:focus-within {
+  border-color: var(--app-date-accent) !important;
+  background: #fff !important;
+  box-shadow: 0 0 0 4px var(--app-date-focus) !important;
+}
+
+.app-date-picker.ant-picker .ant-picker-input > input {
+  font-size: 14px;
+  color: #111827;
+}
+
+.app-date-picker.ant-picker .ant-picker-input > input::placeholder {
+  color: #8b96a8;
+}
+
+.app-date-picker.ant-picker .ant-picker-input {
+  min-width: 0;
+}
+
+.app-date-picker.ant-picker .ant-picker-input > input {
+  width: 100% !important;
+  height: 40px;
+  line-height: 40px;
+}
+
+.app-date-picker.ant-picker .ant-picker-suffix,
+.app-date-picker.ant-picker .ant-picker-clear {
+  color: #94a3b8;
+}
+
+.app-date-picker.ant-picker--range {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 24px minmax(0, 1fr) 18px;
+  column-gap: 8px;
+  align-items: center;
+}
+
+.app-date-picker.ant-picker--range .ant-picker-range-separator {
+  width: 24px;
+  min-width: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+  align-self: center;
+  margin: 0;
+  padding: 0;
+}
+
+.app-date-picker.ant-picker--range .ant-picker-separator,
+.app-date-range-separator {
+  color: #94a3b8;
+  font-size: 15px;
+}
+
+.app-date-picker.ant-picker--range .ant-picker-separator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 0;
+  line-height: 1;
+}
+
+.app-date-picker.ant-picker--range .ant-picker-input,
+.app-date-picker.ant-picker--range .ant-picker-input-start,
+.app-date-picker.ant-picker--range .ant-picker-input-end {
+  min-width: 0;
+  width: 100%;
+}
+
+.app-date-picker.ant-picker--range .ant-picker-suffix {
+  justify-self: end;
+}
+
+.app-date-picker.ant-picker.ant-picker-disabled {
+  border-color: #e5e7eb !important;
+  background: #f5f7fb !important;
+}
+
+.app-date-range-field--compact {
+  width: auto;
+}
+
+.app-date-range-field--compact .app-date-picker.ant-picker--range {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 18px;
+  column-gap: 0;
+}
+
+.app-date-range-field--compact .app-date-picker.ant-picker--range .ant-picker-input-start {
+  padding-right: 18px;
+}
+
+.app-date-range-field--compact .app-date-picker.ant-picker--range .ant-picker-input-end {
+  padding-left: 18px;
+}
+
+.app-date-range-field--compact .app-date-picker.ant-picker--range .ant-picker-range-separator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  width: 24px;
+  min-width: 24px;
+  background: #fff;
+}

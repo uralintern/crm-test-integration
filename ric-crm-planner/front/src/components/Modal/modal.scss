@@ -1,0 +1,318 @@
+@use "../../styles/variables.scss" as *;
+
+.modal-bg {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  animation: modal-fade .18s ease;
+}
+
+@keyframes modal-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 12px;
+  width: 560px;
+  max-width: calc(100% - 32px);
+  max-height: calc(100dvh - 32px);
+  padding: 22px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+  transform-origin: center;
+  animation: modal-scale .18s ease;
+}
+
+@keyframes modal-scale {
+  from { transform: scale(.96); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.modal-title {
+  margin: 0 0 16px 0;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.modal-content {
+  margin-bottom: 18px;
+  min-height: 0;
+  overflow: auto;
+}
+
+.vk-bot-confirmation {
+  display: grid;
+  gap: 16px;
+}
+
+.vk-bot-confirmation p {
+  margin: 0;
+}
+
+.vk-bot-confirmation__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.modal-actions {
+  display:flex;
+  justify-content: flex-end;
+}
+
+.close-btn,
+.close-btn.ant-btn,
+.close-btn.app-button.ant-btn {
+  padding: 8px 14px;
+  background: #fff !important;
+  color: $primary !important;
+  border: 1px solid $primary !important;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.close-btn:hover,
+.close-btn:focus,
+.close-btn.ant-btn:hover,
+.close-btn.ant-btn:focus,
+.close-btn.app-button.ant-btn:hover,
+.close-btn.app-button.ant-btn:focus {
+  background: $primary !important;
+  color: #fff !important;
+  border-color: $primary !important;
+}
+
+.apply-form {
+  background: #fff;
+  padding: 18px;
+  border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(15, 23, 42, 0.08);
+}
+
+.apply-header {
+  margin-bottom: 12px;
+}
+
+.apply-project {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.form-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-field .app-input,
+.form-field .app-select {
+  width: 100%;
+}
+
+.apply-actions {
+  margin-top: 14px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.apply-btn-cancel,
+.apply-btn-send {
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: #fff;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.apply-btn-cancel {
+  border: 1px solid #ef4444 !important;
+  color: #b91c1c !important;
+}
+
+.apply-btn-cancel:hover,
+.apply-btn-cancel:focus {
+  background: #ef4444 !important;
+  color: #fff !important;
+  border-color: #ef4444 !important;
+}
+
+.apply-btn-send {
+  border: 1px solid var(--event-color, #6495ed) !important;
+  color: var(--event-color, #6495ed) !important;
+}
+
+.apply-btn-send:hover,
+.apply-btn-send:focus {
+  background: var(--event-color, #6495ed) !important;
+  color: #fff !important;
+  border-color: var(--event-color, #6495ed) !important;
+}
+
+.confirm-body {
+  background: #fff;
+  padding: 16px;
+  border-radius: 10px;
+}
+
+.confirm-text {
+  color: #333;
+}
+
+.confirm-actions {
+  margin-top: 12px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.confirm-btn-primary,
+.confirm-btn-danger {
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: #fff;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.confirm-btn-primary {
+  border: 1px solid var(--event-color, #6495ed) !important;
+  color: var(--event-color, #6495ed) !important;
+}
+
+.confirm-btn-primary:hover,
+.confirm-btn-primary:focus {
+  background: var(--event-color, #6495ed) !important;
+  color: #fff !important;
+  border-color: var(--event-color, #6495ed) !important;
+}
+
+.confirm-btn-danger {
+  border: 1px solid #ef4444 !important;
+  color: #b91c1c !important;
+}
+
+.confirm-btn-danger:hover,
+.confirm-btn-danger:focus {
+  background: #ef4444 !important;
+  color: #fff !important;
+  border-color: #ef4444 !important;
+}
+
+.btn-cancel {
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: #fff;
+  color: #e53935;
+  border: 1px solid #e53935;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background .12s ease, color .12s ease, border-color .12s ease;
+}
+
+.btn-cancel:hover,
+.btn-cancel:focus {
+  background: #e53935;
+  color: #fff;
+  border-color: #e53935;
+}
+
+.btn-cancel:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-send,
+.btn-send.ant-btn,
+.btn-send.app-button.ant-btn {
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: #fff !important;
+  color: var(--event-color, #6495ed) !important;
+  border: 1px solid var(--event-color, #6495ed) !important;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background .12s ease, color .12s ease, border-color .12s ease;
+}
+
+.btn-send:hover,
+.btn-send:focus,
+.btn-send.ant-btn:hover,
+.btn-send.ant-btn:focus,
+.btn-send.app-button.ant-btn:hover,
+.btn-send.app-button.ant-btn:focus {
+  background: var(--event-color, #6495ed) !important;
+  color: #fff !important;
+  border-color: var(--event-color, #6495ed) !important;
+}
+
+.btn-send:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.modal-close.app-button.ant-btn {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  padding: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  font-size: 0;
+  line-height: 1;
+  cursor: pointer;
+  color: #4b5563 !important;
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: none !important;
+  transition: background 0.14s ease, color 0.14s ease;
+}
+
+.modal-close.app-button.ant-btn > span {
+  display: none;
+}
+
+.modal-close.app-button.ant-btn::before {
+  content: "×";
+  display: block;
+  font-size: 26px;
+  font-weight: 400;
+  line-height: 1;
+  transform: translateY(-1px);
+}
+
+.modal-close.app-button.ant-btn:hover,
+.modal-close.app-button.ant-btn:focus {
+  background: rgba(15, 23, 42, 0.07) !important;
+  color: #111827 !important;
+}
+
+.form-field .field-error {
+  color: #d32f2f;
+  font-size: 13px;
+  margin-top: 6px;
+}
+
+.form-field input[aria-invalid="true"],
+.form-field select[aria-invalid="true"],
+.form-field textarea[aria-invalid="true"] {
+  border-color: #d32f2f;
+}

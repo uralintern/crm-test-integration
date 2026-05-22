@@ -1,0 +1,658 @@
+basePath: /
+definitions:
+  admin.CreateManagerRequest:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+      surname:
+        type: string
+    type: object
+  admin.CreateManagerResponse:
+    properties:
+      email:
+        type: string
+      message:
+        type: string
+      name:
+        type: string
+      role:
+        type: string
+      surname:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  auth.LoginRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  auth.LoginResponse:
+    properties:
+      email:
+        type: string
+      message:
+        type: string
+      name:
+        type: string
+      role:
+        type: string
+      surname:
+        type: string
+      token:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  auth.RegisterRequest:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+      surname:
+        type: string
+    type: object
+  auth.RegisterResponse:
+    properties:
+      email:
+        type: string
+      message:
+        type: string
+      name:
+        type: string
+      role:
+        type: string
+      surname:
+        type: string
+      token:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  intern.FinishAttemptRequest:
+    properties:
+      userAnswers:
+        items:
+          $ref: '#/definitions/intern.UserAnswerInfo'
+        type: array
+    type: object
+  intern.FinishAttemptResponse:
+    properties:
+      max_test_points:
+        type: integer
+      passed:
+        type: boolean
+      result:
+        type: string
+      score:
+        type: integer
+    type: object
+  intern.PublicMatching:
+    properties:
+      left:
+        items:
+          type: string
+        type: array
+      right:
+        items:
+          type: string
+        type: array
+    type: object
+  intern.PublicOptions:
+    properties:
+      case_sensitive:
+        type: boolean
+      choice:
+        items:
+          type: string
+        type: array
+      matching:
+        $ref: '#/definitions/intern.PublicMatching'
+      sequence:
+        items:
+          type: string
+        type: array
+    type: object
+  intern.QuestionInfo:
+    properties:
+      options:
+        $ref: '#/definitions/intern.PublicOptions'
+      order_number:
+        type: integer
+      points:
+        type: integer
+      question_id:
+        type: integer
+      text:
+        type: string
+      type:
+        $ref: '#/definitions/models.QType'
+    type: object
+  intern.StartAttemptRequest:
+    properties:
+      application_id:
+        type: integer
+    type: object
+  intern.StartAttemptResponse:
+    properties:
+      application_id:
+        type: integer
+      config_id:
+        type: integer
+      description:
+        type: string
+      questions:
+        items:
+          $ref: '#/definitions/intern.QuestionInfo'
+        type: array
+      test_id:
+        type: integer
+      threshold:
+        type: number
+      time_limit:
+        type: integer
+      title:
+        type: string
+    type: object
+  intern.UserAnswer:
+    properties:
+      choices:
+        items:
+          type: boolean
+        type: array
+      matching:
+        items:
+          $ref: '#/definitions/models.MatchingPair'
+        type: array
+      sequence:
+        items:
+          $ref: '#/definitions/models.SequenceItem'
+        type: array
+      user_input:
+        type: string
+    type: object
+  intern.UserAnswerInfo:
+    properties:
+      answer:
+        $ref: '#/definitions/intern.UserAnswer'
+      question_id:
+        type: integer
+    type: object
+  manager.CreateQuestionInfo:
+    properties:
+      options:
+        $ref: '#/definitions/models.QuestionOptions'
+      order_number:
+        type: integer
+      points:
+        type: integer
+      text:
+        type: string
+      type:
+        type: string
+    type: object
+  manager.CreateTestInfo:
+    properties:
+      description:
+        type: string
+      is_extra:
+        type: boolean
+      questions:
+        items:
+          $ref: '#/definitions/manager.CreateQuestionInfo'
+        type: array
+      title:
+        type: string
+    type: object
+  manager.Event:
+    properties:
+      end_date:
+        type: string
+      name:
+        type: string
+      start_date:
+        type: string
+    type: object
+  manager.EventCfgInfo:
+    properties:
+      event_id:
+        type: integer
+      extra_threshold:
+        items:
+          $ref: '#/definitions/manager.ExtraThresholdInfo'
+        type: array
+      fail_text:
+        type: string
+      specialization_id:
+        type: integer
+      success_text:
+        type: string
+      test_id:
+        type: integer
+      threshold:
+        type: number
+      time_limit:
+        type: integer
+    type: object
+  manager.EventSpecializationsResponse:
+    properties:
+      end_date:
+        type: string
+      event_id:
+        type: integer
+      event_name:
+        type: string
+      specializations:
+        items:
+          $ref: '#/definitions/manager.Specialization'
+        type: array
+      start_date:
+        type: string
+    type: object
+  manager.ExtraThresholdInfo:
+    properties:
+      message:
+        type: string
+      test_id:
+        type: integer
+      threshold:
+        type: number
+    type: object
+  manager.Specialization:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  manager.TestInfo:
+    properties:
+      creator_id:
+        type: integer
+      description:
+        type: string
+      test_id:
+        type: integer
+      title:
+        type: string
+    type: object
+  manager.TestsInfoResponse:
+    properties:
+      tests:
+        items:
+          $ref: '#/definitions/manager.TestInfo'
+        type: array
+    type: object
+  models.ChoiceOption:
+    properties:
+      is_true:
+        type: boolean
+      text:
+        type: string
+    type: object
+  models.MatchingPair:
+    properties:
+      left:
+        type: string
+      right:
+        type: string
+    type: object
+  models.QType:
+    enum:
+    - single_choice
+    - multiple_choice
+    - text_input
+    - matching
+    - correct_order
+    type: string
+    x-enum-varnames:
+    - SingleChoice
+    - MultipleChoice
+    - TextInput
+    - Matching
+    - CorrectOrder
+  models.QuestionOptions:
+    properties:
+      case_sensitive:
+        type: boolean
+      choice:
+        items:
+          $ref: '#/definitions/models.ChoiceOption'
+        type: array
+      correct_input:
+        items:
+          type: string
+        type: array
+      matching:
+        items:
+          $ref: '#/definitions/models.MatchingPair'
+        type: array
+      sequence:
+        items:
+          $ref: '#/definitions/models.SequenceItem'
+        type: array
+    type: object
+  models.SequenceItem:
+    properties:
+      order:
+        type: integer
+      text:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: backend part of test constructor
+  title: test constructor
+  version: "1.0"
+paths:
+  /api/admin/manager/create:
+    post:
+      consumes:
+      - application/json
+      description: Создать нового организатора
+      parameters:
+      - description: Manager object
+        in: body
+        name: test
+        required: true
+        schema:
+          $ref: '#/definitions/admin.CreateManagerRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/admin.CreateManagerResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Создать организатора
+      tags:
+      - admin
+  /api/intern/attempt/finish:
+    post:
+      consumes:
+      - application/json
+      description: Получение ответов стажёра
+      parameters:
+      - description: Answers object
+        in: body
+        name: answers
+        required: true
+        schema:
+          $ref: '#/definitions/intern.FinishAttemptRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/intern.FinishAttemptResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Завершить тест
+      tags:
+      - intern
+  /api/intern/tests/{link}:
+    get:
+      consumes:
+      - application/json
+      description: Создание попытки по ссылке конфигурации мероприятия
+      parameters:
+      - description: Start attempt object
+        in: body
+        name: answers
+        required: true
+        schema:
+          $ref: '#/definitions/intern.StartAttemptRequest'
+      - description: Ссылка конфигурации теста
+        in: path
+        name: link
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/intern.StartAttemptResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Пройти тест через конфигурацию мероприятия
+      tags:
+      - intern
+  /api/manager/events:
+    get:
+      description: Получить список мероприятий
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/manager.Event'
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Получить мероприятия
+      tags:
+      - manager
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: EventCfg object
+        in: body
+        name: test
+        required: true
+        schema:
+          $ref: '#/definitions/manager.EventCfgInfo'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Создать настройку мероприятия
+      tags:
+      - manager
+  /api/manager/events/{id}:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Config ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: EventCfg object
+        in: body
+        name: test
+        required: true
+        schema:
+          $ref: '#/definitions/manager.EventCfgInfo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Обновить настройку мероприятия
+      tags:
+      - manager
+  /api/manager/events/{id}/specializations:
+    get:
+      consumes:
+      - application/json
+      description: Получение списка специализаций конкретного мероприятия
+      parameters:
+      - description: Event ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/manager.EventSpecializationsResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Получить специализации мероприятия
+      tags:
+      - manager
+  /api/manager/tests:
+    get:
+      description: Получить список тестов
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/manager.TestsInfoResponse'
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Получить тесты для организотора
+      tags:
+      - manager
+    post:
+      consumes:
+      - application/json
+      description: Создать новый тест
+      parameters:
+      - description: Test object
+        in: body
+        name: test
+        required: true
+        schema:
+          $ref: '#/definitions/manager.CreateTestInfo'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Создать тест
+      tags:
+      - manager
+  /api/manager/tests/delete/{id}:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: ID теста
+        in: path
+        minimum: 1
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      security:
+      - ApiKeyAuth: []
+      summary: Удалить тест
+      tags:
+      - manager
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: Логин
+      parameters:
+      - description: User object
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/auth.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/auth.LoginResponse'
+      summary: Вход
+      tags:
+      - users
+  /register:
+    post:
+      consumes:
+      - application/json
+      description: Создать нового пользователя
+      parameters:
+      - description: User object
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/auth.RegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/auth.RegisterResponse'
+      summary: Создать пользователя
+      tags:
+      - users
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

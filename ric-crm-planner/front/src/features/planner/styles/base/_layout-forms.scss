@@ -1,0 +1,156 @@
+﻿.planner-card {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  padding: 12px;
+}
+
+.planner-access-note {
+  margin-bottom: 12px;
+  border-color: #bfdbfe;
+  background:
+    linear-gradient(90deg, rgba(37, 99, 235, 0.08), transparent 48%),
+    #fff;
+}
+
+.planner-access-note .h3 {
+  margin: 0 0 6px;
+}
+
+.planner-access-note p {
+  margin: 0;
+  color: #475569;
+  line-height: 1.45;
+}
+
+.planner-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.planner-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.planner-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.planner-row--right {
+  justify-content: flex-end;
+}
+
+.planner-grid {
+  display: grid;
+  gap: 8px;
+}
+
+.planner-grid--3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.planner-grid--4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.planner-grid--parent-create {
+  grid-template-columns: minmax(260px, 1fr) minmax(160px, 180px) minmax(160px, 180px) auto;
+  align-items: end;
+}
+
+.planner-grid--parent-create .primary {
+  justify-self: end;
+  white-space: nowrap;
+}
+
+.planner-inline-form {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) auto;
+  gap: 8px;
+  align-items: end;
+}
+
+.planner-inline-form .primary {
+  white-space: nowrap;
+}
+
+.planner-grid--team-from-project {
+  grid-template-columns: minmax(220px, 1fr) minmax(180px, 260px) auto;
+  align-items: end;
+}
+
+.planner-grid--team-from-project .primary {
+  justify-self: end;
+  white-space: nowrap;
+}
+
+.planner-label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+  color: #374151;
+}
+
+.planner-card input:not([type="checkbox"]):not([type="radio"]):not(.ant-select-selection-search-input),
+.planner-card select,
+.planner-card textarea,
+.planner-head .planner-label select {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  padding: 8px 10px;
+  background: #fff;
+  color: #111827;
+  font-size: 14px;
+  line-height: 1.25;
+}
+
+.planner-card .ant-picker .ant-picker-input > input,
+.planner-head .ant-picker .ant-picker-input > input {
+  width: 100% !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.planner-card select {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, #6b7280 50%), linear-gradient(135deg, #6b7280 50%, transparent 50%);
+  background-position: calc(100% - 18px) calc(50% - 3px), calc(100% - 12px) calc(50% - 3px);
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  padding-right: 28px;
+}
+
+.planner-head .planner-label select {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, #6b7280 50%), linear-gradient(135deg, #6b7280 50%, transparent 50%);
+  background-position: calc(100% - 18px) calc(50% - 3px), calc(100% - 12px) calc(50% - 3px);
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  padding-right: 28px;
+}
+
+.planner-card input:not([type="checkbox"]):not([type="radio"]):not(.ant-select-selection-search-input):focus,
+.planner-card select:focus,
+.planner-card textarea:focus,
+.planner-head .planner-label select:focus {
+  outline: none;
+  border-color: #6495ed;
+  box-shadow: 0 0 0 3px rgba(100, 149, 237, 0.2);
+}
+
+.planner-card textarea {
+  resize: vertical;
+  min-height: 72px;
+}
+

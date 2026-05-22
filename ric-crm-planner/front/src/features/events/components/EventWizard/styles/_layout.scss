@@ -1,0 +1,120 @@
+﻿@use "../../../../../styles/variables.scss" as *;
+
+.wizard-tab--event {
+  --wizard-accent: var(--event-color, #6495ed);
+  --wizard-soft-bg: rgba(100, 149, 237, 0.045);
+  --wizard-soft-border: rgba(100, 149, 237, 0.18);
+  --wizard-focus-shadow: rgba(100, 149, 237, 0.16);
+  --wizard-select-bg: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+}
+
+.wizard-tab--directions {
+  --wizard-accent: var(--directions-color, #6fbf73);
+  --wizard-soft-bg: rgba(111, 191, 115, 0.055);
+  --wizard-soft-border: rgba(111, 191, 115, 0.22);
+  --wizard-focus-shadow: rgba(111, 191, 115, 0.18);
+  --wizard-select-bg: linear-gradient(180deg, #ffffff 0%, #fbfff8 100%);
+}
+
+.wizard-tab--projects {
+  --wizard-accent: var(--projects-color, #b77bdc);
+  --wizard-soft-bg: rgba(183, 123, 220, 0.055);
+  --wizard-soft-border: rgba(183, 123, 220, 0.22);
+  --wizard-focus-shadow: rgba(183, 123, 220, 0.18);
+  --wizard-select-bg: linear-gradient(180deg, #ffffff 0%, #fdf7ff 100%);
+}
+
+.wizard-tab--form {
+  --wizard-accent: #3b82f6;
+  --wizard-soft-bg: rgba(59, 130, 246, 0.055);
+  --wizard-soft-border: rgba(59, 130, 246, 0.22);
+  --wizard-focus-shadow: rgba(59, 130, 246, 0.18);
+  --wizard-select-bg: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+}
+
+.wizard-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  --wizard-accent: #6495ed;
+}
+
+.wizard {
+  position: relative;
+  width: 80%;
+  height: 80%;
+  background:
+    radial-gradient(circle at 100% 0%, var(--wizard-soft-bg), transparent 34%),
+    #fff;
+  border: 1px solid var(--wizard-soft-border);
+  border-radius: 20px;
+  display: flex;
+  overflow: hidden;
+  animation: fade-in .50s ease;
+  transition:
+    background-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.wizard-nav {
+  width: 260px;
+  border-right: 1px solid #eee;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.wizard-nav .wizard-nav-btn {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  color: #333;
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    transform 0.2s ease;
+}
+
+.wizard-nav .wizard-nav-btn.active {
+  background: var(--wizard-accent) !important;
+  border-color: transparent !important;
+  color: #fff !important;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+  transform: translateX(4px);
+}
+
+.wizard-nav .wizard-nav-btn--automation {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  margin-top: 4px;
+  height: auto !important;
+  min-height: 44px;
+  padding: 12px !important;
+  border: 1px solid var(--wizard-soft-border);
+  border-radius: 12px !important;
+  color: var(--wizard-accent);
+  font-weight: 700;
+}
+
+.wizard-nav .wizard-nav-btn--automation:hover,
+.wizard-nav .wizard-nav-btn--automation:focus {
+  background: var(--wizard-accent) !important;
+  color: #fff !important;
+  border-color: var(--wizard-accent) !important;
+  transform: translateX(4px);
+}
+
+

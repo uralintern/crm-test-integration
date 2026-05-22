@@ -1,0 +1,14 @@
+@media (max-width: 768px) {
+  .kanban-board-kit.rkk-board {
+    height: auto;
+    min-height: 0;
+    overflow-x: auto;
+    padding-bottom: 12px;
+  }
+
+  .kanban-board-kit .rkk-column-outer {
+    flex-basis: 82vw;
+    min-width: 82vw;
+    max-width: 82vw;
+  }
+}

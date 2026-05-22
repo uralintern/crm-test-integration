@@ -1,0 +1,75 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./back
+    restart: unless-stopped
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - django_static:/app/staticfiles
+
+  automation:
+    build:
+      context: ./back
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      RUN_MIGRATIONS: "0"
+      RUN_COLLECTSTATIC: "0"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - django_static:/app/staticfiles
+    command: >
+      sh -c "while true; do
+      python manage.py run_automation;
+      sleep $${AUTOMATION_INTERVAL_SECONDS:-60};
+      done"
+
+  web:
+    build:
+      context: ./front
+      args:
+        VITE_API_BASE: ${VITE_API_BASE:-}
+        VITE_USE_MOCK: ${VITE_USE_MOCK:-false}
+        VITE_TESTING_URL: ${VITE_TESTING_URL:-}
+    restart: unless-stopped
+    environment:
+      APP_DOMAIN: ${APP_DOMAIN}
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
+      - django_static:/srv/django-static:ro
+
+volumes:
+  postgres_data:
+  django_static:
+  caddy_data:
+  caddy_config:

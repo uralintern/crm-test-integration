@@ -1,0 +1,177 @@
+[
+  {
+    "id": 1,
+    "title": "Практика 2025",
+    "description": "Практический поток НПЦ РИЦ с проектами из реального набора 2024 года: сервисы для самозанятых, внутренние инструменты проектной школы и прикладные веб-решения.",
+    "startDate": "2025-06-16",
+    "endDate": "2025-08-31",
+    "applyDeadline": "2025-06-08",
+    "orgChatUrl": "",
+    "leader": 1,
+    "organizer": "Смирнов Денис",
+    "specializations": [
+      { "id": 101, "title": "Frontend разработчик" },
+      { "id": 102, "title": "Backend разработчик" },
+      { "id": 103, "title": "Fullstack разработчик" },
+      { "id": 104, "title": "Веб-дизайнер" },
+      { "id": 204, "title": "Аналитик" },
+      { "id": 302, "title": "Тестировщик" }
+    ],
+    "applicationFormFields": [
+      {
+        "id": "studentName",
+        "label": "ФИО",
+        "type": "text",
+        "required": true,
+        "locked": true,
+        "system": true
+      },
+      {
+        "id": "telegram",
+        "label": "Аккаунт в ВК",
+        "type": "text",
+        "required": true,
+        "locked": true,
+        "system": true
+      },
+      {
+        "id": "university",
+        "label": "Университет",
+        "type": "text",
+        "required": true,
+        "locked": true,
+        "system": true
+      },
+      {
+        "id": "course",
+        "label": "Курс",
+        "type": "text",
+        "required": true,
+        "locked": true,
+        "system": true
+      },
+      {
+        "id": "specialization",
+        "label": "Специализация",
+        "type": "text",
+        "required": true,
+        "locked": true,
+        "system": true
+      },
+      {
+        "id": "about",
+        "label": "О себе",
+        "type": "textarea",
+        "required": false,
+        "locked": false,
+        "system": false
+      },
+      {
+        "id": "experienceLevel",
+        "label": "Опыт участия в проектах",
+        "type": "select",
+        "options": ["Без опыта", "Учебные проекты", "Коммерческий опыт"],
+        "required": true,
+        "locked": false,
+        "system": false
+      },
+      {
+        "id": "portfolio",
+        "label": "Ссылка на портфолио или GitHub",
+        "type": "text",
+        "required": false,
+        "locked": false,
+        "system": false
+      }
+    ],
+    "status": "Набор завершен"
+  },
+  {
+    "id": 2,
+    "title": "Стажировка",
+    "description": "Внутренний набор на развитие CRM, модуля тестирования и командных инструментов РИЦ. Событие открыто для новых заявок и подготовки следующего потока.",
+    "startDate": "2026-05-12",
+    "endDate": "2026-07-10",
+    "applyDeadline": "2026-04-25",
+    "orgChatUrl": "",
+    "leader": 1,
+    "organizer": "Смирнов Денис",
+    "specializations": [
+      { "id": 101, "title": "Frontend разработчик" },
+      { "id": 102, "title": "Backend разработчик" },
+      { "id": 103, "title": "Fullstack разработчик" },
+      { "id": 104, "title": "Веб-дизайнер" },
+      { "id": 204, "title": "Аналитик" },
+      { "id": 106, "title": "DevOps" }
+    ],
+    "applicationFormFields": [
+      {
+        "id": "studentName",
+        "label": "ФИО",
+        "type": "text",
+        "required": true,
+        "locked": true,
+        "system": true
+      },
+      {
+        "id": "telegram",
+        "label": "Аккаунт в ВК",
+        "type": "text",
+        "required": true,
+        "locked": true,
+        "system": true
+      },
+      {
+        "id": "university",
+        "label": "Университет",
+        "type": "text",
+        "required": true,
+        "locked": true,
+        "system": true
+      },
+      {
+        "id": "course",
+        "label": "Курс",
+        "type": "text",
+        "required": true,
+        "locked": true,
+        "system": true
+      },
+      {
+        "id": "specialization",
+        "label": "Специализация",
+        "type": "text",
+        "required": true,
+        "locked": true,
+        "system": true
+      },
+      {
+        "id": "about",
+        "label": "Почему хотите на стажировку",
+        "type": "select",
+        "options": ["Хочу развивать CRM", "Интересен модуль тестирования", "Хочу работать с планировщиком", "Хочу попасть в команду проекта"],
+        "required": true,
+        "locked": false,
+        "system": false
+      },
+      {
+        "id": "employmentFormat",
+        "label": "Предпочтительный формат участия",
+        "type": "select",
+        "options": ["Удаленно", "Гибрид", "Очно"],
+        "required": false,
+        "locked": false,
+        "system": false
+      },
+      {
+        "id": "comment",
+        "label": "Комментарий для организатора",
+        "type": "textarea",
+        "required": false,
+        "locked": false,
+        "system": false
+      }
+    ],
+    "status": "Активно"
+  }
+]

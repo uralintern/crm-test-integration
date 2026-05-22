@@ -1,0 +1,29 @@
+@import "./StatisticsTest.css";
+
+.event-test-cell {
+    text-align: center;
+}
+
+.event-test-result {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.event-stat-btn {
+    border: none;
+    background: #2F4156;
+    color: #F0E8D5;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.stat-modal{
+    background: #C8D9E6;
+}

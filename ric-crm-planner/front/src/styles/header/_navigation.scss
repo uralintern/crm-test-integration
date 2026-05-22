@@ -1,0 +1,60 @@
+﻿.header-left,
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-left {
+  justify-content: flex-start;
+}
+
+.header-right {
+  justify-content: flex-end;
+}
+
+.header-center {
+  display: flex;
+  justify-content: center;
+}
+
+.header-logo.ant-btn {
+  width: 75px;
+  height: 50px;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+  cursor: pointer;
+}
+
+.header-logo.ant-btn:hover,
+.header-logo.ant-btn:focus,
+.header-logo.ant-btn:active,
+.header-logo.ant-btn:focus-visible {
+  background: transparent !important;
+  border: 0 !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.header-logo.ant-btn::after {
+  display: none !important;
+}
+
+.header-logo.ant-btn > span {
+  width: 100%;
+  height: 100%;
+}
+
+.header-logo-img {
+  display: block;
+  width: 75px;
+  height: 50px;
+  object-fit: contain;
+  pointer-events: none;
+}
+

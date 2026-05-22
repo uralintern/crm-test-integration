@@ -1,0 +1,325 @@
+.stat-modal-overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+.create-wrapper2 {
+    display: flex;
+    background: #F0E8D5;
+    width: 1200px;
+    overflow-x: auto;
+    justify-content: center;
+    padding: 0;
+    margin: 0 auto;
+    min-height: 850px;
+}
+
+.stat-table-wrapper::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+.stat-table th:nth-child(2),
+.stat-table td:nth-child(2) {
+    border-left: 1px solid #2f4156;
+}
+
+.stat-table-wrapper::-webkit-scrollbar-track {
+    background: #c8d9e6;
+    border-radius: 10px;
+}
+
+
+.stat-table-wrapper::-webkit-scrollbar-thumb {
+    background-color: #2f4156;
+    border-radius: 10px;
+}
+
+
+.test2 {
+    flex: 3;
+    background: #2F4156;
+    padding: 0px 30px 30px 30px;
+    color: white;
+    border-right: 8px solid #F4EDD9;
+    border-radius: 30px;
+}
+.stat-back-btn2{
+    background: #F0E8D5;
+    border-radius: 10px;
+    padding: 5px 5px 1px 5px;
+
+}
+.stat-top-bar2{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.stat-top-bar2 h1{
+    padding-top: 20px;
+}
+.stat-modal {
+    width: 680px;
+    max-height: 80vh;
+    background: #f0e8d5;
+    border-radius: 20px;
+    padding: 16px 20px 20px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.stat-modal h3{
+    color: #2f4156;
+    display: flex;
+    align-items: center;
+}
+.stat-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.stat-modal-header h2 {
+    margin: 0;
+    font-size: 20px;
+    color: #2f4156;
+}
+
+.stat-close-btn {
+    border: none;
+    background: transparent;
+    font-size: 24px;
+    cursor: pointer;
+    color: #2f4156;
+}
+
+
+.stat-attempts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.stat-attempt-row {
+    background: #e4d8c2;
+    border-radius: 12px;
+    padding: 8px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.stat-attempt-main {
+    display: grid;
+    grid-template-columns: 2fr 1.2fr 1.4fr;
+    column-gap: 8px;
+    align-items: center;
+}
+
+.stat-attempt-user {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-attempt-name {
+    font-weight: 700;
+    color: #2f4156;
+}
+
+.stat-attempt-email {
+    font-size: 13px;
+    color: #2f4156;
+    opacity: 0.85;
+}
+
+.stat-attempt-result {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+}
+
+.stat-attempt-score {
+    font-weight: 600;
+    color: #2f4156;
+}
+
+.stat-attempt-status {
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 999px;
+}
+
+.stat-passed {
+    background: #d4f2c2;
+    color: #255b2a;
+}
+
+.stat-failed {
+    background: #f8d2d2;
+    color: #7a1f1f;
+}
+
+.stat-attempt-time {
+    font-size: 13px;
+    color: #2f4156;
+    text-align: right;
+}
+.stat-attempt-item{
+
+}
+
+.stat-details-btn {
+    margin-top: 4px;
+    border: none;
+    border-radius: 999px;
+    padding: 6px 10px;
+    background: #2f4156;
+    color: #f0e8d5;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.stat-details {
+    margin-top: 10px;
+    padding: 10px 12px 12px;
+    border-radius: 16px;
+    background: #dce7f3;
+    border: 1px solid #b7c7dd;
+}
+
+.stat-details h3 {
+    margin: 0 0 6px;
+    font-size: 18px;
+    color: #2f4156;
+}
+
+.stat-details-user p {
+    margin: 0;
+    font-size: 13px;
+    color: #2f4156;
+}
+
+.stat-details-user p + p {
+    margin-top: 2px;
+}
+
+
+.stat-table-wrapper {
+    margin-top: 8px;
+    max-height: 150px;
+    overflow: auto;
+    background: #f5f0e2;
+    border-radius: 10px;
+    border: 1px solid #2F4156;
+}
+
+.stat-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    color: #2F4156;
+}
+
+.stat-table thead th {
+    position: sticky;
+    top: 0;
+    background: #f0e0b5;
+    color: #2f4156;
+    padding: 6px 8px;
+    border-bottom: 1px solid #2F4156;
+}
+
+.stat-table td {
+    padding: 4px 8px;
+    border-bottom: 1px solid #2F4156;
+}
+
+.stat-table tr:last-child td {
+    border-bottom: none;
+}
+
+.stat-hide-btn {
+    margin-top: 8px;
+    width: 100%;
+    padding: 6px 10px;
+    border-radius: 999px;
+    border: none;
+    background: #2f4156;
+    color: #f0e8d5;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.stat-empty {
+    margin: 8px 0 0;
+    font-size: 14px;
+    color: #F0E8D5;
+}
+
+
+
+
+.stat-attempts-table {
+    margin-top: 20px;
+    background: #2F4156;
+    padding: 15px 20px;
+    border-radius: 20px;
+    color: #2F4156;
+}
+
+.stat-attempts-table table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #f4edd9;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.stat-attempts-table th,
+.stat-attempts-table td {
+    padding: 10px 16px;
+    font-size: 18px;
+    border-right: 2px solid #ffffff;
+    border-bottom: 2px solid #ffffff;
+}
+
+.stat-attempts-table thead th {
+    background: #C8D9E6;
+    text-align: center;
+}
+
+
+
+.stat-attempts-table tbody tr:nth-child(even) {
+    background: #f0e4cc;
+}
+
+.stat-cell-name {
+    font-weight: 600;
+}
+
+.stat-cell-score,
+.stat-cell-time {
+    white-space: nowrap;
+}
+
+.stat-cell-button {
+    text-align: center;
+}
+
+.stat-details-btn {
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: none;
+    background: #2F4156;
+    color: #F0E8D5;
+    font-size: 12px;
+    cursor: pointer;
+}

@@ -1,0 +1,131 @@
+@import url('./assets/fonts/fonts.css');
+
+body {
+    font-family: 'Futura Md BT', sans-serif;
+    background-color: #F0E8D5;
+    line-height: 1.5;
+    font-weight: 400;
+    color-scheme: light dark;
+    color: rgba(255, 255, 255, 0.87);
+    margin-top: 4em;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.auth-block {
+    background-color: #2F4157;
+    border-radius: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.auth-form {
+    margin-left: 9%;
+    margin-right: 9%;
+    margin-top: 32px;
+}
+
+.auth-form h1 {
+    color: #F0E8D5;
+    margin: 0;
+    font-size: 3.5em;
+    text-align: center;
+}
+
+input {
+    font-family: 'Futura Md BT', sans-serif;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 10%;
+    width: 90%;
+    border-radius: 30px;
+    background-color: #F0E8D5;
+    border: 0;
+    font-size: 35px;
+    margin-top: 27px;
+    color: #2F4157;
+    transition: 0.3s;
+}
+
+input::placeholder {
+    color: #2F4157;
+    opacity: 1;
+}
+
+.process-personal-data {
+    margin-top: 16px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.process-personal-data p {
+    margin: 0;
+    margin-left: 10px;
+    font-size: 20px;
+    color: #F0E8D5;
+}
+
+.auth-button {
+    padding: 16px 160px;
+    font-size: 24px;
+    width: 100%;
+}
+
+.auth-form p {
+    color: #F0E8D5;
+    font-size: 20px;
+    text-align: center;
+}
+
+.auth-icon {
+    margin-left: auto;
+}
+
+.auth-icon img {
+    padding: 50px;
+    height: 74vh;
+}
+
+.error-message-form {
+    margin-top: 16px;
+    color: #F47878;
+    font-size: 20px;
+    text-align: center;
+}
+
+.auth-question {
+    margin-top: 16px;
+}
+
+.auth-question a {
+    color: #F0E8D5;
+    text-decoration: none;
+}
+
+.auth-question a:hover {
+    text-decoration: underline;
+}
+
+
+button {
+    border-radius: 100px;
+    border: 1px solid transparent;
+    margin-top: 16px;
+    padding: 0.6em 1.2em;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    color: #F0E8D5;
+    background-color: #221F1F;
+    cursor: pointer;
+    transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #F0E8D5;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}

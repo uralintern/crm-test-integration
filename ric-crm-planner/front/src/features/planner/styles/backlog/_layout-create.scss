@@ -1,0 +1,178 @@
+﻿.backlog-layout {
+  display: grid;
+  grid-template-columns: minmax(360px, 0.78fr) minmax(560px, 1.22fr);
+  align-items: start;
+  gap: 14px;
+}
+
+.backlog-panel {
+  padding: 16px;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.035);
+}
+
+.backlog-panel--parents {
+  position: sticky;
+  top: 12px;
+  max-height: calc(100vh - 24px);
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.65) transparent;
+}
+
+.backlog-panel--subtasks {
+  min-width: 0;
+}
+
+.backlog-section-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.backlog-panel--parents .backlog-section-head {
+  flex-direction: column;
+  gap: 10px;
+}
+
+.backlog-panel--parents .backlog-summary {
+  justify-content: flex-start;
+}
+
+.backlog-section-head .h3 {
+  margin: 2px 0 4px;
+}
+
+.backlog-eyebrow {
+  color: #2563eb;
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.backlog-summary {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.backlog-summary span {
+  border: 1px solid #e5e7eb;
+  border-radius: 999px;
+  background: #f8fafc;
+  color: #64748b;
+  padding: 5px 9px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.backlog-create-panel {
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  background: #f8fafc;
+  padding: 12px;
+  margin-bottom: 14px;
+}
+
+.backlog-create-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.backlog-create-copy strong {
+  color: #111827;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.backlog-create-copy span,
+.backlog-selected-parent {
+  color: #6b7280;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.backlog-parent-create {
+  grid-template-columns: minmax(260px, 1fr) minmax(260px, 360px) auto;
+}
+
+.backlog-panel--parents .backlog-parent-create {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.backlog-panel--parents .backlog-parent-create .planner-label:first-child,
+.backlog-panel--parents .backlog-add-parent {
+  grid-column: 1 / -1;
+}
+
+.backlog-panel--parents .backlog-add-parent {
+  width: 100%;
+  justify-self: stretch;
+}
+
+.backlog-subtask-create {
+  grid-template-columns: minmax(190px, 240px) minmax(260px, 1fr) minmax(260px, 360px) auto;
+  align-items: end;
+}
+
+.backlog-subtask-create > * {
+  min-width: 0;
+}
+
+.backlog-subtask-title-field {
+  grid-column: span 1;
+}
+
+.backlog-sprint-toggle {
+  min-height: 42px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-self: end;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #fff;
+  color: #1f2937;
+  padding: 8px 10px;
+}
+
+.backlog-sprint-toggle small {
+  margin-left: 4px;
+  color: #64748b;
+  font-size: 12px;
+}
+
+.backlog-edit-form .planner-check {
+  justify-content: space-between;
+  width: fit-content;
+  min-width: 132px;
+}
+
+.backlog-add-parent,
+.backlog-add-subtask {
+  align-self: end;
+  min-height: 42px;
+  white-space: nowrap;
+}
+
+.backlog-add-subtask {
+  grid-column: 1 / -1;
+  width: 100%;
+  justify-self: stretch;
+}
+
+.backlog-list,
+.subtask-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+

@@ -1,0 +1,208 @@
+﻿@media (max-width: 1700px) {
+  .backlog-parent-create {
+    grid-template-columns: minmax(240px, 1fr) minmax(260px, 360px);
+  }
+
+  .backlog-add-parent {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+
+  .backlog-subtask-create {
+    grid-template-columns: minmax(180px, 220px) minmax(220px, 1fr) minmax(260px, 340px) auto;
+  }
+}
+
+@media (max-width: 1500px) {
+  .backlog-subtask-create {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .backlog-subtask-date-range {
+    grid-column: 1 / -1;
+  }
+
+  .backlog-sprint-toggle {
+    width: 100%;
+  }
+
+  .backlog-add-subtask {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+}
+
+.subtask-item .planner-inline-edit-row:last-of-type {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (max-width: 1100px) {
+  .backlog-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .backlog-panel--parents {
+    position: static;
+    max-height: none;
+    overflow: visible;
+  }
+
+  .backlog-panel--parents .backlog-section-head {
+    flex-direction: row;
+  }
+
+  .backlog-panel--parents .backlog-summary {
+    justify-content: flex-end;
+  }
+
+  .backlog-panel--parents .backlog-parent-create {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .backlog-parent-create,
+  .backlog-subtask-create {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .backlog-add-parent,
+  .backlog-add-subtask {
+    width: 100%;
+  }
+}
+
+@media (max-width: 900px) {
+  .backlog-section-head,
+  .backlog-parent,
+  .subtask-item {
+    grid-template-columns: 1fr;
+  }
+
+  .backlog-section-head {
+    flex-direction: column;
+  }
+
+  .backlog-panel--parents .backlog-section-head {
+    flex-direction: column;
+  }
+
+  .backlog-summary,
+  .backlog-panel--parents .backlog-summary,
+  .planner-item-actions {
+    justify-content: flex-start;
+  }
+
+  .backlog-panel--parents .backlog-actions {
+    grid-column: auto;
+  }
+
+  .backlog-actions {
+    max-width: none;
+  }
+
+  .backlog-parent-create,
+  .backlog-subtask-create,
+  .planner-inline-edit-row,
+  .subtask-item .planner-inline-edit-row:last-of-type {
+    grid-template-columns: 1fr;
+  }
+
+  .backlog-panel {
+    padding: 14px;
+  }
+}
+
+@media (max-width: 640px) {
+  .backlog-layout {
+    gap: 12px;
+  }
+
+  .backlog-panel {
+    padding: 14px;
+    border-radius: 18px;
+  }
+
+  .backlog-section-head,
+  .backlog-panel--parents .backlog-section-head {
+    gap: 12px;
+  }
+
+  .backlog-summary,
+  .backlog-panel--parents .backlog-summary {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .backlog-create-panel {
+    padding: 14px;
+    border-radius: 16px;
+  }
+
+  .backlog-parent,
+  .backlog-panel--parents .backlog-parent,
+  .subtask-item {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+    gap: 12px;
+    padding: 14px;
+    border-radius: 16px;
+  }
+
+  .backlog-parent-main,
+  .subtask-main {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .backlog-parent .title,
+  .subtask-main .title {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    line-height: 1.25;
+  }
+
+  .backlog-date-row,
+  .subtask-meta-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 7px;
+  }
+
+  .backlog-date-row span,
+  .subtask-meta-grid > span,
+  .backlog-panel--parents .backlog-date-row span {
+    width: 100%;
+    min-width: 0;
+    justify-content: space-between;
+  }
+
+  .planner-item-actions,
+  .backlog-panel--parents .backlog-actions {
+    grid-column: 1 / -1;
+    width: 100%;
+    max-width: none;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .planner-item-actions .app-button.ant-btn {
+    width: 100%;
+    min-width: 0;
+    padding-inline: 8px !important;
+  }
+
+  .planner-inline-edit-row,
+  .planner-inline-edit-row--date,
+  .subtask-item .planner-inline-edit-row:last-of-type {
+    grid-column: 1 / -1;
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 430px) {
+  .planner-item-actions,
+  .backlog-panel--parents .backlog-actions {
+    grid-template-columns: 1fr;
+  }
+}

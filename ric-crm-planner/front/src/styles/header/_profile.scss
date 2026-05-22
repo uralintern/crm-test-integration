@@ -1,0 +1,64 @@
+﻿.profile-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 46px;
+
+  padding: 7px 12px;
+  border-radius: 10px;
+  border: 1px solid #e6e6e6;
+  background: white;
+
+  cursor: pointer;
+}
+
+.profile-icon {
+  font-size: 22px;
+  color: #4b5563;
+  line-height: 1;
+}
+
+.profile-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 1.05;
+
+  .role {
+    font-size: 12px;
+    color: #666;
+    line-height: 1.1;
+  }
+
+  .name {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 1.1;
+  }
+}
+
+.head-btn--login {
+  background: var(--event-color);
+  color: #fff;
+  border-radius: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--event-color);
+  cursor: pointer;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.head-btn--login:hover,
+.head-btn--login:focus-visible {
+  background: #fff !important;
+  color: var(--event-color) !important;
+  border-color: var(--event-color) !important;
+}
+
+.head-btn--login .anticon {
+  font-size: 18px;
+}
+

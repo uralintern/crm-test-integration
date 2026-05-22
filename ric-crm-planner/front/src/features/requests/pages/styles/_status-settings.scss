@@ -1,0 +1,54 @@
+﻿.requests-status-settings {
+  display: grid;
+  gap: 16px;
+}
+
+.requests-status-settings p {
+  margin: 0;
+  color: #64748b;
+  line-height: 1.45;
+}
+
+.requests-status-settings__list {
+  display: grid;
+  gap: 10px;
+}
+
+.requests-status-settings__option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid #e4ebf7;
+  border-radius: 16px;
+  background: #f8fbff;
+}
+
+.requests-status-settings__option::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--status-color, #6495ed);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--status-color, #6495ed) 16%, transparent);
+}
+
+.requests-status-settings__option .ant-checkbox-wrapper {
+  flex: 1;
+  min-width: 0;
+  color: #334155;
+  font-weight: 700;
+}
+
+.requests-status-settings__option > span {
+  flex: 0 0 auto;
+  min-width: 34px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #fff;
+  color: #1d4ed8;
+  font-weight: 800;
+  text-align: center;
+}
+

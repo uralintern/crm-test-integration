@@ -1,0 +1,117 @@
+﻿.notification-center {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 60vh;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+
+.notification-empty {
+  padding: 16px;
+  border: 1px dashed #d1d5db;
+  border-radius: 10px;
+  color: #6b7280;
+}
+
+.notification-center__toolbar {
+  order: 999;
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 4px;
+}
+
+.notification-clear-btn {
+  min-height: 42px;
+  padding: 0 22px !important;
+  border: 1px solid #ef4444 !important;
+  border-radius: 8px !important;
+  background: #fff !important;
+  color: #b91c1c !important;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.notification-clear-btn:hover,
+.notification-clear-btn:focus {
+  background: #ef4444 !important;
+  color: #fff !important;
+  border-color: #ef4444 !important;
+}
+
+.notification-item {
+  border: 1px solid #dbeafe;
+  border-radius: 10px;
+  padding: 12px;
+  background: #f8fbff;
+}
+
+.notification-item.is-read {
+  opacity: 0.84;
+}
+
+.notification-item__head {
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.notification-item__title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.notification-item__date {
+  font-size: 12px;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+.notification-item__message {
+  margin-top: 6px;
+  color: #374151;
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.notification-item__actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.notification-link-btn,
+.notification-remove-btn {
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 6px 10px;
+  background: #fff;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.notification-link-btn {
+  border-color: #2563eb !important;
+  color: #2563eb !important;
+}
+
+.notification-link-btn:hover,
+.notification-link-btn:focus {
+  background: #2563eb !important;
+  color: #fff !important;
+  border-color: #2563eb !important;
+}
+
+.notification-remove-btn {
+  border-color: #ef4444 !important;
+  color: #b91c1c !important;
+}
+
+.notification-remove-btn:hover,
+.notification-remove-btn:focus {
+  background: #ef4444 !important;
+  color: #fff !important;
+  border-color: #ef4444 !important;
+}

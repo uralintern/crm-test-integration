@@ -1,0 +1,58 @@
+@use "./variables.scss" as *;
+@use "./typography.scss";
+
+.auth-container {
+  width: 550px;
+  margin: 120px auto;
+  background: #ffffff;
+  padding: 28px;
+  border-radius: 12px;
+  box-shadow: 0 6px 30px rgba(0,0,0,0.06);
+
+  h2.h1 {
+    margin-bottom: 25px;
+    text-align: center;
+  }
+
+  .auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    label.text-small {
+      color: #555;
+    }
+
+    .app-input {
+      width: 100%;
+    }
+
+    .auth-submit.ant-btn {
+      margin-top: 6px;
+      padding: 12px !important;
+      border-radius: 10px;
+      border: 1px solid $primary !important;
+      background: $primary !important;
+      color: white !important;
+      cursor: pointer;
+      transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .auth-submit.ant-btn:hover,
+    .auth-submit.ant-btn:focus {
+      background: #fff !important;
+      color: $primary !important;
+      border-color: $primary !important;
+    }
+  }
+
+  .switch-link {
+    margin-top: 14px;
+    text-align: center;
+
+    a {
+      color: $primary;
+      font-weight: 600;
+    }
+  }
+}

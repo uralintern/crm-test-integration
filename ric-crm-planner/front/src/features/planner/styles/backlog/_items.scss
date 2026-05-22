@@ -1,0 +1,183 @@
+﻿.backlog-parent,
+.subtask-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  background: #fff;
+  padding: 12px;
+  transition: border-color 0.14s ease, box-shadow 0.14s ease, background 0.14s ease;
+}
+
+.backlog-parent:hover,
+.subtask-item:hover {
+  border-color: #bfdbfe;
+  box-shadow: 0 10px 22px rgba(15, 23, 42, 0.055);
+}
+
+.backlog-parent.active {
+  border-color: #2563eb;
+  background: #fbfdff;
+  box-shadow: 0 12px 24px rgba(37, 99, 235, 0.09);
+}
+
+.backlog-parent-index {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: #eef4ff;
+  color: #1d4ed8;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 650;
+}
+
+.backlog-panel--parents .backlog-parent {
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+}
+
+.backlog-panel--parents .backlog-actions {
+  grid-column: 2;
+  justify-content: flex-start;
+  max-width: none;
+}
+
+.backlog-parent-main,
+.subtask-main {
+  min-width: 0;
+}
+
+.backlog-parent-main {
+  cursor: pointer;
+}
+
+.backlog-parent-kicker,
+.subtask-headline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 5px;
+}
+
+.backlog-parent-kicker span,
+.subtask-status,
+.subtask-sprint-badge {
+  border-radius: 999px;
+  padding: 4px 8px;
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.backlog-parent-kicker span {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.backlog-parent-kicker .is-current {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.backlog-parent .title,
+.subtask-main .title {
+  min-width: 0;
+  overflow: hidden;
+  color: #111827;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.backlog-parent .title {
+  font-size: 16px;
+}
+
+.subtask-main .title {
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.backlog-date-row,
+.subtask-meta-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.backlog-date-row span,
+.subtask-meta-grid > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid #eef2f7;
+  border-radius: 10px;
+  background: #f8fafc;
+  color: #374151;
+  padding: 6px 8px;
+  font-size: 13px;
+}
+
+.backlog-panel--parents .backlog-date-row span {
+  flex: 1 1 120px;
+}
+
+.backlog-date-row small,
+.subtask-meta-grid small {
+  color: #94a3b8;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.subtask-item {
+  grid-template-columns: minmax(0, 1fr) auto;
+  border-left: 4px solid #cbd5e1;
+}
+
+.subtask-item.is-in-sprint {
+  border-left-color: #10b981;
+}
+
+.subtask-status {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.subtask-status.is-sprint {
+  background: #d1fae5;
+  color: #047857;
+}
+
+.subtask-sprint-badge {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.subtask-assignee {
+  max-width: 100%;
+  min-width: 0;
+}
+
+.subtask-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #eef4ff;
+  color: #1d4ed8;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  font-size: 11px;
+  font-weight: 500;
+}
+

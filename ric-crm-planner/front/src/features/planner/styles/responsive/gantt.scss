@@ -1,0 +1,109 @@
+@media (max-width: 900px) {
+  .planner-gantt-head {
+    flex-direction: column;
+  }
+
+  .planner-gantt-head__controls {
+    width: 100%;
+    min-width: 0;
+    align-items: flex-start;
+  }
+
+  .planner-gantt-meta {
+    text-align: left;
+  }
+
+  .planner-gantt-surface {
+    overflow-x: auto;
+  }
+
+  .planner-gantt-list-header,
+  .planner-gantt-list-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .planner-gantt-card {
+    padding: 14px;
+  }
+
+  .planner-gantt-head {
+    gap: 12px;
+  }
+
+  .planner-gantt-head__controls {
+    gap: 8px;
+  }
+
+  .planner-gantt-switcher {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .planner-gantt-switcher .app-button.ant-btn {
+    width: 100%;
+    padding: 8px 6px;
+  }
+
+  .planner-gantt-surface {
+    max-width: 100%;
+    border-radius: 16px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x pan-y;
+    cursor: grab;
+  }
+
+  .planner-gantt-surface > div {
+    min-width: 760px;
+  }
+
+  .planner-gantt-surface:active {
+    cursor: grabbing;
+  }
+
+  .planner-gantt-surface .gantt-horizontal-container,
+  .planner-gantt-surface .timeline-container {
+    min-width: 610px;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x;
+  }
+
+  .planner-gantt-surface ._2k9Ys {
+    height: 20px;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scrollbar-width: auto;
+  }
+
+  .planner-gantt-surface ._2k9Ys::-webkit-scrollbar {
+    height: 14px;
+  }
+
+  .planner-gantt-list-header,
+  .planner-gantt-list-row {
+    padding: 0 8px;
+  }
+
+  .planner-gantt-list-row.is-child .planner-gantt-list-row__title {
+    padding-left: 10px;
+  }
+
+  .planner-gantt-list-row__name {
+    max-width: 116px;
+    font-size: 12px;
+  }
+
+  .planner-gantt-list-row__meta {
+    font-size: 11px;
+  }
+
+  .planner-gantt-expander {
+    width: 12px;
+    min-width: 12px;
+    font-size: 11px;
+  }
+}
