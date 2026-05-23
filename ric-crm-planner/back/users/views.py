@@ -1451,6 +1451,47 @@ class IntegrationApplicationTestResultView(IntegrationApplicationMixin, APIView)
         )
 
 
+class IntegrationApplicationStatusView(IntegrationApplicationMixin, APIView):
+    @swagger_auto_schema(
+        tags=[TAG_INTEGRATION],
+        operation_summary="Update application status from testing service",
+        operation_description="Updates CRM application status when the testing module does not have a CRM test session.",
+        manual_parameters=[INTEGRATION_TOKEN_PARAMETER],
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            required=["application_status"],
+            properties={
+                "application_status": openapi.Schema(type=openapi.TYPE_STRING),
+                "reason": openapi.Schema(type=openapi.TYPE_STRING),
+            },
+        ),
+        responses={200: ApplicationSerializer, 400: ERROR_RESPONSE_SCHEMA, 403: ERROR_RESPONSE_SCHEMA, 404: ERROR_RESPONSE_SCHEMA},
+    )
+    def post(self, request, *args, **kwargs):
+        application = self.get_application()
+        status_name = str(request.data.get("application_status") or "").strip()
+        if not status_name:
+            return Response({"application_status": "Application status is required."}, status=status.HTTP_400_BAD_REQUEST)
+
+        status_obj = Status.objects.filter(name__iexact=status_name).first()
+        if not status_obj:
+            return Response({"application_status": "Application status was not found."}, status=status.HTTP_400_BAD_REQUEST)
+
+        previous_status = application.status.name if application.status_id else ""
+        if previous_status != status_obj.name:
+            application.status = status_obj
+            application.save(update_fields=["status"])
+            application.refresh_from_db()
+            run_crm_automation(
+                application,
+                "request.status_changed",
+                previous_status=previous_status,
+                request=request,
+            )
+
+        return Response(ApplicationSerializer(application, context={"request": request}).data, status=status.HTTP_200_OK)
+
+
 @method_decorator(
     name="get",
     decorator=swagger_auto_schema(

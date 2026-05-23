@@ -14,6 +14,7 @@ from .views import (
     EventDetailView,
     EventListCreateView,
     IntegrationApplicationTestingContextView,
+    IntegrationApplicationStatusView,
     IntegrationApplicationTestResultView,
     IntegrationApplicationTestSessionView,
     IntegrationTestExportView,
@@ -116,6 +117,11 @@ urlpatterns = [
         "integration/applications/<int:application_id>/test-results/",
         IntegrationApplicationTestResultView.as_view(),
         name="integration-application-test-result",
+    ),
+    path(
+        "integration/applications/<int:application_id>/status/",
+        IntegrationApplicationStatusView.as_view(),
+        name="integration-application-status",
     ),
     path(
         "integration/tests/<int:test_id>/export/",

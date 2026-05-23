@@ -5,7 +5,7 @@ from django.core import signing
 from django.urls import reverse
 from urllib.parse import parse_qs, urlparse
 
-from users.models import Application, Notification, Profile, Status
+from users.models import Application, Profile, Status
 
 from .services import VKAPIError, VKConfigurationError, is_vk_user_in_conversation, send_vk_message
 from users.vk_profiles import refresh_profile_vk_user_id
@@ -40,32 +40,24 @@ def get_application_organizers(application: Application):
 
 def notify_organizers_about_vk_error(application: Application, reason: str) -> None:
     student_name = application.user.get_full_name() or application.user.email or str(application.user)
-    event_name = application.event.name if application.event_id else "мероприятие"
-
-    for organizer in get_application_organizers(application):
-        Notification.objects.create(
-            user=organizer,
-            title="Ошибка отправки VK",
-            message=(
-                f"Не удалось отправить VK-сообщение проектанту {student_name} "
-                f'по заявке на мероприятие "{event_name}". Причина: {reason}'
-            ),
-            link="/requests",
-        )
-
+    event_name = application.event.name if application.event_id else "unknown event"
+    logger.warning(
+        'VK message delivery failed for application_id=%s student=%s event=%s reason=%s',
+        application.id,
+        student_name,
+        event_name,
+        reason,
+    )
 
 def notify_organizers_about_chat_join(application: Application) -> None:
     student_name = application.user.get_full_name() or application.user.email or str(application.user)
-    event_name = application.event.name if application.event_id else "мероприятие"
-
-    for organizer in get_application_organizers(application):
-        Notification.objects.create(
-            user=organizer,
-            title="Проектант перешел в орг.чат",
-            message=f'Проектант {student_name} перешел по ссылке на орг.чат мероприятия "{event_name}".',
-            link="/requests",
-        )
-
+    event_name = application.event.name if application.event_id else "unknown event"
+    logger.info(
+        'VK chat join detected for application_id=%s student=%s event=%s',
+        application.id,
+        student_name,
+        event_name,
+    )
 
 def resolve_vk_chat_peer_id(chat_url: str) -> int | None:
     if not chat_url:

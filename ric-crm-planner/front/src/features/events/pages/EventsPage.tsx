@@ -13,31 +13,11 @@ import Table from "../../../components/Table/Table";
 import { useToast } from "../../../components/Toast/ToastProvider";
 import { buildMockRequestTransitionUrl, REQUEST_STATUS } from "../../../constants/requestProgress";
 import { AuthContext } from "../../../context/AuthContext";
-import { useNotifications } from "../../../context/NotificationsContext";
 import { useSearchSubmitFeedback } from "../../../hooks/useSearchSubmitFeedback";
 import type { Event } from "../../../types/event";
 import type { Request as RequestType } from "../../../types/request";
 import "../../../styles/page-colors.scss";
 import AppButton from "../../../components/UI/Button";
-
-interface TestingImportMetaEnv {
-  VITE_TESTING_URL?: string;
-}
-
-const TESTING_BASE_URL =
-  ((import.meta as ImportMeta & { env?: TestingImportMetaEnv }).env?.VITE_TESTING_URL || "").trim() || "https://example.com/testing";
-
-function buildTestingUrl(req: RequestType) {
-  try {
-    const url = new URL(TESTING_BASE_URL, window.location.origin);
-    if (req.id) url.searchParams.set("applicationId", String(req.id));
-    if (req.eventId) url.searchParams.set("eventId", String(req.eventId));
-    if (req.ownerId) url.searchParams.set("ownerId", String(req.ownerId));
-    return url.toString();
-  } catch {
-    return TESTING_BASE_URL;
-  }
-}
 
 function extractErrorMessage(error: unknown): string | undefined {
   const translate = (message: string) =>
@@ -101,7 +81,6 @@ export default function EventsPage() {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
   const { showToast } = useToast();
-  const { addNotification } = useNotifications();
   const isStudent = user?.role === "student";
 
   const [wizardOpen, setWizardOpen] = useState(false);
@@ -113,7 +92,6 @@ export default function EventsPage() {
   const [applyOpen, setApplyOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
   const [testingPromptOpen, setTestingPromptOpen] = useState(false);
-  const [testingPromptStep, setTestingPromptStep] = useState<"ask" | "info">("ask");
   const [pendingRequest, setPendingRequest] = useState<RequestType | null>(null);
 
   const [infoOpen, setInfoOpen] = useState(false);
@@ -176,7 +154,6 @@ export default function EventsPage() {
 
   const closeTestingPrompt = () => {
     setTestingPromptOpen(false);
-    setTestingPromptStep("ask");
     setPendingRequest(null);
   };
 
@@ -195,7 +172,7 @@ export default function EventsPage() {
       return;
     }
 
-    window.location.assign(trimmed);
+    window.open(trimmed, "_blank", "noopener,noreferrer");
   };
 
   const startTestingScenario = async () => {
@@ -208,15 +185,6 @@ export default function EventsPage() {
 
       await updateRequestStatus(Number(pendingRequest.id), REQUEST_STATUS.TESTING);
 
-      addNotification({
-        userId: user?.id,
-        title: "Приглашение на тестирование",
-        message: client.USE_MOCK
-          ? "Откройте ссылку и подтвердите переход к следующему этапу."
-          : "Для продолжения откройте ссылку и пройдите тест.",
-        link,
-      });
-
       await refreshRequests();
       openLink(link);
     } catch {
@@ -227,21 +195,7 @@ export default function EventsPage() {
   };
 
   const startDirectScenario = async () => {
-    if (!pendingRequest?.id) return;
-
-    const link = client.USE_MOCK
-      ? buildMockRequestTransitionUrl(Number(pendingRequest.id), REQUEST_STATUS.STARTED, "start")
-      : buildTestingUrl(pendingRequest);
-
-    addNotification({
-      userId: user?.id,
-      title: "Ссылка для перехода к ПШ",
-      message: "Ссылка для прохождения находится в центре уведомлений.",
-      link,
-    });
-
-    setTestingPromptStep("info");
-    await refreshRequests();
+    closeTestingPrompt();
   };
 
   return (
@@ -351,7 +305,6 @@ export default function EventsPage() {
             });
 
             setPendingRequest(created);
-            setTestingPromptStep("ask");
             setTestingPromptOpen(true);
             showToast("success", "Заявка отправлена");
             await refreshRequests();
@@ -366,28 +319,17 @@ export default function EventsPage() {
       <InfoModal isOpen={infoOpen} onClose={() => setInfoOpen(false)} title={infoItem?.title} description={infoItem?.description} />
 
       <Modal isOpen={testingPromptOpen} onClose={closeTestingPrompt} title="Переход по заявке">
-        {testingPromptStep === "ask" ? (
-          <div className="confirm-body">
-            <div className="confirm-text">Перейти к прохождению теста?</div>
-            <div className="confirm-actions">
-              <AppButton className="confirm-btn-danger" onClick={startDirectScenario}>
-                Нет
-              </AppButton>
-              <AppButton className="confirm-btn-primary" onClick={startTestingScenario}>
-                Да
-              </AppButton>
-            </div>
+        <div className="confirm-body">
+          <div className="confirm-text">Перейти к прохождению теста?</div>
+          <div className="confirm-actions">
+            <AppButton className="confirm-btn-danger" onClick={startDirectScenario}>
+              Нет
+            </AppButton>
+            <AppButton className="confirm-btn-primary" onClick={startTestingScenario}>
+              Да
+            </AppButton>
           </div>
-        ) : (
-          <div className="confirm-body">
-            <div className="confirm-text">Ссылка для прохождения находится в центре уведомлений</div>
-            <div className="confirm-actions">
-              <AppButton className="confirm-btn-primary" onClick={closeTestingPrompt}>
-                Понятно
-              </AppButton>
-            </div>
-          </div>
-        )}
+        </div>
       </Modal>
     </div>
   );
