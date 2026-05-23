@@ -107,7 +107,7 @@ func SSOExchange(w http.ResponseWriter, r *http.Request) {
 
     testLink := ""
     if crmPayload.Application != nil && user.Role.Code == "intern" {
-        testLink = findTestLinkForApplication(crmPayload.Application)
+        testLink = findTestLinkForApplication(crmPayload.Application, user.ID)
     }
 
     w.Header().Set("Content-Type", "application/json; charset=utf-8")
@@ -222,25 +222,50 @@ func mapCRMRole(role string) string {
     return "intern"
 }
 
-func findTestLinkForApplication(application *CRMTestingContext) string {
+func findTestLinkForApplication(application *CRMTestingContext, internID uint) string {
     if application == nil || application.Event == nil {
         return ""
     }
 
     eventID := uint(application.Event.ID)
+    applicationID := uint(application.Application.ID)
     specializationID := uint(0)
     if application.Specialization != nil {
         specializationID = uint(application.Specialization.ID)
     }
 
-    var eventConfig models.EventConfig
+    var eventConfigs []models.EventConfig
+    query := database.DB.Where("event_id = ?", eventID).Order("config_id ASC")
     if specializationID > 0 {
-        if err := database.DB.Where("event_id = ? AND specialization_id = ?", eventID, specializationID).First(&eventConfig).Error; err == nil {
+        query = query.Where("specialization_id = ?", specializationID)
+    }
+
+    if err := query.Find(&eventConfigs).Error; err != nil || len(eventConfigs) == 0 {
+        return ""
+    }
+
+    configIDs := make([]uint, 0, len(eventConfigs))
+    for _, eventConfig := range eventConfigs {
+        configIDs = append(configIDs, eventConfig.ConfigID)
+    }
+
+    var attempts []models.Attempt
+    if err := database.DB.
+        Where("intern_id = ? AND application_id = ? AND config_id IN ? AND end_time IS NOT NULL", internID, applicationID, configIDs).
+        Find(&attempts).Error; err != nil {
+        return eventConfigs[0].TestLink.String()
+    }
+
+    finishedConfigIDs := make(map[uint]struct{}, len(attempts))
+    for _, attempt := range attempts {
+        finishedConfigIDs[attempt.ConfigID] = struct{}{}
+    }
+
+    for _, eventConfig := range eventConfigs {
+        if _, exists := finishedConfigIDs[eventConfig.ConfigID]; !exists {
             return eventConfig.TestLink.String()
         }
     }
-    if err := database.DB.Where("event_id = ?", eventID).First(&eventConfig).Error; err == nil {
-        return eventConfig.TestLink.String()
-    }
+
     return ""
 }

@@ -1,0 +1,13 @@
+.request-withdraw-button.ant-btn {
+  width: max-content;
+  min-width: 138px;
+  padding-inline: 14px;
+  white-space: nowrap;
+  justify-content: center;
+}
+
+@media (max-width: 560px) {
+  .request-withdraw-button.ant-btn {
+    min-width: 150px;
+  }
+}

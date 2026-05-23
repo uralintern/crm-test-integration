@@ -401,7 +401,7 @@ export default function RequestsPage() {
                 <div style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: "flex-start" }}>
                   <div>{row.status || ""}</div>
                   {canWithdraw && (
-                    <AppButton className="danger-outline" onClick={() => handleWithdraw(row.id)}>
+                    <AppButton className="danger-outline request-withdraw-button" onClick={() => handleWithdraw(row.id)}>
                       {TEXT.withdrawRequest}
                     </AppButton>
                   )}

@@ -792,3 +792,52 @@ class IntegrationViewTests(TestCase):
         self.assertEqual(result.result_status, "passed")
         self.assertEqual(session.status, "completed")
         self.assertEqual(self.application.status.name, self.testing_status.name)
+
+    def test_service_passed_result_moves_application_to_chat_link_status(self):
+        chat_status = Status.objects.create(
+            name="Отправлена ссылка на орг. чат",
+            description="",
+            is_positive=True,
+        )
+        session = TestSession.objects.create(
+            session_id="session-passed",
+            application=self.application,
+            test=self.test,
+            user=self.projectant,
+            expires_at=timezone.now() + timedelta(hours=2),
+            status="assigned",
+        )
+        self.application.tests_assigned = True
+        self.application.tests_assigned_at = timezone.now()
+        self.application.test_session_id = session.session_id
+        self.application.status = self.testing_status
+        self.application.save(
+            update_fields=[
+                "tests_assigned",
+                "tests_assigned_at",
+                "test_session_id",
+                "status",
+            ]
+        )
+
+        response = self.client.post(
+            reverse(
+                "integration-application-test-result",
+                kwargs={"application_id": self.application.id},
+            ),
+            {
+                "session_id": session.session_id,
+                "score": 90,
+                "max_score": 100,
+                "is_passed": True,
+                "started_at": timezone.now().isoformat(),
+                "completed_at": (timezone.now() + timedelta(minutes=20)).isoformat(),
+                "time_spent_seconds": 1200,
+            },
+            format="json",
+            **self.integration_headers,
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED, response.data)
+        self.application.refresh_from_db()
+        self.assertEqual(self.application.status.name, chat_status.name)

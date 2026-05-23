@@ -19,13 +19,14 @@ import (
 )
 
 type CRMResultData struct {
-    SessionID   string `json:"session_id"`
-    TestID      string `json:"test_id,omitempty"`
-    Score       int    `json:"score"`
-    MaxScore    int    `json:"max_score"`
-    IsPassed    bool   `json:"is_passed"`
-    CompletedAt string `json:"completed_at"`
-    StartedAt   string `json:"started_at"`
+    SessionID         string `json:"session_id"`
+    TestID            string `json:"test_id,omitempty"`
+    Score             int    `json:"score"`
+    MaxScore          int    `json:"max_score"`
+    IsPassed          bool   `json:"is_passed"`
+    CompletedAt       string `json:"completed_at"`
+    StartedAt         string `json:"started_at"`
+    ApplicationStatus string `json:"application_status,omitempty"`
 }
 
 type FinishAttemptRequest struct {
@@ -50,6 +51,11 @@ type FinishAttemptResponse struct {
     MaxTestPoints int    `json:"max_test_points"`
     Passed        bool   `json:"passed"`
 }
+
+const (
+    crmStatusChatLinkSent  = "Отправлена ссылка на орг. чат"
+    crmStatusTestingFailed = "Не прошел тестирование"
+)
 
 func FinishAttempt(w http.ResponseWriter, r *http.Request) {
     claims, ok := r.Context().Value(middleware.UserContextKey).(*auth.JWTClaims)
@@ -142,13 +148,14 @@ func FinishAttempt(w http.ResponseWriter, r *http.Request) {
 
     if attempt.ApplicationID > 0 && attempt.CRMTestID > 0 {
         crmResult := CRMResultData{
-            SessionID:   fmt.Sprintf("%d", attempt.AttemptID),
-            TestID:      fmt.Sprintf("%d", attempt.CRMTestID),
-            Score:       userPoints,
-            MaxScore:    maxPoints,
-            IsPassed:    passed,
-            CompletedAt: now.Format("2006-01-02T15:04:05Z"),
-            StartedAt:   attempt.StartTime.Format("2006-01-02T15:04:05Z"),
+            SessionID:         fmt.Sprintf("%d", attempt.AttemptID),
+            TestID:            fmt.Sprintf("%d", attempt.CRMTestID),
+            Score:             userPoints,
+            MaxScore:          maxPoints,
+            IsPassed:          passed,
+            CompletedAt:       now.Format("2006-01-02T15:04:05Z"),
+            StartedAt:         attempt.StartTime.Format("2006-01-02T15:04:05Z"),
+            ApplicationStatus: resolveCRMApplicationStatus(attempt, passed),
         }
 
         if err := sendResultsToCRM(crmResult, attempt.ApplicationID); err != nil {
@@ -165,6 +172,58 @@ func FinishAttempt(w http.ResponseWriter, r *http.Request) {
 
     w.Header().Set("Content-Type", "application/json")
     json.NewEncoder(w).Encode(response)
+}
+
+func resolveCRMApplicationStatus(attempt models.Attempt, passed bool) string {
+    if attempt.ApplicationID == 0 {
+        return ""
+    }
+
+    if passed {
+        return crmStatusChatLinkSent
+    }
+
+    configIDs := getRequiredConfigIDs(attempt.EventConfig)
+    if len(configIDs) == 0 {
+        return crmStatusTestingFailed
+    }
+
+    var finishedAttempts []models.Attempt
+    if err := database.DB.
+        Where("intern_id = ? AND application_id = ? AND config_id IN ? AND end_time IS NOT NULL", attempt.InternID, attempt.ApplicationID, configIDs).
+        Find(&finishedAttempts).Error; err != nil {
+        fmt.Printf("CRM status aggregation failed: %v\n", err)
+        return ""
+    }
+
+    finishedConfigIDs := make(map[uint]struct{}, len(finishedAttempts))
+    for _, finishedAttempt := range finishedAttempts {
+        if finishedAttempt.Passed {
+            return crmStatusChatLinkSent
+        }
+        finishedConfigIDs[finishedAttempt.ConfigID] = struct{}{}
+    }
+
+    if len(finishedConfigIDs) >= len(configIDs) {
+        return crmStatusTestingFailed
+    }
+
+    return ""
+}
+
+func getRequiredConfigIDs(eventConfig models.EventConfig) []uint {
+    query := database.DB.Model(&models.EventConfig{}).Where("event_id = ?", eventConfig.EventID)
+    if eventConfig.SpecializationID > 0 {
+        query = query.Where("specialization_id = ?", eventConfig.SpecializationID)
+    }
+
+    var configIDs []uint
+    if err := query.Pluck("config_id", &configIDs).Error; err != nil {
+        fmt.Printf("Event config lookup failed: %v\n", err)
+        return nil
+    }
+
+    return configIDs
 }
 
 func isAnswerCorrect(question models.Question, options models.QuestionOptions, answer UserAnswer) bool {
@@ -262,4 +321,3 @@ func sendResultsToCRM(result CRMResultData, applicationID uint) error {
 
     return nil
 }
-

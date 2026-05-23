@@ -54,6 +54,8 @@ DEFAULT_APPLICATION_STATUS_NAMES = (
     "Удален с ПШ",
 )
 TESTING_APPLICATION_STATUS_NAME = "Прохождение тестирования"
+CHAT_LINK_SENT_APPLICATION_STATUS_NAME = "Отправлена ссылка на орг. чат"
+FAILED_TESTING_APPLICATION_STATUS_NAME = "Не прошел тестирование"
 
 
 def build_user_display_name(user) -> str:
@@ -1360,6 +1362,7 @@ class IntegrationTestResultCallbackSerializer(Serializer):
 
     def create(self, validated_data):
         application: Application = self.context["application"]
+        previous_status = application.status.name if application.status_id else ""
         session: TestSession = validated_data.pop("session")
         test: Test = validated_data.pop("test")
         validated_data.pop("session_id", None)
@@ -1394,7 +1397,17 @@ class IntegrationTestResultCallbackSerializer(Serializer):
         if application.test_session_id != session.session_id:
             application.test_session_id = session.session_id
 
+        if not application_status_value and validated_data.get("is_passed"):
+            application_status_value = CHAT_LINK_SENT_APPLICATION_STATUS_NAME
+        if (
+            not application_status_value
+            and str(validated_data.get("result_status", "")).lower()
+            in {"failed_all", "failed_final"}
+        ):
+            application_status_value = FAILED_TESTING_APPLICATION_STATUS_NAME
+
         update_fields = ["tests_assigned", "tests_assigned_at", "test_session_id"]
+        status_changed = False
         if application_status_value:
             status_obj = None
             if str(application_status_value).isdigit():
@@ -1410,9 +1423,21 @@ class IntegrationTestResultCallbackSerializer(Serializer):
                 )
 
             application.status = status_obj
+            status_changed = previous_status != status_obj.name
             update_fields.append("status")
 
         application.save(update_fields=update_fields)
+
+        if status_changed:
+            from users.automation_engine import run_crm_automation
+
+            application.refresh_from_db()
+            run_crm_automation(
+                application,
+                "request.status_changed",
+                previous_status=previous_status,
+                request=self.context.get("request"),
+            )
 
         self.context["created"] = created
         return result
