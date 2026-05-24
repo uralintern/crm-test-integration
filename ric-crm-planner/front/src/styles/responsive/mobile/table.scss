@@ -234,6 +234,19 @@
     width: 100%;
   }
 
+
+
+  body .request-card-mobile--has-action {
+    position: relative;
+    padding-right: 42px;
+  }
+
+  body .request-card-mobile__action {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
   body .request-card-mobile__title {
     font-size: 21px;
     line-height: 25px;

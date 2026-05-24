@@ -62,8 +62,11 @@ def build_user_display_name(user) -> str:
     if not user:
         return ""
 
-    parts = [getattr(user, "last_name", ""), getattr(user, "first_name", "")]
-    return " ".join(part for part in parts if part).strip()
+    profile = getattr(user, "crm_profile", None)
+    last_name = getattr(user, "last_name", "") or getattr(profile, "surname", "")
+    first_name = getattr(user, "first_name", "") or getattr(profile, "name", "")
+    display_name = " ".join(part for part in (last_name, first_name) if part).strip()
+    return display_name or getattr(user, "email", "") or getattr(user, "username", "") or ""
 
 
 def resolve_application_status() -> Status | None:

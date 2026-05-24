@@ -25,8 +25,9 @@ PLANNER_INVITE_PAYLOAD_TYPE = "planner_invite"
 CHAT_JOIN_ACTION_TYPES = {"chat_invite_user", "chat_invite_user_by_link"}
 JOINED_CHAT_STATUS_NAME = "Добавился в орг. чат"
 STARTED_PSH_STATUS_NAME = "Приступил к ПШ"
+DECLINED_PSH_STATUS_NAME = "Отказался от ПШ"
 REMOVED_FROM_PSH_STATUS_NAME = "Удален с ПШ"
-PLANNER_INVITE_ACCEPT_ALLOWED_STATUSES = {JOINED_CHAT_STATUS_NAME, REMOVED_FROM_PSH_STATUS_NAME}
+PLANNER_INVITE_ACCEPT_ALLOWED_STATUSES = {JOINED_CHAT_STATUS_NAME, DECLINED_PSH_STATUS_NAME, REMOVED_FROM_PSH_STATUS_NAME}
 START_COMMANDS = {"начать", "start", "/start", "старт"}
 PEER_COMMANDS = {"peer", "/peer", "peer_id", "/peer_id"}
 
@@ -156,7 +157,7 @@ def send_planner_invites_for_event(
         .filter(event_id=event_id)
     )
     if recipient_mode == "declined":
-        applications = applications.filter(status__name=REMOVED_FROM_PSH_STATUS_NAME)
+        applications = applications.filter(status__name__in=[DECLINED_PSH_STATUS_NAME, REMOVED_FROM_PSH_STATUS_NAME])
     elif recipient_mode == "joined":
         applications = applications.filter(status__name=JOINED_CHAT_STATUS_NAME)
 
@@ -430,7 +431,7 @@ def accept_planner_invite(application: Application, vk_user_id: int) -> str:
             message=(
                 f"Не удалось подтвердить участие: текущий статус заявки «{current_status}». "
                 f"Подтверждение доступно только после статуса «{JOINED_CHAT_STATUS_NAME}» "
-                f"или для повторного приглашения после статуса «{REMOVED_FROM_PSH_STATUS_NAME}»."
+                f"или для повторного приглашения после статуса «{DECLINED_PSH_STATUS_NAME}»."
             ),
         )
         return "Статус заявки не позволяет подтвердить участие"
@@ -452,8 +453,8 @@ def accept_planner_invite(application: Application, vk_user_id: int) -> str:
 @transaction.atomic
 def decline_planner_invite(application: Application, vk_user_id: int) -> str:
     locked_application = Application.objects.select_for_update().get(pk=application.pk)
-    if locked_application.status_id and locked_application.status.name == REMOVED_FROM_PSH_STATUS_NAME:
-        send_vk_message(user_id=vk_user_id, message="Отказ уже зафиксирован. Статус заявки: «Удален с ПШ».")
+    if locked_application.status_id and locked_application.status.name == DECLINED_PSH_STATUS_NAME:
+        send_vk_message(user_id=vk_user_id, message="Отказ уже зафиксирован. Статус заявки: «Отказался от ПШ».")
         return "Отказ уже зафиксирован"
 
     current_status = locked_application.status.name if locked_application.status_id else "без статуса"
@@ -467,15 +468,15 @@ def decline_planner_invite(application: Application, vk_user_id: int) -> str:
         )
         return "Статус заявки не позволяет отказаться"
 
-    removed_status = resolve_application_status(
-        REMOVED_FROM_PSH_STATUS_NAME,
+    declined_status = resolve_application_status(
+        DECLINED_PSH_STATUS_NAME,
         description="Проектант отказался от участия после приглашения в планировщик.",
         is_positive=False,
     )
-    locked_application.status = removed_status
+    locked_application.status = declined_status
     locked_application.save(update_fields=["status"])
     send_vk_message(
         user_id=vk_user_id,
-        message="Отказ зафиксирован. Статус заявки изменён на «Удален с ПШ».",
+        message="Отказ зафиксирован. Статус заявки изменён на «Отказался от ПШ».",
     )
     return "Отказ зафиксирован"

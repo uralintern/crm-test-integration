@@ -151,3 +151,23 @@
     color: #2f4156;
     font-size: 13px;
 }
+
+
+.mytests-continue-btn {
+    align-self: flex-start;
+    margin-top: 6px;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 999px;
+    background: #2f4156;
+    color: #f0e8d5;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.16s ease, transform 0.16s ease;
+}
+
+.mytests-continue-btn:hover {
+    background: #1f2c3b;
+    transform: translateY(-1px);
+}

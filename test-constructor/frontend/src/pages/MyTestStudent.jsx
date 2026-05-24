@@ -66,6 +66,16 @@ export default function MyTestStudent() {
         [attempts]
     );
 
+    const handleContinue = (attempt) => {
+        const link = attempt.test_link || attempt.testLink;
+        if (!link) return;
+
+        const params = new URLSearchParams();
+        const applicationId = attempt.application_id || attempt.applicationId;
+        if (applicationId) params.set("application_id", String(applicationId));
+        navigate(`/test/${link}${params.toString() ? `?${params.toString()}` : ""}`);
+    };
+
     return (
         <div className="tests-page">
             <div className="test-page" style={{ position: "absolute", left: "1430px", top: "0px" }}>
@@ -111,6 +121,11 @@ export default function MyTestStudent() {
                                         <p className="mytests-card-message">
                                             {attempt.message || attempt.result_text || "Результат ещё не сформирован"}
                                         </p>
+                                        {status === "in_progress" && (attempt.test_link || attempt.testLink) && (
+                                            <button className="mytests-continue-btn" type="button" onClick={() => handleContinue(attempt)}>
+                                                Продолжить тест
+                                            </button>
+                                        )}
                                         <div className="mytests-card-footer">
                                             <span>Баллы: {attempt.score ?? 0}</span>
                                             <span>Начало: {formatDate(attempt.started_at)}</span>

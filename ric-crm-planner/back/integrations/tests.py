@@ -481,5 +481,5 @@ class VKCRMNotificationTests(TestCase):
         )
 
         self.application.refresh_from_db()
-        self.assertEqual(self.application.status.name, "Удален с ПШ")
+        self.assertEqual(self.application.status.name, "Отказался от ПШ")
         send_vk_message_mock.assert_called_once()

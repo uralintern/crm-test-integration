@@ -24,7 +24,9 @@ interface Props<T> {
 }
 
 function buildGridTemplate(columns: Column[], hasActionColumn: boolean, gridColumns?: string) {
-  if (gridColumns && gridColumns.trim()) return gridColumns;
+  if (gridColumns && gridColumns.trim()) {
+    return hasActionColumn ? `${gridColumns.trim()} 60px` : gridColumns.trim();
+  }
   const cols = columns.map((column) => (column.width ? `minmax(${column.width}, ${column.width})` : "minmax(150px, 1fr)"));
   if (hasActionColumn) cols.push("60px");
   return cols.join(" ");
@@ -299,7 +301,8 @@ export default function Table<T>({
                 )}
 
                 {isRequestMobileLayout && (
-                  <div className="request-card-mobile">
+                  <div className={`request-card-mobile${actionButton ? " request-card-mobile--has-action" : ""}`}>
+                    {actionButton && <div className="request-card-mobile__action">{actionButton}</div>}
                     <div className="request-card-mobile__title">{toDisplay(rowRecord.studentName)}</div>
 
                     <div className="request-card-mobile__row request-card-mobile__row--single">

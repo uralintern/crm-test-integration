@@ -105,7 +105,6 @@ function hasPlannerAccessStatus(status?: string) {
 export function buildProjectApplicantGroups({
   crmCatalog,
   requests,
-  closedEventIds,
   userNameById,
   eventTitleById,
   directionTitleById,
@@ -116,8 +115,7 @@ export function buildProjectApplicantGroups({
     const eventId = Number(request.eventId);
     const ownerId = Number(request.ownerId);
     if (!Number.isFinite(eventId) || !Number.isFinite(ownerId)) return;
-    if (isNegativeRequestStatus(request.status)) return;
-    if (closedEventIds.includes(eventId) && !hasPlannerAccessStatus(request.status)) return;
+    if (!hasPlannerAccessStatus(request.status)) return;
 
     if (!applicantsByEvent.has(eventId)) applicantsByEvent.set(eventId, new Map());
     const eventApplicants = applicantsByEvent.get(eventId);

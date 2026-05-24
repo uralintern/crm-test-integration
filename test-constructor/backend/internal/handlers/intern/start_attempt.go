@@ -103,29 +103,39 @@ func StartAttempt(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var existingActiveAttempt models.Attempt
+	resumeActiveAttempt := false
 	if err := database.DB.Where("intern_id = ? AND end_time IS NULL", claims.UserID).
 		First(&existingActiveAttempt).Error; err == nil {
-		http.Error(w, "You already have an active attempt", http.StatusConflict)
-		return
-	}
-
-	var existingAttempt models.Attempt
-	existingAttemptQuery := database.DB.Where(
-		"intern_id = ? AND config_id = ? AND end_time IS NOT NULL",
-		claims.UserID,
-		eventConfig.ConfigID,
-	)
-	if req.ApplicationID > 0 {
-		existingAttemptQuery = existingAttemptQuery.Where("application_id = ?", req.ApplicationID)
-	} else {
-		existingAttemptQuery = existingAttemptQuery.Where("application_id = 0")
-	}
-	if err := existingAttemptQuery.First(&existingAttempt).Error; err == nil {
-		http.Error(w, "You already passed this test for this application", http.StatusConflict)
-		return
+		sameApplication := req.ApplicationID == 0 || existingActiveAttempt.ApplicationID == req.ApplicationID
+		if existingActiveAttempt.ConfigID != eventConfig.ConfigID || !sameApplication {
+			http.Error(w, "You already have an active attempt", http.StatusConflict)
+			return
+		}
+		resumeActiveAttempt = true
 	} else if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
 		http.Error(w, "Database error: "+err.Error(), http.StatusInternalServerError)
 		return
+	}
+
+	if !resumeActiveAttempt {
+		var existingAttempt models.Attempt
+		existingAttemptQuery := database.DB.Where(
+			"intern_id = ? AND config_id = ? AND end_time IS NOT NULL",
+			claims.UserID,
+			eventConfig.ConfigID,
+		)
+		if req.ApplicationID > 0 {
+			existingAttemptQuery = existingAttemptQuery.Where("application_id = ?", req.ApplicationID)
+		} else {
+			existingAttemptQuery = existingAttemptQuery.Where("application_id = 0")
+		}
+		if err := existingAttemptQuery.First(&existingAttempt).Error; err == nil {
+			http.Error(w, "You already passed this test for this application", http.StatusConflict)
+			return
+		} else if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
+			http.Error(w, "Database error: "+err.Error(), http.StatusInternalServerError)
+			return
+		}
 	}
 
 	test := eventConfig.Test
@@ -194,6 +204,23 @@ func StartAttempt(w http.ResponseWriter, r *http.Request) {
 			Options:     publicOptions,
 		}
 	}
+	if resumeActiveAttempt {
+		response := StartAttemptResponse{
+			ConfigID:      eventConfig.ConfigID,
+			TestID:        eventConfig.TestID,
+			ApplicationID: existingActiveAttempt.ApplicationID,
+			Title:         test.Title,
+			Description:   test.Description,
+			TimeLimit:     eventConfig.TimeLimit,
+			Threshold:     eventConfig.Threshold,
+			Questions:     publicQuestions,
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(response)
+		return
+	}
+
 	crmTestID := uint(0)
 	if req.ApplicationID > 0 {
 		crmTestID = fetchCRMTestID(req.ApplicationID)

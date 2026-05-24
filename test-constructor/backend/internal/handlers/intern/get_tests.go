@@ -16,6 +16,7 @@ type AttemptInfo struct {
 	ApplicationID uint       `json:"application_id"`
 	TestID        uint       `json:"test_id"`
 	ConfigID      uint       `json:"config_id"`
+	TestLink      string     `json:"test_link"`
 	TestTitle     string     `json:"test_title"`
 	Title         string     `json:"title"`
 	ResultText    string     `json:"result_text"`
@@ -76,6 +77,7 @@ func GetAttempts(w http.ResponseWriter, r *http.Request) {
 			ApplicationID: attempt.ApplicationID,
 			TestID:        attempt.EventConfig.TestID,
 			ConfigID:      attempt.ConfigID,
+			TestLink:      attempt.EventConfig.TestLink.String(),
 			TestTitle:     attempt.EventConfig.Test.Title,
 			Title:         attempt.EventConfig.Test.Title,
 			ResultText:    resultText,

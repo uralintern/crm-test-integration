@@ -286,6 +286,10 @@ async function resolveOrganizer(event: BackendEvent): Promise<string | undefined
   if (event.organizerName && event.organizerName.trim()) return event.organizerName.trim();
 
   let organizerIds = event.organizerIds;
+  const directOrganizer = event.organizer ?? event.leader;
+  if (typeof directOrganizer === "string" && directOrganizer.trim() && Number.isNaN(Number(directOrganizer))) {
+    return directOrganizer.trim();
+  }
   let id: number | string | undefined = organizerIds?.[0] ?? event.leader ?? event.organizer;
 
   if (typeof id === "undefined" && typeof event.id !== "undefined") {
@@ -319,6 +323,7 @@ async function mapEventToUi(data: unknown): Promise<Event> {
   const plannerState = readPlannerState(USE_MOCK);
   const archivedIds = USE_MOCK ? new Set(getArchivedEventIds()) : new Set<number>();
   const eventId = Number(event.id ?? 0);
+  const isArchived = event.archived || event.is_archived || archivedIds.has(eventId);
   const isEnrollmentClosed = plannerState.closedEventIds.includes(eventId);
   const organizerIds = event.organizerIds?.length
     ? event.organizerIds
@@ -338,9 +343,9 @@ async function mapEventToUi(data: unknown): Promise<Event> {
     leader: organizerIds?.[0] != null ? String(organizerIds[0]) : undefined,
     organizerIds,
     specializations: normalizeSpecList(event, specs),
-    status: isEnrollmentClosed ? "Набор завершен" : computeStatus(event.endDate ?? event.end_date),
+    status: isArchived ? "В архиве" : isEnrollmentClosed ? "Набор завершен" : computeStatus(event.endDate ?? event.end_date),
     organizer: await resolveOrganizer({ ...event, organizerIds }),
-    archived: event.archived || event.is_archived || archivedIds.has(eventId),
+    archived: isArchived,
     orgChatUrl: event.orgChatUrl ?? event.org_chat_url,
     orgChatPeerId: event.orgChatPeerId ?? event.org_chat_peer_id,
     applicationFormFields: event.applicationFormFields ?? event.application_form_fields,
@@ -353,6 +358,7 @@ async function mapEventToUi(data: unknown): Promise<Event> {
     ...extension,
     id: eventId,
     archived: baseEvent.archived || extension.archived,
+    status: baseEvent.archived || extension.archived ? "В архиве" : extension.status ?? baseEvent.status,
     organizerIds: extension.organizerIds ?? baseEvent.organizerIds,
     organizer: extension.organizer ?? baseEvent.organizer,
     orgChatUrl: extension.orgChatUrl ?? baseEvent.orgChatUrl,
