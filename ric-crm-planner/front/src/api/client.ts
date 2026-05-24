@@ -123,41 +123,37 @@ async function request<T = unknown>(path: string, options: RequestOptions = {}):
   const url = API_BASE + path;
   const headers = new Headers(options.headers ?? {});
   const init: RequestOptions = {
+    ...options,
     credentials: "include",
     headers,
-    ...options,
   };
 
   const method = (init.method || "GET").toUpperCase();
   if (["POST", "PUT", "PATCH", "DELETE"].includes(method)) {
     const csrf = getCookie("csrftoken");
     if (csrf) {
-      const csrfHeaders = new Headers(init.headers ?? {});
-      csrfHeaders.set("X-CSRFToken", csrf);
-      init.headers = csrfHeaders;
+      headers.set("X-CSRFToken", csrf);
     }
   }
 
   if (typeof init.body !== "undefined") {
     const body = init.body;
-    if (body instanceof FormData) {
-      headers.delete("Content-Type");
-    }
+    const isFormData = body instanceof FormData;
     const isBodyInit =
       typeof body === "string" ||
       body instanceof Blob ||
-      body instanceof FormData ||
+      isFormData ||
       body instanceof URLSearchParams ||
       body instanceof ArrayBuffer ||
       ArrayBuffer.isView(body);
 
-    if (!isBodyInit) {
+    if (isFormData) {
+      headers.delete("Content-Type");
+    } else if (!isBodyInit) {
       if (!headers.has("Content-Type")) headers.set("Content-Type", "application/json");
       init.body = JSON.stringify(body);
     }
   }
-
-  if (typeof init.body === "undefined" && !headers.has("Content-Type")) headers.set("Content-Type", "application/json");
 
   let res = await fetch(url, init as RequestInit);
 
