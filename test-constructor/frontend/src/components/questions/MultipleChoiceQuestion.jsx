@@ -22,7 +22,7 @@ function MultipleChoiceQuestion({ question, updateQuestion, deleteQuestion }) {
     };
 
     const addOption = () => {
-        const newOptions = [...question.options, { text: "", isCorrect: false }];
+        const newOptions = [...question.options, { text: "", isCorrect: false, points: 0 }];
         updateQuestion(question.id, "options", newOptions);
     };
 
@@ -56,12 +56,12 @@ function MultipleChoiceQuestion({ question, updateQuestion, deleteQuestion }) {
                 </div>
                 <div className="q-header1">
                      <span>
-                            <img
-                                src={MultipIcon}
-                                alt="multu"
-                                style={{ width: '36px', height: '36px' }}
-                            />
-                    </span>
+                             <img
+                                 src={MultipIcon}
+                                 alt="multu"
+                                 style={{ width: '36px', height: '36px' }}
+                             />
+                     </span>
                     Множественный выбор
                 </div>
                 <div className="q-header">
@@ -74,7 +74,7 @@ function MultipleChoiceQuestion({ question, updateQuestion, deleteQuestion }) {
                     onChange={(e) => updateQuestion(question.id, "text", e.target.value)}
                 />
                 </span>
-            </div>
+                </div>
             </div>
             <div className="options-list">
                 {question.options?.map((option, index) => (
@@ -95,8 +95,8 @@ function MultipleChoiceQuestion({ question, updateQuestion, deleteQuestion }) {
                             />
                         </label>
                         <ScoreInput2
-                            value={question.maxScore}
-                            onChange={val => updateQuestion(question.id, "maxScore", val)}
+                            value={option.points || 0}
+                            onChange={val => updateOption(index, "points", val)}
                         />
                         <button
                             className="delete-answer-btn"

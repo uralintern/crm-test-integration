@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
-import timeIcon from '../../assets/time.svg';
+import timeIcon from "../../assets/time.svg";
 
 export default function TimeBox({ time, setTime }) {
-    const [touched, setTouched] = useState({ hours: false, minutes: false, seconds: false });
+    const [touched, setTouched] = useState({
+        hours: false,
+        minutes: false,
+        seconds: false
+    });
 
     const handleFocus = (field) => {
         setTouched({ ...touched, [field]: true });
@@ -17,7 +21,7 @@ export default function TimeBox({ time, setTime }) {
     return (
         <div className="time-box">
             <div className="time-box1">
-                <img src={timeIcon} alt="Время" />
+                <img src={timeIcon} alt="время" />
                 <p>Ограничение по времени</p>
             </div>
             <div className="time-box-inner1">
@@ -26,39 +30,42 @@ export default function TimeBox({ time, setTime }) {
                         type="number"
                         min="0"
                         placeholder="0 часов"
-                        value={touched.hours ? (time.hours || '') : ''}
+                        value={time.hours || ''}
                         onFocus={() => handleFocus('hours')}
-                        onBlur={() => handleBlur('hours', time.hours)}
+                        onBlur={(e) => handleBlur('hours', time.hours)}
                         onChange={e => {
-                            const value = e.target.value === '' ? 0 : parseInt(e.target.value, 10);
+                            const value = e.target.value === '' ? 0 : parseInt(e.target.value);
                             setTime({ ...time, hours: value || 0 });
                         }}
+                        style={{ textAlign: 'center' }}
                     />
                     <input
                         type="number"
                         min="0"
                         max="59"
                         placeholder="0 минут"
-                        value={touched.minutes ? (time.minutes || '') : ''}
+                        value={time.minutes || ''}
                         onFocus={() => handleFocus('minutes')}
-                        onBlur={() => handleBlur('minutes', time.minutes)}
+                        onBlur={(e) => handleBlur('minutes', time.minutes)}
                         onChange={e => {
-                            const value = e.target.value === '' ? 0 : parseInt(e.target.value, 10);
+                            const value = e.target.value === '' ? 0 : parseInt(e.target.value);
                             setTime({ ...time, minutes: Math.min(59, value || 0) });
                         }}
+                        style={{ textAlign: 'center' }}
                     />
                     <input
                         type="number"
                         min="0"
                         max="59"
                         placeholder="0 секунд"
-                        value={touched.seconds ? (time.seconds || '') : ''}
+                        value={time.seconds || ''}
                         onFocus={() => handleFocus('seconds')}
-                        onBlur={() => handleBlur('seconds', time.seconds)}
+                        onBlur={(e) => handleBlur('seconds', time.seconds)}
                         onChange={e => {
-                            const value = e.target.value === '' ? 0 : parseInt(e.target.value, 10);
+                            const value = e.target.value === '' ? 0 : parseInt(e.target.value);
                             setTime({ ...time, seconds: Math.min(59, value || 0) });
                         }}
+                        style={{ textAlign: 'center' }}
                     />
                 </div>
             </div>

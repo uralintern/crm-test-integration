@@ -38,6 +38,14 @@ export const eventsAPI = {
         api.post('/api/manager/events', config),
 };
 
+export const candidatesAPI = {
+    getCandidates: () =>
+        api.get('/api/manager/users'),
+
+    getCandidateDetails: (candidateId) =>
+        api.get(`/api/manager/users/${candidateId}`),
+};
+
 export const authAPI = {
     register: (name, surname, email, password) =>
         api.post('/register', { name, surname, email, password }),

@@ -10,10 +10,13 @@ export default function CriteriaTable({
     onAddTest,
     onDelete,
     onDeleteTest,
-    testsList = []
+    testsList = [],
+    tests = []
 }) {
+    const availableTests = testsList.length > 0 ? testsList : tests;
+
     const getTestTitle = (id) => {
-        const test = testsList.find(t => Number(t.id) === Number(id));
+        const test = availableTests.find(t => Number(t.id) === Number(id));
         return test ? test.title : `Тест №${id}`;
     };
 

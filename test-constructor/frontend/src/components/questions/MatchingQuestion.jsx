@@ -22,7 +22,7 @@ function MatchingQuestion({ question, updateQuestion, deleteQuestion }) {
     };
 
     const addRow = () => {
-        const newRows = [...question.rows, { option: "", answer: "" }];
+        const newRows = [...question.rows, { option: "", answer: "", points: 0 }];
         updateQuestion(question.id, "rows", newRows);
     };
 
@@ -57,12 +57,12 @@ function MatchingQuestion({ question, updateQuestion, deleteQuestion }) {
                 </div>
                 <div className="q-header1">
                      <span>
-                            <img
-                                src={RatioIcon}
-                                alt="Ratio"
-                                style={{ width: '36px', height: '36px' }}
-                            />
-                    </span>
+                             <img
+                                 src={RatioIcon}
+                                 alt="Ratio"
+                                 style={{ width: '36px', height: '36px' }}
+                             />
+                     </span>
                     На соотношение
                 </div>
                 <div className="q-header">
@@ -75,7 +75,7 @@ function MatchingQuestion({ question, updateQuestion, deleteQuestion }) {
                     onChange={(e) => updateQuestion(question.id, "text", e.target.value)}
                 />
                 </span>
-            </div>
+                </div>
             </div>
             <div className="block-questions99">
                 <div className="block-questions-container">
@@ -83,35 +83,35 @@ function MatchingQuestion({ question, updateQuestion, deleteQuestion }) {
                     <div className="section-title3">Ответ</div>
                 </div>
                 <div className="answers-list">
-                {question.rows?.map((row, index) => (
-                    <div key={index} className="answer-row">
-                        <input
-                            type="text"
-                            className="answer-input"
-                            placeholder="Введите вариант..."
-                            value={row.option}
-                            onChange={(e) => updateRow(index, "option", e.target.value)}
-                        />
-                        <div className="table-separator">:::</div>
-                        <input
-                            type="text"
-                            className="answer-input"
-                            placeholder="Введите ответ..."
-                            value={row.answer}
-                            onChange={(e) => updateRow(index, "answer", e.target.value)}
-                        />
-                        <ScoreInput2
-                            value={question.maxScore}
-                            onChange={val => updateQuestion(question.id, "maxScore", val)}
-                        />
-                        <button
-                            className="delete-answer-btn"
-                            onClick={() => deleteRow(index)}
-                        >
-                            <DeleteIconSub  />
-                        </button>
-                    </div>
-                ))}
+                    {question.rows?.map((row, index) => (
+                        <div key={index} className="answer-row">
+                            <input
+                                type="text"
+                                className="answer-input"
+                                placeholder="Введите вариант..."
+                                value={row.option}
+                                onChange={(e) => updateRow(index, "option", e.target.value)}
+                            />
+                            <div className="table-separator">:::</div>
+                            <input
+                                type="text"
+                                className="answer-input"
+                                placeholder="Введите ответ..."
+                                value={row.answer}
+                                onChange={(e) => updateRow(index, "answer", e.target.value)}
+                            />
+                            <ScoreInput2
+                                value={row.points || 0}
+                                onChange={val => updateRow(index, "points", val)}
+                            />
+                            <button
+                                className="delete-answer-btn"
+                                onClick={() => deleteRow(index)}
+                            >
+                                <DeleteIconSub  />
+                            </button>
+                        </div>
+                    ))}
                 </div>
             </div>
 

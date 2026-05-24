@@ -22,7 +22,7 @@ function SingleChoiceQuestion({ question, updateQuestion, deleteQuestion }) {
     };
 
     const addOption = () => {
-        const newOptions = [...question.options, { text: "", isCorrect: false }];
+        const newOptions = [...question.options, { text: "", isCorrect: false, points: 0 }];
         updateQuestion(question.id, "options", newOptions);
     };
 
@@ -59,8 +59,7 @@ function SingleChoiceQuestion({ question, updateQuestion, deleteQuestion }) {
                     <span>
                             <img
                                 src={SingleChoiseIcon}
-                                alt="SingleChoise
-                                "
+                                alt="SingleChoise"
                                 style={{ width: '36px', height: '36px' }}
                             />
                     </span>
@@ -102,8 +101,8 @@ function SingleChoiceQuestion({ question, updateQuestion, deleteQuestion }) {
                             />
                         </label>
                         <ScoreInput2
-                            value={question.maxScore}
-                            onChange={val => updateQuestion(question.id, "maxScore", val)}
+                            value={option.points || 0}
+                            onChange={val => updateOption(index, "points", val)}
                         />
                         <button
                             className="delete-answer-btn"

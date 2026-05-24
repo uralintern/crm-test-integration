@@ -30,9 +30,9 @@ body {
     color: #F0E8D5;
     font-size: 20px;
     font-weight: 700;
-    position: relative;   /* нужно для ::after */
-    display: inline-block; /* чтобы линия ровно по ширине текста */
-    padding-bottom: 6px;  /* отступ вниз, чтобы линия была чуть ниже текста */
+    position: relative;
+    display: inline-block;
+    padding-bottom: 6px;
 }
 .event-config-header p::after {
     content: "";
@@ -50,12 +50,12 @@ body {
     padding: 0;
     display: inline-flex;
     align-items: center;
-    align-self: flex-start; /* ключ: прижать кнопку к верхнему краю ряда */
+    align-self: flex-start;
     cursor: pointer;
 }
 
 .event-config-back-btn:focus {
-    outline: 2px solid #F0E8D5; /* или другой цвет фокусного состояния */
+    outline: 2px solid #F0E8D5;
     border-radius: 16px;
 }
 
@@ -64,7 +64,7 @@ body {
     height: 40px;
     display: block;
 }
-/* Кнопка "Добавить тесты" — текст слева, иконка справа */
+
 .add-tests-btn {
     width: 100%;
     background: #C8D9E6;
@@ -79,7 +79,7 @@ body {
 
     display: flex;
     align-items: center;
-    justify-content: center; /* центрируем текст+иконку внутри кнопки */
+    justify-content: center;
     gap: 8px;
 }
 .add-tests-plus {
@@ -175,7 +175,7 @@ body {
 .fail-message-icon {
     width: 24px;
     height: 24px;
-    margin-top: 2px; /* Небольшое выравнивание */
+    margin-top: 2px;
 }
 
 .fail-message-title {
@@ -188,10 +188,10 @@ body {
 
 .fail-message-block input {
     width: calc(100% - 24px);
-    margin: 12px 12px 12px 12px; /* Увеличен отступ сверху, чтобы "отлипнуть" от нижнего края текста */
+    margin: 12px 12px 12px 12px;
     border-radius: 16px;
     border: 1px solid #2F4156;
-    padding: 10px 12px; /* Делаем поле ввода выше */
+    padding: 10px 12px;
     font-size: 16px;
     background: #C8D9E6;
     box-sizing: border-box;
@@ -254,12 +254,13 @@ body {
     align-items: center;
 }
 .time-input-box input::placeholder {
-    color: #F0E8D5; /* или любой другой цвет */
-    opacity: 1; /* Для Firefox */
-    text-indent: 25px;
+    color: #F0E8D5;
+    opacity: 1;
+    text-indent: 0;
 }
 .time-input-box input {
     flex: 1;
+    text-align: center;
     border-radius: 24px;
     padding: 12px 50px;
     font-size: 16px;
@@ -374,13 +375,10 @@ body {
     box-shadow: 0 0 0 0 rgba(25, 118, 210, 0.1);
 }
 
-
-/* Убрать rounded corners снизу когда селект открыт */
 .specialization-select.open .specialization-select-button {
     border-radius: 16px 16px 0 0;
 }
 
-/* Текст выбранной специализации */
 .specialization-select-value {
     flex: 1;
     text-align: left;
@@ -389,7 +387,6 @@ body {
     text-overflow: ellipsis;
 }
 
-/* Кастомная стрелочка */
 .select-arrow {
     position: absolute;
     right: 8px;
@@ -406,7 +403,6 @@ body {
     justify-content: center;
 }
 
-/* Стрелочка внутри (треугольник) */
 .select-arrow::after {
     content: '';
     width: 0;
@@ -417,11 +413,9 @@ body {
     transition: transform 0.3s ease;
 }
 
-/* Анимация стрелочки при открытии */
 .specialization-select.open .select-arrow::after {
     transform: rotate(180deg);
 }
-
 
 .specialization-select-list {
     position: relative;
@@ -451,15 +445,12 @@ body {
     border-bottom: none;
 }
 
-
-/* Контейнер с опциями */
 .specialization-select-options {
     padding: 8px 0;
     display: flex;
     flex-direction: column;
 }
 
-/* Каждая опция (специализация) */
 .specialization-option {
     border-radius: 10px;
     background: transparent;
@@ -473,7 +464,6 @@ body {
     position: relative;
     margin: 10px 10px 10px 10px;
 }
-
 
 .specialization-option:hover:not(.disabled) {
     background: #CCCCCC;
@@ -533,20 +523,16 @@ body {
     border-right: none;
 }
 
-/* Строки */
 .criteria-table-row {
     display: grid;
     grid-template-columns: 2fr 3fr 3fr 70px;
-
     border-bottom: 1px solid #2F4156;
-
 }
 
 .criteria-table-row:last-child {
     border-bottom: none;
 }
 
-/* Ячейки */
 .criteria-table-row > * {
     padding: 16px;
     border-right: 1px solid #2F4156;
@@ -578,7 +564,7 @@ body {
     padding: 0;
     margin-top: 0;
 }
-/* Кнопка добавления */
+
 .criteria-add-test-btn {
     align-self: center;
     background: transparent;
@@ -590,8 +576,8 @@ body {
     margin-top: 5px;
 
 
-    display: flex;           /* 👈 ДОБАВИТЬ */
-    align-items: center;     /* 👈 ДОБАВИТЬ — выравнивает по вертикали */
+    display: flex;
+    align-items: center;
     white-space: nowrap;
 }
 .criteria-add-test-btn img {
@@ -599,7 +585,7 @@ body {
     height: 24px;
     margin-right: 10px;
 }
-/* Кнопка добавления критерия */
+
 .criteria-add-btn {
     width: 50%;
     margin: 20px auto;
@@ -637,18 +623,17 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 8px 16px;              /* 👈 ИЗМЕНИТЬ с 10px 18px на 8px 16px */
+    padding: 8px 16px;
     background: #B8C7D9;
     border: 1px solid #2F4156;
     border-radius: 30px;
     color: #2F4156;
     font-weight: 700;
-    height: 44Px;            /* 👈 ДОБАВИТЬ — минимальная высота как у кнопки */
+    height: 44Px;
 }
 .criteria-test-item span{
     margin-left: 16px;
 }
-/* Кнопка удаления */
 .criteria-delete-test-btn {
     background: transparent;
     border: none;
@@ -721,10 +706,38 @@ body {
     height: 28px;
 }
 
-/* DELETE COLUMN */
-
 .criteria-delete-cell {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.event-config-test-item.active-red {
+    color: white;
+    border: 4px solid #C8D9E6;
+    box-shadow: 0 0 10px #C8D9E6;
+    cursor: pointer;
+}
+
+.event-config-test-item.active-red .test-title {
+    color: white;
+}
+
+.event-config-status,
+.event-config-empty-state {
+    margin: 20px 0;
+    padding: 16px 20px;
+    border-radius: 18px;
+    background: #F4EDD9;
+    color: #2F4157;
+    font-size: 18px;
+    line-height: 1.35;
+}
+
+.event-config-empty-state {
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }

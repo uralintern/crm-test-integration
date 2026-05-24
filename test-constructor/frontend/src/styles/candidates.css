@@ -1,0 +1,110 @@
+.candidates-search-box {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.candidates-search-input {
+    width: 100%;
+
+    padding: 20px 40px;
+    font-size: 24px;
+    border-radius: 24px;
+    border: none;
+    background-color: white;
+    color: #2F4157;
+    font-family: 'Futura Md BT', sans-serif;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.candidates-search-input::placeholder {
+    color: #2F4157;
+    opacity: 0.6;
+}
+
+.candidates-search-input:focus {
+    outline: none;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+}
+
+.candidates-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.candidate-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    border: none;
+    background: #F4EDD9;
+    padding: 15px 20px;
+    border-radius: 15px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Futura Md BT', sans-serif;
+}
+
+.candidate-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    background: #F0E4CC;
+}
+
+.candidate-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #2F4157;
+    color: #F0E8D5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+.candidate-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.candidate-name {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #2F4157;
+}
+
+.candidate-email-list {
+    margin: 0;
+    font-size: 14px;
+    color: rgba(47, 65, 87, 0.72);
+}
+
+.candidate-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    color: #2F4157;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.candidates-loading,
+.candidates-empty {
+    text-align: center;
+    font-size: 18px;
+    color: #F0E8D5;
+    margin-top: 40px;
+}

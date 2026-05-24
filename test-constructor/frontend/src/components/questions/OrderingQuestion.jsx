@@ -5,6 +5,7 @@ import DeleteIconSub from "../../assets/delete_sub.svg?react";
 
 import CorrectOrderIcon from "../../assets/CorrectOrder.svg";
 import ScoreInput2 from "../details/ScoreInput2.jsx";
+
 function OrderingQuestion({ question, updateQuestion, deleteQuestion }) {
     const {
         attributes,
@@ -22,13 +23,13 @@ function OrderingQuestion({ question, updateQuestion, deleteQuestion }) {
     };
 
     const addItem = () => {
-        const newItems = [...question.items, { text: "" }];
+        const newItems = [...question.items, { text: "", points: 0 }];
         updateQuestion(question.id, "items", newItems);
     };
 
-    const updateItem = (index, value) => {
+    const updateItem = (index, field, value) => {
         const newItems = [...question.items];
-        newItems[index].text = value;
+        newItems[index][field] = value;
         updateQuestion(question.id, "items", newItems);
     };
 
@@ -75,7 +76,7 @@ function OrderingQuestion({ question, updateQuestion, deleteQuestion }) {
                 />
                 </span>
 
-            </div>
+                </div>
             </div>
             <div className="block-questions99">
                 <div className="block-questions-container33">
@@ -83,29 +84,29 @@ function OrderingQuestion({ question, updateQuestion, deleteQuestion }) {
                     <div className="section-title2222">Ответ</div>
                 </div>
                 <div className="answers-list">
-                {question.items?.map((item, index) => (
-                    <div key={index} className="answer-row">
-                        <span className="item-number">{index + 1}</span>
-                        <input
-                            type="text"
-                            className="answer-input"
-                            placeholder="Введите ответ..."
-                            value={item.text}
-                            onChange={(e) => updateItem(index, e.target.value)}
-                        />
-                        <ScoreInput2
-                            value={question.maxScore}
-                            onChange={val => updateQuestion(question.id, "maxScore", val)}
-                        />
-                        <button
-                            className="delete-answer-btn"
-                            onClick={() => deleteItem(index)}
-                        >
-                            <DeleteIconSub  />
-                        </button>
-                    </div>
-                ))}
-            </div>
+                    {question.items?.map((item, index) => (
+                        <div key={index} className="answer-row">
+                            <span className="item-number">{index + 1}</span>
+                            <input
+                                type="text"
+                                className="answer-input"
+                                placeholder="Введите ответ..."
+                                value={item.text}
+                                onChange={(e) => updateItem(index, "text", e.target.value)}
+                            />
+                            <ScoreInput2
+                                value={item.points || 0}
+                                onChange={val => updateItem(index, "points", val)}
+                            />
+                            <button
+                                className="delete-answer-btn"
+                                onClick={() => deleteItem(index)}
+                            >
+                                <DeleteIconSub  />
+                            </button>
+                        </div>
+                    ))}
+                </div>
             </div>
             <button className="add-answer-btn" onClick={addItem}>
                 + Добавить ряд

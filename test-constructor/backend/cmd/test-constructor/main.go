@@ -52,6 +52,8 @@ func main() {
     m.HandleFunc("/events/{id}", manager.UpdateConfig).Methods("PUT")
     m.HandleFunc("/events/{id}/attempts", manager.GetEventAttempts).Methods("GET")
     m.HandleFunc("/events/{id}/specializations", manager.GetEventSpecializations).Methods("GET")
+    m.HandleFunc("/users", manager.GetUsers).Methods("GET")
+    m.HandleFunc("/users/{id}", manager.GetUserStatistics).Methods("GET")
 
     i := api.PathPrefix("/intern").Subrouter()
     i.Use(middleware.InternMiddleware)

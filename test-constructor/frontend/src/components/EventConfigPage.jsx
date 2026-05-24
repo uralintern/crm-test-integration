@@ -17,6 +17,16 @@ const DEFAULT_CRITERIA = [
     { threshold: 50, message: 'Назначить дополнительный тест', extraTests: [] },
 ];
 
+function createDefaultConfig(selectedSpec = '') {
+    return {
+        selectedSpec,
+        criteria: DEFAULT_CRITERIA.map((item) => ({ ...item, extraTests: [...item.extraTests] })),
+        failMessage: '',
+        time: { hours: 1, minutes: 0, seconds: 0 },
+        shareLink: '',
+    };
+}
+
 function normalizeTestsPayload(data) {
     let testsArray = [];
     if (Array.isArray(data)) testsArray = data;
@@ -51,18 +61,17 @@ export default function EventConfigPage() {
     const eventId = useMemo(() => new URLSearchParams(location.search).get('eventId'), [location.search]);
 
     const [tests, setTests] = useState([]);
-    const [selectedTests, setSelectedTests] = useState([]);
-    const [criteria, setCriteria] = useState(DEFAULT_CRITERIA);
+    const [selectedTestIds, setSelectedTestIds] = useState([]);
+    const [selectedTestId, setSelectedTestId] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
     const [modalTarget, setModalTarget] = useState(null);
     const [modalSelected, setModalSelected] = useState([]);
     const [specializations, setSpecializations] = useState([]);
-    const [selectedSpec, setSelectedSpec] = useState('');
-    const [failMessage, setFailMessage] = useState('');
-    const [time, setTime] = useState({ hours: 1, minutes: 0, seconds: 0 });
-    const [shareLink, setShareLink] = useState('');
+    const [testConfigs, setTestConfigs] = useState({});
     const [saving, setSaving] = useState(false);
     const [statusMessage, setStatusMessage] = useState('');
+
+    const defaultSpec = specializations[0] ? String(specializations[0].id) : '';
 
     useEffect(() => {
         const fetchTests = async () => {
@@ -88,7 +97,6 @@ export default function EventConfigPage() {
         const fetchSpecializations = async () => {
             if (!eventId) {
                 setSpecializations([]);
-                setSelectedSpec('');
                 return;
             }
 
@@ -96,55 +104,143 @@ export default function EventConfigPage() {
                 const response = await eventsAPI.getEventSpecializations(eventId);
                 const normalized = normalizeSpecializationsPayload(response.data);
                 setSpecializations(normalized);
-                setSelectedSpec(prev => prev || (normalized[0] ? String(normalized[0].id) : ''));
+                const firstSpec = normalized[0] ? String(normalized[0].id) : '';
+                setTestConfigs(prev => Object.fromEntries(
+                    Object.entries(prev).map(([testId, config]) => [
+                        testId,
+                        { ...config, selectedSpec: config.selectedSpec || firstSpec },
+                    ])
+                ));
             } catch (err) {
                 console.error('Ошибка загрузки специализаций мероприятия:', err);
                 setSpecializations([]);
-                setSelectedSpec('');
             }
         };
 
         fetchSpecializations();
     }, [eventId]);
 
+    const getCurrentConfig = () => {
+        if (!selectedTestId || !testConfigs[selectedTestId]) {
+            return createDefaultConfig(defaultSpec);
+        }
+        return testConfigs[selectedTestId];
+    };
+
+    const updateConfig = (testId, updater) => {
+        setTestConfigs(prev => {
+            const current = prev[testId] || createDefaultConfig(defaultSpec);
+            const next = typeof updater === 'function' ? updater(current) : { ...current, ...updater };
+            return { ...prev, [testId]: next };
+        });
+    };
+
+    const updateCurrentConfig = (field, value) => {
+        if (!selectedTestId) return;
+        updateConfig(selectedTestId, { [field]: value });
+    };
+
     const openModal = (target) => {
         setModalTarget(target);
-        if (target === 'main') setModalSelected(selectedTests);
-        else setModalSelected(criteria[target].extraTests || []);
+        if (target === 'main') {
+            setModalSelected([...selectedTestIds]);
+        } else {
+            const currentConfig = getCurrentConfig();
+            setModalSelected([...(currentConfig.criteria[target]?.extraTests || [])]);
+        }
         setModalOpen(true);
     };
 
     const handleApplyModal = () => {
-        if (modalTarget === 'main') setSelectedTests(modalSelected);
-        else {
-            setCriteria(criteria.map((row, idx) =>
-                idx === modalTarget ? { ...row, extraTests: modalSelected } : row
+        if (modalTarget === 'main') {
+            const normalizedIds = modalSelected.map(Number).filter(Number.isFinite);
+            setSelectedTestIds(normalizedIds);
+            setTestConfigs(prev => {
+                const next = {};
+                normalizedIds.forEach(testId => {
+                    next[testId] = prev[testId] || createDefaultConfig(defaultSpec);
+                });
+                return next;
+            });
+            if (!normalizedIds.includes(Number(selectedTestId))) {
+                setSelectedTestId(normalizedIds[0] || null);
+            }
+        } else {
+            const selectedExtraIds = modalSelected.map(Number).filter(Number.isFinite);
+            updateCurrentConfig('criteria', getCurrentConfig().criteria.map((row, idx) =>
+                idx === modalTarget ? { ...row, extraTests: selectedExtraIds } : row
             ));
         }
         setModalOpen(false);
     };
 
     const handleCriteriaChange = (idx, newRow) => {
-        setCriteria(criteria.map((row, i) => (i === idx ? newRow : row)));
+        updateCurrentConfig('criteria', getCurrentConfig().criteria.map((row, i) => (i === idx ? newRow : row)));
     };
 
     const handleAddCriteria = () => {
-        setCriteria([...criteria, { threshold: 0, message: '', extraTests: [] }]);
+        updateCurrentConfig('criteria', [...getCurrentConfig().criteria, { threshold: 0, message: '', extraTests: [] }]);
     };
 
     const handleRemoveSelected = (idToRemove) => {
-        setSelectedTests(prev => prev.filter(id => id !== idToRemove));
+        const testId = Number(idToRemove);
+        const newSelected = selectedTestIds.filter(id => Number(id) !== testId);
+        setSelectedTestIds(newSelected);
+        if (Number(selectedTestId) === testId) {
+            setSelectedTestId(newSelected[0] || null);
+        }
+        setTestConfigs(prev => {
+            const next = { ...prev };
+            delete next[testId];
+            return next;
+        });
     };
 
     const handleDeleteCriteria = (index) => {
-        setCriteria(prev => prev.filter((_, i) => i !== index));
+        updateCurrentConfig('criteria', getCurrentConfig().criteria.filter((_, i) => i !== index));
     };
 
     const handleDeleteTest = (criteriaIndex, testIndex) => {
-        setCriteria(prev => prev.map((item, i) => {
+        updateCurrentConfig('criteria', getCurrentConfig().criteria.map((item, i) => {
             if (i !== criteriaIndex) return item;
             return { ...item, extraTests: item.extraTests.filter((_, idx) => idx !== testIndex) };
         }));
+    };
+
+    const handleToggleModalSelected = (id) => {
+        const testId = Number(id);
+        if (!Number.isFinite(testId)) return;
+
+        setModalSelected(prev => {
+            const normalized = prev.map(Number).filter(Number.isFinite);
+            return normalized.includes(testId)
+                ? normalized.filter(item => item !== testId)
+                : [...normalized, testId];
+        });
+    };
+
+    const buildPayload = (testId, config) => {
+        const mainThreshold = Number(config.criteria[0]?.threshold || 75);
+        const successText = config.criteria[0]?.message || 'Тест пройден';
+        const extraThreshold = config.criteria.slice(1).flatMap(row =>
+            (row.extraTests || []).map(extraTestId => ({
+                threshold: Number(row.threshold || 0),
+                message: row.message || '',
+                test_id: Number(extraTestId),
+                test_threshold: Number(row.threshold || mainThreshold),
+            })).filter(item => item.threshold > 0 && item.test_id > 0)
+        );
+
+        return {
+            event_id: Number(eventId),
+            specialization_id: Number(config.selectedSpec),
+            test_id: Number(testId),
+            success_text: successText,
+            fail_text: config.failMessage || 'Тест не пройден',
+            time_limit: timeToSeconds(config.time),
+            threshold: mainThreshold,
+            extra_threshold: extraThreshold,
+        };
     };
 
     const handleSave = async () => {
@@ -153,44 +249,32 @@ export default function EventConfigPage() {
             setStatusMessage('Не найдено мероприятие CRM.');
             return;
         }
-        if (!selectedSpec) {
-            setStatusMessage('Выберите специализацию.');
-            return;
-        }
-        if (selectedTests.length === 0) {
+        if (selectedTestIds.length === 0) {
             setStatusMessage('Выберите хотя бы один тест.');
             return;
         }
 
-        const mainThreshold = Number(criteria[0]?.threshold || 75);
-        const successText = criteria[0]?.message || 'Тест пройден';
-        const extraThreshold = criteria.flatMap(row =>
-            (row.extraTests || []).map(testId => ({
-                threshold: Number(row.threshold || 0),
-                message: row.message || '',
-                test_id: Number(testId),
-            })).filter(item => item.threshold > 0 && item.test_id > 0)
-        );
+        const invalidConfig = selectedTestIds.some(testId => !(testConfigs[testId]?.selectedSpec || defaultSpec));
+        if (invalidConfig) {
+            setStatusMessage('Выберите специализацию для каждого теста.');
+            return;
+        }
 
         setSaving(true);
         try {
             const responses = [];
-            for (const testId of selectedTests) {
-                const response = await eventsAPI.saveEventConfig({
-                    event_id: Number(eventId),
-                    specialization_id: Number(selectedSpec),
-                    test_id: Number(testId),
-                    success_text: successText,
-                    fail_text: failMessage || 'Тест не пройден',
-                    time_limit: timeToSeconds(time),
-                    threshold: mainThreshold,
-                    extra_threshold: extraThreshold,
-                });
-                responses.push(response.data);
+            for (const testId of selectedTestIds) {
+                const config = testConfigs[testId] || createDefaultConfig(defaultSpec);
+                const payload = buildPayload(testId, config);
+                const response = await eventsAPI.saveEventConfig(payload);
+                responses.push({ testId, data: response.data });
             }
 
-            const firstLink = responses.find(item => item?.test_link)?.test_link;
-            if (firstLink) setShareLink(`${window.location.origin}/test/${firstLink}`);
+            responses.forEach(({ testId, data }) => {
+                if (data?.test_link) {
+                    updateConfig(testId, { shareLink: `${window.location.origin}/test/${data.test_link}` });
+                }
+            });
             setStatusMessage('Настройки тестирования сохранены.');
         } catch (err) {
             console.error('Ошибка сохранения настроек мероприятия:', err);
@@ -199,6 +283,8 @@ export default function EventConfigPage() {
             setSaving(false);
         }
     };
+
+    const currentConfig = getCurrentConfig();
 
     return (
         <div className="event-config-page">
@@ -221,18 +307,26 @@ export default function EventConfigPage() {
                 </button>
 
                 <ul className="event-config-tests-list">
-                    {selectedTests.map(id => {
+                    {selectedTestIds.map(id => {
                         const test = tests.find(t => Number(t.id) === Number(id));
+                        const isActive = Number(selectedTestId) === Number(id);
                         return test ? (
-                            <li key={id} className="event-config-test-item">
+                            <li
+                                key={id}
+                                className={`event-config-test-item ${isActive ? 'active-red' : ''}`}
+                                onClick={() => setSelectedTestId(id)}
+                            >
                                 <span className="test-title">{test.title}</span>
                                 <button
                                     className="test-delete-btn"
-                                    onClick={() => handleRemoveSelected(id)}
+                                    onClick={(event) => {
+                                        event.stopPropagation();
+                                        handleRemoveSelected(id);
+                                    }}
                                     aria-label={`Удалить тест ${test.title}`}
                                     type="button"
                                 >
-                                    <img src={korzinaIcon} alt="Удалить" />
+                                    <img src={korzinaIcon} alt="" className="test-delete-icon" />
                                 </button>
                             </li>
                         ) : null;
@@ -241,37 +335,49 @@ export default function EventConfigPage() {
             </div>
 
             <div className="event-config-main">
-                <SpecializationSelect
-                    specializations={specializations}
-                    selected={selectedSpec}
-                    onChange={setSelectedSpec}
-                />
-                <div className="criteria-table-title">Критерии прохождения теста</div>
-                <CriteriaTable
-                    criteria={criteria}
-                    onChange={handleCriteriaChange}
-                    onAdd={handleAddCriteria}
-                    onAddTest={idx => openModal(idx)}
-                    onDelete={handleDeleteCriteria}
-                    onDeleteTest={handleDeleteTest}
-                    testsList={tests}
-                />
-                <div className="fail-message-block">
-                    <div className="fail-message-header">
-                        <img src={massageIcon} alt="" style={{ width: '32px', height: '32px' }} />
-                        <p className="fail-message-title">Сообщение при провальном прохождении</p>
+                {selectedTestId ? (
+                    <>
+                        <SpecializationSelect
+                            specializations={specializations}
+                            selected={currentConfig.selectedSpec || defaultSpec}
+                            onChange={(value) => updateCurrentConfig('selectedSpec', value)}
+                        />
+                        <div className="criteria-table-title">Критерий прохождения теста</div>
+                        <CriteriaTable
+                            criteria={currentConfig.criteria}
+                            onChange={handleCriteriaChange}
+                            onAdd={handleAddCriteria}
+                            onAddTest={idx => openModal(idx)}
+                            tests={tests}
+                            selectedTests={currentConfig.criteria.flatMap(row => row.extraTests || [])}
+                            onDelete={handleDeleteCriteria}
+                            onDeleteTest={handleDeleteTest}
+                        />
+                        <div className="fail-message-label">
+                            <img src={massageIcon} alt="" className="fail-message-icon" />
+                            Сообщение при провальном прохождении теста
+                        </div>
+                        <div className="fail-message-input-wrap">
+                            <input
+                                type="text"
+                                placeholder="Введите текст сообщения при провальном прохождении..."
+                                value={currentConfig.failMessage}
+                                onChange={event => updateCurrentConfig('failMessage', event.target.value)}
+                            />
+                        </div>
+                        <TimeBox
+                            time={currentConfig.time}
+                            setTime={(newTime) => updateCurrentConfig('time', newTime)}
+                        />
+                        <ShareLinkBox link={currentConfig.shareLink} />
+                    </>
+                ) : (
+                    <div className="event-config-empty-state">
+                        Выберите тест для настройки или добавьте новый тест.
                     </div>
-                    <input
-                        type="text"
-                        placeholder="Введите текст сообщения при провальном прохождении..."
-                        value={failMessage}
-                        onChange={e => setFailMessage(e.target.value)}
-                    />
-                </div>
-                <TimeBox time={time} setTime={setTime} />
-                <ShareLinkBox link={shareLink} />
+                )}
                 {statusMessage && <div className="event-config-status">{statusMessage}</div>}
-                <button className="save-btn" onClick={handleSave} disabled={saving}>
+                <button className="save-btn" onClick={handleSave} disabled={saving || selectedTestIds.length === 0}>
                     {saving ? 'Сохранение...' : 'Сохранить'}
                 </button>
             </div>
@@ -280,15 +386,9 @@ export default function EventConfigPage() {
                 open={modalOpen}
                 tests={tests}
                 selected={modalSelected}
-                onSelect={id =>
-                    setModalSelected(
-                        modalSelected.includes(id)
-                            ? modalSelected.filter(i => i !== id)
-                            : [...modalSelected, id]
-                    )
-                }
-                onApply={handleApplyModal}
+                onSelect={handleToggleModalSelected}
                 onClose={() => setModalOpen(false)}
+                onApply={handleApplyModal}
             />
         </div>
     );

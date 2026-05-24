@@ -8,13 +8,16 @@ import { useNavigate } from "react-router-dom";
 import EditIcon from "../assets/edit.svg?react";
 import ShareIcon from "../assets/share.svg?react";
 import StatisticsIcon from "../assets/statistics.svg?react";
+import CloseIcon from "../assets/close.svg?react";
 import DeleteIcon from "../assets/delete.svg?react";
 import CopyIcon from "../assets/copy_sub.svg?react";
 import { testsAPI } from "../services/api.js";
+import BackIcon from "../assets/back.svg?react";
 import TaskIcon from "../assets/task.svg?react";
 import EventIcon from "../assets/event.svg?react";
 import CandidatesIcon from "../assets/Candidates.svg?react";
 export default function Tests() {
+    const [statsTest, setStatsTest] = useState(null);
     const navigate = useNavigate();
 
 
@@ -37,6 +40,7 @@ export default function Tests() {
 
                 const response = await testsAPI.getTests();
                 const data = response.data;
+                console.log("Полученные тесты:", data);
 
                 let testsArray = [];
                 if (Array.isArray(data)) {
@@ -45,6 +49,8 @@ export default function Tests() {
                     testsArray = data.tests;
                 } else if (data.data && Array.isArray(data.data)) {
                     testsArray = data.data;
+                } else {
+                    console.error("Неизвестная структура ответа:", data);
                 }
 
                 const normalizedTests = testsArray.map(test => ({
@@ -53,6 +59,7 @@ export default function Tests() {
                 }));
 
                 setTests(normalizedTests);
+                console.log('ids:', normalizedTests.map(t => t.id));
 
             } catch (error) {
                 console.error("Ошибка:", error);
@@ -87,13 +94,38 @@ export default function Tests() {
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
-    const editTest = (test) => {
-        navigate("/create", {
-            state: { editing: true, test: test, deleteOnSave: true },
-        });
-        setOpenMenuId(null);
-    };
+    const editTest = async (test) => {
+        console.log("Тест для редактирования:", test);
 
+        try {
+
+            let fullTest = test;
+
+            const savedTestsRaw = localStorage.getItem("savedTestsExtended");
+            if (savedTestsRaw) {
+                try {
+                    const savedTests = JSON.parse(savedTestsRaw);
+                    const found = savedTests.find(t => t.id === test.id);
+                    if (found) {
+                        fullTest = found;
+                        console.log("Найден сохранённый тест с деталями:", fullTest);
+                    }
+                } catch (e) {
+                    console.error("Ошибка при чтении localStorage:", e);
+                }
+            }
+
+            localStorage.setItem("editingTest", JSON.stringify(fullTest));
+
+            navigate("/create", {
+                state: { editing: true, test: fullTest, deleteOnSave: true },
+            });
+            setOpenMenuId(null);
+        } catch (error) {
+            console.error("Ошибка при редактировании теста:", error);
+            alert("Ошибка при загрузке теста для редактирования");
+        }
+    };
 
 
 
@@ -106,6 +138,7 @@ export default function Tests() {
                 return;
             }
 
+            console.log("Удаление теста с ID:", id);
             await testsAPI.deleteTest(id);
 
             const updatedTests = tests.filter(test => {
@@ -138,8 +171,12 @@ export default function Tests() {
 
     const shareTest = async (test) => {
         try {
+            const testLink = test.test_link;
 
-            const link = `${window.location.origin}/test/${test.test_link}`;
+            const key = `shared_test_${testLink}`;
+            localStorage.setItem(key, JSON.stringify(test));
+
+            const link = `http://localhost:5173/test/${testLink}`;
             setShareLink(link);
             setShareModalOpen(true);
         } catch (error) {
@@ -149,6 +186,13 @@ export default function Tests() {
         setOpenMenuId(null);
     };
 
+
+
+
+
+    const closeTest = async (id) => {
+
+    };
 
     const viewStatistics = (test) => {
         navigate(`/statistics/${test.id}`);
@@ -327,6 +371,13 @@ export default function Tests() {
                     </div>
                 </div>
             )}
+            {statsTest && (
+                <StatisticsTest
+                    testId={statsTest.id}
+                    onClose={() => setStatsTest(null)}
+                />
+            )}
+
         </div>
     );
 }

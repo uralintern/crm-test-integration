@@ -11,6 +11,7 @@ import PassingTestStudent from "./pages/PassingTestStudent.jsx";
 import SSO from "./pages/SSO.jsx";
 import Events from "./pages/Events.jsx";
 import Candidates from "./pages/Candidates.jsx";
+import CandidateDetails from "./pages/CandidateDetails.jsx";
 import EventConfigPage from "./components/EventConfigPage";
 import StatisticsEvent from "./pages/StatisticsEvent";
 
@@ -38,6 +39,7 @@ function App() {
                 <Route path="/tests" element={<Tests />} />
                 <Route path="/events" element={<Events />} />
                 <Route path="/candidates" element={<Candidates />} />
+                <Route path="/candidates/:candidateId" element={<CandidateDetails />} />
                 <Route path="/event-config" element={<EventConfigPage />} />
                 <Route path="/event-statistics/:eventId" element={<StatisticsEvent />} />
             </Routes>

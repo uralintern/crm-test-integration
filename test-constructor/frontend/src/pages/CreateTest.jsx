@@ -23,7 +23,7 @@ import "../styles/createTest.css";
 import LogoutButton from "../components/LogoutButton.jsx";
 import TimeBox from "../components/details/TimeBox.jsx";
 import BackIcon from "../assets/back.svg?react";
-import { API_BASE_URL } from "../services/api.js";
+import { testsAPI } from "../services/api.js";
 
 
 function useAppSensors() {
@@ -51,9 +51,9 @@ export default function CreateTest() {
     })();
 
     const editingTest =
-        (location.state?.test && location.state.test.questions
+        isEditing && location.state?.test && location.state.test.questions
             ? location.state.test
-            : storedEditingTest) || null;
+            : storedEditingTest || null;
 
     const deleteOnSave = location.state?.deleteOnSave || false;
 
@@ -85,7 +85,7 @@ export default function CreateTest() {
     );
 
     const [passingCriteria, setPassingCriteria] = useState(
-        isEditing
+        isEditing && editingTest
             ? {
                 type: editingTest?.is_percentage ? "percentage" : "points",
                 percentage: editingTest?.is_percentage
@@ -298,6 +298,7 @@ export default function CreateTest() {
                                 q.options?.map((opt) => ({
                                     text: opt.text,
                                     is_true: opt.isCorrect,
+                                    points: opt.points || 0,
                                 })) || [],
                         };
                         break;
@@ -308,6 +309,7 @@ export default function CreateTest() {
                                 q.options?.map((opt) => ({
                                     text: opt.text,
                                     is_true: opt.isCorrect,
+                                    points: opt.points || 0,
                                 })) || [],
                         };
                         break;
@@ -325,6 +327,7 @@ export default function CreateTest() {
                                 q.rows?.map((row) => ({
                                     left: row.option,
                                     right: row.answer,
+                                    points: row.points || 0,
                                 })) || [],
                         };
                         break;
@@ -335,6 +338,7 @@ export default function CreateTest() {
                                 q.items?.map((item, itemIdx) => ({
                                     text: item.text,
                                     order: itemIdx + 1,
+                                    points: item.points || 0,
                                 })) || [],
                         };
                         break;
@@ -352,6 +356,11 @@ export default function CreateTest() {
             }),
         };
 
+        console.log(
+            "Отправляемые данные на бэкенд:",
+            JSON.stringify(testData, null, 2)
+        );
+
         try {
             const token = localStorage.getItem("token");
             if (!token) {
@@ -364,59 +373,26 @@ export default function CreateTest() {
                 const testId =
                     editingTest.ID || editingTest.id || editingTest.Id;
                 if (testId) {
-                    const deleteResponse = await fetch(
-                        `${API_BASE_URL}/api/manager/tests/delete/${testId}`,
-                        {
-                            method: "POST",
-                            headers: {
-                                Authorization: `Bearer ${token}`,
-                                "Content-Type": "application/json",
-                            },
-                        }
+                    console.log(
+                        `Удаляем старый тест с ID: ${testId} перед созданием нового`
                     );
 
-                    const deleteResponseText =
-                        await deleteResponse.text();
-
-                    if (!deleteResponse.ok) {
+                    try {
+                        await testsAPI.deleteTest(testId);
+                        console.log("Старый тест успешно удален");
+                    } catch (deleteError) {
                         console.error(
                             "Не удалось удалить старый тест. Создаем новый тест поверх существующего.",
-                            deleteResponseText
+                            deleteError
                         );
                     }
                 }
             }
 
-            const response = await fetch(
-                `${API_BASE_URL}/api/manager/tests`,
-                {
-                    method: "POST",
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(testData),
-                }
-            );
+            const response = await testsAPI.createTest(testData);
+            const result = response.data;
 
-            const responseText = await response.text();
-
-            if (!response.ok) {
-                console.error("Ответ сервера (текст):", responseText);
-                console.error("Статус ошибки:", response.status);
-                throw new Error(`Ошибка HTTP: ${response.status}`);
-            }
-
-            let result;
-            try {
-                result = JSON.parse(responseText);
-            } catch (e) {
-                console.error(
-                    "Не удалось распарсить JSON ответ:",
-                    responseText
-                );
-                throw new Error("Сервер вернул некорректный JSON");
-            }
+            console.log("Успешный ответ от сервера:", result);
 
             const savedId = result?.id || result?.test_id || editingTest?.id;
             if (savedId) {
@@ -450,7 +426,6 @@ export default function CreateTest() {
                     console.error("Не удалось сохранить локальный тест с вопросами", e);
                 }
             }
-
 
             localStorage.removeItem("editingTest");
 
@@ -600,5 +575,3 @@ export default function CreateTest() {
         </div>
     );
 }
-
-

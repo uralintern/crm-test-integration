@@ -275,7 +275,6 @@
     stroke: none;
 }
 
-/* Вкладки навигации вместо заголовка */
 .tests-tabs {
     display: flex;
     gap: 20px;
@@ -328,7 +327,6 @@
     transform: translateX(34px);
 }
 
-/* События/Мероприятия */
 .events-container {
     display: flex;
     flex-direction: column;
