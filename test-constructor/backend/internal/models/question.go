@@ -51,6 +51,7 @@ type QuestionOptions struct {
 type ChoiceOption struct {
 	Text   string `json:"text"`
 	IsTrue bool   `json:"is_true,omitempty"`
+	Points int    `json:"points,omitempty"`
 }
 
 type MatchingPair struct {
