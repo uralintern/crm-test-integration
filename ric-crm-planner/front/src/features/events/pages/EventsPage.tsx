@@ -195,7 +195,21 @@ export default function EventsPage() {
   };
 
   const startDirectScenario = async () => {
-    closeTestingPrompt();
+    if (!pendingRequest?.id) {
+      closeTestingPrompt();
+      return;
+    }
+
+    try {
+      await updateRequestStatus(Number(pendingRequest.id), REQUEST_STATUS.TESTING);
+      await refreshRequests();
+      closeTestingPrompt();
+      showToast("info", "Ссылка на тестирование появится в центре уведомлений.");
+    } catch {
+      await refreshRequests();
+      closeTestingPrompt();
+      showToast("error", "Не удалось перевести заявку на этап тестирования");
+    }
   };
 
   return (

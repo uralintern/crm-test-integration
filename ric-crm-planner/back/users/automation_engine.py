@@ -400,7 +400,8 @@ def run_robot_action(
         success = create_organizer_notifications(event.application, title, message) > 0
         log_message = "Уведомления отправлены организаторам." if success else "Организаторы не найдены."
     elif action in {"notification.user", "notification.assignee", "testing.link"}:
-        success = create_notification(event.application.user_id, title, message)
+        notification_link = f"/testing?applicationId={event.application.id}" if action == "testing.link" else "/requests"
+        success = create_notification(event.application.user_id, title, message, link=notification_link)
         log_message = "Уведомление отправлено проектанту." if success else "Проектант не найден."
     elif action == "planner.invite.vk":
         try:

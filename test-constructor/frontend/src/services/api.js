@@ -34,6 +34,8 @@ export const eventsAPI = {
         api.get(`/api/manager/events/${eventId}/specializations`),
     getEventStatistics: (eventId) =>
         api.get(`/api/manager/events/${eventId}/attempts`),
+    getEventConfigs: (eventId) =>
+        api.get(`/api/manager/events/${eventId}/configs`),
     saveEventConfig: (config) =>
         api.post('/api/manager/events', config),
 };

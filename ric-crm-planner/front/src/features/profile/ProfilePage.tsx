@@ -60,7 +60,10 @@ function normalizeCourse(value: string) {
   const digits = value.replace(/\D/g, "");
   if (!digits) return "";
 
-  const number = Math.min(6, Math.max(1, Number(digits)));
+  const parsed = Number(digits);
+  if (!Number.isFinite(parsed) || parsed <= 0) return "";
+
+  const number = Math.min(6, Math.max(1, parsed));
   return String(number);
 }
 

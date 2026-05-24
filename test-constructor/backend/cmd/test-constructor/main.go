@@ -50,6 +50,7 @@ func main() {
     m.HandleFunc("/events", manager.GetEvents).Methods("GET")
     m.HandleFunc("/events", manager.CreateConfig).Methods("POST")
     m.HandleFunc("/events/{id}", manager.UpdateConfig).Methods("PUT")
+    m.HandleFunc("/events/{id}/configs", manager.GetEventConfigs).Methods("GET")
     m.HandleFunc("/events/{id}/attempts", manager.GetEventAttempts).Methods("GET")
     m.HandleFunc("/events/{id}/specializations", manager.GetEventSpecializations).Methods("GET")
     m.HandleFunc("/users", manager.GetUsers).Methods("GET")

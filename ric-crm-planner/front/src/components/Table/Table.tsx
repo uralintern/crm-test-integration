@@ -64,7 +64,7 @@ export default function Table<T>({
 }: Props<T>) {
   const { user } = useContext(AuthContext);
   const isOrganizer = canUseOrganizerActions(user?.role);
-  const hasActionColumn = Boolean((isOrganizer && onEdit) || (!isOrganizer && onInfoClick));
+  const hasActionColumn = Boolean((isOrganizer && onEdit) || onInfoClick);
   const columnKeys = columns.map((column) => column.key);
   const isEventMobileLayout = ["title", "startDate", "endDate", "organizer", "status"].every((key) => columnKeys.includes(key));
   const isDirectionMobileLayout = ["title", "organizer"].every((key) => columnKeys.includes(key)) && !isEventMobileLayout;
@@ -146,7 +146,7 @@ export default function Table<T>({
               ) : (
                 editActionButton
               )
-            ) : !isOrganizer && onInfoClick ? (
+            ) : onInfoClick ? (
                 <AppButton
                   className="info-btn"
                   onClick={(event) => {

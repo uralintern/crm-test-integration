@@ -51,8 +51,58 @@ function normalizeSpecializationsPayload(data) {
         .filter(spec => Number.isFinite(spec.id));
 }
 
+function normalizeEventConfigsPayload(data) {
+    const items = Array.isArray(data) ? data : data?.configs || data?.data || [];
+    return (Array.isArray(items) ? items : [])
+        .map(config => ({
+            configId: Number(config.config_id || config.configId || config.id),
+            eventId: Number(config.event_id || config.eventId),
+            specializationId: Number(config.specialization_id || config.specializationId),
+            testId: Number(config.test_id || config.testId),
+            successText: config.success_text || config.successText || '',
+            failText: config.fail_text || config.failText || '',
+            timeLimit: Number(config.time_limit || config.timeLimit || 0),
+            threshold: Number(config.threshold || 75),
+            testLink: config.test_link || config.testLink || '',
+            extraThreshold: Array.isArray(config.extra_threshold) ? config.extra_threshold : (config.extraThreshold || []),
+        }))
+        .filter(config => Number.isFinite(config.configId) && Number.isFinite(config.testId));
+}
+
 function timeToSeconds(time) {
     return Number(time.hours || 0) * 3600 + Number(time.minutes || 0) * 60 + Number(time.seconds || 0);
+}
+
+function secondsToTime(seconds) {
+    const value = Math.max(0, Number(seconds || 0));
+    return {
+        hours: Math.floor(value / 3600),
+        minutes: Math.floor((value % 3600) / 60),
+        seconds: value % 60,
+    };
+}
+
+function configFromBackend(config, defaultSpec) {
+    const extraRows = (config.extraThreshold || []).map(item => ({
+        threshold: Number(item.threshold || item.test_threshold || item.testThreshold || 0),
+        message: item.message || '',
+        extraTests: [Number(item.test_id || item.testId)].filter(Number.isFinite),
+    }));
+
+    return {
+        selectedSpec: String(config.specializationId || defaultSpec || ''),
+        criteria: [
+            {
+                threshold: Number(config.threshold || 75),
+                message: config.successText || 'Тест пройден',
+                extraTests: [],
+            },
+            ...extraRows,
+        ],
+        failMessage: config.failText || '',
+        time: secondsToTime(config.timeLimit || 3600),
+        shareLink: config.testLink ? `${window.location.origin}/test/${config.testLink}` : '',
+    };
 }
 
 export default function EventConfigPage() {
@@ -78,12 +128,7 @@ export default function EventConfigPage() {
             try {
                 const response = await testsAPI.getTests();
                 const normalized = normalizeTestsPayload(response.data);
-                const userStr = localStorage.getItem('user');
-                const currentUserId = userStr ? JSON.parse(userStr).id : null;
-                const filtered = currentUserId != null
-                    ? normalized.filter(t => Number(t.creator_id) === Number(currentUserId))
-                    : normalized;
-                setTests(filtered);
+                setTests(normalized);
             } catch (err) {
                 console.error('Ошибка загрузки тестов:', err);
                 setTests([]);
@@ -119,6 +164,37 @@ export default function EventConfigPage() {
 
         fetchSpecializations();
     }, [eventId]);
+
+    useEffect(() => {
+        const fetchEventConfigs = async () => {
+            if (!eventId) {
+                setSelectedTestIds([]);
+                setSelectedTestId(null);
+                setTestConfigs({});
+                return;
+            }
+
+            try {
+                const response = await eventsAPI.getEventConfigs(eventId);
+                const configs = normalizeEventConfigsPayload(response.data);
+                if (configs.length === 0) return;
+
+                const ids = [...new Set(configs.map(config => Number(config.testId)).filter(Number.isFinite))];
+                const nextConfigs = {};
+                configs.forEach(config => {
+                    nextConfigs[config.testId] = configFromBackend(config, defaultSpec);
+                });
+
+                setSelectedTestIds(ids);
+                setSelectedTestId(current => current && ids.includes(Number(current)) ? current : ids[0] || null);
+                setTestConfigs(nextConfigs);
+            } catch (err) {
+                console.error('Ошибка загрузки сохраненных настроек мероприятия:', err);
+            }
+        };
+
+        fetchEventConfigs();
+    }, [eventId, defaultSpec]);
 
     const getCurrentConfig = () => {
         if (!selectedTestId || !testConfigs[selectedTestId]) {

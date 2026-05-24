@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { getEvents } from "../../events/api/events";
 import { getRequests, removeRequest, updateRequestStatus } from "../api/requests";
 import Modal from "../../../components/Modal/Modal";
+import InfoModal from "../../../components/Modal/InfoModal";
 import Table from "../../../components/Table/Table";
 import {
   ORGANIZER_REQUEST_STATUSES,
@@ -50,6 +51,28 @@ import {
   readDisplayedStatuses,
 } from "../utils/requestsUtils";
 
+function formatRequestInfo(request: RequestRecord) {
+  const lines: string[] = [];
+  const add = (label: string, value?: unknown) => {
+    const text = typeof value === "string" ? value.trim() : value == null ? "" : String(value).trim();
+    if (text) lines.push(`${label}: ${text}`);
+  };
+
+  add("Проектант", request.studentName);
+  add("Мероприятие", eventTitleFromRecord(request));
+  add("Направление", request.directionTitle);
+  add("Проект", request.projectTitle);
+  add("Специализация", request.specialization);
+  add("Статус", request.status);
+  add("Сообщение", request.about);
+
+  Object.entries(request.customFields || {}).forEach(([key, value]) => {
+    add(key, value);
+  });
+
+  add("Дата подачи", request.createdAt ? new Date(request.createdAt).toLocaleString("ru-RU") : "");
+  return lines.length ? lines.join("\n") : "Информация по заявке отсутствует";
+}
 function renderStatusOption(status: string) {
   const color = REQUEST_STATUS_COLORS[status] || "#94a3b8";
 
@@ -100,6 +123,8 @@ export default function RequestsPage() {
   });
   const [statusSettingsOpen, setStatusSettingsOpen] = useState(false);
   const [displayedStatuses, setDisplayedStatuses] = useState<string[]>(readDisplayedStatuses);
+  const [infoOpen, setInfoOpen] = useState(false);
+  const [infoItem, setInfoItem] = useState<{ title?: string; description?: string } | null>(null);
 
   const load = useCallback(async () => {
     const loadedRequests = await getRequests({ ownerId: user?.id, role: user?.role }).catch(() => []);
@@ -372,6 +397,10 @@ export default function RequestsPage() {
           data={mapped}
           animatedIds={searchAnimatedIds}
           gridColumns="1.2fr 2fr 1.4fr 1fr"
+          onInfoClick={(row) => {
+            setInfoItem({ title: row.studentName || "Заявка", description: formatRequestInfo(row.raw) });
+            setInfoOpen(true);
+          }}
           renderCell={(row: RequestTableRow, colKey: string) => {
             if (colKey !== "status") return undefined;
 
@@ -437,6 +466,8 @@ export default function RequestsPage() {
           </div>
         </div>
 	      </Modal>
+
+      <InfoModal isOpen={infoOpen} onClose={() => setInfoOpen(false)} title={infoItem?.title} description={infoItem?.description} />
 
       <StatusSettingsModal
         isOpen={statusSettingsOpen}

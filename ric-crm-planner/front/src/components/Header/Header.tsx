@@ -209,18 +209,30 @@ export default function Header() {
     setNotificationsOpen(true);
   };
 
-  const openNotificationLink = (id: string, link?: string) => {
+  const openNotificationLink = async (id: string, link?: string) => {
     markAsRead(id);
     if (!link) return;
+
     try {
       const url = new URL(link, window.location.origin);
+      if (url.origin === window.location.origin && url.pathname === "/testing") {
+        const applicationId = Number(url.searchParams.get("applicationId"));
+        const response = await createTestingSSOLink(Number.isFinite(applicationId) && applicationId > 0 ? applicationId : undefined);
+        setNotificationsOpen(false);
+        window.open(response.url, "_blank", "noopener,noreferrer");
+        return;
+      }
+
       if (url.origin === window.location.origin) {
         setNotificationsOpen(false);
         navigate(`${url.pathname}${url.search}${url.hash}`);
         return;
       }
     } catch {
+      showToast("error", "Не удалось открыть ссылку из уведомления");
+      return;
     }
+
     window.open(link, "_blank", "noopener,noreferrer");
   };
 
@@ -315,19 +327,19 @@ export default function Header() {
         <div className="header-left">
           {user && (
             <>
-              <AppButton className="head-btn head-btn--muted" onClick={() => navigate("/requests")}>
+              <AppButton className={`head-btn head-btn--muted${isActivePath("/requests") ? " is-active" : ""}`} onClick={() => navigate("/requests")}>
                 <BarsOutlined />
                 <span>{isProjectant ? HEADER_TEXT.myRequests : HEADER_TEXT.requests}</span>
               </AppButton>
 
               {canManageAutomation && (
-                <AppButton className="head-btn head-btn--automation" onClick={() => navigate("/automation")}>
+                <AppButton className={`head-btn head-btn--automation${isActivePath("/automation") ? " is-active" : ""}`} onClick={() => navigate("/automation")}>
                   <SaveOutlined />
                   <span>{HEADER_TEXT.automation}</span>
                 </AppButton>
               )}
 
-              <AppButton className="head-btn head-btn--planner" onClick={() => navigate("/planner")}>
+              <AppButton className={`head-btn head-btn--planner${isActivePath("/planner") ? " is-active" : ""}`} onClick={() => navigate("/planner")}>
                 <TeamOutlined />
                 <span>{HEADER_TEXT.planner}</span>
               </AppButton>
@@ -409,7 +421,7 @@ export default function Header() {
                       {notification.link && !isOrganizer && (
                         <AppButton
                           className="notification-link-btn"
-                          onClick={() => openNotificationLink(notification.id, notification.link)}
+                          onClick={() => void openNotificationLink(notification.id, notification.link)}
                         >
                           {HEADER_TEXT.openLink}
                         </AppButton>

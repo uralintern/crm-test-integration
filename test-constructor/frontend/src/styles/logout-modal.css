@@ -4,7 +4,7 @@
     right: 20px;
     z-index: 10000;
     background: #2F4156;
-    padding: 25px 25px;
+    padding: 0;
     border: none;
     border-radius: 50px;
     cursor: pointer;
@@ -13,14 +13,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
-    transition: background 0.3s;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    transition: transform 0.2s, filter 0.2s;
     color: white;
     outline: none !important;
 }
 
 .logout-btn:hover {
-    background: #1a2b3c;
+    filter: brightness(0.92);
+    transform: translateY(-1px);
 }
 
 .logout-modal-overlay {

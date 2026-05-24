@@ -304,12 +304,12 @@ async function resolveOrganizer(event: BackendEvent): Promise<string | undefined
     return organizerIds
       .map((organizerId) => {
         const user = users.find((item) => String(item.id) === String(organizerId));
-        return user ? extractUserDisplay(user) || String(organizerId) : String(organizerId);
+        return user ? extractUserDisplay(user) || "Организатор" : "Организатор";
       })
       .filter(Boolean)
       .join(", ");
   } catch {
-    return organizerIds.map(String).join(", ");
+    return "Организатор";
   }
 }
 
