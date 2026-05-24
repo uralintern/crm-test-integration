@@ -20,6 +20,13 @@ export const ROBOT_CATALOG: Record<AutomationScope, CatalogGroup[]> = {
           message: "Перейдите по индивидуальной ссылке и присоединитесь к организационному чату.",
         },
         {
+          code: "file.vk",
+          title: "Отправить файл VK",
+          description: "Отправляет проектанту документы во ВКонтакте. Форматы: docx, pdf, pptx, txt, до 10 МБ.",
+          subject: "Файлы по заявке",
+          message: "Отправляем файлы по заявке на мероприятие.",
+        },
+        {
           code: "notification.user",
           title: "Отправить уведомление",
           description: "Показывает проектанту уведомление в системе.",

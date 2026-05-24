@@ -64,7 +64,7 @@ const formatAssigneeName = (label: string) => {
 
 const getSubtaskAssignee = (subtask: PlannerSubtask, displayAssigneeLabel: (id: number) => string) => {
   if (subtask.assigneeId) return formatAssigneeName(displayAssigneeLabel(subtask.assigneeId));
-  return subtask.role || "\u041d\u0435 \u043d\u0430\u0437\u043d\u0430\u0447\u0435\u043d";
+  return subtask.role || "Не назначен";
 };
 
 export default function BacklogTab({

@@ -1,4 +1,4 @@
-import hashlib
+﻿import hashlib
 import json
 from dataclasses import dataclass
 from copy import deepcopy
@@ -15,11 +15,12 @@ from integrations.vk.crm_notifications import (
     notify_organizers_about_vk_error,
     scan_chat_membership_for_sent_applications,
     send_application_vk_message,
+    upload_application_vk_documents,
 )
 from integrations.vk.planner_invites import send_planner_invite
 from integrations.vk.services import VKAPIError, VKConfigurationError
 from users.automation_defaults import create_default_crm_automation_config
-from users.models import Application, CRMAutomationConfig, CRMAutomationExecutionLog, Event, Notification, Status
+from users.models import Application, CRMAutomationAttachment, CRMAutomationConfig, CRMAutomationExecutionLog, Event, Notification, Status
 
 
 @dataclass
@@ -363,6 +364,28 @@ def update_application_status(application: Application, status_name: str) -> boo
     application.save(update_fields=["status"])
     return True
 
+def robot_attachment_ids(robot: dict[str, Any]) -> list[int]:
+    raw_attachments = robot.get("attachments") if isinstance(robot.get("attachments"), list) else []
+    ids: list[int] = []
+    for attachment in raw_attachments:
+        if isinstance(attachment, dict):
+            attachment_id = to_int(attachment.get("id"))
+        else:
+            attachment_id = to_int(attachment)
+        if attachment_id and attachment_id not in ids:
+            ids.append(attachment_id)
+    return ids
+
+
+def get_robot_attachments(robot: dict[str, Any], event_id: int):
+    ids = robot_attachment_ids(robot)
+    if not ids:
+        return []
+    attachments_by_id = {
+        attachment.id: attachment
+        for attachment in CRMAutomationAttachment.objects.filter(event_id=event_id, id__in=ids)
+    }
+    return [attachments_by_id[attachment_id] for attachment_id in ids if attachment_id in attachments_by_id]
 
 def run_robot_action(
     config_model: CRMAutomationConfig,
@@ -403,6 +426,23 @@ def run_robot_action(
         notification_link = f"/testing?applicationId={event.application.id}" if action == "testing.link" else "/requests"
         success = create_notification(event.application.user_id, title, message, link=notification_link)
         log_message = "Уведомление отправлено проектанту." if success else "Проектант не найден."
+    elif action == "file.vk":
+        try:
+            documents = get_robot_attachments(robot, event.event_id)
+            if not documents:
+                log_message = "Файлы для VK-робота не выбраны."
+            else:
+                vk_attachments = upload_application_vk_documents(event.application, documents)
+                send_application_vk_message(
+                    event.application,
+                    message or "Вам отправлены файлы по заявке.",
+                    attachments=vk_attachments,
+                )
+                success = True
+                log_message = "VK-файлы отправлены проектанту."
+        except (VKConfigurationError, VKAPIError, ValueError) as exc:
+            notify_organizers_about_vk_error(event.application, str(exc))
+            log_message = str(exc)
     elif action == "planner.invite.vk":
         try:
             send_planner_invite(event.application, message=message)

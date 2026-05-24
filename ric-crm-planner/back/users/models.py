@@ -1,4 +1,4 @@
-
+﻿
 from django.utils import timezone
 from django.db import models
 from django.db.models import Q
@@ -551,3 +551,31 @@ class Answer(models.Model):
 
     def __str__(self):
         return f"Ответ {self.user} на '{self.question}': {self.answer}"
+
+
+class CRMAutomationAttachment(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    event = models.ForeignKey(
+        Event,
+        on_delete=models.CASCADE,
+        related_name="crm_automation_attachments",
+    )
+    uploaded_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="crm_automation_attachments",
+    )
+    file_name = models.CharField(max_length=255)
+    content_type = models.CharField(max_length=120, blank=True)
+    size = models.PositiveIntegerField(default=0)
+    content = models.BinaryField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = "CRM_AUTOMATION_ATTACHMENT"
+        ordering = ("-created_at",)
+
+    def __str__(self):
+        return self.file_name

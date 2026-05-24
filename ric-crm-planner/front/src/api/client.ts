@@ -122,7 +122,6 @@ async function request<T = unknown>(path: string, options: RequestOptions = {}):
 
   const url = API_BASE + path;
   const headers = new Headers(options.headers ?? {});
-  if (!headers.has("Content-Type")) headers.set("Content-Type", "application/json");
   const init: RequestOptions = {
     credentials: "include",
     headers,
@@ -141,6 +140,9 @@ async function request<T = unknown>(path: string, options: RequestOptions = {}):
 
   if (typeof init.body !== "undefined") {
     const body = init.body;
+    if (body instanceof FormData) {
+      headers.delete("Content-Type");
+    }
     const isBodyInit =
       typeof body === "string" ||
       body instanceof Blob ||
@@ -150,9 +152,12 @@ async function request<T = unknown>(path: string, options: RequestOptions = {}):
       ArrayBuffer.isView(body);
 
     if (!isBodyInit) {
+      if (!headers.has("Content-Type")) headers.set("Content-Type", "application/json");
       init.body = JSON.stringify(body);
     }
   }
+
+  if (typeof init.body === "undefined" && !headers.has("Content-Type")) headers.set("Content-Type", "application/json");
 
   let res = await fetch(url, init as RequestInit);
 

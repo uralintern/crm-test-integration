@@ -1,8 +1,9 @@
-from django.urls import path
+﻿from django.urls import path
 
 from .views import (
     ApplicationDetailView,
     ApplicationListView,
+    CRMAutomationAttachmentListCreateView,
     CRMAutomationConfigView,
     CRMAutomationExecutionLogListView,
     CRMAutomationPendingRunView,
@@ -87,6 +88,11 @@ urlpatterns = [
         name="application-detail",
     ),
     path("automation/<int:event_id>/", CRMAutomationConfigView.as_view(), name="crm-automation-config"),
+    path(
+        "automation/<int:event_id>/attachments/",
+        CRMAutomationAttachmentListCreateView.as_view(),
+        name="crm-automation-attachment-list",
+    ),
     path(
         "automation/<int:event_id>/logs/",
         CRMAutomationExecutionLogListView.as_view(),

@@ -1,4 +1,5 @@
 ﻿import type {
+  AutomationAttachment,
   AutomationCommonSettings,
   AutomationConditionGroup,
   AutomationConditionOperator,
@@ -88,6 +89,21 @@ function normalizeConditionGroup(value: unknown): AutomationConditionGroup {
   return { mode, rules };
 }
 
+
+function normalizeAttachment(value: unknown): AutomationAttachment | null {
+  if (!value || typeof value !== "object") return null;
+  const item = value as Record<string, unknown>;
+  const id = Number(item.id);
+  if (!Number.isFinite(id)) return null;
+  return {
+    id,
+    name: String(item.name || item.fileName || "Файл"),
+    size: Math.max(0, Number(item.size || 0)),
+    contentType: typeof item.contentType === "string" ? item.contentType : undefined,
+    createdAt: typeof item.createdAt === "string" ? item.createdAt : undefined,
+  };
+}
+
 function normalizeSettings(settings?: Partial<AutomationCommonSettings>): AutomationCommonSettings {
   return {
     runMode: settings?.runMode === "parallel" ? "parallel" : "queue",
@@ -127,6 +143,7 @@ function normalizeRobot(robot: AutomationRobot, fallbackStageId: string): Automa
     settings: normalizeSettings(robot.settings),
     subject: String(robot.subject || robot.title || "Уведомление"),
     message: String(robot.message || robot.description || ""),
+    attachments: Array.isArray(robot.attachments) ? (robot.attachments.map(normalizeAttachment).filter(Boolean) as AutomationAttachment[]) : [],
   };
 }
 
@@ -280,4 +297,10 @@ export async function writeAutomationConfigAsync(config: AutomationConfig): Prom
     scope: normalized.scope,
     eventId: normalized.eventId,
   });
+}
+
+export async function uploadCrmAutomationAttachment(eventId: number, file: File): Promise<AutomationAttachment> {
+  const formData = new FormData();
+  formData.append("file", file);
+  return client.post<AutomationAttachment>("/api/users/automation/" + eventId + "/attachments/", formData);
 }

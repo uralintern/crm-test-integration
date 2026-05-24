@@ -1,4 +1,4 @@
-from django.contrib import admin
+﻿from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
@@ -7,6 +7,7 @@ from .models import (
     Application,
     Contact,
     CRMAutomationConfig,
+    CRMAutomationAttachment,
     CRMAutomationExecutionLog,
     Direction,
     Event,
@@ -65,3 +66,5 @@ admin.site.register(TrueAnswer)
 admin.site.register(TestResult)
 admin.site.register(TestSession)
 admin.site.register(Project)
+
+admin.site.register(CRMAutomationAttachment)

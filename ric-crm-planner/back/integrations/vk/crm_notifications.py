@@ -1,4 +1,4 @@
-import logging
+﻿import logging
 
 from django.conf import settings
 from django.core import signing
@@ -7,7 +7,7 @@ from urllib.parse import parse_qs, urlparse
 
 from users.models import Application, Profile, Status
 
-from .services import VKAPIError, VKConfigurationError, is_vk_user_in_conversation, send_vk_message
+from .services import VKAPIError, VKConfigurationError, is_vk_user_in_conversation, send_vk_message, upload_vk_document
 from users.vk_profiles import refresh_profile_vk_user_id
 
 
@@ -304,10 +304,29 @@ def scan_chat_membership_for_sent_applications(limit: int = 50) -> dict[str, int
     return result
 
 
-def send_application_vk_message(application: Application, message: str, keyboard: dict | None = None) -> int:
+def send_application_vk_message(
+    application: Application,
+    message: str,
+    keyboard: dict | None = None,
+    attachments: list[str] | None = None,
+) -> int:
     vk_user_id = resolve_application_vk_user_id(application)
 
-    return send_vk_message(user_id=vk_user_id, message=message, keyboard=keyboard)
+    return send_vk_message(user_id=vk_user_id, message=message, keyboard=keyboard, attachments=attachments)
+
+
+def upload_application_vk_documents(application: Application, documents) -> list[str]:
+    vk_user_id = resolve_application_vk_user_id(application)
+    attachments: list[str] = []
+    for document in documents:
+        attachments.append(
+            upload_vk_document(
+                user_id=vk_user_id,
+                file_name=document.file_name,
+                content=bytes(document.content),
+            )
+        )
+    return attachments
 
 
 def notify_application_testing_started(application: Application, previous_status_id: int | None = None) -> int | None:

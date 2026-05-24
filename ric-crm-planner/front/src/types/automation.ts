@@ -43,6 +43,14 @@ export interface AutomationCommonSettings {
   condition: AutomationConditionGroup;
 }
 
+export interface AutomationAttachment {
+  id: number;
+  name: string;
+  size: number;
+  contentType?: string;
+  createdAt?: string;
+}
+
 export interface AutomationRobot {
   id: string;
   stageId: string;
@@ -56,6 +64,7 @@ export interface AutomationRobot {
   settings: AutomationCommonSettings;
   subject: string;
   message: string;
+  attachments?: AutomationAttachment[];
 }
 
 export interface AutomationTrigger {

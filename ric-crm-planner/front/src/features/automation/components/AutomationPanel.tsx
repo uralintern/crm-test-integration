@@ -375,6 +375,7 @@ const AutomationPanel = forwardRef<AutomationPanelHandle, AutomationPanelProps>(
                 <RobotEditor
                   robot={selectedRobot}
                   stageOptions={stageOptions}
+                  eventId={selectedEventId}
                   onChange={(updater) => updateRobot(selectedRobot.id, updater)}
                   onDelete={() => deleteRule(selectedRule)}
                 />

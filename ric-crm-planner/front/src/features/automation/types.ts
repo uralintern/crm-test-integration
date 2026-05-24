@@ -1,6 +1,7 @@
 import type { AutomationRobot, AutomationScope, AutomationTrigger } from "../../types/automation";
 
 export type {
+  AutomationAttachment,
   AutomationCommonSettings,
   AutomationConditionGroup,
   AutomationConditionMode,

@@ -1,8 +1,9 @@
-import json
+﻿import json
 import random
 import re
 import urllib.parse
 import urllib.request
+import uuid
 from typing import Any
 from dataclasses import dataclass
 
@@ -130,18 +131,23 @@ def send_vk_message(
     user_id: int | None = None,
     peer_id: int | None = None,
     keyboard: dict[str, Any] | None = None,
+    attachments: list[str] | None = None,
 ) -> int:
     normalized_message = message.strip()
-    if not normalized_message:
-        raise ValueError("Message must not be empty.")
+    normalized_attachments = [attachment.strip() for attachment in (attachments or []) if str(attachment).strip()]
+    if not normalized_message and not normalized_attachments:
+        raise ValueError("Message or attachment must not be empty.")
     if user_id is None and peer_id is None:
         raise ValueError("Either user_id or peer_id is required.")
 
     payload: dict[str, str | int] = {
         **({"peer_id": peer_id} if peer_id is not None else {"user_id": user_id or 0}),
-        "message": normalized_message,
         "random_id": random.randint(1, 2_147_483_647),
     }
+    if normalized_message:
+        payload["message"] = normalized_message
+    if normalized_attachments:
+        payload["attachment"] = ",".join(normalized_attachments)
     if keyboard:
         payload["keyboard"] = json.dumps(keyboard, ensure_ascii=False)
 
@@ -208,3 +214,67 @@ def delete_vk_message(
         return
 
     call_vk_method("messages.delete", payload)
+
+
+def upload_multipart_file(upload_url: str, *, file_name: str, content: bytes) -> dict:
+    boundary = f"----crm-vk-upload-{uuid.uuid4().hex}"
+    safe_file_name = file_name.replace('"', "'").replace("\r", " ").replace("\n", " ")
+    body = b"\r\n".join(
+        [
+            f"--{boundary}".encode("utf-8"),
+            f'Content-Disposition: form-data; name="file"; filename="{safe_file_name}"'.encode("utf-8"),
+            b"Content-Type: application/octet-stream",
+            b"",
+            content,
+            f"--{boundary}--".encode("utf-8"),
+            b"",
+        ]
+    )
+    request = urllib.request.Request(
+        upload_url,
+        data=body,
+        method="POST",
+        headers={"Content-Type": f"multipart/form-data; boundary={boundary}"},
+    )
+    with urllib.request.urlopen(request, timeout=settings.VK_REQUEST_TIMEOUT_SECONDS) as response:
+        response_body = response.read().decode("utf-8")
+    data = json.loads(response_body)
+    if "error" in data:
+        error = data["error"]
+        if isinstance(error, dict):
+            raise VKAPIError(error.get("error_code"), error.get("error_msg", "Unknown VK upload error."))
+        raise VKAPIError(None, str(error))
+    return data
+
+
+def extract_saved_doc(response: Any) -> dict:
+    if isinstance(response, dict):
+        if isinstance(response.get("doc"), dict):
+            return response["doc"]
+        if "id" in response and "owner_id" in response:
+            return response
+    if isinstance(response, list):
+        for item in response:
+            if isinstance(item, dict):
+                if isinstance(item.get("doc"), dict):
+                    return item["doc"]
+                if "id" in item and "owner_id" in item:
+                    return item
+    raise VKAPIError(None, "VK docs.save did not return saved document data.")
+
+
+def upload_vk_document(*, file_name: str, content: bytes, user_id: int | None = None, peer_id: int | None = None) -> str:
+    if user_id is None and peer_id is None:
+        raise ValueError("Either user_id or peer_id is required.")
+    target_peer_id = peer_id if peer_id is not None else user_id
+    server_data = call_vk_method("docs.getMessagesUploadServer", {"type": "doc", "peer_id": int(target_peer_id or 0)})
+    upload_url = str((server_data.get("response") or {}).get("upload_url") or "")
+    if not upload_url:
+        raise VKAPIError(None, "VK did not return document upload URL.")
+    uploaded = upload_multipart_file(upload_url, file_name=file_name, content=content)
+    file_token = str(uploaded.get("file") or "")
+    if not file_token:
+        raise VKAPIError(None, "VK document upload did not return file token.")
+    saved = call_vk_method("docs.save", {"file": file_token, "title": file_name})
+    doc = extract_saved_doc(saved.get("response"))
+    return f"doc{int(doc['owner_id'])}_{int(doc['id'])}"

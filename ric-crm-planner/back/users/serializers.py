@@ -1,4 +1,4 @@
-import json
+﻿import json
 from decimal import Decimal
 
 from django.conf import settings
@@ -23,6 +23,7 @@ from .models import (
     Answer,
     Application,
     CRMAutomationConfig,
+    CRMAutomationAttachment,
     CRMAutomationExecutionLog,
     Direction,
     Event,
@@ -921,6 +922,18 @@ class NotificationCreateSerializer(ModelSerializer):
             **validated_data,
         )
 
+
+
+
+class CRMAutomationAttachmentSerializer(ModelSerializer):
+    name = serializers.CharField(source="file_name", read_only=True)
+    contentType = serializers.CharField(source="content_type", read_only=True)
+    createdAt = serializers.DateTimeField(source="created_at", read_only=True)
+
+    class Meta:
+        model = CRMAutomationAttachment
+        fields = ("id", "name", "size", "contentType", "createdAt")
+        read_only_fields = fields
 
 class CRMAutomationConfigSerializer(ModelSerializer):
     eventId = serializers.IntegerField(source="event_id")

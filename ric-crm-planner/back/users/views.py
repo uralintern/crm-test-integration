@@ -1,4 +1,4 @@
-from django.conf import settings
+﻿from django.conf import settings
 import secrets
 from django.contrib.auth import get_user_model
 from django.contrib.auth.tokens import default_token_generator
@@ -20,6 +20,7 @@ from rest_framework.generics import (
     RetrieveUpdateAPIView,
     RetrieveUpdateDestroyAPIView,
 )
+from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -39,6 +40,7 @@ from users.permissions import (
 from users.serializers import (
     ApplicationCreateSerializer,
     ApplicationSerializer,
+    CRMAutomationAttachmentSerializer,
     CRMAutomationConfigPayloadSerializer,
     CRMAutomationConfigSerializer,
     CRMAutomationExecutionLogSerializer,
@@ -67,6 +69,7 @@ from users.models import (
     Application,
     Answer,
     CRMAutomationConfig,
+    CRMAutomationAttachment,
     CRMAutomationExecutionLog,
     Direction,
     Event,
@@ -94,6 +97,9 @@ TAG_APPLICATIONS = "Applications"
 TAG_NOTIFICATIONS = "Уведомления"
 TAG_REFERENCE = "Reference"
 TAG_INTEGRATION = "Integration"
+
+ALLOWED_CRM_AUTOMATION_ATTACHMENT_EXTENSIONS = {"docx", "pdf", "pptx", "txt"}
+CRM_AUTOMATION_ATTACHMENT_MAX_SIZE = 10 * 1024 * 1024
 
 MESSAGE_RESPONSE_SCHEMA = openapi.Schema(
     type=openapi.TYPE_OBJECT,
@@ -1108,6 +1114,46 @@ class ApplicationDetailView(RetrieveUpdateDestroyAPIView):
         ).values_list("id", flat=True)
         return queryset.filter(Q(user=self.request.user) | Q(event_id__in=assigned_event_ids))
 
+
+
+
+class CRMAutomationAttachmentListCreateView(APIView):
+    permission_classes = (CuratorOrAdminPermission,)
+    parser_classes = (MultiPartParser, FormParser)
+
+    def get_event(self):
+        return get_object_or_404(Event, pk=int(self.kwargs["event_id"]), is_archived=False)
+
+    def get(self, request, *args, **kwargs):
+        event = self.get_event()
+        attachments = CRMAutomationAttachment.objects.filter(event=event)
+        return Response(CRMAutomationAttachmentSerializer(attachments, many=True).data)
+
+    def post(self, request, *args, **kwargs):
+        event = self.get_event()
+        uploaded_file = request.FILES.get("file")
+        if not uploaded_file:
+            return Response({"file": "Файл не передан."}, status=status.HTTP_400_BAD_REQUEST)
+
+        file_name = uploaded_file.name or "attachment"
+        extension = file_name.rsplit(".", 1)[-1].lower() if "." in file_name else ""
+        if extension not in ALLOWED_CRM_AUTOMATION_ATTACHMENT_EXTENSIONS:
+            return Response(
+                {"file": "Поддерживаются только docx, pdf, pptx, txt."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        if uploaded_file.size > CRM_AUTOMATION_ATTACHMENT_MAX_SIZE:
+            return Response({"file": "Файл должен быть не больше 10 МБ."}, status=status.HTTP_400_BAD_REQUEST)
+
+        attachment = CRMAutomationAttachment.objects.create(
+            event=event,
+            uploaded_by=request.user if request.user.is_authenticated else None,
+            file_name=file_name[:255],
+            content_type=(uploaded_file.content_type or "")[:120],
+            size=uploaded_file.size,
+            content=uploaded_file.read(),
+        )
+        return Response(CRMAutomationAttachmentSerializer(attachment).data, status=status.HTTP_201_CREATED)
 
 class CRMAutomationConfigView(RetrieveUpdateAPIView):
     permission_classes = (CuratorOrAdminPermission,)

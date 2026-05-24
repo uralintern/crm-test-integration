@@ -1,4 +1,5 @@
-﻿import { DeleteOutlined, RobotOutlined, ThunderboltOutlined } from "@ant-design/icons";
+import { useRef, useState } from "react";
+import { DeleteOutlined, FileAddOutlined, PaperClipOutlined, RobotOutlined, ThunderboltOutlined } from "@ant-design/icons";
 import { Tooltip } from "antd";
 import { ORGANIZER_REQUEST_STATUSES } from "../../../constants/requestProgress";
 import AppButton from "../../../components/UI/Button";
@@ -16,6 +17,7 @@ import type {
   AutomationTrigger,
   RuleKind,
 } from "../types";
+import { uploadCrmAutomationAttachment } from "../storage/automationStorage";
 import { clampDelay, getStageTitle } from "../utils/rules";
 import { ConditionBuilder } from "./ConditionBuilder";
 
@@ -24,12 +26,14 @@ type StageOption = { value: string; label: string };
 type RobotEditorProps = {
   robot: AutomationRobot;
   stageOptions: StageOption[];
+  eventId?: number | null;
   onChange: (updater: (robot: AutomationRobot) => AutomationRobot) => void;
   onDelete: () => void;
 };
 
-export function RobotEditor({ robot, stageOptions, onChange, onDelete }: RobotEditorProps) {
+export function RobotEditor({ robot, stageOptions, eventId, onChange, onDelete }: RobotEditorProps) {
   const isStatusChangeRobot = robot.action === "status.change";
+  const isFileRobot = robot.action === "file.vk";
   const statusOptions = ORGANIZER_REQUEST_STATUSES.map((status) => ({ value: status, label: status }));
   const targetStatus =
     robot.targetStatus ||
@@ -69,7 +73,7 @@ export function RobotEditor({ robot, stageOptions, onChange, onDelete }: RobotEd
 
         {isStatusChangeRobot ? (
           <label>
-            <span>Статус для перевода</span>
+            <span>{"Статус для перевода"}</span>
             <AppSelect
               value={targetStatus}
               options={statusOptions}
@@ -97,6 +101,8 @@ export function RobotEditor({ robot, stageOptions, onChange, onDelete }: RobotEd
                 onChange={(event) => onChange((item) => ({ ...item, message: event.target.value }))}
               />
             </label>
+
+            {isFileRobot && <VkFileRobotEditor robot={robot} eventId={eventId} onChange={onChange} />}
           </>
         )}
 
@@ -237,6 +243,110 @@ function CommonSettingsEditor({ settings, stageOptions, onChange }: CommonSettin
         onChange={(condition) => updateSettings({ condition })}
       />
     </fieldset>
+  );
+}
+
+const VK_FILE_EXTENSIONS = ["docx", "pdf", "pptx", "txt"];
+const VK_FILE_MAX_SIZE = 10 * 1024 * 1024;
+
+function formatFileSize(size: number) {
+  if (size >= 1024 * 1024) return (size / 1024 / 1024).toFixed(1) + " МБ";
+  if (size >= 1024) return Math.round(size / 1024) + " КБ";
+  return size + " Б";
+}
+
+function VkFileRobotEditor({
+  robot,
+  eventId,
+  onChange,
+}: {
+  robot: AutomationRobot;
+  eventId?: number | null;
+  onChange: (updater: (robot: AutomationRobot) => AutomationRobot) => void;
+}) {
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const [error, setError] = useState("");
+  const [uploading, setUploading] = useState(false);
+  const attachments = robot.attachments || [];
+
+  async function uploadFiles(files: FileList | null) {
+    if (!files?.length) return;
+    if (!eventId) {
+      setError("Сначала выберите и сохраните мероприятие.");
+      return;
+    }
+
+    setError("");
+    setUploading(true);
+    try {
+      const uploaded: NonNullable<AutomationRobot["attachments"]> = [];
+      for (const file of Array.from(files)) {
+        const extension = file.name.split(".").pop()?.toLowerCase() || "";
+        if (!VK_FILE_EXTENSIONS.includes(extension)) {
+          setError("Можно загрузить только docx, pdf, pptx или txt.");
+          continue;
+        }
+        if (file.size > VK_FILE_MAX_SIZE) {
+          setError("Файл должен быть не больше 10 МБ.");
+          continue;
+        }
+        uploaded.push(await uploadCrmAutomationAttachment(eventId, file));
+      }
+      if (uploaded.length) {
+        onChange((item) => ({
+          ...item,
+          attachments: [...(item.attachments || []), ...uploaded],
+        }));
+      }
+    } catch {
+      setError("Не удалось загрузить файл. Проверьте формат и размер.");
+    } finally {
+      setUploading(false);
+      if (inputRef.current) inputRef.current.value = "";
+    }
+  }
+
+  return (
+    <div className="automation-file-field">
+      <div className="automation-file-field__head">
+        <span>{"Файлы VK"}</span>
+        <AppButton disabled={uploading} onClick={() => inputRef.current?.click()}>
+          <FileAddOutlined />
+          <span>{uploading ? "Загрузка..." : "Добавить файл"}</span>
+        </AppButton>
+      </div>
+      <input
+        ref={inputRef}
+        type="file"
+        multiple
+        accept=".docx,.pdf,.pptx,.txt"
+        onChange={(event) => uploadFiles(event.target.files)}
+      />
+      <p>{"Форматы: docx, pdf, pptx, txt. Максимальный размер одного файла - 10 МБ."}</p>
+      {error && <div className="automation-file-field__error">{error}</div>}
+      {attachments.length > 0 && (
+        <div className="automation-file-list">
+          {attachments.map((file) => (
+            <div className="automation-file-list__item" key={file.id}>
+              <PaperClipOutlined />
+              <span>{file.name}</span>
+              <small>{formatFileSize(file.size)}</small>
+              <button
+                type="button"
+                onClick={() =>
+                  onChange((item) => ({
+                    ...item,
+                    attachments: (item.attachments || []).filter((attachment) => attachment.id !== file.id),
+                  }))
+                }
+              >
+                {"убрать"}
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
 
