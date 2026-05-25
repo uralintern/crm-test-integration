@@ -454,10 +454,10 @@ export default function EventForm() {
         </label>
       </FieldWrap>
 
+      {!canManageEventOrganizers && mode === "edit" && (
+        <div className="event-organizers-hint">Менять организаторов может только главный организатор.</div>
+      )}
       <div className="tags">
-        {!canManageEventOrganizers && mode === "edit" && (
-          <div className="field-hint">Менять организаторов может только главный организатор.</div>
-        )}
         {selectedOrganizerIds.map((organizerId) => {
           const organizer = organizers.find((item) => String(item.id) === String(organizerId));
           return (

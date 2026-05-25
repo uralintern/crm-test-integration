@@ -1,4 +1,4 @@
-﻿.wizard-close.app-button.ant-btn {
+.wizard-close.app-button.ant-btn {
   position: absolute;
   right: 16px;
   top: 12px;
@@ -113,6 +113,17 @@ select:focus {
 .date-field .calendar-btn:hover img {
   opacity: 1;
   transform: scale(1.1);
+}
+
+.event-organizers-hint {
+  margin-top: 8px;
+  padding: 10px 12px;
+  border: 1px solid #dbe7ff;
+  border-radius: 10px;
+  background: #f7faff;
+  color: #4b587c;
+  font-size: 14px;
+  line-height: 1.35;
 }
 
 .tags {
