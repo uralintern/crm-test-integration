@@ -56,7 +56,7 @@ export default function Candidates() {
     }, [candidates, searchQuery]);
 
     return (
-        <div className="tests-page">
+        <div className="tests-page candidates-page">
             <LogoutButton />
             <div className="tests-wrapper">
                 <div className="tests">

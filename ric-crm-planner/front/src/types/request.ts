@@ -2,6 +2,7 @@ export interface Request {
   id: number;
   studentName: string;
   telegram?: string;
+  vk?: string;
   university?: string;
   course?: string;
   projectId?: number;

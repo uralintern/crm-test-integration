@@ -1,4 +1,4 @@
-﻿import json
+import json
 from decimal import Decimal
 
 from django.conf import settings
@@ -762,6 +762,9 @@ class ApplicationSerializer(ModelSerializer):
     userName = serializers.SerializerMethodField()
     userEmail = serializers.EmailField(source="user.email", read_only=True)
     user_email = serializers.EmailField(source="user.email", read_only=True)
+    university = serializers.SerializerMethodField()
+    course = serializers.SerializerMethodField()
+    vk = serializers.SerializerMethodField()
     eventId = serializers.IntegerField(source="event_id", read_only=True)
     eventTitle = serializers.CharField(source="event.name", read_only=True)
     eventName = serializers.CharField(source="event.name", read_only=True)
@@ -813,6 +816,9 @@ class ApplicationSerializer(ModelSerializer):
             "userName",
             "userEmail",
             "user_email",
+            "university",
+            "course",
+            "vk",
             "direction",
             "directionId",
             "direction_name",
@@ -842,6 +848,25 @@ class ApplicationSerializer(ModelSerializer):
 
     def get_userName(self, obj):
         return self.get_studentName(obj)
+
+    def _get_profile(self, obj):
+        try:
+            return obj.user.crm_profile
+        except Exception:
+            return None
+
+    def get_university(self, obj):
+        profile = self._get_profile(obj)
+        return getattr(profile, "university", "") or ""
+
+    def get_course(self, obj):
+        profile = self._get_profile(obj)
+        course = getattr(profile, "course", None)
+        return course or ""
+
+    def get_vk(self, obj):
+        profile = self._get_profile(obj)
+        return getattr(profile, "vk", "") or ""
 
     def to_representation(self, instance):
         data = super().to_representation(instance)

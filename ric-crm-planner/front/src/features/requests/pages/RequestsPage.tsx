@@ -1,4 +1,4 @@
-﻿import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { Dropdown, Segmented } from "antd";
 import type { MenuProps } from "antd";
 import { DownOutlined } from "@ant-design/icons";
@@ -17,6 +17,7 @@ import {
 import { AuthContext } from "../../../context/AuthContext";
 import { useSearchSubmitFeedback } from "../../../hooks/useSearchSubmitFeedback";
 import type { Event as EventType } from "../../../types/event";
+import { normalizeApplicationFormFields } from "../../../constants/applicationForm";
 import "../../../styles/page-colors.scss";
 import AppButton from "../../../components/UI/Button";
 import { AppSearch } from "../../../components/UI/Input";
@@ -51,8 +52,14 @@ import {
   readDisplayedStatuses,
 } from "../utils/requestsUtils";
 
-function formatRequestInfo(request: RequestRecord) {
+function getApplicationFieldLabels(request: RequestRecord, events: EventType[]) {
+  const event = events.find((item) => Number(item.id) === Number(request.eventId));
+  return new Map(normalizeApplicationFormFields(event?.applicationFormFields).map((field) => [field.id, field.label]));
+}
+
+function formatRequestInfo(request: RequestRecord, events: EventType[]) {
   const lines: string[] = [];
+  const fieldLabels = getApplicationFieldLabels(request, events);
   const add = (label: string, value?: unknown) => {
     const text = typeof value === "string" ? value.trim() : value == null ? "" : String(value).trim();
     if (text) lines.push(`${label}: ${text}`);
@@ -63,11 +70,15 @@ function formatRequestInfo(request: RequestRecord) {
   add("Направление", request.directionTitle);
   add("Проект", request.projectTitle);
   add("Специализация", request.specialization);
+  add(fieldLabels.get("university") ?? "Университет", request.university);
+  add(fieldLabels.get("course") ?? "Курс", request.course);
+  add(fieldLabels.get("telegram") ?? "Аккаунт в ВК", request.vk ?? request.telegram);
   add("Статус", request.status);
-  add("Сообщение", request.about);
+  add(fieldLabels.get("about") ?? "Сообщение", request.about);
 
   Object.entries(request.customFields || {}).forEach(([key, value]) => {
-    add(key, value);
+    if (key === "about") return;
+    add(fieldLabels.get(key) ?? key, value);
   });
 
   add("Дата подачи", request.createdAt ? new Date(request.createdAt).toLocaleString("ru-RU") : "");
@@ -398,7 +409,7 @@ export default function RequestsPage() {
           animatedIds={searchAnimatedIds}
           gridColumns="1.2fr 2fr 1.4fr 1fr"
           onInfoClick={(row) => {
-            setInfoItem({ title: row.studentName || "Заявка", description: formatRequestInfo(row.raw) });
+            setInfoItem({ title: row.studentName || "Заявка", description: formatRequestInfo(row.raw, events) });
             setInfoOpen(true);
           }}
           renderCell={(row: RequestTableRow, colKey: string) => {

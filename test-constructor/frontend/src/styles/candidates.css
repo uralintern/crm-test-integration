@@ -108,3 +108,18 @@
     color: #F0E8D5;
     margin-top: 40px;
 }
+
+.candidates-page .tests-wrapper {
+    height: auto;
+    min-height: 829px;
+    align-items: stretch;
+}
+
+.candidates-page .tests {
+    min-height: 829px;
+    padding-bottom: 36px;
+}
+
+.candidates-page .candidates-list {
+    padding-bottom: 8px;
+}

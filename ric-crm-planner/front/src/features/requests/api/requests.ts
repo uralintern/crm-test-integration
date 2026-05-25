@@ -1,4 +1,4 @@
-﻿import client from "../../../api/client";
+import client from "../../../api/client";
 import { REQUEST_STATUS } from "../../../constants/requestProgress";
 import type { Request as ReqType } from "../../../types/request";
 import {
@@ -52,6 +52,10 @@ type BackendRequest = {
   userName?: string;
   userEmail?: string;
   user_email?: string;
+  telegram?: string;
+  vk?: string;
+  university?: string;
+  course?: string | number;
   projectId?: number | string;
   project?: number | string;
   projectTitle?: string;
@@ -170,6 +174,10 @@ function mapBackendRequest(item: BackendRequest, statuses: BackendStatus[]): Req
       : item.specialization
         ? String(item.specialization)
         : undefined,
+    telegram: item.telegram ?? item.vk,
+    vk: item.vk ?? item.telegram,
+    university: item.university,
+    course: typeof item.course === "undefined" || item.course === null ? undefined : String(item.course),
     about: item.about ?? item.message ?? "",
     customFields: item.customFields ?? item.custom_fields,
     status: mappedStatus.status,
