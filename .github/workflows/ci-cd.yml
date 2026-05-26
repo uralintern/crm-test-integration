@@ -67,6 +67,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Prepare CI env file
+        run: cp .env.example .env
+
       - name: Validate docker compose
         run: docker compose config --quiet
 
@@ -95,6 +98,12 @@ jobs:
             fi
 
             cd "$PROJECT_PATH"
+            if [ ! -f .env ]; then
+              echo "Missing .env on VPS: $PROJECT_PATH/.env"
+              echo "Create it from .env.example and fill real secrets before deployment."
+              exit 1
+            fi
+
             git fetch origin main
             git checkout main
             git pull --ff-only origin main
