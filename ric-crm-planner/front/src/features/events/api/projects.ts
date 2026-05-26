@@ -92,6 +92,14 @@ export async function getProjectsByDirection(directionId: number): Promise<Proje
     .map((x) => mapBackendProject(x, userNameById));
 }
 
+export async function updateProjectCurator(projectId: number, curatorId: number): Promise<Project | null> {
+  if (USE_MOCK || !projectId || !curatorId) return null;
+
+  const { userNameById } = await getUserMaps();
+  const updated = await client.patch<BackendProject>(`/api/users/projects/${projectId}/`, { curator: curatorId });
+  return mapBackendProject(updated, userNameById);
+}
+
 export async function saveProjectsForDirection(directionId: number, projects: Project[]) {
   if (USE_MOCK) return _saveProjectsForDirection(directionId, projects);
 

@@ -8,6 +8,7 @@ import {
   syncParticipants,
 } from "../api/planner";
 import { getRequests } from "../../requests/api/requests";
+import { updateProjectCurator } from "../../events/api/projects";
 import { useToast } from "../../../components/Toast/ToastProvider";
 import PageLoader from "../../../components/Loading/PageLoader";
 import { AuthContext } from "../../../context/AuthContext";
@@ -928,10 +929,21 @@ export default function PlannerPage() {
           onOpenTeamInfo={openTeamInfo}
           onOpenTeamEdit={openTeamEdit}
           onAssignTeamCurator={(teamId, curatorId) => {
-            setState((prev) => ({
-              ...prev,
-              teams: prev.teams.map((team) => (team.id === teamId ? { ...team, curatorId } : team)),
-            }));
+            const targetTeam = state.teams.find((team) => Number(team.id) === Number(teamId));
+            const nextState = {
+              ...state,
+              teams: state.teams.map((team) =>
+                Number(team.id) === Number(teamId) ? { ...team, curatorId, updatedAt: currentTimestamp() } : team
+              ),
+            };
+
+            setState(nextState);
+            void savePlannerState(nextState);
+
+            if (targetTeam?.projectId) {
+              void updateProjectCurator(Number(targetTeam.projectId), curatorId).catch(() => null);
+            }
+
             notifySuccess("Куратор назначен");
           }}
           onDeleteTeam={openDeleteTeamConfirm}

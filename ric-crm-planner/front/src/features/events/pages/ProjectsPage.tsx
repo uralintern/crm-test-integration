@@ -84,7 +84,7 @@ export default function ProjectsPage() {
 
         return {
           ...project,
-          curator: buildCuratorLabel(curatorIds, userNameById),
+          curator: curatorIds.length > 0 || !project.curator ? buildCuratorLabel(curatorIds, userNameById) : project.curator,
         };
       });
 
