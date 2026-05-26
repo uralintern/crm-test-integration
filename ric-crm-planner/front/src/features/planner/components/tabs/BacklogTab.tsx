@@ -75,6 +75,12 @@ function formatBacklogDate(value?: string) {
   return `${match[3]}-${match[2]}-${match[1]}`;
 }
 
+function isSubtaskInSprint(subtask: PlannerSubtask) {
+  const sprintState = subtask as { inSprint?: unknown; in_sprint?: unknown };
+  const rawValue = sprintState.inSprint ?? sprintState.in_sprint;
+  return rawValue === true || rawValue === 1 || rawValue === "1" || String(rawValue).toLowerCase() === "true";
+}
+
 export default function BacklogTab({
   activeTeamName,
   parentTitle,
@@ -123,8 +129,7 @@ export default function BacklogTab({
   onCancelEditSubtask,
   onDeleteSubtask,
 }: BacklogTabProps) {
-  const selectedParentSubtasks = filteredSubtasks.filter((subtask) => Number(subtask.parentTaskId) === Number(selectedParentId));
-  const selectedParentSprintCount = selectedParentSubtasks.filter((subtask) => subtask.inSprint).length;
+  const teamSprintCount = filteredSubtasks.filter(isSubtaskInSprint).length;
   const getParentSubtasks = (parentId: number) =>
     filteredSubtasks.filter((subtask) => Number(subtask.parentTaskId) === Number(parentId));
 
@@ -234,7 +239,7 @@ export default function BacklogTab({
           <div className="backlog-summary">
             <span>{filteredParents.length} задач</span>
             <span>{filteredSubtasks.length} подзадач</span>
-            <span>{selectedParentSprintCount} в спринте</span>
+            <span>{teamSprintCount} в спринте</span>
           </div>
         </div>
 
@@ -243,7 +248,7 @@ export default function BacklogTab({
 
           {filteredParents.map((parent) => {
             const parentSubtasks = getParentSubtasks(parent.id);
-            const parentSprintCount = parentSubtasks.filter((subtask) => subtask.inSprint).length;
+            const parentSprintCount = parentSubtasks.filter(isSubtaskInSprint).length;
             const isActive = Number(selectedParentId) === Number(parent.id);
             const editable = canEditTeam(parent.teamId);
 
@@ -291,9 +296,10 @@ export default function BacklogTab({
                     const assigneeLabel = getSubtaskAssignee(subtask, displayAssigneeLabel);
                     const subtaskEditable = canEditTeam(subtask.teamId);
                     const isEditing = editingSubtaskId === subtask.id && editingSubtaskDraft;
+                    const subtaskInSprint = isSubtaskInSprint(subtask);
 
                     return (
-                      <div key={subtask.id} className={`backlog-subtask-row ${subtask.inSprint ? "is-in-sprint" : ""}`}>
+                      <div key={subtask.id} className={`backlog-subtask-row ${subtaskInSprint ? "is-in-sprint" : ""}`}>
                         {isEditing ? (
                           renderSubtaskEditor(subtask)
                         ) : (
@@ -303,7 +309,7 @@ export default function BacklogTab({
                               <span>{formatBacklogDate(subtask.startDate)} - {formatBacklogDate(subtask.endDate)}</span>
                               <span>{assigneeLabel}</span>
                               <span>{subtask.status}</span>
-                              {subtask.inSprint && <span>в спринте</span>}
+                              {subtaskInSprint && <span>в спринте</span>}
                             </div>
                           </>
                         )}
