@@ -10,7 +10,7 @@
 ~/crm-test-integration
 ```
 
-Если вход выполнен под пользователем `root`, полный путь будет:
+Если вход выполнен под пользователем `corleone`, полный путь будет:
 
 ```bash
 /root/crm-test-integration
@@ -60,10 +60,10 @@ Workflow:
 
 GitHub Secrets, которые нужны для деплоя:
 
-- `VPS_HOST` - IP сервера, например `5.181.108.146`.
-- `VPS_USER` - SSH-пользователь, например `root`.
+- `VPS_HOST` - IP сервера - `5.181.108.146`.
+- `VPS_USER` - SSH-пользователь - `corleone`.
 - `VPS_SSH_KEY` - приватный SSH-ключ для подключения к серверу.
-- `VPS_PROJECT_PATH` - путь до проекта, для нового VPS `/root/crm-test-integration`.
+- `VPS_PROJECT_PATH` - путь до проекта, для нового VPS `/corleone/crm-test-integration`.
 
 Секреты добавляются в GitHub так:
 
