@@ -1,56 +1,40 @@
 # Инструкция по сопровождению проекта
 
-Этот файл нужен для будущих разработчиков или администратора заказчика. Здесь собраны основные команды для обслуживания сервиса на VPS.
+Файл нужен для будущих разработчиков и администратора заказчика. Здесь собраны основные команды для production-сервера.
 
 ## 1. Где находится проект
 
-На новом сервере проект должен лежать здесь:
+На VPS проект должен лежать здесь:
 
 ```bash
-~/crm-test-integration
-```
-
-Если вход выполнен под пользователем `corleone`, полный путь будет:
-
-```bash
-/root/crm-test-integration
+/home/corleone/crm-test-integration
 ```
 
 Основные файлы:
 
-- `docker-compose.yml` - описание всех Docker-сервисов.
-- `.env` - реальные настройки и секреты сервера.
-- `ric-crm-planner/` - CRM-модуль.
+- `docker-compose.yml` - compose для локальной разработки и ручной сборки.
+- `docker-compose.prod.yml` - compose для production, использует готовые образы из GHCR.
+- `.env` - реальные настройки и секреты сервера, не хранится в GitHub.
+- `.env.example` - шаблон переменных окружения.
+- `ric-crm-planner/` - CRM и планировщик.
 - `test-constructor/` - модуль тестирования.
-- `.github/workflows/ci-cd.yml` - автоматический деплой через GitHub Actions.
+- `.github/workflows/ci-cd.yml` - автоматическая сборка и деплой.
 
-Файл `.env` нельзя выкладывать в GitHub.
+## 2. Как работает production-деплой
 
-## 2. Домены и сервер
+Production-деплой не собирает проект на VPS.
 
-CRM:
-
-```text
-https://meetuppoint.ru
-```
-
-Модуль тестирования:
+Правильная схема:
 
 ```text
-https://tests.meetuppoint.ru
+GitHub Actions -> сборка Docker images -> публикация в GHCR -> VPS pull -> VPS up
 ```
 
-VPS:
-
-```text
-5.181.108.146
-```
-
-DNS должен указывать оба домена на этот IP.
+Это сделано для экономии ресурсов VPS. Сборка frontend через Node.js и backend через Go/Python может занимать много RAM и диска. На слабом VPS это приводит к ошибкам `no space left on device`, зависаниям `npm ci` и высокой нагрузке.
 
 ## 3. Автоматический деплой
 
-Автоматический деплой выполняется через GitHub Actions после каждого push в ветку `main`.
+Автоматический деплой запускается после push в ветку `main`.
 
 Workflow:
 
@@ -58,91 +42,35 @@ Workflow:
 .github/workflows/ci-cd.yml
 ```
 
-GitHub Secrets, которые нужны для деплоя:
+GitHub Actions делает следующее:
 
-- `VPS_HOST` - IP сервера - `5.181.108.146`.
-- `VPS_USER` - SSH-пользователь - `corleone`.
+1. Проверяет `docker-compose.yml`.
+2. Проверяет `docker-compose.prod.yml`.
+3. Собирает Docker-образы.
+4. Публикует образы в `ghcr.io`.
+5. Подключается к VPS по SSH.
+6. Выполняет `git pull`.
+7. Скачивает новые образы.
+8. Перезапускает контейнеры.
+9. Запускает миграции CRM backend.
+
+Нужные GitHub Secrets:
+
+- `VPS_HOST` - IP сервера, например `5.181.108.146`.
+- `VPS_USER` - SSH-пользователь, например `corleone`.
+- `VPS_PROJECT_PATH` - путь к проекту, например `/home/corleone/crm-test-integration`.
 - `VPS_SSH_KEY` - приватный SSH-ключ для подключения к серверу.
-- `VPS_PROJECT_PATH` - путь до проекта, для нового VPS `/corleone/crm-test-integration`.
 
-Секреты добавляются в GitHub так:
+## 4. Проверка состояния контейнеров
 
-```text
-Settings -> Secrets and variables -> Actions -> New repository secret
-```
-
-В поле `Name` пишется только имя, например:
-
-```text
-VPS_HOST
-```
-
-В поле `Secret` пишется только значение, например:
-
-```text
-5.181.108.146
-```
-
-Не нужно писать `VPS_HOST=5.181.108.146`. Знак `=` в GitHub Secrets не используется.
-
-## 4. Как создать SSH-ключ для GitHub Actions
-
-Если CI/CD настраивается с нуля, нужен SSH-ключ. GitHub Actions будет подключаться к VPS по этому ключу.
-
-На своем компьютере в PowerShell:
-
-```powershell
-ssh-keygen -t ed25519 -C "github-actions-meetuppoint" -f "$env:USERPROFILE\.ssh\github_actions_meetuppoint"
-```
-
-Будут созданы два файла:
-
-- приватный ключ: `github_actions_meetuppoint`
-- публичный ключ: `github_actions_meetuppoint.pub`
-
-Публичный ключ нужно добавить на VPS:
-
-```bash
-mkdir -p ~/.ssh
-nano ~/.ssh/authorized_keys
-chmod 700 ~/.ssh
-chmod 600 ~/.ssh/authorized_keys
-```
-
-Приватный ключ нужно добавить в GitHub Secret `VPS_SSH_KEY`.
-
-Команда для вывода приватного ключа:
-
-```powershell
-Get-Content "$env:USERPROFILE\.ssh\github_actions_meetuppoint" -Raw
-```
-
-Команда для вывода публичного ключа:
-
-```powershell
-Get-Content "$env:USERPROFILE\.ssh\github_actions_meetuppoint.pub"
-```
-
-## 5. Ручное обновление на VPS
-
-Если автоматический деплой не сработал, можно обновить вручную:
+На VPS:
 
 ```bash
 cd ~/crm-test-integration
-git pull
-docker compose up -d --build
-docker compose exec backend python manage.py migrate
-docker compose ps
+docker compose -f docker-compose.prod.yml ps
 ```
 
-## 6. Проверка состояния контейнеров
-
-```bash
-cd ~/crm-test-integration
-docker compose ps
-```
-
-Все основные сервисы должны быть в статусе `Up`:
+В норме должны быть запущены:
 
 - `db`
 - `backend`
@@ -152,77 +80,150 @@ docker compose ps
 - `testing-web`
 - `web`
 
-## 7. Просмотр логов
+## 5. Просмотр логов
 
-CRM frontend / Caddy:
+Все логи:
 
 ```bash
-docker compose logs --tail=100 web
+docker compose -f docker-compose.prod.yml logs --tail=100
+```
+
+CRM frontend и Caddy:
+
+```bash
+docker compose -f docker-compose.prod.yml logs --tail=100 web
 ```
 
 CRM backend:
 
 ```bash
-docker compose logs --tail=100 backend
+docker compose -f docker-compose.prod.yml logs --tail=100 backend
 ```
 
 CRM automation worker:
 
 ```bash
-docker compose logs --tail=100 automation
+docker compose -f docker-compose.prod.yml logs --tail=100 automation
 ```
 
 Testing backend:
 
 ```bash
-docker compose logs --tail=100 testing-backend
+docker compose -f docker-compose.prod.yml logs --tail=100 testing-backend
 ```
 
-Все логи сразу:
-
-```bash
-docker compose logs --tail=100
-```
-
-## 8. Перезапуск сервисов
+## 6. Перезапуск сервисов
 
 Перезапустить все сервисы:
 
 ```bash
-docker compose restart
+docker compose -f docker-compose.prod.yml restart
 ```
 
 Перезапустить только CRM backend:
 
 ```bash
-docker compose restart backend
+docker compose -f docker-compose.prod.yml restart backend automation
 ```
 
 Перезапустить только frontend/Caddy:
 
 ```bash
-docker compose restart web
+docker compose -f docker-compose.prod.yml restart web testing-web
 ```
 
-## 9. Создать главного организатора
-
-Создать суперпользователя Django:
+После изменения `.env` лучше выполнить:
 
 ```bash
-docker compose exec backend python manage.py createsuperuser
+docker compose -f docker-compose.prod.yml up -d
 ```
 
-После этого можно войти в Django admin:
+Сборку добавлять не нужно. В production не используется `--build`.
+
+## 7. Ручное обновление production
+
+Если нужно обновить сервер вручную без запуска GitHub Actions:
+
+```bash
+cd ~/crm-test-integration
+git pull
+export IMAGE_PREFIX=ghcr.io/<github_owner>/<repo_name>
+export IMAGE_TAG=latest
+docker compose -f docker-compose.prod.yml pull
+docker compose -f docker-compose.prod.yml up -d
+docker compose -f docker-compose.prod.yml exec -T backend python manage.py migrate
+docker compose -f docker-compose.prod.yml ps
+```
+
+Если GHCR-пакеты приватные, сначала выполнить:
+
+```bash
+echo <GHCR_TOKEN> | docker login ghcr.io -u <GITHUB_USERNAME> --password-stdin
+```
+
+Token должен иметь право `read:packages`.
+
+## 8. Локальный или тестовый запуск со сборкой
+
+Если нужно собрать проект прямо на сервере или локально, используется обычный compose:
+
+```bash
+docker compose up -d --build
+```
+
+Для локального запуска без HTTPS:
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.local.yml up -d --build
+```
+
+Важно: этот вариант тяжелее по ресурсам, потому что Docker собирает образы из исходников.
+
+## 9. Очистка Docker на VPS
+
+Посмотреть использование места:
+
+```bash
+docker system df
+```
+
+Удалить неиспользуемые образы:
+
+```bash
+docker image prune -f
+```
+
+Удалить build cache:
+
+```bash
+docker builder prune -f
+```
+
+Полная очистка неиспользуемых Docker-ресурсов:
+
+```bash
+docker system prune -f
+```
+
+Не использовать `docker volume prune`, если не нужно удалить базы данных. Volumes хранят PostgreSQL-данные.
+
+## 10. Создание главного организатора
+
+Создать Django superuser:
+
+```bash
+docker compose -f docker-compose.prod.yml exec backend python manage.py createsuperuser
+```
+
+После этого можно зайти в админку:
 
 ```text
 https://meetuppoint.ru/admin/
 ```
 
-Чтобы сделать обычного пользователя главным организатором CRM, нужно в админке назначить ему CRM-роль `curator` или `admin`, в зависимости от текущей модели ролей проекта.
+## 11. Настройки VK
 
-## 10. Где менять настройки VK
-
-Все VK-настройки лежат в `.env` на VPS:
+VK-настройки находятся в `.env` на VPS:
 
 - `VK_ENABLED`
 - `VK_GROUP_ID`
@@ -234,31 +235,13 @@ https://meetuppoint.ru/admin/
 - `VK_ORG_CHAT_URL`
 - `VK_ORG_CHAT_PEER_ID`
 
-После изменения `.env` нужно перезапустить backend и automation:
+После изменения `.env` выполнить:
 
 ```bash
-docker compose up -d --build backend automation web
+docker compose -f docker-compose.prod.yml up -d
 ```
 
-## 11. Что делать, если сайт не открывается
-
-Проверить контейнеры:
-
-```bash
-docker compose ps
-```
-
-Проверить Caddy:
-
-```bash
-docker compose logs --tail=100 web
-```
-
-Проверить backend:
-
-```bash
-docker compose logs --tail=100 backend
-```
+## 12. Проверка DNS и HTTPS
 
 Проверить DNS:
 
@@ -267,8 +250,23 @@ nslookup meetuppoint.ru
 nslookup tests.meetuppoint.ru
 ```
 
-Оба домена должны возвращать IP:
+Оба домена должны возвращать IP VPS:
 
 ```text
 5.181.108.146
+```
+
+Caddy сам выпускает HTTPS-сертификаты, если DNS уже указывает на VPS и открыты порты `80` и `443`.
+
+Проверить порты:
+
+```bash
+sudo ufw status
+```
+
+Если firewall включен, открыть порты:
+
+```bash
+sudo ufw allow 80/tcp
+sudo ufw allow 443/tcp
 ```

@@ -1,0 +1,116 @@
+﻿services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    image: ${IMAGE_PREFIX:?Set IMAGE_PREFIX}-backend:${IMAGE_TAG:-latest}
+    restart: unless-stopped
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - django_static:/app/staticfiles
+
+  automation:
+    image: ${IMAGE_PREFIX:?Set IMAGE_PREFIX}-backend:${IMAGE_TAG:-latest}
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      RUN_MIGRATIONS: "0"
+      RUN_COLLECTSTATIC: "0"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - django_static:/app/staticfiles
+    command: >
+      sh -c "while true; do
+      python manage.py run_automation;
+      sleep $${AUTOMATION_INTERVAL_SECONDS:-60};
+      done"
+
+  testing-db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${TESTING_DB_NAME}
+      POSTGRES_USER: ${TESTING_DB_USER}
+      POSTGRES_PASSWORD: ${TESTING_DB_PASSWORD}
+    volumes:
+      - testing_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  testing-backend:
+    image: ${IMAGE_PREFIX:?Set IMAGE_PREFIX}-testing-backend:${IMAGE_TAG:-latest}
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: host=testing-db user=${TESTING_DB_USER} password=${TESTING_DB_PASSWORD} dbname=${TESTING_DB_NAME} port=5432 sslmode=disable
+      DB_HOST: testing-db
+      DB_PORT: "5432"
+      DB_NAME: ${TESTING_DB_NAME}
+      DB_USER: ${TESTING_DB_USER}
+      DB_PASSWORD: ${TESTING_DB_PASSWORD}
+      ADMIN_EMAIL: ${TESTING_ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${TESTING_ADMIN_PASSWORD}
+      JWT_SECRET: ${TESTING_JWT_SECRET}
+      JWT_TTL_HOURS: ${TESTING_JWT_TTL_HOURS:-24}
+      PORT: "8080"
+      CLIENT_URL: https://${TESTING_DOMAIN}
+      CRM_SERVICE: http://backend:8000
+      CRM_TOKEN: ${TESTING_SERVICE_TOKEN}
+    depends_on:
+      testing-db:
+        condition: service_healthy
+      backend:
+        condition: service_started
+
+  testing-web:
+    image: ${IMAGE_PREFIX:?Set IMAGE_PREFIX}-testing-web:${IMAGE_TAG:-latest}
+    restart: unless-stopped
+    depends_on:
+      - testing-backend
+
+  web:
+    image: ${IMAGE_PREFIX:?Set IMAGE_PREFIX}-web:${IMAGE_TAG:-latest}
+    restart: unless-stopped
+    environment:
+      APP_DOMAIN: ${APP_DOMAIN}
+      TESTING_DOMAIN: ${TESTING_DOMAIN}
+    depends_on:
+      - backend
+      - testing-web
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
+      - django_static:/srv/django-static:ro
+
+volumes:
+  postgres_data:
+  testing_postgres_data:
+  django_static:
+  caddy_data:
+  caddy_config:
