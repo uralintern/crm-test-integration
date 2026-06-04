@@ -195,3 +195,20 @@
   border-color: var(--wizard-accent) !important;
 }
 
+
+.wizard-actions .wizard-export-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 42px;
+  border-color: rgba(36, 97, 186, 0.34) !important;
+  color: var(--wizard-accent) !important;
+  background: #fff !important;
+}
+
+.wizard-actions .wizard-export-btn:hover,
+.wizard-actions .wizard-export-btn:focus {
+  border-color: var(--wizard-accent) !important;
+  color: var(--wizard-accent) !important;
+  background: rgba(100, 149, 237, 0.08) !important;
+}

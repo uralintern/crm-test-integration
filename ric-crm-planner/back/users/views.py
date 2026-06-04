@@ -86,6 +86,7 @@ from users.models import (
 )
 from users.automation_defaults import create_default_crm_automation_config
 from users.automation_engine import normalize_crm_automation_config_dict, run_crm_automation, run_due_crm_automation
+from users.exporters import build_event_applications_xlsx_response, build_event_details_docx_response
 
 TAG_AUTH = "Auth"
 TAG_USERS = "Users"
@@ -652,6 +653,37 @@ class EventDetailView(RetrieveUpdateDestroyAPIView):
         instance.is_archived = True
         instance.archived_at = timezone.now()
         instance.save(update_fields=("is_archived", "archived_at"))
+
+
+def _can_export_event(user, event_id: int) -> bool:
+    return has_curator_or_admin_role(user) or is_event_organizer(user, event_id)
+
+
+class EventDetailsExportView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, event_id: int, *args, **kwargs):
+        event = get_object_or_404(
+            Event.objects.select_related("leader", "specialization").prefetch_related(
+                "organizers",
+                "event_specializations__specialization",
+            ),
+            pk=event_id,
+        )
+        if not _can_export_event(request.user, event.id):
+            return Response({"detail": "Недостаточно прав для экспорта мероприятия."}, status=status.HTTP_403_FORBIDDEN)
+        return build_event_details_docx_response(event)
+
+
+class EventApplicationsExportView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, event_id: int, *args, **kwargs):
+        event = get_object_or_404(Event.objects.select_related("leader", "specialization"), pk=event_id)
+        if not _can_export_event(request.user, event.id):
+            return Response({"detail": "Недостаточно прав для экспорта заявок."}, status=status.HTTP_403_FORBIDDEN)
+        return build_event_applications_xlsx_response(event)
+
 
 @method_decorator(
     name="get",

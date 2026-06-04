@@ -13,6 +13,8 @@ from .views import (
     DirectionListCreateView,
     EmailConfirmationView,
     EventDetailView,
+    EventDetailsExportView,
+    EventApplicationsExportView,
     EventListCreateView,
     IntegrationApplicationTestingContextView,
     IntegrationApplicationStatusView,
@@ -54,6 +56,16 @@ urlpatterns = [
     path("profile/", ProfileView.as_view(), name="profile"),
     path("events/", EventListCreateView.as_view(), name="event-list-create"),
     path("events/<int:event_id>/", EventDetailView.as_view(), name="event-detail"),
+    path(
+        "events/<int:event_id>/export/details.docx/",
+        EventDetailsExportView.as_view(),
+        name="event-export-details-docx",
+    ),
+    path(
+        "events/<int:event_id>/export/applications.xlsx/",
+        EventApplicationsExportView.as_view(),
+        name="event-export-applications-xlsx",
+    ),
     path(
         "events/<int:event_id>/directions/",
         DirectionListCreateView.as_view(),

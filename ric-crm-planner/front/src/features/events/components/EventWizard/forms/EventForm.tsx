@@ -1,7 +1,9 @@
-import { CheckOutlined } from "@ant-design/icons";
+import { CheckOutlined, DownOutlined, DownloadOutlined } from "@ant-design/icons";
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
+import { Dropdown } from "antd";
+import type { MenuProps } from "antd";
 import { getSpecializations } from "../../../../../api/specializations";
-import { getEventById, removeEvent as archiveEvent, saveEvent as persistEvent } from "../../../api/events";
+import { exportEventApplicationsXlsx, exportEventDetailsDocx, getEventById, removeEvent as archiveEvent, saveEvent as persistEvent } from "../../../api/events";
 import { getRequests } from "../../../../requests/api/requests";
 import { getAllUsers } from "../../../../../storage/storage";
 import type { Event } from "../../../../../types/event";
@@ -55,6 +57,7 @@ export default function EventForm() {
   const [saveState, setSaveState] = useState<SaveState>("idle");
   const [savedSnapshot, setSavedSnapshot] = useState("");
   const [initialized, setInitialized] = useState(false);
+  const [exporting, setExporting] = useState(false);
 
   const editableEventId = mode === "edit" ? eventId : undefined;
   const organizers = useMemo(() => {
@@ -369,6 +372,7 @@ export default function EventForm() {
 
   const isSynced = saveState === "synced";
   const hasPersistedEvent = mode === "edit" || Boolean(loadedEvent?.id);
+  const currentEventId = Number(loadedEvent?.id ?? eventId ?? 0) || 0;
   const saveButtonLabel = isSynced
     ? mode === "edit"
       ? "Изменения сохранены"
@@ -376,6 +380,36 @@ export default function EventForm() {
     : hasPersistedEvent
       ? "Сохранить изменения"
       : "Сохранить мероприятие";
+
+  const exportMenuItems: MenuProps["items"] = [
+    { key: "applications-xlsx", label: "Экспорт заявок xlsx" },
+    { key: "details-docx", label: "Экспорт данных мероприятия docx" },
+  ];
+
+  const handleExport = async (kind: string) => {
+    if (!currentEventId) {
+      showToast("error", "Сначала сохраните мероприятие.");
+      return;
+    }
+
+    setExporting(true);
+    try {
+      if (kind === "applications-xlsx") {
+        await exportEventApplicationsXlsx(currentEventId);
+      } else {
+        await exportEventDetailsDocx(currentEventId);
+      }
+      showToast("success", "Файл экспорта сформирован");
+    } catch (error) {
+      showToast("error", extractErrorMessage(error));
+    } finally {
+      setExporting(false);
+    }
+  };
+
+  const handleExportMenuClick: NonNullable<MenuProps["onClick"]> = ({ key }) => {
+    void handleExport(String(key));
+  };
 
   return (
     <div className="wizard-form">
@@ -534,6 +568,21 @@ export default function EventForm() {
           <AppButton className="danger-outline" onClick={() => setConfirmOpen(true)} style={{ marginRight: "auto" }}>
             Удалить
           </AppButton>
+        )}
+
+
+        {mode === "edit" && (
+          <Dropdown
+            menu={{ items: exportMenuItems, onClick: handleExportMenuClick }}
+            trigger={["hover"]}
+            disabled={exporting || !currentEventId}
+          >
+            <AppButton className="secondary wizard-export-btn" type="button" disabled={exporting || !currentEventId}>
+              <DownloadOutlined />
+              {exporting ? "Экспорт..." : "Экспорт"}
+              <DownOutlined />
+            </AppButton>
+          </Dropdown>
         )}
 
         <AppButton className="primary" onClick={handleSave} type="button" disabled={isSynced}>

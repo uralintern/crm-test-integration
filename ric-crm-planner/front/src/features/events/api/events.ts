@@ -552,3 +552,13 @@ export async function restoreEvent(id: number): Promise<Event | undefined> {
     return mapEventToUi({ ...extension, id: eventId, archived: false, archivedAt: undefined });
   }
 }
+
+export async function exportEventApplicationsXlsx(eventId: number): Promise<void> {
+  if (USE_MOCK) throw new Error("Экспорт заявок доступен только при работе с backend.");
+  await client.download(`/api/users/events/${eventId}/export/applications.xlsx/`, `event-${eventId}-applications.xlsx`);
+}
+
+export async function exportEventDetailsDocx(eventId: number): Promise<void> {
+  if (USE_MOCK) throw new Error("Экспорт мероприятия доступен только при работе с backend.");
+  await client.download(`/api/users/events/${eventId}/export/details.docx/`, `event-${eventId}-details.docx`);
+}

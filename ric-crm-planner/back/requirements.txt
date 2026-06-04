@@ -8,3 +8,5 @@ gunicorn==22.0.0
 setuptools==80.9.0
 channels==4.1.0
 daphne==4.1.2
+openpyxl==3.1.5
+python-docx==1.1.2

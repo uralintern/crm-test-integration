@@ -207,6 +207,75 @@ async function login(email: string, password: string) {
   return info;
 }
 
+
+function parseFilenameFromDisposition(disposition: string | null, fallback: string) {
+  if (!disposition) return fallback;
+
+  const encodedMatch = disposition.match(/filename\*=UTF-8''([^;]+)/i);
+  if (encodedMatch?.[1]) {
+    try {
+      return decodeURIComponent(encodedMatch[1]);
+    } catch {
+      return encodedMatch[1];
+    }
+  }
+
+  const plainMatch = disposition.match(/filename="?([^";]+)"?/i);
+  return plainMatch?.[1] || fallback;
+}
+
+async function requestBlob(path: string, options: RequestOptions = {}, fallbackFilename = "download") {
+  if (USE_MOCK) throw new Error("client.requestBlob: called in mock mode.");
+
+  const url = API_BASE + path;
+  const headers = new Headers(options.headers ?? {});
+  const init: RequestOptions = {
+    ...options,
+    credentials: "include",
+    headers,
+  };
+
+  const method = (init.method || "GET").toUpperCase();
+  if (["POST", "PUT", "PATCH", "DELETE"].includes(method)) {
+    const csrf = getCookie("csrftoken");
+    if (csrf) headers.set("X-CSRFToken", csrf);
+  }
+
+  let res = await fetch(url, init as RequestInit);
+  if (res.status === 401 && localStorage.getItem(LS_CURRENT_USER)) {
+    const ok = await doRefresh();
+    if (ok) res = await fetch(url, init as RequestInit);
+  }
+
+  if (!res.ok) {
+    const text = await res.text().catch(() => "");
+    try {
+      const data = text ? JSON.parse(text) : null;
+      throw data || { message: res.statusText || "Request failed" };
+    } catch (error) {
+      if (error && typeof error === "object") throw error;
+      throw { message: text || res.statusText || "Request failed" };
+    }
+  }
+
+  return {
+    blob: await res.blob(),
+    filename: parseFilenameFromDisposition(res.headers.get("Content-Disposition"), fallbackFilename),
+  };
+}
+
+async function download(path: string, fallbackFilename = "download") {
+  const { blob, filename } = await requestBlob(path, { method: "GET" }, fallbackFilename);
+  const href = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = href;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(href);
+}
+
 async function logout() {
   if (USE_MOCK) throw new Error("client.logout: mock mode");
   await post("/api/users/logout/");
@@ -217,6 +286,8 @@ export default {
   API_BASE,
   USE_MOCK,
   request,
+  requestBlob,
+  download,
   get,
   post,
   put,
