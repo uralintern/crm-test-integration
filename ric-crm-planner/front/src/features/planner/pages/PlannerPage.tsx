@@ -398,7 +398,7 @@ export default function PlannerPage() {
 
     socket.onmessage = (event) => {
       const message = parsePlannerTeamDeskSocketMessage(String(event.data));
-      if (!message || message.type !== "desk.updated" || Number(message.teamId) !== Number(activeTeamId)) return;
+      if (!message || Number(message.teamId) !== Number(activeTeamId)) return;
 
       skipNextPlannerSaveRef.current = true;
       setState((prev) => mergeTeamDeskIntoPlannerState(prev, message.desk));

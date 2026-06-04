@@ -1,8 +1,11 @@
 from copy import deepcopy
+from datetime import timedelta
 
 from django.db.models import Q
 from django.db import transaction
 from django.utils.decorators import method_decorator
+from django.utils import timezone
+from django.utils.dateparse import parse_datetime
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from rest_framework.exceptions import PermissionDenied
@@ -403,6 +406,52 @@ class PlannerStateCompatView(RetrieveUpdateAPIView):
                 broadcast_team_desk_update(desk)
 
 
+
+def _parse_client_updated_at(value):
+    if not value:
+        return None
+    parsed = parse_datetime(str(value))
+    if parsed is None:
+        return None
+    if timezone.is_naive(parsed):
+        parsed = timezone.make_aware(parsed, timezone.get_current_timezone())
+    return parsed
+
+
+def _is_stale_team_desk_update(desk: TeamPlannerDesk, incoming_updated_at) -> bool:
+    client_updated_at = _parse_client_updated_at(incoming_updated_at)
+    if client_updated_at is None or not desk.updated_at:
+        return False
+    return client_updated_at < desk.updated_at - timedelta(milliseconds=10)
+
+
+def _merge_json_items_by_id(current_items, incoming_items):
+    result = deepcopy(current_items) if isinstance(current_items, list) else []
+    seen_ids = {
+        _to_int(item.get("id"))
+        for item in result
+        if isinstance(item, dict) and _to_int(item.get("id")) is not None
+    }
+    for item in incoming_items if isinstance(incoming_items, list) else []:
+        if not isinstance(item, dict):
+            continue
+        item_id = _to_int(item.get("id"))
+        if item_id is None or item_id not in seen_ids:
+            result.append(deepcopy(item))
+            if item_id is not None:
+                seen_ids.add(item_id)
+    return result
+
+
+def _merge_stale_team_desk_payload(desk: TeamPlannerDesk, validated_data):
+    if "parent_tasks" in validated_data:
+        validated_data["parent_tasks"] = _merge_json_items_by_id(desk.parent_tasks, validated_data.get("parent_tasks"))
+    if "subtasks" in validated_data:
+        validated_data["subtasks"] = _merge_json_items_by_id(desk.subtasks, validated_data.get("subtasks"))
+    for field in ("team_name", "curator_id", "member_ids", "columns"):
+        if field in validated_data:
+            validated_data[field] = deepcopy(getattr(desk, field))
+
 @method_decorator(
     name="get",
     decorator=swagger_auto_schema(
@@ -471,6 +520,10 @@ class TeamPlannerDeskDetailView(RetrieveUpdateAPIView):
         return desk
 
     def perform_update(self, serializer):
+        incoming_updated_at = self.request.data.get("updated_at") or self.request.data.get("updatedAt")
+        if _is_stale_team_desk_update(serializer.instance, incoming_updated_at):
+            _merge_stale_team_desk_payload(serializer.instance, serializer.validated_data)
+
         workspace = PlannerWorkspaceState.objects.order_by("id").first()
         previous_state = {
             "teams": deepcopy(workspace.teams) if workspace and isinstance(workspace.teams, list) else [],

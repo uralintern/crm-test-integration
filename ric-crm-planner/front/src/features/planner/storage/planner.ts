@@ -1,4 +1,4 @@
-﻿import seedPlannerState from "../../../mock-data/planner-state.json";
+import seedPlannerState from "../../../mock-data/planner-state.json";
 import type { PlannerParentTask, PlannerState, PlannerSubtask, PlannerTeam } from "../../../types/planner";
 
 const LS_PLANNER = "ric_planner_state_v1";
@@ -81,7 +81,9 @@ export function writePlannerState(state: PlannerState) {
 }
 
 export function nextPlannerId(items: Array<{ id: number }>) {
-  return items.reduce((acc, item) => Math.max(acc, Number(item.id) || 0), 0) + 1;
+  const maxExistingId = items.reduce((acc, item) => Math.max(acc, Number(item.id) || 0), 0);
+  const generatedId = Date.now() * 1000 + Math.floor(Math.random() * 1000);
+  return Math.max(maxExistingId + 1, generatedId);
 }
 
 export function removeTeamCascade(state: PlannerState, teamId: number): PlannerState {

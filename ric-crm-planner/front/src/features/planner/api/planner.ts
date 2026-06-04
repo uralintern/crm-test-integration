@@ -377,6 +377,7 @@ function toBackendTeamDesk(state: PlannerState, teamId: number) {
     team_name: team?.name ?? "",
     curator_id: team?.curatorId ?? null,
     member_ids: team?.memberIds ?? [],
+    updated_at: team?.updatedAt ?? "",
     parent_tasks: state.parentTasks.filter((task) => Number(task.teamId) === Number(teamId)),
     subtasks: state.subtasks.filter((subtask) => Number(subtask.teamId) === Number(teamId)),
     columns: state.columns,
