@@ -401,7 +401,8 @@ export async function savePlannerWorkspaceState(state: PlannerState): Promise<Pl
   if (USE_MOCK) return state;
   try {
     await client.patch("/api/users/planner/", toBackendPlannerWorkspace(state));
-  } catch {
+  } catch (error) {
+    console.error("Planner workspace save failed", error);
   }
   return state;
 }
@@ -411,7 +412,8 @@ export async function savePlannerTeamDesk(state: PlannerState, teamId: number): 
   if (USE_MOCK) return state;
   try {
     await client.put(`/api/planner/teams/${teamId}/desk/`, toBackendTeamDesk(state, teamId));
-  } catch {
+  } catch (error) {
+    console.error("Planner team desk save failed", error);
   }
   return state;
 }
