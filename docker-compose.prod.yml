@@ -1,8 +1,4 @@
 services:
-  redis:
-    image: redis:7-alpine
-    restart: unless-stopped
-
   db:
     image: postgres:16-alpine
     restart: unless-stopped
@@ -25,13 +21,9 @@ services:
     restart: unless-stopped
     env_file:
       - .env
-    environment:
-      REDIS_URL: redis://redis:6379/0
     depends_on:
       db:
         condition: service_healthy
-      redis:
-        condition: service_started
     volumes:
       - django_static:/app/staticfiles
 
@@ -41,14 +33,11 @@ services:
     env_file:
       - .env
     environment:
-      REDIS_URL: redis://redis:6379/0
       RUN_MIGRATIONS: "0"
       RUN_COLLECTSTATIC: "0"
     depends_on:
       db:
         condition: service_healthy
-      redis:
-        condition: service_started
     volumes:
       - django_static:/app/staticfiles
     command: >
