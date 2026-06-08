@@ -22,6 +22,9 @@ from users.models import (
     ROLE_PROJECTANT,
     Specialization,
     Status,
+    Test,
+    TestResult,
+    TestSession,
 )
 from users.automation_engine import run_crm_automation, run_due_crm_automation
 
@@ -338,6 +341,102 @@ class CRMContractTests(TestCase):
         self.assertEqual(result["changed"], 1)
         application.refresh_from_db()
         self.assertEqual(application.status.name, failed_status.name)
+
+
+    def test_crm_robot_condition_can_use_testing_score(self):
+        submitted_status = Status.objects.get_or_create(name="Submitted")[0]
+        high_score_status = Status.objects.get_or_create(name="High score")[0]
+        application = Application.objects.create(
+            user=self.projectant,
+            event=self.event,
+            direction=self.direction,
+            message="Ready",
+            date_sub=timezone.now(),
+            date_end=self.event.end_app_date,
+            status=submitted_status,
+        )
+        test = Test.objects.create(
+            name="Qualification test",
+            description="",
+            entry=0,
+            event=self.event,
+            specialization=None,
+            passing_score=80,
+            time_limit=60,
+            is_active=True,
+            question_count=10,
+            test_type="online",
+        )
+        session = TestSession.objects.create(
+            session_id="score-session",
+            application=application,
+            test=test,
+            user=self.projectant,
+            expires_at=timezone.now() + timedelta(hours=1),
+            status="completed",
+        )
+        application.test_session_id = session.session_id
+        application.save(update_fields=["test_session_id"])
+        TestResult.objects.create(
+            score=85,
+            max_score=100,
+            is_passed=True,
+            completed_at=timezone.now(),
+            started_at=timezone.now() - timedelta(minutes=10),
+            application=application,
+            session=session,
+            test=test,
+            user=self.projectant,
+            correct_answers=8,
+            total_questions=10,
+            percentage=85,
+            time_spent_seconds=600,
+            result_status="passed",
+            detailed_results="",
+        )
+        CRMAutomationConfig.objects.create(
+            scope="crm",
+            event=self.event,
+            stages=[
+                {"id": "submitted", "title": submitted_status.name, "description": ""},
+            ],
+            triggers=[],
+            robots=[
+                {
+                    "id": "move-high-score",
+                    "stageId": "submitted",
+                    "targetStatus": high_score_status.name,
+                    "title": "Move by score",
+                    "description": "",
+                    "action": "status.change",
+                    "enabled": True,
+                    "settings": {
+                        "runMode": "queue",
+                        "timing": "immediate",
+                        "delayMinutes": 0,
+                        "condition": {
+                            "mode": "all",
+                            "rules": [
+                                {
+                                    "id": "score-condition",
+                                    "field": "testing_result",
+                                    "operator": "greater_or_equal",
+                                    "value": "80",
+                                }
+                            ],
+                        },
+                    },
+                    "subject": "",
+                    "message": "",
+                }
+            ],
+        )
+
+        result = run_crm_automation(application, "application.created")
+
+        self.assertEqual(result["changed"], 1)
+        application.refresh_from_db()
+        self.assertEqual(application.status.name, high_score_status.name)
 
 
     @patch("users.automation_engine.send_planner_invite")

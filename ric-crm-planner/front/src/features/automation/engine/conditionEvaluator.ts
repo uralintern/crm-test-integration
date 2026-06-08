@@ -28,6 +28,14 @@ function getCustomField(request: ReqType, keys: string[]) {
   return undefined;
 }
 
+function getRequestValue(request: ReqType, keys: string[]) {
+  const source = request as unknown as Record<string, unknown>;
+  for (const key of keys) {
+    if (typeof source[key] !== "undefined") return source[key];
+  }
+  return undefined;
+}
+
 function getConditionFieldValue(rule: AutomationConditionRule, request: ReqType, event?: Event) {
   switch (rule.field) {
     case "status":
@@ -49,7 +57,10 @@ function getConditionFieldValue(rule: AutomationConditionRule, request: ReqType,
     case "application_date":
       return request.createdAt;
     case "testing_result":
-      return getCustomField(request, ["testing_result", "результат тестирования", "тестирование"]);
+      return (
+        getRequestValue(request, ["testingResult", "testing_result", "testScore", "test_score", "score"]) ??
+        getCustomField(request, ["testing_result", "результат тестирования", "тестирование"])
+      );
     case "responsible":
       return event?.organizer || event?.leader || event?.organizerIds?.join(", ");
     default:

@@ -175,10 +175,47 @@ def application_display_name(application: Application) -> str:
     return display_name or application.user.get_full_name() or application.user.email or str(application.user)
 
 
+def user_display_name(user) -> str:
+    if not user:
+        return ""
+    display_name = f"{user.last_name or ''} {user.first_name or ''}".strip()
+    return display_name or user.get_full_name() or user.email or str(user)
+
+
+def application_profile(application: Application):
+    try:
+        return application.user.crm_profile
+    except Exception:
+        return None
+
+
+def latest_test_result(application: Application):
+    current_session_id = normalized_text(application.test_session_id)
+    if current_session_id:
+        result = (
+            application.test_results.select_related("session")
+            .filter(session__session_id=current_session_id)
+            .order_by("-completed_at", "-id")
+            .first()
+        )
+        if result:
+            return result
+    return application.test_results.order_by("-completed_at", "-id").first()
+
+
 def event_context(event: CRMAutomationEvent) -> dict[str, Any]:
     application = event.application
     crm_event = application.event
-    return {
+    profile = application_profile(application)
+    custom_fields = application.custom_fields if isinstance(application.custom_fields, dict) else {}
+    responsible = crm_event.leader if crm_event else None
+    test_result = latest_test_result(application)
+    test_score = test_result.score if test_result else ""
+    test_max_score = test_result.max_score if test_result else ""
+    test_percentage = float(test_result.percentage) if test_result else ""
+    test_passed = test_result.is_passed if test_result else ""
+    test_result_status = test_result.result_status if test_result else ""
+    context = {
         "id": application.id,
         "applicationId": application.id,
         "eventCode": event.code,
@@ -193,11 +230,35 @@ def event_context(event: CRMAutomationEvent) -> dict[str, Any]:
         "project": application.project.name if application.project_id else "",
         "projectId": application.project_id,
         "specialization": application.specialization.name if application.specialization_id else "",
+        "university": getattr(profile, "university", "") if profile else "",
+        "course": getattr(profile, "course", "") if profile else "",
+        "vk": getattr(profile, "vk", "") if profile else "",
+        "application_date": application.date_sub.isoformat() if application.date_sub else "",
+        "applicationDate": application.date_sub.isoformat() if application.date_sub else "",
+        "responsible": user_display_name(responsible),
+        "responsibleId": responsible.id if responsible else "",
         "message": application.message,
         "comment": application.comment,
         "testsAssigned": application.tests_assigned,
         "isApproved": application.is_approved,
+        "testing_result": test_score,
+        "testingResult": test_score,
+        "test_score": test_score,
+        "testScore": test_score,
+        "max_score": test_max_score,
+        "maxScore": test_max_score,
+        "testing_percentage": test_percentage,
+        "testingPercentage": test_percentage,
+        "test_passed": test_passed,
+        "testPassed": test_passed,
+        "result_status": test_result_status,
+        "resultStatus": test_result_status,
     }
+    for key, value in custom_fields.items():
+        normalized_key = normalized_text(key)
+        if normalized_key and normalized_key not in context:
+            context[normalized_key] = value
+    return context
 
 
 def condition_value(context: dict[str, Any], field: str) -> Any:
