@@ -64,10 +64,6 @@ function transformSpecial(obj: unknown): unknown {
   if (typeof res.curator === "number" || typeof res.curator === "string") {
     res.curator = Number(res.curator);
   }
-  if (typeof res.message !== "undefined" && !("about" in res)) {
-    res.about = res.message;
-    delete res.message;
-  }
   if (typeof res.dateSub !== "undefined" && !("createdAt" in res)) {
     res.createdAt = res.dateSub;
     delete res.dateSub;
@@ -297,6 +293,5 @@ export default {
   logout,
   doRefresh,
 };
-
 
 
