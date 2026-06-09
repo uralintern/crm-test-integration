@@ -319,7 +319,9 @@ export default function EventsPage() {
             });
 
             setPendingRequest(created);
-            setTestingPromptOpen(true);
+            if (client.USE_MOCK || created.hasAvailableTests) {
+              setTestingPromptOpen(true);
+            }
             showToast("success", "Заявка отправлена");
             await refreshRequests();
             return true;

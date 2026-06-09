@@ -844,6 +844,7 @@ class ApplicationSerializer(ModelSerializer):
     projectTitle = serializers.CharField(source="project.name", read_only=True)
     createdAt = serializers.DateTimeField(source="date_sub", read_only=True)
     dateSub = serializers.DateTimeField(source="date_sub", read_only=True)
+    hasAvailableTests = serializers.SerializerMethodField()
 
     class Meta:
         model = Application
@@ -886,6 +887,7 @@ class ApplicationSerializer(ModelSerializer):
             "tests_assigned",
             "tests_assigned_at",
             "test_session_id",
+            "hasAvailableTests",
             "custom_fields",
         )
         read_only_fields = ("id", "user", "direction", "event", "date_sub")
@@ -914,6 +916,14 @@ class ApplicationSerializer(ModelSerializer):
     def get_vk(self, obj):
         profile = self._get_profile(obj)
         return getattr(profile, "vk", "") or ""
+
+    def get_hasAvailableTests(self, obj):
+        queryset = Test.objects.filter(is_active=True)
+        if obj.event_id:
+            queryset = queryset.filter(Q(event__isnull=True) | Q(event_id=obj.event_id))
+        if obj.specialization_id:
+            queryset = queryset.filter(Q(specialization__isnull=True) | Q(specialization_id=obj.specialization_id))
+        return queryset.exists()
 
     def to_representation(self, instance):
         data = super().to_representation(instance)

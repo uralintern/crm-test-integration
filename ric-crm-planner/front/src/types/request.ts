@@ -19,4 +19,5 @@ export interface Request {
   statusId?: number;
   ownerId?: number;
   createdAt?: string;
+  hasAvailableTests?: boolean;
 }
