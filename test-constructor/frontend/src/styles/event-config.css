@@ -803,3 +803,43 @@ body {
     overflow: hidden !important;
     text-overflow: ellipsis !important;
 }
+
+.time-checkbox {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.time-checkbox input {
+    display: none;
+}
+
+.time-checkbox .checkmark {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #2f4156;
+    border-radius: 4px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.time-checkbox input:checked + .checkmark {
+    background: #2f4156;
+}
+
+.time-checkbox input:checked + .checkmark::after {
+    content: '✓';
+    color: #f0e8d5;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.time-box-unlimited {
+    padding: 18px 0 2px;
+    text-align: center;
+    color: #2f4156;
+    font-size: 18px;
+    font-weight: 600;
+}

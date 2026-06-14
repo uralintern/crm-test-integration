@@ -41,53 +41,43 @@ export const eventsAPI = {
 };
 
 export const candidatesAPI = {
-    getCandidates: () =>
-        api.get('/api/manager/users'),
-
-    getCandidateDetails: (candidateId) =>
-        api.get(`/api/manager/users/${candidateId}`),
+    getCandidates: () => api.get('/api/manager/users'),
+    getCandidateDetails: (candidateId) => api.get(`/api/manager/users/${candidateId}`),
 };
 
 export const authAPI = {
     register: (name, surname, email, password) =>
         api.post('/register', { name, surname, email, password }),
-
-    login: (email, password) =>
-        api.post('/login', { email, password }),
-
-    ssoExchange: (ticket) =>
-        api.post('/sso/exchange', { ticket }),
+    login: (email, password) => api.post('/login', { email, password }),
+    ssoExchange: (ticket) => api.post('/sso/exchange', { ticket }),
 };
 
 export const testsAPI = {
-    createTest: (testData) =>
-        api.post('/api/manager/tests', testData),
-
-    getTests: () =>
-        api.get('/api/manager/tests'),
-
-    getTest: (testId) =>
-        api.get(`/api/manager/tests/${testId}`),
-
-    updateTest: (testId, testData) =>
-        api.put(`/api/manager/tests/${testId}`, testData),
-
-    deleteTest: (testId) =>
-        api.post(`/api/manager/tests/delete/${testId}`),
-
-    getTestAttempts: (testId) =>
-        api.get(`/api/manager/tests/${testId}/attempts`),
-
-    getAttempts: () =>
-        api.get('/api/intern/tests'),
-
+    createTest: (testData) => api.post('/api/manager/tests', testData),
+    getTests: () => api.get('/api/manager/tests'),
+    getTest: (testId) => api.get(`/api/manager/tests/${testId}`),
+    updateTest: (testId, testData) => api.put(`/api/manager/tests/${testId}`, testData),
+    deleteTest: (testId) => api.post(`/api/manager/tests/delete/${testId}`),
+    getTestAttempts: (testId) => api.get(`/api/manager/tests/${testId}/attempts`),
+    getAttempts: () => api.get('/api/intern/tests'),
+    getTestSelection: (eventId, specializationId, applicationId) =>
+        api.get('/api/intern/tests/selection', {
+            params: {
+                event_id: eventId,
+                ...(specializationId ? { specialization_id: specializationId } : {}),
+                ...(applicationId ? { application_id: applicationId } : {}),
+            },
+        }),
     startAttempt: (link, applicationId) =>
         api.get(`/api/intern/tests/${link}`, {
             params: applicationId ? { application_id: applicationId } : {},
         }),
+    finishAttempt: (attemptData) => api.post('/api/intern/attempt/finish', attemptData),
+};
 
-    finishAttempt: (attemptData) =>
-        api.post('/api/intern/attempt/finish', attemptData),
+export const internAPI = {
+    getUserEvents: () => api.get('/api/intern/users/events'),
+    createUserEvent: (eventData) => api.post('/api/intern/users/events', eventData),
 };
 
 export default api;

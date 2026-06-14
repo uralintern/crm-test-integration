@@ -5,7 +5,7 @@ import DeleteIconSub from "../../assets/delete_sub.svg?react";
 import ScoreInput2 from "../details/ScoreInput2.jsx";
 import RatioIcon from "../../assets/Ratio.svg";
 
-function MatchingQuestion({ question, updateQuestion, deleteQuestion }) {
+function MatchingQuestion({ question, updateQuestion, deleteQuestion, onChangeType }) {
     const {
         attributes,
         listeners,
@@ -37,6 +37,10 @@ function MatchingQuestion({ question, updateQuestion, deleteQuestion }) {
         updateQuestion(question.id, "rows", newRows);
     };
 
+    const handleChangeType = () => {
+        onChangeType?.(question.id);
+    };
+
     return (
         <div ref={setNodeRef} style={style} className="question-block matching">
             <div className = "">
@@ -48,7 +52,6 @@ function MatchingQuestion({ question, updateQuestion, deleteQuestion }) {
                         </div>
                     </span>
 
-
                     <div className="q-icons">
                             <span onClick={() => deleteQuestion(question.id)}>
                                 <DeleteIcon style={{ width: '24px', height: '24px' }}/>
@@ -56,7 +59,10 @@ function MatchingQuestion({ question, updateQuestion, deleteQuestion }) {
                     </div>
                 </div>
                 <div className="q-header1">
-                     <span>
+                     <span
+                         onClick={handleChangeType}
+                         style={{ cursor: "pointer" }}
+                     >
                              <img
                                  src={RatioIcon}
                                  alt="Ratio"

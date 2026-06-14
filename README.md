@@ -179,15 +179,3 @@ docker builder prune -f
 
 - `DEPLOY_INTEGRATION.md` - установка Docker, настройка VPS, DNS, `.env`, GitHub Secrets и CI/CD.
 - `MAINTENANCE.md` - обновление сервиса, ручной deploy, логи, бэкапы, чистка места, передача проекта.
-
-## Передача проекта другому владельцу
-
-Коротко:
-
-1. Передать репозиторий через GitHub `Settings -> General -> Danger Zone -> Transfer ownership`.
-2. Новый владелец заново создает GitHub Secrets.
-3. На VPS проверить доступ к новому репозиторию и GHCR.
-4. Если изменился GitHub owner/repo, вручную обновить `IMAGE_PREFIX` только для ручного деплоя. В CI/CD он вычисляется автоматически.
-5. `.env` передается отдельно безопасным способом, не через GitHub.
-
-Подробно это описано в `MAINTENANCE.md`.

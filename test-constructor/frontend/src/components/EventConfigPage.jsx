@@ -23,6 +23,7 @@ function createDefaultConfig(selectedSpec = '') {
         criteria: DEFAULT_CRITERIA.map((item) => ({ ...item, extraTests: [...item.extraTests] })),
         failMessage: '',
         time: { hours: 1, minutes: 0, seconds: 0 },
+        isTimeEnabled: true,
         shareLink: '',
     };
 }
@@ -100,7 +101,8 @@ function configFromBackend(config, defaultSpec) {
             ...extraRows,
         ],
         failMessage: config.failText || '',
-        time: secondsToTime(config.timeLimit || 3600),
+        time: secondsToTime(config.timeLimit),
+        isTimeEnabled: config.timeLimit > 0,
         shareLink: config.testLink ? `${window.location.origin}/test/${config.testLink}` : '',
     };
 }
@@ -313,7 +315,7 @@ export default function EventConfigPage() {
             test_id: Number(testId),
             success_text: successText,
             fail_text: config.failMessage || 'Тест не пройден',
-            time_limit: timeToSeconds(config.time),
+            time_limit: config.isTimeEnabled ? timeToSeconds(config.time) : 0,
             threshold: mainThreshold,
             extra_threshold: extraThreshold,
         };
@@ -428,6 +430,7 @@ export default function EventConfigPage() {
                             selectedTests={currentConfig.criteria.flatMap(row => row.extraTests || [])}
                             onDelete={handleDeleteCriteria}
                             onDeleteTest={handleDeleteTest}
+                            maxScore={Number(tests.find(test => Number(test.id) === Number(selectedTestId))?.max_score || 100)}
                         />
                         <div className="fail-message-label">
                             <img src={massageIcon} alt="" className="fail-message-icon" />
@@ -444,6 +447,8 @@ export default function EventConfigPage() {
                         <TimeBox
                             time={currentConfig.time}
                             setTime={(newTime) => updateCurrentConfig('time', newTime)}
+                            isTimeEnabled={currentConfig.isTimeEnabled}
+                            setIsTimeEnabled={(value) => updateCurrentConfig('isTimeEnabled', value)}
                         />
                         <ShareLinkBox link={currentConfig.shareLink} />
                     </>

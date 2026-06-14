@@ -13,6 +13,7 @@ type Attempt struct {
 	StartTime     time.Time `gorm:"not null"`
 	EndTime       *time.Time
 	Score         float64 `gorm:"default:0"`
+	MaxScore      int     `gorm:"default:0"`
 	Passed        bool    `gorm:"default:false"`
 	// Relations
 	User        User        `gorm:"foreignKey:InternID;constraint:OnDelete:CASCADE;OnUpdate:CASCADE"`

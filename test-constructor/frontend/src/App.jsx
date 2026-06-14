@@ -6,6 +6,8 @@ import Login from "./pages/Login.jsx";
 import Tests from "./pages/Test.jsx";
 import CreateTest from "./pages/CreateTest.jsx";
 import MyTestStudent from "./pages/MyTestStudent.jsx";
+import StudentHome from "./pages/StudentHome.jsx";
+import TestPreviewPage from "./pages/TestPreviewPage.jsx";
 import StatisticsTest from "./pages/StatisticsTest.jsx";
 import PassingTestStudent from "./pages/PassingTestStudent.jsx";
 import SSO from "./pages/SSO.jsx";
@@ -24,7 +26,10 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/sso" element={<SSO />} />
 
+                <Route path="/StudentHome" element={<StudentHome />} />
+                <Route path="/student-home" element={<StudentHome />} />
                 <Route path="/myTestStudent" element={<MyTestStudent />} />
+                <Route path="/test-preview/:test_link" element={<TestPreviewPage />} />
                 <Route path="/statisticsTest" element={<StatisticsTest />} />
                 <Route path="/passingTestStudent" element={<PassingTestStudent />} />
                 <Route path="/statistics/:testId" element={<StatisticsTest />} />
@@ -48,4 +53,3 @@ function App() {
 }
 
 export default App;
-

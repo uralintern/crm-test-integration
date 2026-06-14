@@ -50,6 +50,7 @@ type FinishAttemptResponse struct {
 	Score         int    `json:"score"`
 	MaxTestPoints int    `json:"max_test_points"`
 	Passed        bool   `json:"passed"`
+	AllCompleted  bool   `json:"all_completed"`
 }
 
 const (
@@ -134,6 +135,7 @@ func FinishAttempt(w http.ResponseWriter, r *http.Request) {
 	now := time.Now()
 	attempt.EndTime = &now
 	attempt.Score = float64(userPoints)
+	attempt.MaxScore = maxPoints
 
 	passed := float64(userPoints) >= attempt.EventConfig.Threshold
 	attempt.Passed = passed
@@ -147,8 +149,9 @@ func FinishAttempt(w http.ResponseWriter, r *http.Request) {
 		resultText = attempt.EventConfig.SuccessText
 	}
 
+	applicationStatus := ""
 	if attempt.ApplicationID > 0 {
-		applicationStatus := resolveCRMApplicationStatus(attempt, passed)
+		applicationStatus = resolveCRMApplicationStatus(attempt)
 		crmResult := CRMResultData{
 			SessionID:         fmt.Sprintf("%d", attempt.AttemptID),
 			TestID:            fmt.Sprintf("%d", attempt.CRMTestID),
@@ -180,24 +183,39 @@ func FinishAttempt(w http.ResponseWriter, r *http.Request) {
 		Score:         userPoints,
 		MaxTestPoints: maxPoints,
 		Passed:        passed,
+		AllCompleted:  applicationStatus != "",
 	}
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(response)
 }
 
-func resolveCRMApplicationStatus(attempt models.Attempt, passed bool) string {
+func resolveCRMApplicationStatus(attempt models.Attempt) string {
 	if attempt.ApplicationID == 0 {
 		return ""
 	}
 
-	if passed {
-		return crmStatusChatLinkSent
+	var configs []models.EventConfig
+	query := database.DB.
+		Preload("ExtraThreshold").
+		Where("event_id = ?", attempt.EventConfig.EventID)
+	if attempt.EventConfig.SpecializationID > 0 {
+		query = query.Where("specialization_id = ?", attempt.EventConfig.SpecializationID)
+	}
+	if err := query.Find(&configs).Error; err != nil {
+		fmt.Printf("Event config lookup failed: %v\n", err)
+		return ""
 	}
 
-	configIDs := getRequiredConfigIDs(attempt.EventConfig)
-	if len(configIDs) == 0 {
-		return crmStatusTestingFailed
+	configByTestID := make(map[uint]models.EventConfig, len(configs))
+	extraTestIDs := make(map[uint]struct{})
+	configIDs := make([]uint, 0, len(configs))
+	for _, config := range configs {
+		configByTestID[config.TestID] = config
+		configIDs = append(configIDs, config.ConfigID)
+		for _, rule := range config.ExtraThreshold {
+			extraTestIDs[rule.TestID] = struct{}{}
+		}
 	}
 
 	var finishedAttempts []models.Attempt
@@ -208,34 +226,70 @@ func resolveCRMApplicationStatus(attempt models.Attempt, passed bool) string {
 		return ""
 	}
 
-	finishedConfigIDs := make(map[uint]struct{}, len(finishedAttempts))
+	attemptByConfigID := make(map[uint]models.Attempt, len(finishedAttempts))
 	for _, finishedAttempt := range finishedAttempts {
-		if finishedAttempt.Passed {
-			return crmStatusChatLinkSent
-		}
-		finishedConfigIDs[finishedAttempt.ConfigID] = struct{}{}
+		attemptByConfigID[finishedAttempt.ConfigID] = finishedAttempt
 	}
 
-	if len(finishedConfigIDs) >= len(configIDs) {
+	hasRequiredConfigs := false
+	testingFailed := false
+
+	for _, config := range configs {
+		if _, isExtra := extraTestIDs[config.TestID]; isExtra {
+			continue
+		}
+		hasRequiredConfigs = true
+
+		mainAttempt, completed := attemptByConfigID[config.ConfigID]
+		if !completed {
+			return ""
+		}
+		if mainAttempt.Passed {
+			continue
+		}
+
+		applicableExtraTests := make([]uint, 0)
+		for _, rule := range config.ExtraThreshold {
+			if mainAttempt.Score >= rule.Threshold {
+				applicableExtraTests = append(applicableExtraTests, rule.TestID)
+			}
+		}
+		if len(applicableExtraTests) == 0 {
+			testingFailed = true
+			continue
+		}
+
+		extraPassed := false
+		extraPending := false
+		for _, extraTestID := range applicableExtraTests {
+			extraConfig, exists := configByTestID[extraTestID]
+			if !exists {
+				continue
+			}
+			extraAttempt, completed := attemptByConfigID[extraConfig.ConfigID]
+			if !completed {
+				extraPending = true
+				continue
+			}
+			if extraAttempt.Passed {
+				extraPassed = true
+				break
+			}
+		}
+
+		if extraPassed {
+			continue
+		}
+		if extraPending {
+			return ""
+		}
+		testingFailed = true
+	}
+
+	if !hasRequiredConfigs || testingFailed {
 		return crmStatusTestingFailed
 	}
-
-	return ""
-}
-
-func getRequiredConfigIDs(eventConfig models.EventConfig) []uint {
-	query := database.DB.Model(&models.EventConfig{}).Where("event_id = ?", eventConfig.EventID)
-	if eventConfig.SpecializationID > 0 {
-		query = query.Where("specialization_id = ?", eventConfig.SpecializationID)
-	}
-
-	var configIDs []uint
-	if err := query.Pluck("config_id", &configIDs).Error; err != nil {
-		fmt.Printf("Event config lookup failed: %v\n", err)
-		return nil
-	}
-
-	return configIDs
+	return crmStatusChatLinkSent
 }
 
 func isAnswerCorrect(question models.Question, options models.QuestionOptions, answer UserAnswer) bool {

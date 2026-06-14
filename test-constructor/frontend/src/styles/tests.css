@@ -14,7 +14,7 @@
     background: #F0E8D5;
     justify-content: center;
     width: 1660px;
-    height: 829px;
+    min-height: 829px;
     position: relative;
 }
 .logout-btn {
@@ -186,12 +186,12 @@
 
 .dropdown-menu {
     position: absolute;
-    top: -80px;
+    top: -40px;
     left: 245px;
     background: white;
     border-radius: 30px;
     width: 200px;
-    height: 170px;
+    min-height: 90px;
     z-index: 10000 !important;
 }
 

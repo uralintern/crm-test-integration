@@ -33,7 +33,7 @@ function Login() {
             if (role === "manager") {
                 nav('/tests');
             } else if (role === "intern") {
-                nav('/myTestStudent');
+                nav('/StudentHome');
             }else if (role === "admin") {
                 nav('/')
             }

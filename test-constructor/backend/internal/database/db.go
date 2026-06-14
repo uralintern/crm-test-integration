@@ -45,6 +45,7 @@ func Connect() {
 		&models.EventConfig{},
 		&models.ExtraThreshold{},
 		&models.Attempt{},
+		&models.UserEvent{},
 	)
 	if err != nil {
 		log.Fatal("database migration failed: ", err)

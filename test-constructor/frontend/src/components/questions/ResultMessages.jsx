@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 export default function ResultMessages({ messages, updateMessages }) {
     const handleSuccessChange = (e) => {
         updateMessages({ ...messages, success: e.target.value });

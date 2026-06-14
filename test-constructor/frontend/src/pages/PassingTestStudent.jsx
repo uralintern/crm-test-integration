@@ -13,14 +13,6 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
-function shuffleArray(array) {
-    const arr = array.slice();
-    for (let i = arr.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-    return arr;
-}
 
 function SortableMatchAnswer({ id, text }) {
     const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
@@ -133,6 +125,7 @@ export default function PassingTestStudent() {
     const navigate = useNavigate();
     const startedRef = useRef(false);
     const submittingRef = useRef(false);
+    const handleSubmitRef = useRef(null);
 
     const [test, setTest] = useState(null);
     const [answers, setAnswers] = useState({});
@@ -177,7 +170,7 @@ export default function PassingTestStudent() {
     useEffect(() => {
         if (timeLeft == null) return;
         if (timeLeft <= 0) {
-            handleSubmit();
+            handleSubmitRef.current?.();
             return;
         }
 
@@ -387,6 +380,15 @@ export default function PassingTestStudent() {
         localStorage.setItem(keyAttempts, JSON.stringify(Array.isArray(attemptsList) ? [...attemptsList, attempt] : [attempt]));
     };
 
+    const getReturnPath = () => {
+        const params = new URLSearchParams();
+        for (const key of ["event_id", "specialization_id", "application_id"]) {
+            const value = searchParams.get(key);
+            if (value) params.set(key, value);
+        }
+        return `/myTestStudent${params.toString() ? `?${params.toString()}` : ""}`;
+    };
+
     const handleSubmit = async () => {
         if (!test || submittingRef.current) return;
         submittingRef.current = true;
@@ -396,7 +398,7 @@ export default function PassingTestStudent() {
                 const response = await testsAPI.finishAttempt({ userAnswers: buildApiAnswers() });
                 const result = response.data;
                 alert(result.result || (result.passed ? "Тест пройден." : "Тест не пройден."));
-                navigate("/myTestStudent");
+                navigate(getReturnPath());
                 return;
             }
 
@@ -406,13 +408,15 @@ export default function PassingTestStudent() {
             const message = passed ? test.success_text || "Тест успешно пройден." : test.fail_text || "Тест не пройден.";
             saveLocalAttempt(passed, message, totalScore, totalMax, perQuestion);
             alert(message);
-            navigate("/myTestStudent");
+            navigate(getReturnPath());
         } catch (error) {
             console.error("Failed to finish test", error);
             alert("Не удалось завершить тест. Попробуйте ещё раз.");
             submittingRef.current = false;
         }
     };
+
+    handleSubmitRef.current = handleSubmit;
 
     if (loading) return <div>Загрузка...</div>;
     if (!test) return <div>{errorMessage || "Тест не найден или ссылка недействительна."}</div>;

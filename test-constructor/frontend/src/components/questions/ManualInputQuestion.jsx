@@ -4,7 +4,8 @@ import DeleteIcon from "../../assets/delete.svg?react";
 import DeleteIconSub from "../../assets/delete_sub.svg?react";
 import ScoreInput from "../details/ScoreInput.jsx";
 import ManualIcon from "../../assets/Manual.svg";
-function ManualInputQuestion({ question, updateQuestion, deleteQuestion }) {
+
+function ManualInputQuestion({ question, updateQuestion, deleteQuestion, onChangeType }) {
     const {
         attributes,
         listeners,
@@ -36,6 +37,10 @@ function ManualInputQuestion({ question, updateQuestion, deleteQuestion }) {
         updateQuestion(question.id, "correctAnswers", newAnswers);
     };
 
+    const handleChangeType = () => {
+        onChangeType?.(question.id);
+    };
+
     return (
         <div ref={setNodeRef} style={style} className="question-block manual-input">
             <div className = "">
@@ -48,8 +53,6 @@ function ManualInputQuestion({ question, updateQuestion, deleteQuestion }) {
                         </div>
                     </span>
 
-
-
                     <div className="q-icons">
                             <span onClick={() => deleteQuestion(question.id)}>
                                 <DeleteIcon style={{ width: '24px', height: '24px' }}/>
@@ -57,12 +60,15 @@ function ManualInputQuestion({ question, updateQuestion, deleteQuestion }) {
                     </div>
                 </div>
                 <div className="q-header1">
-                    <span>
-                            <img
-                                 src={ManualIcon}
-                                alt="manual"
-                                style={{ width: '36px', height: '36px' }}
-                            />
+                    <span
+                        onClick={handleChangeType}
+                        style={{ cursor: "pointer" }}
+                    >
+                    <img
+                        src={ManualIcon}
+                        alt="manual"
+                        style={{ width: '36px', height: '36px' }}
+                    />
                     </span>
                     Задание на ручной ввод
                 </div>
@@ -81,7 +87,7 @@ function ManualInputQuestion({ question, updateQuestion, deleteQuestion }) {
             </div>
 
             <div className="block-questions99">
-            <div className="section-title">Правильные ответы</div>
+                <div className="section-title">Правильные ответы</div>
                 <div className="answers-list">
                     {question.correctAnswers?.map((answer, index) => (
                         <div key={index} className="answer-row99">
@@ -99,19 +105,19 @@ function ManualInputQuestion({ question, updateQuestion, deleteQuestion }) {
                     ))}
                 </div>
                 <button className="add-answer-btn" onClick={addAnswer}>
-                + Добавить ответ
+                    + Добавить ответ
                 </button>
                 <div className="section-settings">Настройки</div>
-                    <div className="setting-row">
-                        <label>
-                            <input
-                                type="checkbox"
-                                checked={question.caseSensitive || false}
-                                onChange={(e) => updateQuestion(question.id, "caseSensitive", e.target.checked)}
-                            />
-                            Учитывать регистр ответов
-                        </label>
-                    </div>
+                <div className="setting-row">
+                    <label>
+                        <input
+                            type="checkbox"
+                            checked={question.caseSensitive || false}
+                            onChange={(e) => updateQuestion(question.id, "caseSensitive", e.target.checked)}
+                        />
+                        Учитывать регистр ответов
+                    </label>
+                </div>
             </div>
             <ScoreInput
                 value={question.maxScore}

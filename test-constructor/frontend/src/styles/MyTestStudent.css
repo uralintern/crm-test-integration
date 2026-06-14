@@ -171,3 +171,258 @@
     background: #1f2c3b;
     transform: translateY(-1px);
 }
+
+/* Participant event and multi-test pages. */
+.student-logout {
+    position: absolute;
+    right: 20px;
+    top: 0;
+    z-index: 2;
+}
+
+.tests-tabs {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.tab-btn {
+    border: 1px solid #f0e8d5;
+    border-radius: 999px;
+    padding: 10px 20px;
+    background: transparent;
+    color: #f0e8d5;
+    font: inherit;
+    cursor: pointer;
+}
+
+.tab-btn-active {
+    background: #f0e8d5;
+    color: #2f4156;
+}
+
+.event-card {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.mytests-card-new {
+    background: #f5eee1;
+    border: 2px solid #d0c3aa;
+    border-radius: 16px;
+    padding: 24px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(220px, 0.45fr);
+    gap: 24px;
+    align-items: center;
+}
+
+.mytests-card-new.is-locked {
+    opacity: 0.7;
+}
+
+.mytests-card-left {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    min-width: 0;
+}
+
+.mytests-card-icon,
+.mytests-time-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    background: #2f4156;
+    border-radius: 14px;
+}
+
+.mytests-card-icon {
+    width: 56px;
+    height: 56px;
+}
+
+.mytests-card-icon img {
+    width: 34px;
+    height: 34px;
+}
+
+.mytests-time-icon {
+    width: 44px;
+    height: 44px;
+}
+
+.mytests-time-icon img {
+    width: 28px;
+    height: 28px;
+}
+
+.mytests-card-info {
+    min-width: 0;
+}
+
+.mytests-label,
+.mytests-time-label {
+    margin: 0 0 6px;
+    color: #716955;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.mytests-card-new .mytests-card-title {
+    margin: 0 0 10px;
+    color: #2f4156;
+    font-size: 18px;
+}
+
+.mytests-card-description {
+    margin: 6px 0 0;
+    color: #2f4156;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.mytests-card-divider {
+    width: 1px;
+    height: 100px;
+    background: #c7baa0;
+}
+
+.mytests-card-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.mytests-time-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.mytests-time-value {
+    margin: 0;
+    color: #2f4156;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.mytests-start-btn {
+    border: 1px solid #2f4156;
+    border-radius: 12px;
+    padding: 9px 18px;
+    background: #c8d9e6;
+    color: #2f4156;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.mytests-start-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+}
+
+.status-available,
+.status-in_progress,
+.status-locked {
+    color: #2f4156;
+    border: 1px solid #c7baa0;
+    background: #eee5d2;
+}
+
+.mytests-completed {
+    margin-top: 32px;
+}
+
+.mytests-completed-title {
+    margin: 0 0 16px;
+    color: #f0e8d5;
+    font-size: 22px;
+}
+
+.mytests-list-completed {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.mytests-card-completed {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 16px 18px;
+    border-radius: 14px;
+    background: #f5eee1;
+    color: #2f4156;
+}
+
+.mytests-completed-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.mytests-completed-title-card {
+    margin: 0;
+    color: #2f4156;
+}
+
+.mytests-status-badge {
+    display: inline-flex;
+    border-radius: 999px;
+    padding: 5px 10px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.status-passed {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-failed {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.mytests-completed-stats,
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.stat-label {
+    color: #716955;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.stat-value {
+    color: #2f4156;
+    font-weight: 700;
+}
+
+@media (max-width: 900px) {
+    .mytests-card-new {
+        grid-template-columns: 1fr;
+    }
+
+    .mytests-card-divider {
+        display: none;
+    }
+
+    .event-card,
+    .mytests-card-completed,
+    .mytests-completed-info {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}

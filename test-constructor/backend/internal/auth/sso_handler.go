@@ -16,6 +16,7 @@ import (
 
 	"github.com/google/uuid"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
 type SSOExchangeRequest struct {
@@ -117,6 +118,9 @@ func SSOExchange(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+	if err := upsertUserEvent(user.ID, crmPayload.Application); err != nil {
+		log.Printf("Failed to save CRM application context: %v", err)
+	}
 
 	token, err := GenerateJWTWithScope(
 		user.ID,
@@ -150,6 +154,22 @@ func SSOExchange(w http.ResponseWriter, r *http.Request) {
 		Next:        crmPayload.Next,
 		TestLink:    testLink,
 	})
+}
+
+func upsertUserEvent(userID uint, application *CRMTestingContext) error {
+	if application == nil || application.Event == nil || application.Application.ID == 0 {
+		return nil
+	}
+
+	userEvent := models.UserEvent{
+		UserID:        userID,
+		EventID:       uint(application.Event.ID),
+		ApplicationID: uint(application.Application.ID),
+	}
+	return database.DB.Clauses(clause.OnConflict{
+		Columns:   []clause.Column{{Name: "user_id"}, {Name: "event_id"}},
+		DoUpdates: clause.AssignmentColumns([]string{"application_id"}),
+	}).Create(&userEvent).Error
 }
 
 func exchangeTicketWithCRM(ticket string) (*CRMSSOExchangeResponse, error) {

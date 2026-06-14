@@ -1,0 +1,375 @@
+.test-preview-page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #2F4156 0%, #1a2633 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0 40px 0;
+    font-family: 'Futura Md BT', sans-serif;
+}
+
+.test-preview-header {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding: 20px 40px;
+}
+
+.test-preview-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex: 1;
+}
+
+.test-preview-container {
+    width: 100%;
+    max-width: 850px;
+    padding: 0 20px;
+}
+
+.preview-title-section {
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.preview-title {
+    margin: 0 0 12px 0;
+    font-size: 32px;
+    font-weight: 700;
+    color: #F0E8D5;
+    letter-spacing: -0.5px;
+}
+
+.preview-subtitle {
+    margin: 0;
+    font-size: 16px;
+    color: #F0E8D5;
+    opacity: 0.85;
+    line-height: 1.5;
+}
+
+.preview-test-card {
+    background: #F0E8D5;
+    border-radius: 24px;
+    padding: 32px 28px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+    margin-bottom: 32px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 28px;
+    align-items: center;
+}
+
+.preview-card-left {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.preview-card-icon {
+    flex-shrink: 0;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #2F4156;
+    border-radius: 16px;
+    color: #F0E8D5;
+}
+
+.preview-card-icon svg {
+    width: 32px;
+    height: 32px;
+}
+
+.preview-card-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.preview-info-section {
+    margin-bottom: 16px;
+}
+
+.preview-info-section:last-child {
+    margin-bottom: 0;
+}
+
+.preview-info-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: #9A8F7A;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+}
+
+.preview-info-title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: #2F4156;
+    word-break: break-word;
+}
+
+.preview-info-description {
+    margin: 0;
+    font-size: 14px;
+    color: #2F4156;
+    line-height: 1.5;
+    opacity: 0.85;
+    word-break: break-word;
+}
+
+.preview-card-divider {
+    width: 2px;
+    height: 120px;
+    background: linear-gradient(180deg, transparent 0%, #D0C3AA 50%, transparent 100%);
+    border-radius: 1px;
+}
+
+.preview-card-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.preview-time-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    text-align: center;
+}
+
+.preview-time-icon {
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #2F4156;
+    border-radius: 16px;
+    color: #F0E8D5;
+}
+
+.preview-time-icon svg {
+    width: 28px;
+    height: 28px;
+}
+
+.preview-time-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: #9A8F7A;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.preview-time-value {
+    margin: 4px 0 0 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: #2F4156;
+    min-height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.preview-additional-info {
+    background: #F5EEE1;
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    gap: 24px;
+    margin-bottom: 24px;
+    border: 1px solid #E0D3B0;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    color: #2F4156;
+}
+
+.info-icon {
+    font-size: 20px;
+    line-height: 1;
+}
+
+.info-text {
+    line-height: 1.4;
+}
+
+.info-text strong {
+    font-weight: 700;
+    color: #2F4156;
+}
+
+.preview-notice {
+    background: #E8F0F8;
+    border-left: 4px solid #2F4156;
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    margin-bottom: 32px;
+}
+
+.notice-icon {
+    font-size: 18px;
+    line-height: 1.4;
+    flex-shrink: 0;
+}
+
+.notice-text {
+    margin: 0;
+    font-size: 14px;
+    color: #2F4156;
+    line-height: 1.5;
+}
+
+.preview-button-section {
+    display: flex;
+    justify-content: center;
+}
+
+.preview-start-btn {
+    padding: 16px 56px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #2F4156;
+    background: #C8D9E6;
+    border: 2px solid #2F4156;
+    border-radius: 28px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Futura Md BT', sans-serif;
+    letter-spacing: 0.3px;
+}
+
+.preview-start-btn:hover {
+    background: #B5C9DB;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(47, 65, 86, 0.2);
+}
+
+.preview-start-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(47, 65, 86, 0.15);
+}
+
+.test-preview-loading,
+.test-preview-error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    width: 100%;
+}
+
+.test-preview-loading p,
+.test-preview-error p {
+    font-size: 18px;
+    color: #F0E8D5;
+    margin: 0;
+}
+
+.test-preview-error {
+    flex-direction: column;
+    gap: 24px;
+    text-align: center;
+}
+
+.test-preview-back-btn {
+    padding: 12px 32px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #2F4156;
+    background: #C8D9E6;
+    border: 2px solid #2F4156;
+    border-radius: 24px;
+    cursor: pointer;
+    font-family: 'Futura Md BT', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.test-preview-back-btn:hover {
+    background: #B5C9DB;
+    transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+    .test-preview-page {
+        padding: 15px 0 30px 0;
+    }
+
+    .test-preview-header {
+        padding: 15px 20px;
+    }
+
+    .test-preview-container {
+        padding: 0 15px;
+    }
+
+    .preview-title {
+        font-size: 24px;
+    }
+
+    .preview-subtitle {
+        font-size: 14px;
+    }
+
+    .preview-test-card {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 24px 20px;
+    }
+
+    .preview-card-divider {
+        display: none;
+    }
+
+    .preview-card-right {
+        padding-top: 20px;
+        border-top: 2px solid #E0D3B0;
+    }
+
+    .preview-additional-info {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .preview-start-btn {
+        width: 100%;
+        padding: 14px 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .preview-title {
+        font-size: 20px;
+    }
+
+    .preview-info-title,
+    .preview-time-value {
+        font-size: 18px;
+    }
+
+    .preview-test-card {
+        padding: 16px;
+    }
+
+    .preview-notice {
+        padding: 12px 16px;
+        gap: 8px;
+    }
+}

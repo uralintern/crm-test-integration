@@ -33,6 +33,7 @@ type TestInfo struct {
     SuccessText  string             `json:"success_text"`
     FailText     string             `json:"fail_text"`
     CompleteTime int                `json:"complete_time"`
+    MaxScore     int                `json:"max_score"`
     Questions    []TestQuestionInfo `json:"questions,omitempty"`
 }
 
@@ -42,7 +43,7 @@ type TestsInfoResponse struct {
 
 func GetTests(w http.ResponseWriter, r *http.Request) {
     var tests []models.Test
-    if err := database.DB.Find(&tests).Error; err != nil {
+    if err := database.DB.Preload("Questions").Find(&tests).Error; err != nil {
         http.Error(w, err.Error(), http.StatusInternalServerError)
         return
     }
@@ -95,6 +96,11 @@ func DeleteTest(w http.ResponseWriter, r *http.Request) {
 }
 
 func buildTestInfo(test models.Test, questions []TestQuestionInfo) TestInfo {
+    maxScore := 0
+    for _, question := range test.Questions {
+        maxScore += question.Points
+    }
+
     return TestInfo{
         ID:           test.ID,
         TestID:       test.ID,
@@ -107,6 +113,7 @@ func buildTestInfo(test models.Test, questions []TestQuestionInfo) TestInfo {
         SuccessText:  test.SuccessText,
         FailText:     test.FailText,
         CompleteTime: test.CompleteTime,
+        MaxScore:     maxScore,
         Questions:    questions,
     }
 }

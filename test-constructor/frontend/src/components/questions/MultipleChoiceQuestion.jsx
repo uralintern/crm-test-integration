@@ -5,7 +5,7 @@ import DeleteIconSub from "../../assets/delete_sub.svg?react";
 import MultipIcon from "../../assets/MultipleСhoice.svg";
 import ScoreInput2 from "../details/ScoreInput2.jsx";
 
-function MultipleChoiceQuestion({ question, updateQuestion, deleteQuestion }) {
+function MultipleChoiceQuestion({ question, updateQuestion, deleteQuestion, onChangeType }) {
     const {
         attributes,
         listeners,
@@ -37,6 +37,10 @@ function MultipleChoiceQuestion({ question, updateQuestion, deleteQuestion }) {
         updateQuestion(question.id, "options", newOptions);
     };
 
+    const handleChangeType = () => {
+        onChangeType?.(question.id);
+    };
+
     return (
         <div ref={setNodeRef} style={style} className="question-block multiple-choice">
             <div className = "">
@@ -55,7 +59,10 @@ function MultipleChoiceQuestion({ question, updateQuestion, deleteQuestion }) {
                     </div>
                 </div>
                 <div className="q-header1">
-                     <span>
+                     <span
+                         onClick={handleChangeType}
+                         style={{ cursor: "pointer" }}
+                     >
                              <img
                                  src={MultipIcon}
                                  alt="multu"

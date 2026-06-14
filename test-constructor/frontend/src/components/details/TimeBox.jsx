@@ -1,73 +1,65 @@
-import React, { useState } from 'react';
 import timeIcon from "../../assets/time.svg";
 
-export default function TimeBox({ time, setTime }) {
-    const [touched, setTouched] = useState({
-        hours: false,
-        minutes: false,
-        seconds: false
-    });
-
-    const handleFocus = (field) => {
-        setTouched({ ...touched, [field]: true });
+export default function TimeBox({ time, setTime, isTimeEnabled, setIsTimeEnabled }) {
+    const handleToggleTimeLimit = () => {
+        const nextValue = !isTimeEnabled;
+        setIsTimeEnabled(nextValue);
+        if (!nextValue) {
+            setTime({ hours: 0, minutes: 0, seconds: 0 });
+        } else if (!time.hours && !time.minutes && !time.seconds) {
+            setTime({ hours: 1, minutes: 0, seconds: 0 });
+        }
     };
 
-    const handleBlur = (field, value) => {
-        if (value === 0 || value === '' || isNaN(value)) {
-            setTouched({ ...touched, [field]: false });
-        }
+    const updatePart = (field, rawValue, maxValue) => {
+        const parsed = rawValue === "" ? 0 : Number.parseInt(rawValue, 10);
+        const safeValue = Number.isFinite(parsed) ? Math.max(0, parsed) : 0;
+        setTime({
+            ...time,
+            [field]: typeof maxValue === "number" ? Math.min(maxValue, safeValue) : safeValue,
+        });
     };
 
     return (
         <div className="time-box">
             <div className="time-box1">
-                <img src={timeIcon} alt="время" />
+                <img src={timeIcon} alt="" />
                 <p>Ограничение по времени</p>
+                <label className="time-checkbox">
+                    <input type="checkbox" checked={isTimeEnabled} onChange={handleToggleTimeLimit} />
+                    <span className="checkmark" />
+                </label>
             </div>
             <div className="time-box-inner1">
-                <div className="time-input-box">
-                    <input
-                        type="number"
-                        min="0"
-                        placeholder="0 часов"
-                        value={time.hours || ''}
-                        onFocus={() => handleFocus('hours')}
-                        onBlur={(e) => handleBlur('hours', time.hours)}
-                        onChange={e => {
-                            const value = e.target.value === '' ? 0 : parseInt(e.target.value);
-                            setTime({ ...time, hours: value || 0 });
-                        }}
-                        style={{ textAlign: 'center' }}
-                    />
-                    <input
-                        type="number"
-                        min="0"
-                        max="59"
-                        placeholder="0 минут"
-                        value={time.minutes || ''}
-                        onFocus={() => handleFocus('minutes')}
-                        onBlur={(e) => handleBlur('minutes', time.minutes)}
-                        onChange={e => {
-                            const value = e.target.value === '' ? 0 : parseInt(e.target.value);
-                            setTime({ ...time, minutes: Math.min(59, value || 0) });
-                        }}
-                        style={{ textAlign: 'center' }}
-                    />
-                    <input
-                        type="number"
-                        min="0"
-                        max="59"
-                        placeholder="0 секунд"
-                        value={time.seconds || ''}
-                        onFocus={() => handleFocus('seconds')}
-                        onBlur={(e) => handleBlur('seconds', time.seconds)}
-                        onChange={e => {
-                            const value = e.target.value === '' ? 0 : parseInt(e.target.value);
-                            setTime({ ...time, seconds: Math.min(59, value || 0) });
-                        }}
-                        style={{ textAlign: 'center' }}
-                    />
-                </div>
+                {isTimeEnabled ? (
+                    <div className="time-input-box">
+                        <input
+                            type="number"
+                            min="0"
+                            placeholder="0 часов"
+                            value={time.hours || ""}
+                            onChange={(event) => updatePart("hours", event.target.value)}
+                        />
+                        <input
+                            type="number"
+                            min="0"
+                            max="59"
+                            placeholder="0 минут"
+                            value={time.minutes || ""}
+                            onChange={(event) => updatePart("minutes", event.target.value, 59)}
+                        />
+                        <input
+                            type="number"
+                            min="0"
+                            max="59"
+                            placeholder="0 секунд"
+                            value={time.seconds || ""}
+                            onChange={(event) => updatePart("seconds", event.target.value, 59)}
+                        />
+                    </div>
+                ) : (
+                    <div className="time-box-unlimited"><p>Время не ограничено</p></div>
+                )}
             </div>
         </div>
     );

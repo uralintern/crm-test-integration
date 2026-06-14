@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import {
     DndContext,
     closestCenter,
@@ -55,8 +55,6 @@ export default function CreateTest() {
             ? location.state.test
             : storedEditingTest || null;
 
-    const deleteOnSave = location.state?.deleteOnSave || false;
-
 
     const [title, setTitle] = useState(
         isEditing ? editingTest?.title || "" : ""
@@ -65,10 +63,13 @@ export default function CreateTest() {
     const [description, setDescription] = useState(
         isEditing ? editingTest?.description || "" : ""
     );
-    const [showQuestionMenu, setShowQuestionMenu] = useState(false);
+    const [showQuestionMenu, setShowQuestionMenu] = useState(null);
+    const [questionMenuMode, setQuestionMenuMode] = useState("add");
+    const [selectedQuestionId, setSelectedQuestionId] = useState(null);
+    const nextQuestionId = useRef(0);
 
 
-    const [time, setTime] = useState(
+    const [time] = useState(
         isEditing && editingTest?.complete_time
             ? {
                 hours: Math.floor(editingTest.complete_time / 3600),
@@ -84,7 +85,7 @@ export default function CreateTest() {
             }
     );
 
-    const [passingCriteria, setPassingCriteria] = useState(
+    const [passingCriteria] = useState(
         isEditing && editingTest
             ? {
                 type: editingTest?.is_percentage ? "percentage" : "points",
@@ -102,7 +103,7 @@ export default function CreateTest() {
             }
     );
 
-    const [resultMessages, setResultMessages] = useState(
+    const [resultMessages] = useState(
         isEditing
             ? {
                 success: editingTest?.success_text || "",
@@ -210,46 +211,93 @@ export default function CreateTest() {
         ];
     });
 
-    const calculateTotalPoints = () => {
-        return questions.reduce((sum, q) => sum + (q.maxScore || 0), 0);
-    };
-
     const calculateCompleteTime = () => {
         return time.hours * 3600 + time.minutes * 60 + time.seconds;
     };
 
     const sensors = useAppSensors();
 
+    const changeQuestionType = (questionId) => {
+        setSelectedQuestionId(questionId);
+        setQuestionMenuMode("change");
+        setShowQuestionMenu("icon_click");
+    };
+
     const addQuestion = (type) => {
-        const baseQuestion = {
-            id: Date.now().toString(),
-            order: questions.length + 1,
-            type,
-            text: "",
-            maxScore: 15,
-        };
+        if (questionMenuMode === "change" && selectedQuestionId) {
+            const currentQuestion = questions.find(q => q.id === selectedQuestionId);
+            if (!currentQuestion) {
+                setShowQuestionMenu(false);
+                setQuestionMenuMode("add");
+                setSelectedQuestionId(null);
+                return;
+            }
 
-        switch (type) {
-            case "shortText":
-                baseQuestion.correctAnswers = [""];
-                baseQuestion.caseSensitive = false;
-                break;
-            case "singleChoice":
-                baseQuestion.options = [{ text: "", isCorrect: false }];
-                break;
-            case "multipleChoice":
-                baseQuestion.options = [{ text: "", isCorrect: false }];
-                baseQuestion.scoringType = "allOrNothing";
-                break;
-            case "matching":
-                baseQuestion.rows = [{ option: "", answer: "" }];
-                break;
-            case "ordering":
-                baseQuestion.items = [{ text: "" }];
-                break;
+            const newQuestion = {
+                id: currentQuestion.id,
+                order: currentQuestion.order,
+                type,
+                text: currentQuestion.text,
+                maxScore: currentQuestion.maxScore || 15,
+            };
+
+            switch (type) {
+                case "shortText":
+                    newQuestion.correctAnswers = [""];
+                    newQuestion.caseSensitive = false;
+                    break;
+                case "singleChoice":
+                    newQuestion.options = [{ text: "", isCorrect: false, points: 0 }];
+                    break;
+                case "multipleChoice":
+                    newQuestion.options = [{ text: "", isCorrect: false, points: 0 }];
+                    newQuestion.scoringType = "allOrNothing";
+                    break;
+                case "matching":
+                    newQuestion.rows = [{ option: "", answer: "", points: 0 }];
+                    break;
+                case "ordering":
+                    newQuestion.items = [{ text: "", points: 0 }];
+                    break;
+            }
+
+            setQuestions(
+                questions.map(q => q.id === selectedQuestionId ? newQuestion : q)
+            );
+            setSelectedQuestionId(null);
+        } else {
+            const baseQuestion = {
+                id: `new-question-${++nextQuestionId.current}`,
+                order: questions.length + 1,
+                type,
+                text: "",
+                maxScore: 15,
+            };
+
+            switch (type) {
+                case "shortText":
+                    baseQuestion.correctAnswers = [""];
+                    baseQuestion.caseSensitive = false;
+                    break;
+                case "singleChoice":
+                    baseQuestion.options = [{ text: "", isCorrect: false, points: 0 }];
+                    break;
+                case "multipleChoice":
+                    baseQuestion.options = [{ text: "", isCorrect: false, points: 0 }];
+                    baseQuestion.scoringType = "allOrNothing";
+                    break;
+                case "matching":
+                    baseQuestion.rows = [{ option: "", answer: "", points: 0 }];
+                    break;
+                case "ordering":
+                    baseQuestion.items = [{ text: "", points: 0 }];
+                    break;
+            }
+
+            setQuestions([...questions, baseQuestion]);
         }
-
-        setQuestions([...questions, baseQuestion]);
+        setShowQuestionMenu(false);
+        setQuestionMenuMode("add");
     };
 
     const updateQuestion = (id, field, value) => {
@@ -456,23 +504,16 @@ export default function CreateTest() {
                         <EditIcon />
                     </div>
                     <div className="title-input-container-desk">
-                    <input
-                        className="test-desk"
-                        placeholder="Описание теста"
-                        value={description}
-                        onChange={(e) =>
-                            setDescription(e.target.value)
-                        }
-                    />
+                        <input
+                            className="test-desk"
+                            placeholder="Описание теста"
+                            value={description}
+                            onChange={(e) =>
+                                setDescription(e.target.value)
+                            }
+                        />
                         <EditIcon />
                     </div>
-                    {/*
-                    <PassingCriteria
-                        criteria={passingCriteria}
-                        updateCriteria={setPassingCriteria}
-                        totalPoints={calculateTotalPoints()}
-                    />
-                       */}
                     <DndContext
                         sensors={sensors}
                         collisionDetection={closestCenter}
@@ -488,42 +529,88 @@ export default function CreateTest() {
                                     question={question}
                                     updateQuestion={updateQuestion}
                                     deleteQuestion={deleteQuestion}
+                                    onChangeType={changeQuestionType}
                                 />
                             ))}
                         </SortableContext>
                     </DndContext>
 
-                    {/* <ResultMessages
-                        messages={resultMessages}
-                        updateMessages={setResultMessages}
-                    />
-                    */}
-                </div>
-
-                <div className="create-right">
-                    <div className="create-right-inner">
+                    <div className="questions-bottom-buttons">
+                        <button
+                            className="add-question-btn"
+                            onClick={() => {
+                                setQuestionMenuMode("add");
+                                setSelectedQuestionId(null);
+                                setShowQuestionMenu("add_button");
+                            }}
+                        >
+                            Добавить вопрос
+                        </button>
                         <button
                             className="save-btn"
                             onClick={handleSave}
                         >
                             {isEditing
                                 ? "Сохранить изменения"
-                                : "Создать тест"}
+                                : "СОЗДАТЬ ТЕСТ"}
                         </button>
-                        <h3>Поля теста</h3>
-                        <div className="right-section">
-                            <button
-                                className="right-btn-toggle"
-                                onClick={() => setShowQuestionMenu(!showQuestionMenu)}
-                            >
-                                Добавить новый вопрос
-                                <span className={`toggle-arrow ${showQuestionMenu ? 'open' : ''}`}>▼</span>
-                            </button>
+                    </div>
 
-                            {showQuestionMenu && questionTypes.map((type) => (
+                </div>
+
+
+            </div>
+            {showQuestionMenu && (
+                <div className="modal-overlay" onClick={() => setShowQuestionMenu(false)}>
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                        <div className="modal-header">
+                            <h3>
+                                {questionMenuMode === "change"
+                                    ? "Выберите новый тип вопроса"
+                                    : "Выберите тип вопроса"}
+                            </h3>
+                            <button
+                                className="modal-close"
+                                onClick={() => setShowQuestionMenu(false)}
+                            >
+                                ×
+                            </button>
+                        </div>
+
+                        {showQuestionMenu === "icon_click" && (
+                            <div className="modal-mode-switcher">
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="question-mode"
+                                        value="add"
+                                        checked={questionMenuMode === "add"}
+                                        onChange={() => {
+                                            setQuestionMenuMode("add");
+                                            setSelectedQuestionId(null);
+                                        }}
+                                    />
+                                    Добавить новый вопрос
+                                </label>
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="question-mode"
+                                        value="change"
+                                        checked={questionMenuMode === "change"}
+                                        onChange={() => setQuestionMenuMode("change")}
+                                        disabled={questions.length === 0}
+                                    />
+                                    Изменить тип текущего вопроса
+                                </label>
+                            </div>
+                        )}
+
+                        <div className="modal-body">
+                            {questionTypes.map((type) => (
                                 <button
                                     key={type.key}
-                                    className="right-btn"
+                                    className="modal-option"
                                     onClick={() => {
                                         addQuestion(type.key);
                                     }}
@@ -532,12 +619,9 @@ export default function CreateTest() {
                                 </button>
                             ))}
                         </div>
-                        {/* <TimeBox time={time} setTime={setTime} />
-        */}
                     </div>
                 </div>
-
-            </div>
+            )}
         </div>
     );
 }

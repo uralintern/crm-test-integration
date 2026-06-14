@@ -168,14 +168,6 @@ export default function Tests() {
         setOpenMenuId(null);
     };
 
-
-
-
-
-    const closeTest = async (id) => {
-
-    };
-
     const viewStatistics = (test) => {
         navigate(`/statistics/${test.id}`);
         setOpenMenuId(null);
@@ -253,7 +245,7 @@ export default function Tests() {
                                                         <EditIcon className="menu-icon" />
                                                         <span>Редактировать</span>
                                                     </button>
-                                                    <button className="menu-item share" onClick={() => shareTest(test)}>
+                                                                                                        <button className="menu-item share" onClick={() => shareTest(test)}>
                                                         <ShareIcon className="menu-icon" />
                                                         <span>Поделиться</span>
                                                     </button>
@@ -261,6 +253,7 @@ export default function Tests() {
                                                         <StatisticsIcon className="menu-icon" />
                                                         <span>Статистика</span>
                                                     </button>
+
 
                                                     <button className="menu-item" onClick={() => openDeleteConfirm(test)}>
                                                         <DeleteIcon className="menu-icon" />

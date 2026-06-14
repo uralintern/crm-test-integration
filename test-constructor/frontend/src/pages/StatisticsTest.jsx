@@ -10,7 +10,7 @@ export default function StatisticsTest() {
     const navigate = useNavigate();
     const [attempts, setAttempts] = useState([]);
     const [selectedAttempt, setSelectedAttempt] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const [, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchAttempts = async () => {

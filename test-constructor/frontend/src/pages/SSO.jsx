@@ -68,13 +68,22 @@ export default function SSO() {
                 }
 
                 const applicationId = data.application?.application?.id;
+                const eventId = data.application?.event?.id;
+                const specializationId = data.application?.specialization?.id;
+                if (data.role === "intern" && eventId) {
+                    const query = new URLSearchParams({ event_id: String(eventId) });
+                    if (applicationId) query.set("application_id", String(applicationId));
+                    if (specializationId) query.set("specialization_id", String(specializationId));
+                    navigate(`/myTestStudent?${query.toString()}`, { replace: true });
+                    return;
+                }
                 if (data.role === "intern" && data.test_link) {
                     const query = applicationId ? `?application_id=${applicationId}` : "";
                     navigate(`/test/${data.test_link}${query}`, { replace: true });
                     return;
                 }
 
-                navigate(data.role === "intern" ? "/myTestStudent" : "/tests", { replace: true });
+                navigate(data.role === "intern" ? "/StudentHome" : "/tests", { replace: true });
             } catch (error) {
                 console.error("SSO exchange failed", error);
                 setMessage(getErrorMessage(error));

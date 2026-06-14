@@ -10,6 +10,7 @@ import (
 	"math/rand"
 	"net/http"
 	"strconv"
+	"strings"
 	"test-constructor/config"
 	"test-constructor/internal/auth"
 	"test-constructor/internal/database"
@@ -36,7 +37,8 @@ type CRMTestingContextResponse struct {
 }
 
 type CRMAvailableTest struct {
-	ID uint `json:"id"`
+	ID   uint   `json:"id"`
+	Name string `json:"name"`
 }
 
 type StartAttemptResponse struct {
@@ -108,6 +110,11 @@ func StartAttempt(w http.ResponseWriter, r *http.Request) {
 		return
 	} else if err != nil {
 		http.Error(w, "Database error: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	if !hasAccessToExtraConfig(claims.UserID, req.ApplicationID, eventConfig) {
+		http.Error(w, "Дополнительный тест пока недоступен", http.StatusForbidden)
 		return
 	}
 
@@ -247,7 +254,12 @@ func StartAttempt(w http.ResponseWriter, r *http.Request) {
 
 	crmTestID := uint(0)
 	if req.ApplicationID > 0 {
-		crmTestID = fetchCRMTestID(req.ApplicationID)
+		crmTestID = fetchCRMTestID(req.ApplicationID, eventConfig.Test.Title)
+	}
+
+	maxScore := 0
+	for _, question := range eventConfig.Test.Questions {
+		maxScore += question.Points
 	}
 
 	attempt := models.Attempt{
@@ -257,6 +269,7 @@ func StartAttempt(w http.ResponseWriter, r *http.Request) {
 		InternID:      claims.UserID,
 		StartTime:     time.Now(),
 		EndTime:       nil,
+		MaxScore:      maxScore,
 	}
 
 	if err := database.DB.Create(&attempt).Error; err != nil {
@@ -311,7 +324,7 @@ func readStartAttemptRequest(r *http.Request) StartAttemptRequest {
 	return req
 }
 
-func fetchCRMTestID(applicationID uint) uint {
+func fetchCRMTestID(applicationID uint, testTitle string) uint {
 	cfg := config.Load()
 	if cfg.CRMService == "" || cfg.CRMToken == "" {
 		return 0
@@ -349,6 +362,14 @@ func fetchCRMTestID(applicationID uint) uint {
 	if len(context.AvailableTests) == 0 {
 		return 0
 	}
+
+	normalizedTitle := strings.TrimSpace(testTitle)
+	for _, availableTest := range context.AvailableTests {
+		if strings.EqualFold(strings.TrimSpace(availableTest.Name), normalizedTitle) {
+			return availableTest.ID
+		}
+	}
+
 	return context.AvailableTests[0].ID
 }
 func createTestSession(applicationID uint, testID uint, sessionID string, expiresAt time.Time) error {
