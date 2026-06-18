@@ -182,7 +182,11 @@ export default function EventConfigPage() {
             try {
                 const response = await eventsAPI.getEventConfigs(eventId);
                 const configs = normalizeEventConfigsPayload(response.data);
-                if (configs.length === 0) return;
+                if (configs.length === 0) {
+                    setSelectedTestIds([]);
+                    setTestConfigs({});
+                    return;
+                }
 
                 const ids = [...new Set(configs.map(config => Number(config.testId)).filter(Number.isFinite))];
                 const nextConfigs = {};
@@ -195,6 +199,8 @@ export default function EventConfigPage() {
                 setTestConfigs(nextConfigs);
             } catch (err) {
                 console.error('Ошибка загрузки сохраненных настроек мероприятия:', err);
+                setSelectedTestIds([]);
+                setTestConfigs({});
             }
         };
 
@@ -277,18 +283,31 @@ export default function EventConfigPage() {
         updateCurrentConfig('criteria', [...getCurrentConfig().criteria, { threshold: 0, message: '', extraTests: [] }]);
     };
 
-    const handleRemoveSelected = (idToRemove) => {
+    const handleRemoveSelected = async (idToRemove) => {
         const testId = Number(idToRemove);
-        const newSelected = selectedTestIds.filter(id => Number(id) !== testId);
-        setSelectedTestIds(newSelected);
-        if (Number(selectedTestId) === testId) {
-            setSelectedTestId(newSelected[0] || null);
+        if (!eventId) return;
+
+        try {
+            await eventsAPI.deleteEventConfig(eventId, testId);
+
+            const newSelected = selectedTestIds.filter(id => Number(id) !== testId);
+            setSelectedTestIds(newSelected);
+
+            if (Number(selectedTestId) === testId) {
+                setSelectedTestId(newSelected[0] || null);
+            }
+
+            setTestConfigs(prev => {
+                const next = { ...prev };
+                delete next[testId];
+                return next;
+            });
+
+            setStatusMessage('Тест успешно удален');
+        } catch (err) {
+            console.error('Ошибка удаления теста:', err);
+            setStatusMessage('Не удалось удалить тест');
         }
-        setTestConfigs(prev => {
-            const next = { ...prev };
-            delete next[testId];
-            return next;
-        });
     };
 
     const handleDeleteCriteria = (index) => {

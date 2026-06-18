@@ -38,8 +38,8 @@ export const eventsAPI = {
         api.get(`/api/manager/events/${eventId}/configs`),
     saveEventConfig: (config) =>
         api.post('/api/manager/events', config),
-    deleteEventConfig: (configId) => {
-        return api.delete(`/v1/event/config/${configId}`);
+    deleteEventConfig: (eventId, testId) => {
+        return api.delete(`/api/manager/events/${eventId}/configs/${testId}`);
     }
 };
 
