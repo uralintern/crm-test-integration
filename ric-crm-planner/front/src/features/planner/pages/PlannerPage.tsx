@@ -278,6 +278,14 @@ export default function PlannerPage() {
   }, [requests]);
 
   const userNameById = useMemo(() => new Map(users.map((u) => [Number(u.id), fullName(u) || u.email])), [users]);
+  const curatorUsers = useMemo(
+    () =>
+      users.filter((candidate) => {
+        const candidateRole = roleFlags(candidate.role);
+        return candidateRole.isOrganizer || candidateRole.isCurator || Boolean(candidate.isGlobalOrganizer || candidate.isSuperuser || candidate.isStaff);
+      }),
+    [users]
+  );
   const requestStudentNameById = useMemo(() => {
     const map = new Map<number, string>();
     requests.forEach((request) => {
@@ -1030,7 +1038,7 @@ export default function PlannerPage() {
           teamDirectionByGroup={teamDirectionByGroup}
           teamProjectByGroup={teamProjectByGroup}
           activeTeamBuilderGroupKey={activeTeamBuilderGroupKey}
-          currentUser={user}
+          curatorUsers={curatorUsers}
           visibleTeams={visibleTeams}
           userNameById={userNameById}
           onOpenConfirmCloseEnrollment={openCloseEnrollment}

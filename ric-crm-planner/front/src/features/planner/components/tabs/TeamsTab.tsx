@@ -21,7 +21,7 @@ type TeamsTabProps = {
   teamDirectionByGroup: Record<string, string>;
   teamProjectByGroup: Record<string, string>;
   activeTeamBuilderGroupKey: string;
-  currentUser: User;
+  curatorUsers: User[];
   visibleTeams: PlannerTeam[];
   userNameById: Map<number, string>;
   onOpenConfirmCloseEnrollment: (eventId: number, eventTitle: string) => void;
@@ -76,7 +76,7 @@ export default function TeamsTab({
   teamDirectionByGroup,
   teamProjectByGroup,
   activeTeamBuilderGroupKey,
-  currentUser,
+  curatorUsers,
   visibleTeams,
   userNameById,
   onOpenConfirmCloseEnrollment,
@@ -131,27 +131,23 @@ export default function TeamsTab({
     });
   };
 
+  const eligibleCurators = [...curatorUsers]
+    .filter((curator) => Number.isFinite(Number(curator.id)) && Number(curator.id) > 0)
+    .sort((a, b) => (fullName(a) || a.email || String(a.id)).localeCompare(fullName(b) || b.email || String(b.id), "ru"));
+  const curatorUserById = new Map(eligibleCurators.map((curator) => [Number(curator.id), curator]));
+  const curatorSelectOptions = eligibleCurators.map((curator) => ({
+    value: String(curator.id),
+    label: fullName(curator) || curator.email || `ID ${curator.id}`,
+  }));
+
   const getCuratorName = (id: number) => {
-    if (Number(id) === Number(currentUser.id)) {
-      return fullName(currentUser) || currentUser.email || `ID ${currentUser.id}`;
-    }
+    const curator = curatorUserById.get(Number(id));
+    if (curator) return fullName(curator) || curator.email || `ID ${curator.id}`;
 
     return userNameById.get(Number(id)) || `Участник #${id}`;
   };
 
-  const getCuratorOptions = (team: PlannerTeam) => {
-    const optionIds = new Set<number>();
-    if (Number(currentUser.id)) optionIds.add(Number(currentUser.id));
-    team.memberIds.forEach((memberId) => optionIds.add(Number(memberId)));
-
-    return [
-      { value: "", label: "Выберите куратора", disabled: true },
-      ...Array.from(optionIds).map((id) => ({
-        value: String(id),
-        label: Number(id) === Number(currentUser.id) ? `Организатор: ${getCuratorName(id)}` : getCuratorName(id),
-      })),
-    ];
-  };
+  const getCuratorOptions = () => [{ value: "", label: "Выберите куратора", disabled: true }, ...curatorSelectOptions];
 
   const submitTeamCurator = (teamId: number) => {
     const curatorId = Number(curatorDraftByTeam[teamId] || 0);
@@ -212,7 +208,7 @@ export default function TeamsTab({
             <div className="team-meta-grid">
               <div className="team-value">
                 <span>Куратор</span>
-                {team.curatorId ? userNameById.get(team.curatorId) || `ID ${team.curatorId}` : "-"}
+                {team.curatorId ? getCuratorName(team.curatorId) : "-"}
               </div>
               <div className="team-value">
                 <span>Участники</span>
@@ -232,7 +228,7 @@ export default function TeamsTab({
                 <AppSelect
                   value={curatorDraftByTeam[team.id] || ""}
                   onChange={(value) => setCuratorDraftByTeam((prev) => ({ ...prev, [team.id]: String(value) }))}
-                  options={getCuratorOptions(team)}
+                  options={getCuratorOptions()}
                 />
                 <AppButton
                   className="primary"
@@ -306,21 +302,7 @@ export default function TeamsTab({
       );
     }
 
-    const curatorOptions = [
-      { value: "", label: "Куратор команды", disabled: true },
-      ...(!activeSelectedApplicants.some((applicant) => Number(applicant.ownerId) === Number(currentUser.id))
-        ? [
-            {
-              value: String(currentUser.id),
-              label: `Организатор: ${fullName(currentUser) || currentUser.email || `ID ${currentUser.id}`}`,
-            },
-          ]
-        : []),
-      ...activeSelectedApplicants.map((applicant) => ({
-        value: String(applicant.ownerId),
-        label: applicant.name,
-      })),
-    ];
+    const curatorOptions = [{ value: "", label: "Куратор команды", disabled: true }, ...curatorSelectOptions];
 
     return (
       <section className="planner-card teams-panel teams-panel--selection">
