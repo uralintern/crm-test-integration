@@ -33,6 +33,40 @@
 .backlog-sheet__head .planner-current-team {
   margin-bottom: 0;
 }
+.backlog-head-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.backlog-filter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.backlog-filter .app-select.ant-select {
+  min-width: 220px;
+}
+
+@media (max-width: 768px) {
+  .backlog-head-tools,
+  .backlog-filter {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-content: stretch;
+    width: 100%;
+  }
+
+  .backlog-filter .app-select.ant-select {
+    width: 100%;
+  }
+}
 
 .backlog-sheet__body {
   display: grid;

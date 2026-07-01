@@ -298,7 +298,42 @@ class PlannerDeskViewTests(TestCase):
         self.assertEqual(len(desk18.parent_tasks), 1)
         self.assertEqual(len(desk18.subtasks), 1)
 
-    def test_frontend_contract_patch_users_planner_removes_deleted_team_desk(self):
+    def test_frontend_contract_patch_users_planner_preserves_missing_team_desk_without_prune(self):
+        staff_user = get_user_model().objects.create_user(
+            email="planner-preserve-admin@example.com",
+            username="planner-preserve-admin@example.com",
+            password="StrongPass123",
+            is_active=True,
+            is_staff=True,
+        )
+        self.client.force_authenticate(user=staff_user)
+        workspace = PlannerWorkspaceState.objects.create(
+            enrollment_closed=True,
+            participants=[],
+            teams=[
+                {"id": 17, "name": "Team 17", "curatorId": 4, "memberIds": [11], "confirmed": False},
+                {"id": 18, "name": "Team 18", "curatorId": 5, "memberIds": [12], "confirmed": False},
+            ],
+            parent_tasks=[{"id": 1, "teamId": 17, "title": "P1"}, {"id": 2, "teamId": 18, "title": "P2"}],
+            subtasks=[{"id": 10, "teamId": 17, "parentTaskId": 1, "title": "S1"}],
+            columns=["Todo", "Done"],
+        )
+        TeamPlannerDesk.objects.create(team_id=17, team_name="Team 17", member_ids=[11])
+        TeamPlannerDesk.objects.create(team_id=18, team_name="Team 18", member_ids=[12])
+
+        response = self.client.patch(
+            reverse("planner-state"),
+            {"teams": [{"id": 18, "name": "Team 18", "curatorId": 5, "memberIds": [12], "confirmed": False}]},
+            format="json",
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertTrue(TeamPlannerDesk.objects.filter(team_id=17).exists())
+        self.assertTrue(TeamPlannerDesk.objects.filter(team_id=18).exists())
+        workspace.refresh_from_db()
+        self.assertEqual(sorted(team["id"] for team in workspace.teams), [17, 18])
+
+    def test_frontend_contract_patch_users_planner_prunes_deleted_team_desk_when_requested(self):
         staff_user = get_user_model().objects.create_user(
             email="planner-delete-admin@example.com",
             username="planner-delete-admin@example.com",
@@ -323,7 +358,10 @@ class PlannerDeskViewTests(TestCase):
 
         response = self.client.patch(
             reverse("planner-state"),
-            {"teams": [{"id": 18, "name": "Team 18", "curatorId": 5, "memberIds": [12], "confirmed": False}]},
+            {
+                "teams": [{"id": 18, "name": "Team 18", "curatorId": 5, "memberIds": [12], "confirmed": False}],
+                "prune_missing_team_desks": True,
+            },
             format="json",
         )
 

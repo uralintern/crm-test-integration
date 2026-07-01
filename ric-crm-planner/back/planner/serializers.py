@@ -5,6 +5,8 @@ from planner.models import PlannerAutomationConfig, PlannerAutomationExecutionLo
 
 
 class PlannerWorkspaceStateSerializer(serializers.ModelSerializer):
+    prune_missing_team_desks = serializers.BooleanField(write_only=True, required=False, default=False)
+
     class Meta:
         model = PlannerWorkspaceState
         fields = (
@@ -14,7 +16,16 @@ class PlannerWorkspaceStateSerializer(serializers.ModelSerializer):
             "parent_tasks",
             "subtasks",
             "columns",
+            "prune_missing_team_desks",
         )
+
+    def create(self, validated_data):
+        validated_data.pop("prune_missing_team_desks", None)
+        return super().create(validated_data)
+
+    def update(self, instance, validated_data):
+        validated_data.pop("prune_missing_team_desks", None)
+        return super().update(instance, validated_data)
 
 
 class TeamPlannerDeskSerializer(serializers.ModelSerializer):
