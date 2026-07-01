@@ -7,6 +7,10 @@ import type { User } from "../../../types/user";
 
 const USE_MOCK = client.USE_MOCK;
 
+type SavePlannerOptions = {
+  pruneMissingTeamDesks?: boolean;
+};
+
 export type PlannerTeamDesk = {
   teamId: number;
   teamName: string;
@@ -356,7 +360,7 @@ function mapBackendPlanner(raw: unknown): PlannerState {
   };
 }
 
-function toBackendPlannerWorkspace(state: PlannerState) {
+function toBackendPlannerWorkspace(state: PlannerState, options: SavePlannerOptions = {}) {
   return {
     enrollment_closed: state.closedEventIds.length > 0,
     closed_event_ids: state.closedEventIds,
@@ -367,6 +371,7 @@ function toBackendPlannerWorkspace(state: PlannerState) {
     })),
     teams: state.teams,
     columns: state.columns,
+    ...(options.pruneMissingTeamDesks ? { prune_missing_team_desks: true } : {}),
   };
 }
 
@@ -377,7 +382,6 @@ function toBackendTeamDesk(state: PlannerState, teamId: number) {
     team_name: team?.name ?? "",
     curator_id: team?.curatorId ?? null,
     member_ids: team?.memberIds ?? [],
-    updated_at: team?.updatedAt ?? "",
     parent_tasks: state.parentTasks.filter((task) => Number(task.teamId) === Number(teamId)),
     subtasks: state.subtasks.filter((subtask) => Number(subtask.teamId) === Number(teamId)),
     columns: state.columns,
@@ -396,11 +400,11 @@ export async function getPlannerState(): Promise<PlannerState> {
   }
 }
 
-export async function savePlannerWorkspaceState(state: PlannerState): Promise<PlannerState> {
+export async function savePlannerWorkspaceState(state: PlannerState, options: SavePlannerOptions = {}): Promise<PlannerState> {
   writePlannerState(state);
   if (USE_MOCK) return state;
   try {
-    await client.patch("/api/users/planner/", toBackendPlannerWorkspace(state));
+    await client.patch("/api/users/planner/", toBackendPlannerWorkspace(state, options));
   } catch (error) {
     console.error("Planner workspace save failed", error);
   }
@@ -418,11 +422,14 @@ export async function savePlannerTeamDesk(state: PlannerState, teamId: number): 
   return state;
 }
 
-export async function savePlannerState(state: PlannerState, activeTeamId?: number | null): Promise<PlannerState> {
+export async function savePlannerState(
+  state: PlannerState,
+  activeTeamId?: number | null,
+  options: SavePlannerOptions = {}
+): Promise<PlannerState> {
   writePlannerState(state);
   if (USE_MOCK) return state;
 
-  await savePlannerWorkspaceState(state);
   const shouldSaveTeamDesk =
     activeTeamId != null &&
     Number.isFinite(activeTeamId) &&
@@ -431,6 +438,8 @@ export async function savePlannerState(state: PlannerState, activeTeamId?: numbe
   if (shouldSaveTeamDesk) {
     await savePlannerTeamDesk(state, activeTeamId);
   }
+
+  await savePlannerWorkspaceState(state, options);
   return state;
 }
 

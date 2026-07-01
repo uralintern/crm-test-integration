@@ -1,8 +1,9 @@
-﻿import { useMemo, useState, type CSSProperties, type ComponentProps, type DragEvent } from "react";
+import { useMemo, useState, type CSSProperties, type ComponentProps, type DragEvent } from "react";
 import { Kanban, type BoardData } from "react-kanban-kit";
 import type { PlannerSubtask } from "../../../../types/planner";
 import AppButton from "../../../../components/UI/Button";
 import AppInput from "../../../../components/UI/Input";
+import AppSelect from "../../../../components/UI/Select";
 import {
   COLUMN_DRAG_TYPE,
   ROOT_ID,
@@ -22,6 +23,9 @@ type KanbanTabProps = {
   newColumn: string;
   columns: string[];
   filteredSubtasks: PlannerSubtask[];
+  assigneeFilter: string;
+  assigneeFilterOptions: Array<{ value: string; label: string; disabled?: boolean }>;
+  onAssigneeFilterChange: (value: string) => void;
   canEditTeam: (teamId: number) => boolean;
   displayAssigneeLabel: (id: number) => string;
   currentUserId: number;
@@ -37,6 +41,9 @@ export default function KanbanTab({
   newColumn,
   columns,
   filteredSubtasks,
+  assigneeFilter,
+  assigneeFilterOptions,
+  onAssigneeFilterChange,
   canEditTeam,
   displayAssigneeLabel,
   currentUserId,
@@ -90,7 +97,7 @@ export default function KanbanTab({
           children: [],
           totalChildrenCount: 0,
           type: "card",
-          isDraggable: canEditTeam(subtask.teamId),
+          isDraggable: canEditTeam(subtask.teamId) || Number(subtask.assigneeId) === Number(currentUserId),
           content: { subtask } satisfies KanbanCardContent,
         };
         source[columnId]?.children.push(cardId);
@@ -154,11 +161,21 @@ export default function KanbanTab({
   return (
     <div className="planner-stack">
       <div className="planner-card">
-        <div className="planner-inline-form">
-          <AppInput value={newColumn} onChange={(event) => onNewColumnChange(event.target.value)} placeholder="Новый статус" />
-          <AppButton className="primary" onClick={onAddColumn}>
-            Добавить
-          </AppButton>
+        <div className="planner-inline-form kanban-toolbar">
+          <div className="kanban-column-form">
+            <AppInput value={newColumn} onChange={(event) => onNewColumnChange(event.target.value)} placeholder="Новый статус" />
+            <AppButton className="primary" onClick={onAddColumn}>
+              Добавить
+            </AppButton>
+          </div>
+          <div className="kanban-assignee-filter">
+            <span>Исполнитель</span>
+            <AppSelect
+              value={assigneeFilter}
+              onChange={(value) => onAssigneeFilterChange(String(value))}
+              options={assigneeFilterOptions}
+            />
+          </div>
         </div>
       </div>
 
@@ -170,8 +187,11 @@ export default function KanbanTab({
         cardsGap={8}
         virtualization={false}
         allowColumnAdder={false}
-        allowListFooter={(column) => column.totalChildrenCount === 0}
-        renderListFooter={() => <div className="kanban-empty">Нет задач в спринте</div>}
+        allowListFooter={() => true}
+        renderListFooter={(column) => {
+          const isEmpty = column.totalChildrenCount === 0;
+          return <div className={`kanban-drop-area ${isEmpty ? "is-empty" : ""}`}>{isEmpty ? "Нет задач в спринте" : "Перетащите карточку сюда"}</div>;
+        }}
         renderColumnHeader={(column) => {
           const title = getColumnTitle(column);
           const columnIndex = columns.findIndex((columnTitle) => columnTitle === title);

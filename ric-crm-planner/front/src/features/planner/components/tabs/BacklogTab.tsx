@@ -45,6 +45,9 @@ type BacklogTabProps = {
   onSubInSprintChange: (value: boolean) => void;
   onAddSubtask: () => void;
   filteredSubtasks: PlannerSubtask[];
+  assigneeFilter: string;
+  assigneeFilterOptions: Array<{ value: string; label: string; disabled?: boolean }>;
+  onAssigneeFilterChange: (value: string) => void;
   editingSubtaskId: number | null;
   editingSubtaskDraft: SubtaskEditDraft | null;
   setEditingSubtaskDraft: Dispatch<SetStateAction<SubtaskEditDraft | null>>;
@@ -124,6 +127,9 @@ export default function BacklogTab({
   onSubInSprintChange,
   onAddSubtask,
   filteredSubtasks,
+  assigneeFilter,
+  assigneeFilterOptions,
+  onAssigneeFilterChange,
   editingSubtaskId,
   editingSubtaskDraft,
   setEditingSubtaskDraft,
@@ -301,10 +307,20 @@ export default function BacklogTab({
             <div className="backlog-eyebrow">Бэклог команды</div>
             <div className="planner-current-team">Название команды: <strong>{activeTeamName || "Не выбрана"}</strong></div>
           </div>
-          <div className="backlog-summary">
-            <span>{filteredParents.length} задач</span>
-            <span>{filteredSubtasks.length} подзадач</span>
-            <span>{teamSprintCount} в спринте</span>
+          <div className="backlog-head-tools">
+            <div className="backlog-filter">
+              <span className="backlog-filter__label">Исполнитель</span>
+              <AppSelect
+                value={assigneeFilter}
+                onChange={(value) => onAssigneeFilterChange(String(value))}
+                options={assigneeFilterOptions}
+              />
+            </div>
+            <div className="backlog-summary">
+              <span>{filteredParents.length} задач</span>
+              <span>{filteredSubtasks.length} подзадач</span>
+              <span>{teamSprintCount} в спринте</span>
+            </div>
           </div>
         </div>
 

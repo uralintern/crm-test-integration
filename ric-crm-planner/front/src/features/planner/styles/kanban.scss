@@ -1,6 +1,6 @@
 .kanban-board-kit.rkk-board {
   display: flex;
-  align-items: flex-start;
+  align-items: stretch;
   gap: 14px;
   min-height: 430px;
   height: auto;
@@ -9,14 +9,24 @@
   padding: 4px 0 12px;
 }
 
-.kanban-board-kit .rkk-column-outer {
+.kanban-board-kit > div {
+  display: flex;
   flex: 1 0 310px;
   min-width: 310px;
   max-width: 420px;
+  align-self: stretch;
+}
+
+.kanban-board-kit .rkk-column-outer {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: none;
   height: auto;
+  display: flex;
 }
 
 .kanban-board-kit .rkk-column {
+  flex: 1 1 auto;
   min-height: 430px;
   height: auto;
   padding: 0;
@@ -29,7 +39,9 @@
 
 .kanban-board-kit .rkk-column-wrapper {
   min-height: 430px;
-  height: auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   gap: 0;
 }
 
@@ -48,8 +60,8 @@
 }
 
 .kanban-board-kit .rkk-column-content-list {
-  min-height: 300px;
-  height: auto;
+  min-height: max(300px, calc(100vh - 340px));
+  height: 100%;
   padding: 16px;
   overflow-y: visible;
   overflow-x: hidden;
@@ -335,4 +347,81 @@
 
 .kanban-column-remove:active {
   transform: translateY(0);
+}
+
+.kanban-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.kanban-column-form,
+.kanban-assignee-filter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.kanban-column-form {
+  flex: 1 1 340px;
+}
+
+.kanban-column-form .app-input {
+  min-width: 220px;
+}
+
+.kanban-assignee-filter {
+  flex: 0 1 330px;
+  justify-content: flex-end;
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.kanban-assignee-filter .app-select.ant-select {
+  min-width: 220px;
+}
+
+.kanban-board-kit .rkk-generic-item-list-footer {
+  height: 100%;
+}
+
+.kanban-drop-area {
+  min-height: 240px;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  border: 1px dashed transparent;
+  border-radius: 12px;
+  background: transparent;
+  color: transparent;
+  font-size: 13px;
+  font-weight: 600;
+  transition: border-color 0.14s ease, background 0.14s ease, color 0.14s ease;
+}
+
+.kanban-drop-area.is-empty,
+.kanban-board-kit .rkk-column:hover .kanban-drop-area {
+  border-color: #d7e2f1;
+  background: rgba(255, 255, 255, 0.64);
+  color: #94a3b8;
+}
+
+@media (max-width: 768px) {
+  .kanban-toolbar,
+  .kanban-column-form,
+  .kanban-assignee-filter {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-content: stretch;
+    width: 100%;
+  }
+
+  .kanban-assignee-filter .app-select.ant-select,
+  .kanban-column-form .app-input,
+  .kanban-column-form .app-button.ant-btn {
+    width: 100%;
+  }
 }

@@ -204,7 +204,7 @@ def _user_can_access_team_desk(user, team_id):
     member_ids = [_to_int(member_id) for member_id in (desk.member_ids if isinstance(desk.member_ids, list) else [])]
     return user_id in member_ids or user_id == _to_int(desk.curator_id)
 
-def _sync_team_desks_from_workspace(workspace: PlannerWorkspaceState):
+def _sync_team_desks_from_workspace(workspace: PlannerWorkspaceState, prune_missing: bool = False):
     teams = workspace.teams if isinstance(workspace.teams, list) else []
     parent_tasks = workspace.parent_tasks if isinstance(workspace.parent_tasks, list) else []
     subtasks = workspace.subtasks if isinstance(workspace.subtasks, list) else []
@@ -234,9 +234,31 @@ def _sync_team_desks_from_workspace(workspace: PlannerWorkspaceState):
             desk.save()
             updated_desks.append(desk)
 
-        TeamPlannerDesk.objects.exclude(team_id__in=target_ids).delete()
+        if prune_missing:
+            TeamPlannerDesk.objects.exclude(team_id__in=target_ids).delete()
 
     return updated_desks
+
+
+def _request_flag_enabled(value):
+    return value is True or str(value).strip().lower() in {"1", "true", "yes", "on"}
+
+
+def _merge_missing_json_items_by_id(current_items, previous_items):
+    result = deepcopy(current_items) if isinstance(current_items, list) else []
+    seen_ids = {
+        _to_int(item.get("id"))
+        for item in result
+        if isinstance(item, dict) and _to_int(item.get("id")) is not None
+    }
+    for item in previous_items if isinstance(previous_items, list) else []:
+        if not isinstance(item, dict):
+            continue
+        item_id = _to_int(item.get("id"))
+        if item_id is not None and item_id not in seen_ids:
+            result.append(deepcopy(item))
+            seen_ids.add(item_id)
+    return result
 
 
 def _sync_workspace_from_team_desk(desk: TeamPlannerDesk):
@@ -363,7 +385,23 @@ class PlannerStateCompatView(RetrieveUpdateAPIView):
             "subtasks": previous_subtasks,
             "columns": deepcopy(serializer.instance.columns) if serializer.instance and isinstance(serializer.instance.columns, list) else [],
         }
+        prune_missing_team_desks = _request_flag_enabled(self.request.data.get("prune_missing_team_desks"))
         workspace = serializer.save()
+
+        if self.request.method.upper() == "PATCH" and not prune_missing_team_desks:
+            update_fields = []
+            if "teams" in self.request.data:
+                workspace.teams = _merge_missing_json_items_by_id(workspace.teams, previous_teams)
+                update_fields.append("teams")
+            if "parent_tasks" in self.request.data:
+                workspace.parent_tasks = _merge_missing_json_items_by_id(workspace.parent_tasks, previous_parent_tasks)
+                update_fields.append("parent_tasks")
+            if "subtasks" in self.request.data:
+                workspace.subtasks = _merge_missing_json_items_by_id(workspace.subtasks, previous_subtasks)
+                update_fields.append("subtasks")
+            if update_fields:
+                update_fields.append("updated_at")
+                workspace.save(update_fields=update_fields)
 
         if not has_curator_or_admin_role(self.request.user):
             user_id = _to_int(self.request.user.id)
@@ -402,7 +440,7 @@ class PlannerStateCompatView(RetrieveUpdateAPIView):
         workspace.refresh_from_db()
         should_sync_desks = self.request.method.upper() == "PUT" or "teams" in self.request.data or "parent_tasks" in self.request.data or "subtasks" in self.request.data
         if should_sync_desks:
-            for desk in _sync_team_desks_from_workspace(workspace):
+            for desk in _sync_team_desks_from_workspace(workspace, prune_missing=prune_missing_team_desks):
                 broadcast_team_desk_update(desk)
 
 

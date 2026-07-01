@@ -45,6 +45,8 @@ import { fullName, isFallbackParticipantName, PLANNED_KANBAN_STATUS, roleFlags }
 import { getManagedEventIds, isGlobalOrganizer } from "../../../utils/access";
 import "../planner.scss";
 
+const UNASSIGNED_ASSIGNEE_FILTER = "__unassigned";
+
 export default function PlannerPage() {
   const { user } = useContext(AuthContext);
   const { showToast } = useToast();
@@ -57,6 +59,7 @@ export default function PlannerPage() {
   const isStudent = role.isStudent && !isOrganizer;
   const userId = Number(user?.id || 0);
   const skipNextPlannerSaveRef = useRef(false);
+  const pruneMissingTeamDesksOnNextSaveRef = useRef(false);
   const syncedProjectCuratorKeyRef = useRef<Set<string>>(new Set());
   const plannerSocketRef = useRef<WebSocket | null>(null);
 
@@ -68,6 +71,7 @@ export default function PlannerPage() {
   const [loading, setLoading] = useState(false);
   const [isPlannerLoaded, setIsPlannerLoaded] = useState(false);
   const [teamFilter, setTeamFilter] = useState("");
+  const [assigneeFilter, setAssigneeFilter] = useState("");
   const [state, setState] = useState<PlannerState>({
     enrollmentClosed: false,
     closedEventIds: [],
@@ -340,6 +344,7 @@ export default function PlannerPage() {
   };
   const canViewTeam = (teamId: number) => isManagedTeam(teamId) || isCurator || (isStudent && confirmedMemberTeamIds.includes(teamId));
   const canEditTeam = (teamId: number) => isManagedTeam(teamId) || (isCurator && curatorTeamIds.includes(teamId)) || (isStudent && confirmedMemberTeamIds.includes(teamId));
+  const canMoveSubtask = (subtask: PlannerSubtask) => canEditTeam(subtask.teamId) || Number(subtask.assigneeId) === userId;
 
   const visibleTeams = state.teams.filter((t) => canViewTeam(t.id) && !hiddenEventIdSet.has(Number(t.eventId)));
   const activeTeamId = teamFilter ? Number(teamFilter) : null;
@@ -350,7 +355,9 @@ export default function PlannerPage() {
       skipNextPlannerSaveRef.current = false;
       return;
     }
-    void savePlannerState(state, activeTeamId);
+    const saveOptions = pruneMissingTeamDesksOnNextSaveRef.current ? { pruneMissingTeamDesks: true } : undefined;
+    pruneMissingTeamDesksOnNextSaveRef.current = false;
+    void savePlannerState(state, activeTeamId, saveOptions);
   }, [activeTeamId, isPlannerLoaded, state]);
   const plannerAutomationEventId = Number(activeTeam?.eventId ?? visibleTeams[0]?.eventId ?? 0) || null;
   const openPlannerAutomation = () => {
@@ -371,13 +378,30 @@ export default function PlannerPage() {
       setTeamFilter(String(visibleTeams[0].id));
     }
   }, [teamFilter, visibleTeams]);
-  const filteredParents = state.parentTasks.filter(
+  const teamParents = state.parentTasks.filter(
     (p) => canViewTeam(p.teamId) && activeTeamId != null && Number(activeTeamId) === Number(p.teamId)
   );
-  const selectedParent = filteredParents.find((p) => Number(p.id) === Number(selectedParentId));
-  const filteredSubtasks = state.subtasks.filter(
+  const teamSubtasks = state.subtasks.filter(
     (s) => canViewTeam(s.teamId) && activeTeamId != null && Number(activeTeamId) === Number(s.teamId)
   );
+  const normalizedAssigneeFilter = assigneeFilter.trim();
+  const matchesAssigneeFilter = (assigneeId?: number) => {
+    if (!normalizedAssigneeFilter) return true;
+    const normalizedAssigneeId = Number(assigneeId);
+    if (normalizedAssigneeFilter === UNASSIGNED_ASSIGNEE_FILTER) {
+      return assigneeId == null || !Number.isFinite(normalizedAssigneeId) || normalizedAssigneeId <= 0;
+    }
+    return normalizedAssigneeId === Number(normalizedAssigneeFilter);
+  };
+  const filteredSubtasks = teamSubtasks.filter((subtask) => matchesAssigneeFilter(subtask.assigneeId));
+  const filteredParents = teamParents.filter((parent) => {
+    if (!normalizedAssigneeFilter) return true;
+    if (matchesAssigneeFilter(parent.assigneeId)) return true;
+    return teamSubtasks.some(
+      (subtask) => Number(subtask.parentTaskId) === Number(parent.id) && matchesAssigneeFilter(subtask.assigneeId)
+    );
+  });
+  const selectedParent = filteredParents.find((p) => Number(p.id) === Number(selectedParentId));
   const displayNameForUserId = (id: number) => {
     const userName = userNameById.get(id);
     if (userName) return userName;
@@ -398,6 +422,14 @@ export default function PlannerPage() {
   const getTeamMemberIds = (teamId: number) =>
     state.teams.find((t) => Number(t.id) === Number(teamId))?.memberIds || [];
   const activeTeamMembers = activeTeamId != null ? getTeamMemberIds(activeTeamId) : [];
+  const assigneeFilterOptions = [
+    { value: "", label: "Все исполнители" },
+    { value: UNASSIGNED_ASSIGNEE_FILTER, label: "Без ответственного" },
+    ...activeTeamMembers.map((id) => ({ value: String(id), label: displayAssigneeLabel(Number(id)) })),
+  ];
+  useEffect(() => {
+    setAssigneeFilter("");
+  }, [activeTeamId]);
   useEffect(() => {
     if (!isPlannerLoaded || activeTeamId == null || !Number.isFinite(activeTeamId) || activeTeamId <= 0) return;
 
@@ -513,6 +545,7 @@ export default function PlannerPage() {
   };
   const confirmDeleteTeam = () => {
     if (deleteTeamTargetId == null) return;
+    pruneMissingTeamDesksOnNextSaveRef.current = true;
     setState((prev) => removeTeamCascade(prev, deleteTeamTargetId));
     setDeleteTeamTargetId(null);
     notifySuccess("Команда удалена");
@@ -903,7 +936,7 @@ export default function PlannerPage() {
   const moveKanbanSubtask = (subtaskId: number, column: string, position: number) => {
     setState((prev) => {
       const moved = prev.subtasks.find((subtask) => Number(subtask.id) === Number(subtaskId));
-      if (!moved || !canEditTeam(moved.teamId)) return prev;
+      if (!moved || !canMoveSubtask(moved)) return prev;
 
 	      const movedNext: PlannerSubtask = { ...moved, status: column, inSprint: true, updatedAt: currentTimestamp() };
       const targetSubtasks = prev.subtasks.filter(
@@ -1164,6 +1197,9 @@ export default function PlannerPage() {
           onSubInSprintChange={setSubInSprint}
           onAddSubtask={addSubtask}
           filteredSubtasks={filteredSubtasks}
+          assigneeFilter={assigneeFilter}
+          assigneeFilterOptions={assigneeFilterOptions}
+          onAssigneeFilterChange={setAssigneeFilter}
           editingSubtaskId={editingSubtaskId}
           editingSubtaskDraft={editingSubtaskDraft}
           setEditingSubtaskDraft={setEditingSubtaskDraft}
@@ -1183,6 +1219,9 @@ export default function PlannerPage() {
           newColumn={newColumn}
           columns={state.columns}
           filteredSubtasks={filteredSubtasks}
+          assigneeFilter={assigneeFilter}
+          assigneeFilterOptions={assigneeFilterOptions}
+          onAssigneeFilterChange={setAssigneeFilter}
           canEditTeam={canEditTeam}
           displayAssigneeLabel={displayAssigneeLabel}
           currentUserId={userId}

@@ -19,7 +19,7 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 14px;
-  align-items: start;
+  align-items: center;
   margin-bottom: 14px;
 }
 
@@ -32,6 +32,48 @@
 
 .backlog-sheet__head .planner-current-team {
   margin-bottom: 0;
+}
+
+.backlog-head-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.backlog-filter {
+  display: flex;
+  align-items: center;
+  min-height: 40px;
+  gap: 8px;
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.backlog-filter .app-select.ant-select {
+  min-width: 220px;
+}
+
+.backlog-filter__label {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+}
+
+@media (max-width: 768px) {
+  .backlog-head-tools,
+  .backlog-filter {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-content: stretch;
+    width: 100%;
+  }
+
+  .backlog-filter .app-select.ant-select {
+    width: 100%;
+  }
 }
 
 .backlog-sheet__body {
@@ -1178,4 +1220,3 @@
     margin-left: 0;
   }
 }
-
