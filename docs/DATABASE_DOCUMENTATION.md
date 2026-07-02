@@ -1,11 +1,5 @@
 # RIC CRM Planner - Документация
 
-- **[API_DOCUMENTATION.md](./API_DOCUMENTATION.md)** - Полная документация REST API и WebSocket контрактов
-- **[DATABASE_SCHEMA_DETAILED.md](./DATABASE_SCHEMA_DETAILED.md)** - Детальная схема БД с ER-диаграммой и примерами запросов
-- **[DATABASE_AND_API_DOCUMENTATION.md](./DATABASE_AND_API_DOCUMENTATION.md)** - Описание схемы БД (этот файл)
-- **[API_QUICK_REFERENCE.md](./API_QUICK_REFERENCE.md)** - Быстрая справка для разработчиков
-- **[DOCUMENTATION_INDEX.md](./DOCUMENTATION_INDEX.md)** - Навигация по всей документации
-
 ## 1. СХЕМА БАЗЫ ДАННЫХ
 
 ### 1.1 Таблица AUTH_USER (встроенная Django)
@@ -511,11 +505,3 @@ CRM_PLANNER_AUTOMATION_EXECUTION_LOG
 ├── executed_at (DateTime, blank)
 └── created_at (DateTime, auto_now_add)
 ```
-
----
-
-## 2. СВЯЗИ И АРХИТЕКТУРА
-
-Для детальной информации о связях между сущностями, ER-диаграмме и примерах данных см. [DATABASE_SCHEMA_DETAILED.md](./DATABASE_SCHEMA_DETAILED.md).
-
----
