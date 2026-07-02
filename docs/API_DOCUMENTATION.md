@@ -1,8 +1,6 @@
-# RIC CRM Planner - REST API Полная Документация
+# 1. ОСНОВНАЯ КОНФИГУРАЦИЯ API
 
-## 1. ОСНОВНАЯ КОНФИГУРАЦИЯ API
-
-### 1.1 Базовые параметры
+## 1.1 Базовые параметры
 
 | Параметр | Значение |
 |----------|----------|
@@ -37,11 +35,6 @@ Authorization: Bearer {access_token}
 # Или в HTTP-only cookie (автоматически)
 Cookie: access_token={token}
 ```
-
-**Жизненный цикл токена:**
-
-- `access_token` - 15 минут (по умолчанию)
-- `refresh_token` - 24 часа (по умолчанию)
 
 ### 1.4 Трансформация данных (Client-Side)
 
@@ -2592,84 +2585,3 @@ curl -X POST http://localhost:8000/api/integrations/vk/notify-application-testin
     "peer_id": 123456789
   }'
 ```
-
----
-
-## 15. КОДЫ СТАТУСОВ HTTP
-
-| Код | Статус | Описание | Пример |
-|-----|--------|---------|---------|
-| 200 | OK | Успешный GET/PUT запрос | Получена информация о ресурсе |
-| 201 | Created | Успешное создание ресурса | Создана новая заявка |
-| 204 | No Content | Успешное удаление ресурса | Ресурс удален |
-| 400 | Bad Request | Ошибка в данных запроса | Неверный email формат |
-| 401 | Unauthorized | Отсутствует/неверный токен | Токен истек или отсутствует |
-| 403 | Forbidden | Недостаточно разрешений | Недостаточно прав для удаления |
-| 404 | Not Found | Ресурс не найден | Событие с таким ID не существует |
-| 409 | Conflict | Нарушение уникальности | Username уже зарегистрирован |
-| 422 | Unprocessable Entity | Ошибка обработки данных | Логическая ошибка данных |
-| 429 | Too Many Requests | Превышен rate limit | Слишком много запросов |
-| 500 | Internal Server Error | Ошибка сервера | Критическая ошибка на сервере |
-
----
-
-## 16. ПРИМЕРЫ ИСПОЛЬЗОВАНИЯ
-
-### 16.1 Полный цикл: Регистрация → Вход → Подача заявки → Тестирование
-
-```bash
-#!/bin/bash
-
-BASE_URL="http://localhost:8000/api"
-COOKIES_FILE="cookies.txt"
-
-# 1. Регистрация
-echo "1. Регистрация..."
-curl -X POST $BASE_URL/users/register/ \
-  -H "Content-Type: application/json" \
-  -c $COOKIES_FILE \
-  -d '{
-    "username": "testuser",
-    "email": "test@example.com",
-    "password": "SecurePass123",
-    "password_confirm": "SecurePass123",
-    "surname": "User",
-    "name": "Test"
-  }'
-
-# 2. Вход
-echo -e "\n2. Вход в систему..."
-LOGIN_RESPONSE=$(curl -s -X POST $BASE_URL/users/login/ \
-  -H "Content-Type: application/json" \
-  -b $COOKIES_FILE \
-  -c $COOKIES_FILE \
-  -d '{
-    "username": "testuser",
-    "password": "SecurePass123"
-  }')
-
-ACCESS_TOKEN=$(echo $LOGIN_RESPONSE | grep -o '"access":"[^"]*' | cut -d'"' -f4)
-echo "Access Token: $ACCESS_TOKEN"
-
-# 3. Подача заявки
-echo -e "\n3. Подача заявки..."
-curl -X POST $BASE_URL/users/events/1/directions/1/applications/ \
-  -H "Authorization: Bearer $ACCESS_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "message": "I am interested in this program",
-    "specialization": 2,
-    "custom_form_answers": {"experience": "intermediate"}
-  }'
-
-# 4. Получение SSO ссылки для тестирования
-echo -e "\n4. Получение SSO ссылки..."
-curl -X GET "$BASE_URL/users/integration/testing/sso-link/?application_id=1" \
-  -H "Authorization: Bearer $ACCESS_TOKEN"
-```
-
----
-
-**Версия**: 1.0  
-**Последнее обновление**: 2024-07-01
-**Автор**: RIC Development Team
