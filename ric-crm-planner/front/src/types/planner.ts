@@ -1,4 +1,6 @@
-﻿export interface PlannerParticipant {
+﻿import { Dayjs } from "dayjs";
+
+export interface PlannerParticipant {
   id: number;
   fullName: string;
 }
@@ -24,8 +26,8 @@ export interface PlannerParentTask {
   title: string;
   description?: string;
   assigneeId?: number;
-  startDate: string;
-  endDate: string;
+  startDate?: Dayjs;
+  endDate?: Dayjs;
   createdBy?: number;
   updatedAt?: string;
 }
@@ -37,8 +39,8 @@ export interface PlannerSubtask {
   title: string;
   role: string;
   assigneeId?: number;
-  startDate: string;
-  endDate: string;
+  startDate?: Dayjs;
+  endDate?: Dayjs;
   inSprint: boolean;
   status: string;
   createdBy?: number;

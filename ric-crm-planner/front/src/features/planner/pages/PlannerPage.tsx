@@ -22,7 +22,6 @@ import { getAllUsers } from "../../../storage/storage";
 import type { PlannerState, PlannerSubtask, PlannerTeam } from "../../../types/planner";
 import type { Request } from "../../../types/request";
 import type { User } from "../../../types/user";
-import PlannerHeader from "../components/PlannerHeader";
 import PlannerTabs from "../components/PlannerTabs";
 import TeamsTab from "../components/tabs/TeamsTab";
 import BacklogTab from "../components/tabs/BacklogTab";
@@ -44,6 +43,7 @@ import { buildApplicantsTree, buildProjectApplicantGroups } from "../planner.app
 import { fullName, isFallbackParticipantName, PLANNED_KANBAN_STATUS, roleFlags } from "../planner.utils";
 import { getManagedEventIds, isGlobalOrganizer } from "../../../utils/access";
 import "../planner.scss";
+import dayjs, { Dayjs } from "dayjs";
 
 const UNASSIGNED_ASSIGNEE_FILTER = "__unassigned";
 
@@ -98,14 +98,14 @@ export default function PlannerPage() {
 
   const [parentTitle, setParentTitle] = useState("");
   const [parentAssigneeId, setParentAssigneeId] = useState("");
-  const [parentStart, setParentStart] = useState("");
-  const [parentEnd, setParentEnd] = useState("");
+  const [parentStart, setParentStart] = useState<Dayjs | undefined>();
+  const [parentEnd, setParentEnd] = useState<Dayjs | undefined>();
   const [selectedParentId, setSelectedParentId] = useState<number | null>(null);
 
   const [subTitle, setSubTitle] = useState("");
-  const [subAssigneeId, setSubAssigneeId] = useState("");
-  const [subStart, setSubStart] = useState("");
-  const [subEnd, setSubEnd] = useState("");
+  const [subAssigneeId, setSubAssigneeId] = useState("0");
+  const [subStart, setSubStart] = useState<Dayjs | undefined>();
+  const [subEnd, setSubEnd] = useState<Dayjs | undefined>();
   const [subInSprint, setSubInSprint] = useState(false);
   const [newColumn, setNewColumn] = useState("");
   const [closeEnrollmentTarget, setCloseEnrollmentTarget] = useState<{ eventId: number; eventTitle: string } | null>(null);
@@ -586,10 +586,10 @@ export default function PlannerPage() {
     const availableIds = new Set(group.applicants.map((a) => a.ownerId));
     const assignedIds = group.eventId
       ? new Set(
-          state.teams
-            .filter((team) => Number(team.eventId) === Number(group.eventId))
-            .flatMap((team) => team.memberIds.map((memberId) => Number(memberId)))
-        )
+        state.teams
+          .filter((team) => Number(team.eventId) === Number(group.eventId))
+          .flatMap((team) => team.memberIds.map((memberId) => Number(memberId)))
+      )
       : new Set<number>();
     const memberIds = selectedOwnerIds.filter((id) => availableIds.has(id) && !assignedIds.has(Number(id)));
     if (memberIds.length === 0) {
@@ -621,20 +621,20 @@ export default function PlannerPage() {
         acc[String(applicant.ownerId)] = String(applicant.specialization);
         return acc;
       }, {});
-	    const created: PlannerTeam = {
-	      id: nextPlannerId(state.teams),
-	      name: teamName,
-	      curatorId,
-	      memberIds,
+    const created: PlannerTeam = {
+      id: nextPlannerId(state.teams),
+      name: teamName,
+      curatorId,
+      memberIds,
       memberRoles,
       confirmed: false,
       eventId: group.eventId,
-	      directionId,
-	      projectId,
-	      sourceRequestIds: requestIds,
-	      createdBy: userId || undefined,
-	      updatedAt: currentTimestamp(),
-	    };
+      directionId,
+      projectId,
+      sourceRequestIds: requestIds,
+      createdBy: userId || undefined,
+      updatedAt: currentTimestamp(),
+    };
 
     setState((prev) => {
       const participantsById = new Map(prev.participants.map((p) => [Number(p.id), p]));
@@ -669,30 +669,38 @@ export default function PlannerPage() {
       notifyError("Нет прав или команда не выбрана");
       return;
     }
-    if (!parentTitle.trim() || !parentStart || !parentEnd || parentStart > parentEnd) {
+    if (!parentTitle.trim()) {
       notifyError("Проверьте поля большой задачи");
       return;
     }
+
+    if (parentStart && parentEnd) {
+      if (parentStart > parentEnd) {
+        notifyError("Проверьте сроки большой задачи");
+        return;
+      }
+    }
+
     setState((prev) => ({
       ...prev,
       parentTasks: [
         ...prev.parentTasks,
-	        {
-	          id: nextPlannerId(prev.parentTasks),
-	          teamId,
-	          title: parentTitle.trim(),
-	          assigneeId: parentAssigneeId ? Number(parentAssigneeId) : undefined,
-	          startDate: parentStart,
-	          endDate: parentEnd,
-	          createdBy: userId || undefined,
-	          updatedAt: currentTimestamp(),
-	        },
+        {
+          id: nextPlannerId(prev.parentTasks),
+          teamId,
+          title: parentTitle.trim(),
+          assigneeId: parentAssigneeId ? Number(parentAssigneeId) : undefined,
+          startDate: parentStart,
+          endDate: parentEnd,
+          createdBy: userId || undefined,
+          updatedAt: currentTimestamp(),
+        },
       ],
     }));
     setParentTitle("");
     setParentAssigneeId("");
-    setParentStart("");
-    setParentEnd("");
+    setParentStart(undefined);
+    setParentEnd(undefined);
     notifySuccess("Большая задача добавлена");
   };
 
@@ -705,14 +713,11 @@ export default function PlannerPage() {
       notifyError("Нет прав на подзадачи этой команды");
       return;
     }
-    if (!subTitle.trim() || !subAssigneeId || !subStart || !subEnd || subStart > subEnd) {
+    if (!subTitle.trim() || !subAssigneeId) {
       notifyError("Проверьте поля подзадачи");
       return;
     }
-    if (subStart < selectedParent.startDate || subEnd > selectedParent.endDate) {
-      notifyError("Сроки подзадачи вне диапазона большой задачи");
-      return;
-    }
+
     const created: PlannerSubtask = {
       id: nextPlannerId(state.subtasks),
       teamId: selectedParent.teamId,
@@ -720,19 +725,19 @@ export default function PlannerPage() {
       title: subTitle.trim(),
       role: "",
       assigneeId: Number(subAssigneeId),
-	      startDate: subStart,
-	      endDate: subEnd,
-	      status: plannedColumn,
-	      inSprint: subInSprint,
-	      createdBy: userId || undefined,
-	      updatedAt: currentTimestamp(),
-	    };
+      startDate: subStart,
+      endDate: subEnd,
+      status: plannedColumn,
+      inSprint: true,
+      createdBy: userId || undefined,
+      updatedAt: currentTimestamp(),
+    };
     setState((prev) => ({ ...prev, subtasks: [...prev.subtasks, created] }));
     setSubTitle("");
-    setSubAssigneeId("");
-    setSubStart("");
-    setSubEnd("");
-    setSubInSprint(false);
+    setSubAssigneeId("0");
+    setSubStart(undefined);
+    setSubEnd(undefined);
+    setSubInSprint(true);
     notifySuccess("Подзадача добавлена");
   };
 
@@ -743,8 +748,8 @@ export default function PlannerPage() {
     setEditingParentDraft({
       title: parent.title,
       assigneeId: parent.assigneeId,
-      startDate: parent.startDate,
-      endDate: parent.endDate,
+      startDate: parent.startDate ? dayjs(parent.startDate) : undefined,
+      endDate: parent.endDate ? dayjs(parent.endDate) : undefined,
     });
   };
 
@@ -756,31 +761,23 @@ export default function PlannerPage() {
   const saveEditedParent = () => {
     if (!editingParentId || !editingParentDraft) return;
     const nextTitle = editingParentDraft.title.trim();
-    if (!nextTitle || !editingParentDraft.startDate || !editingParentDraft.endDate || editingParentDraft.startDate > editingParentDraft.endDate) {
+    if (!nextTitle) {
       notifyError("Проверьте поля большой задачи");
       return;
     }
-    const hasOutOfRangeSubtasks = state.subtasks.some(
-      (s) =>
-        Number(s.parentTaskId) === Number(editingParentId) &&
-        (s.startDate < editingParentDraft.startDate || s.endDate > editingParentDraft.endDate)
-    );
-    if (hasOutOfRangeSubtasks) {
-      notifyError("Сначала исправьте сроки подзадач: они должны быть в диапазоне большой задачи");
-      return;
-    }
+
     setState((prev) => ({
       ...prev,
       parentTasks: prev.parentTasks.map((p) =>
         Number(p.id) === Number(editingParentId)
           ? {
-              ...p,
-              title: nextTitle,
-	              assigneeId: editingParentDraft.assigneeId,
-	              startDate: editingParentDraft.startDate,
-	              endDate: editingParentDraft.endDate,
-	              updatedAt: currentTimestamp(),
-	            }
+            ...p,
+            title: nextTitle,
+            assigneeId: editingParentDraft.assigneeId,
+            startDate: editingParentDraft.startDate ? dayjs(editingParentDraft.startDate) : undefined,
+            endDate: editingParentDraft.endDate ? dayjs(editingParentDraft.endDate) : undefined,
+            updatedAt: currentTimestamp(),
+          }
           : p
       ),
     }));
@@ -795,8 +792,8 @@ export default function PlannerPage() {
     setEditingSubtaskDraft({
       title: subtask.title,
       assigneeId: subtask.assigneeId,
-      startDate: subtask.startDate,
-      endDate: subtask.endDate,
+      startDate: subtask.startDate ? dayjs(subtask.startDate) : undefined,
+      endDate: subtask.endDate ? dayjs(subtask.endDate) : undefined,
       status: subtask.status,
       inSprint: subtask.inSprint,
     });
@@ -810,17 +807,15 @@ export default function PlannerPage() {
   const saveEditedSubtask = () => {
     if (!editingSubtaskId || !editingSubtaskDraft) return;
     const nextTitle = editingSubtaskDraft.title.trim();
-    if (!nextTitle || !editingSubtaskDraft.assigneeId || !editingSubtaskDraft.startDate || !editingSubtaskDraft.endDate || editingSubtaskDraft.startDate > editingSubtaskDraft.endDate) {
+
+    if (!nextTitle) {
       notifyError("Проверьте поля подзадачи");
       return;
     }
     const current = state.subtasks.find((s) => Number(s.id) === Number(editingSubtaskId));
     const parent = state.parentTasks.find((p) => Number(p.id) === Number(current?.parentTaskId));
     if (!current || !parent) return;
-    if (editingSubtaskDraft.startDate < parent.startDate || editingSubtaskDraft.endDate > parent.endDate) {
-      notifyError("Сроки подзадачи вне диапазона большой задачи");
-      return;
-    }
+
     const safeStatus =
       editingSubtaskDraft.inSprint && !current.inSprint
         ? plannedColumn
@@ -834,15 +829,15 @@ export default function PlannerPage() {
       subtasks: prev.subtasks.map((s) =>
         Number(s.id) === Number(editingSubtaskId)
           ? {
-              ...s,
-              title: nextTitle,
-              assigneeId: editingSubtaskDraft.assigneeId,
-              startDate: editingSubtaskDraft.startDate,
-              endDate: editingSubtaskDraft.endDate,
-	              status: safeStatus,
-	              inSprint: Boolean(editingSubtaskDraft.inSprint),
-	              updatedAt: currentTimestamp(),
-	            }
+            ...s,
+            title: nextTitle,
+            assigneeId: editingSubtaskDraft.assigneeId,
+            startDate: editingSubtaskDraft.startDate,
+            endDate: editingSubtaskDraft.endDate,
+            status: safeStatus,
+            inSprint: Boolean(editingSubtaskDraft.inSprint),
+            updatedAt: currentTimestamp(),
+          }
           : s
       ),
     }));
@@ -938,7 +933,7 @@ export default function PlannerPage() {
       const moved = prev.subtasks.find((subtask) => Number(subtask.id) === Number(subtaskId));
       if (!moved || !canMoveSubtask(moved)) return prev;
 
-	      const movedNext: PlannerSubtask = { ...moved, status: column, inSprint: true, updatedAt: currentTimestamp() };
+      const movedNext: PlannerSubtask = { ...moved, status: column, inSprint: true, updatedAt: currentTimestamp() };
       const targetSubtasks = prev.subtasks.filter(
         (subtask) =>
           Number(subtask.id) !== Number(subtaskId) &&
@@ -1047,7 +1042,6 @@ export default function PlannerPage() {
 
   return (
     <div className="page planner-page">
-      <PlannerHeader visibleTeams={visibleTeams} teamFilter={teamFilter} onTeamFilterChange={setTeamFilter} />
       <PlannerTabs tab={tab} onChange={setTab} onOpenAutomation={isOrganizer ? openPlannerAutomation : undefined} />
 
       {studentWaitingForConfirmedTeam && (
@@ -1211,6 +1205,10 @@ export default function PlannerPage() {
           onDeleteSubtask={(subtaskId) =>
             setState((prev) => ({ ...prev, subtasks: prev.subtasks.filter((subtask) => subtask.id !== subtaskId) }))
           }
+
+          visibleTeams={visibleTeams}
+          teamFilter={teamFilter}
+          onTeamFilterChange={setTeamFilter}
         />
       )}
 

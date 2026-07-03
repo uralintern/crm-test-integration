@@ -1,17 +1,19 @@
+import type { Dayjs } from "dayjs";
+
 export type PlannerTab = "teams" | "backlog" | "kanban" | "gantt";
 
 export type ParentEditDraft = {
   title: string;
   assigneeId?: number;
-  startDate: string;
-  endDate: string;
+  startDate?: Dayjs;
+  endDate?: Dayjs;
 };
 
 export type SubtaskEditDraft = {
   title: string;
   assigneeId?: number;
-  startDate: string;
-  endDate: string;
+  startDate?: Dayjs;
+  endDate?: Dayjs;
   status: string;
   inSprint: boolean;
 };
