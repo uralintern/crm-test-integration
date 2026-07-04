@@ -1,12 +1,49 @@
-import { useState, type Dispatch, type SetStateAction, type MouseEvent } from "react";
-import type { PlannerParentTask, PlannerSubtask, PlannerTeam } from "../../../../types/planner";
+import {
+  useState,
+  type Dispatch,
+  type SetStateAction,
+  type MouseEvent,
+} from "react";
+import type {
+  PlannerParentTask,
+  PlannerSubtask,
+  PlannerTeam,
+} from "../../../../types/planner";
 import type { ParentEditDraft, SubtaskEditDraft } from "../../planner.types";
-import { Select, Button, Input, DatePicker, Flex, Typography, Popconfirm } from "antd";
-import { CaretDownFilled, CaretRightFilled, CloseCircleFilled, DeleteFilled, EditFilled, SaveFilled } from '@ant-design/icons'
+import {
+  Badge,
+  Button,
+  Card,
+  DatePicker,
+  Empty,
+  Flex,
+  Input,
+  Popconfirm,
+  Select,
+  Space,
+  Statistic,
+  Tag,
+  Tooltip,
+  Typography,
+} from "antd";
+import {
+  CalendarOutlined,
+  CaretDownFilled,
+  CaretRightFilled,
+  CloseOutlined,
+  DeleteOutlined,
+  EditOutlined,
+  FilterOutlined,
+  FolderOpenOutlined,
+  PlusOutlined,
+  SaveFilled,
+  TeamOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 
-const { Text } = Typography;
+const { Text, Title } = Typography;
 
 type BacklogTabProps = {
   activeTeamName: string;
@@ -47,7 +84,11 @@ type BacklogTabProps = {
   onAddSubtask: () => void;
   filteredSubtasks: PlannerSubtask[];
   assigneeFilter: string;
-  assigneeFilterOptions: Array<{ value: string; label: string; disabled?: boolean }>;
+  assigneeFilterOptions: Array<{
+    value: string;
+    label: string;
+    disabled?: boolean;
+  }>;
   onAssigneeFilterChange: (value: string) => void;
   editingSubtaskId: number | null;
   editingSubtaskDraft: SubtaskEditDraft | null;
@@ -70,12 +111,17 @@ const formatAssigneeName = (label: string) => {
   return parts.length > 2 ? parts.slice(0, 2).join(" ") : namePart;
 };
 
-const getSubtaskAssignee = (subtask: PlannerSubtask, displayAssigneeLabel: (id: number) => string) => {
-  if (subtask.assigneeId) return formatAssigneeName(displayAssigneeLabel(subtask.assigneeId));
+const getSubtaskAssignee = (
+  subtask: PlannerSubtask,
+  displayAssigneeLabel: (id: number) => string,
+) => {
+  if (subtask.assigneeId)
+    return formatAssigneeName(displayAssigneeLabel(subtask.assigneeId));
   return subtask.role || "Исполнитель не назначен";
 };
 
 export default function BacklogTab({
+  activeTeamName,
   parentTitle,
   parentAssigneeId,
   parentStart,
@@ -92,6 +138,7 @@ export default function BacklogTab({
   editingParentId,
   editingParentDraft,
   setEditingParentDraft,
+  onOpenTaskCard,
   onStartEditParent,
   onSaveEditedParent,
   onCancelEditParent,
@@ -122,16 +169,23 @@ export default function BacklogTab({
   onDeleteSubtask,
   visibleTeams,
   teamFilter,
-  onTeamFilterChange
+  onTeamFilterChange,
 }: BacklogTabProps) {
-  const [openParentById, setOpenParentById] = useState<Record<number, boolean>>({});
+  const [openParentById, setOpenParentById] = useState<Record<number, boolean>>(
+    {},
+  );
 
   const getParentSubtasks = (parentId: number) =>
-    filteredSubtasks.filter((subtask) => Number(subtask.parentTaskId) === Number(parentId));
+    filteredSubtasks.filter(
+      (subtask) => Number(subtask.parentTaskId) === Number(parentId),
+    );
 
   const toggleParent = (parentId: number) => {
     const fallbackOpen = Number(selectedParentId) === Number(parentId);
-    setOpenParentById((prev) => ({ ...prev, [parentId]: !(prev[parentId] ?? fallbackOpen) }));
+    setOpenParentById((prev) => ({
+      ...prev,
+      [parentId]: !(prev[parentId] ?? fallbackOpen),
+    }));
     onSelectParent(parentId);
   };
 
@@ -141,24 +195,42 @@ export default function BacklogTab({
     action();
   };
 
-  //Редактор большой задачи
+  const formatDate = (date: Dayjs | undefined): string =>
+    date ? dayjs(date).format("DD.MM.YYYY") : "Нет срока";
+
+  const memberOptions = (ids: number[]) =>
+    ids.map((id) => ({
+      value: String(id),
+      label: formatAssigneeName(displayAssigneeLabel(Number(id))),
+    }));
+
   const renderParentEditor = (parent: PlannerParentTask) => (
-    <Flex>
+    <Flex gap={12} wrap>
       <Input
         value={editingParentDraft?.title ?? ""}
-        onClick={(event) => event.stopPropagation()}
-        onChange={(event) => setEditingParentDraft((prev) => (prev ? { ...prev, title: event.target.value } : prev))}
+        onChange={(event) =>
+          setEditingParentDraft((prev) =>
+            prev ? { ...prev, title: event.target.value } : prev,
+          )
+        }
         placeholder="Название большой задачи"
       />
       <Select
-        value={editingParentDraft?.assigneeId != null ? String(editingParentDraft.assigneeId) : ""}
-        onClick={(event) => event.stopPropagation()}
+        value={
+          editingParentDraft?.assigneeId != null
+            ? String(editingParentDraft.assigneeId)
+            : ""
+        }
         onChange={(value) =>
-          setEditingParentDraft((prev) => (prev ? { ...prev, assigneeId: value ? Number(value) : undefined } : prev))
+          setEditingParentDraft((prev) =>
+            prev
+              ? { ...prev, assigneeId: value ? Number(value) : undefined }
+              : prev,
+          )
         }
         options={[
           { value: "", label: "Без ответственного" },
-          ...getTeamMemberIds(parent.teamId).map((id) => ({ value: String(id), label: formatAssigneeName(displayAssigneeLabel(Number(id))) })),
+          ...memberOptions(getTeamMemberIds(parent.teamId)),
         ]}
       />
       <DatePicker
@@ -166,7 +238,7 @@ export default function BacklogTab({
         value={editingParentDraft?.startDate}
         onChange={(startDate) =>
           setEditingParentDraft((state) =>
-            state ? { ...state, startDate: startDate ?? undefined } : null
+            state ? { ...state, startDate: startDate ?? undefined } : null,
           )
         }
       />
@@ -175,58 +247,60 @@ export default function BacklogTab({
         value={editingParentDraft?.endDate}
         onChange={(endDate) =>
           setEditingParentDraft((state) =>
-            state ? { ...state, endDate: endDate ?? undefined } : null
+            state ? { ...state, endDate: endDate ?? undefined } : null,
           )
         }
       />
     </Flex>
   );
 
-  //Редактор подзадачи
   const renderSubtaskEditor = (subtask: PlannerSubtask) => (
-    <Flex gap={8}>
+    <Flex gap={12} wrap>
       <Input
         value={editingSubtaskDraft?.title ?? ""}
-        onChange={(event) => setEditingSubtaskDraft((prev) => (prev ? { ...prev, title: event.target.value } : prev))}
+        onChange={(event) =>
+          setEditingSubtaskDraft((prev) =>
+            prev ? { ...prev, title: event.target.value } : prev,
+          )
+        }
         placeholder="Название подзадачи"
       />
       <Select
-        value={editingSubtaskDraft?.assigneeId != null ? String(editingSubtaskDraft.assigneeId) : "0"}
-        onChange={(value) => setEditingSubtaskDraft((prev) => (prev ? { ...prev, assigneeId: Number(value) } : prev))}
+        value={
+          editingSubtaskDraft?.assigneeId != null
+            ? String(editingSubtaskDraft.assigneeId)
+            : "0"
+        }
+        onChange={(value) =>
+          setEditingSubtaskDraft((prev) =>
+            prev ? { ...prev, assigneeId: Number(value) } : prev,
+          )
+        }
         options={[
           { value: "0", label: "Без ответственного" },
-          ...getTeamMemberIds(subtask.teamId).map((id) => ({ value: String(id), label: formatAssigneeName(displayAssigneeLabel(Number(id))) })),
+          ...memberOptions(getTeamMemberIds(subtask.teamId)),
         ]}
       />
       <DatePicker
-        style={{ width: '100%' }}
         format="DD.MM.YYYY"
         value={editingSubtaskDraft?.startDate}
         onChange={(startDate) =>
           setEditingSubtaskDraft((state) =>
-            state ? { ...state, startDate: startDate ?? undefined } : null
+            state ? { ...state, startDate: startDate ?? undefined } : null,
           )
         }
       />
       <DatePicker
-        style={{ width: '100%' }}
         format="DD.MM.YYYY"
         value={editingSubtaskDraft?.endDate}
         onChange={(endDate) =>
           setEditingSubtaskDraft((state) =>
-            state ? { ...state, endDate: endDate ?? undefined } : null
+            state ? { ...state, endDate: endDate ?? undefined } : null,
           )
         }
       />
     </Flex>
   );
-
-  const formatDate = (date: Dayjs | undefined): string => {
-    if (!date)
-      return 'Нет срока'
-
-    return dayjs(date).format('DD.MM.YYYY');
-  }
 
   const renderSubtaskRow = (subtask: PlannerSubtask) => {
     const assigneeLabel = getSubtaskAssignee(subtask, displayAssigneeLabel);
@@ -234,205 +308,382 @@ export default function BacklogTab({
     const isEditing = editingSubtaskId === subtask.id && editingSubtaskDraft;
 
     return (
-      <Flex style={{ backgroundColor: 'aqua' }} justify={'space-between'} align="center" key={subtask.id}>
-        {/*Список подзадач */}
-        {isEditing ? (
-          renderSubtaskEditor(subtask)
-        ) : (
-          <Flex vertical>
-            <Text>{subtask.title}</Text>
-            <Flex gap={8}>
-              <Text>{formatDate(subtask.startDate)} - {formatDate(subtask.endDate)}</Text>
-              <Text>{assigneeLabel}</Text>
-              <Text>{subtask.status}</Text>
-            </Flex>
-          </Flex>
-        )}
+      <Card key={subtask.id} className="backlog-subtask-card" size="small">
+        <Flex justify="space-between" gap={12} wrap>
+          {isEditing ? (
+            renderSubtaskEditor(subtask)
+          ) : (
+            <div className="backlog-task-copy">
+              <Button
+                type="link"
+                className="backlog-title-link"
+                onClick={() => onOpenTaskCard("subtask", subtask.id)}
+              >
+                {subtask.title}
+              </Button>
+              <Space size={[6, 6]} wrap>
+                <Tag icon={<CalendarOutlined />}>
+                  {formatDate(subtask.startDate)} —{" "}
+                  {formatDate(subtask.endDate)}
+                </Tag>
+                <Tag
+                  icon={<UserOutlined />}
+                  color={subtask.assigneeId ? "blue" : "default"}
+                >
+                  {assigneeLabel}
+                </Tag>
+                <Tag>{subtask.status}</Tag>
+              </Space>
+            </div>
+          )}
 
-        <Flex>
           {subtaskEditable &&
             (isEditing ? (
-              <Flex gap={8}>
-                <Button size="large" icon={<SaveFilled />} onClick={onSaveEditedSubtask} />
-                <Button size="large" icon={<CloseCircleFilled />} onClick={onCancelEditSubtask} />
-              </Flex>
+              <Space>
+                <Button
+                  color="green"
+                  variant="solid"
+                  size="large"
+                  icon={<SaveFilled />}
+                  onClick={onSaveEditedSubtask}
+                />
+                <Button
+                  color="red"
+                  variant="solid"
+                  size="large"
+                  icon={<CloseOutlined />}
+                  onClick={onCancelEditSubtask}
+                />
+              </Space>
             ) : (
-              <Flex gap={8}>
-                <Button size="large" icon={<EditFilled />} onClick={() => onStartEditSubtask(subtask.id)} />
+              <Space>
+                <Button
+                  size="large"
+                  icon={<EditOutlined />}
+                  onClick={() => onStartEditSubtask(subtask.id)}
+                />
                 <Popconfirm
                   title="Вы уверены, что хотите удалить эту подзадачу?"
                   onConfirm={() => onDeleteSubtask(subtask.id)}
                   okText="Да"
-                  cancelText="Нет">
-                  <Button size="large" icon={<DeleteFilled />} />
+                  cancelText="Нет"
+                >
+                  <Button size="large" danger icon={<DeleteOutlined />} />
                 </Popconfirm>
-              </Flex>
+              </Space>
             ))}
         </Flex>
-      </Flex>
+      </Card>
     );
   };
 
   return (
-    <Flex vertical gap={16}>
-      {/* Шапка бэклога */}
-      <Flex style={{ backgroundColor: 'blue' }} justify={'space-between'} align={'center'}>
-        <Flex align="center" gap={8}>
-          <Text>Бэклог команды:</Text>
-          <Select
-            size="large"
-            value={teamFilter || ""}
-            onChange={(value) => onTeamFilterChange(String(value))}
-            options={
-              visibleTeams.length === 0
-                ? [{ value: "", label: "Нет команд" }]
-                : visibleTeams.map((team) => ({ value: String(team.id), label: team.name }))
-            }
+    <div className="planner-stack backlog-tab">
+      <Card className="planner-card backlog-hero">
+        <Flex justify="space-between" gap={16} wrap align="center">
+          <Space vertical size={4}>
+            <Text className="teams-eyebrow">Бэклог команды</Text>
+            <Title level={3} className="backlog-title">
+              {activeTeamName || "Выберите команду"}
+            </Title>
+          </Space>
+          <Space size={[12, 12]} wrap>
+            <Statistic title="Большие задачи" value={filteredParents.length} />
+            <Statistic title="Подзадачи" value={filteredSubtasks.length} />
+          </Space>
+        </Flex>
+
+        <Flex style={{ marginTop: 16 }} gap={12}>
+          <Flex style={{ width: "50%" }} vertical>
+            <span>
+              <TeamOutlined /> Команда
+            </span>
+            <Select
+              size="large"
+              value={teamFilter || ""}
+              onChange={(value) => onTeamFilterChange(String(value))}
+              options={
+                visibleTeams.length === 0
+                  ? [{ value: "", label: "Нет команд" }]
+                  : visibleTeams.map((team) => ({
+                      value: String(team.id),
+                      label: team.name,
+                    }))
+              }
+            />
+          </Flex>
+          <Flex style={{ width: "50%" }} vertical>
+            <span>
+              <FilterOutlined /> Исполнитель
+            </span>
+            <Select
+              size="large"
+              value={assigneeFilter}
+              onChange={(value) => onAssigneeFilterChange(String(value))}
+              options={assigneeFilterOptions}
+            />
+          </Flex>
+        </Flex>
+      </Card>
+
+      <div className="backlog-list">
+        {filteredParents.length === 0 && (
+          <Empty
+            className="planner-card"
+            image={Empty.PRESENTED_IMAGE_SIMPLE}
+            description="Пока нет больших задач для выбранной команды"
           />
-        </Flex>
-
-        <Flex gap={16}>
-          <Text>{filteredParents.length} задач</Text>
-          <Text>{filteredSubtasks.length} подзадач</Text>
-        </Flex>
-
-        <Select
-          size="large"
-          value={assigneeFilter}
-          onChange={(value) => onAssigneeFilterChange(String(value))}
-          options={assigneeFilterOptions}
-        />
-      </Flex>
-
-      {/*Список всех больших задач */}
-      <Flex style={{ backgroundColor: 'red' }} vertical gap={16}>
-        {filteredParents.length === 0 && <div>Пока нет больших задач для выбранной команды</div>}
+        )}
 
         {filteredParents.map((parent) => {
           const parentSubtasks = getParentSubtasks(parent.id);
-          const isOpen = Boolean(openParentById[parent.id] ?? Number(selectedParentId) === Number(parent.id)) || editingParentId === parent.id;
+          const isOpen =
+            Boolean(
+              openParentById[parent.id] ??
+              Number(selectedParentId) === Number(parent.id),
+            ) || editingParentId === parent.id;
           const editable = canEditTeam(parent.teamId);
-          const parentAssignee = parent.assigneeId ? formatAssigneeName(displayAssigneeLabel(parent.assigneeId)) : "Исполнитель не назначен";
+          const parentAssignee = parent.assigneeId
+            ? formatAssigneeName(displayAssigneeLabel(parent.assigneeId))
+            : "Исполнитель не назначен";
 
           return (
-            <Flex vertical key={parent.id}>
-              <Flex justify="space-between" align="center">
-                <Flex align="center" wrap style={{ backgroundColor: 'yellow', width: '100%' }} gap={16} onClick={() => toggleParent(parent.id)}>
-                  <Button icon={isOpen ? <CaretDownFilled /> : <CaretRightFilled />} />
-                  <Text>{parent.title}</Text>
-                  <Text>{parentSubtasks.length} подзадач</Text>
-                  <Text>{formatDate(parent.startDate)} - {formatDate(parent.endDate)}</Text>
-                  <Text>{parentAssignee}</Text>
+            <Card
+              key={parent.id}
+              styles={{ body: { padding: 8 } }}
+              className={`backlog-parent-card ${isOpen ? "is-open" : ""}`}
+            >
+              <Flex
+                justify="space-between"
+                gap={12}
+                wrap
+                onClick={() => toggleParent(parent.id)}
+              >
+                <Flex gap={12}>
+                  <span className="backlog-expander">
+                    {isOpen ? <CaretDownFilled /> : <CaretRightFilled />}
+                  </span>
+                  <span className="backlog-task-copy">
+                    <Flex gap={12} align="center">
+                      <Text
+                        strong
+                        className="backlog-parent-title"
+                        onClick={(event) =>
+                          runHeaderAction(event, () =>
+                            onOpenTaskCard("parent", parent.id),
+                          )
+                        }
+                      >
+                        {parent.title}
+                      </Text>
+                      <Badge
+                        count={parentSubtasks.length}
+                        overflowCount={99}
+                        color="#2563eb"
+                      />
+                    </Flex>
+                    <Space size={[6, 6]} wrap>
+                      <Tag icon={<CalendarOutlined />}>
+                        {formatDate(parent.startDate)} —{" "}
+                        {formatDate(parent.endDate)}
+                      </Tag>
+                      <Tag
+                        icon={<UserOutlined />}
+                        color={parent.assigneeId ? "blue" : "default"}
+                      >
+                        {parentAssignee}
+                      </Tag>
+                    </Space>
+                  </span>
                 </Flex>
-
-                <Flex>
-                  {editable &&
-                    (editingParentId === parent.id ? (
-                      <Flex gap={8}>
-                        <Button size="large" icon={<SaveFilled />}
-                          onClick={(event) => runHeaderAction(event, onSaveEditedParent)} />
-                        <Button size="large" icon={<CloseCircleFilled />}
-                          onClick={(event) => runHeaderAction(event, onCancelEditParent)} />
-                      </Flex>
-                    ) : (
-                      <Flex gap={8}>
-                        <Button size="large" icon={<EditFilled />}
-                          onClick={() => onStartEditParent(parent.id)} />
-                        <Popconfirm
-                          title="Вы уверены, что хотите удалить эту задачу?"
-                          onConfirm={() => onDeleteParent(parent.id)}
-                          okText="Да"
-                          cancelText="Нет">
-                          <Button size="large" icon={<DeleteFilled />} />
-                        </Popconfirm>
-                      </Flex>
-                    ))}
-                </Flex>
+                {editable &&
+                  (editingParentId === parent.id ? (
+                    <Space>
+                      <Tooltip title="Сохранить">
+                        <Button
+                          color="green"
+                          size="large"
+                          variant="solid"
+                          icon={<SaveFilled />}
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            runHeaderAction(event, onSaveEditedParent);
+                          }}
+                        />
+                      </Tooltip>
+                      <Tooltip title="Отменить">
+                        <Button
+                          color="red"
+                          size="large"
+                          variant="solid"
+                          icon={<CloseOutlined />}
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            runHeaderAction(event, onCancelEditParent);
+                          }}
+                        />
+                      </Tooltip>
+                    </Space>
+                  ) : (
+                    <Space>
+                      <Tooltip title="Редактировать">
+                        <Button
+                          size="large"
+                          icon={<EditOutlined />}
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            onStartEditParent(parent.id);
+                          }}
+                        />
+                      </Tooltip>
+                      <Popconfirm
+                        title="Вы уверены, что хотите удалить эту задачу?"
+                        onConfirm={(event) => {
+                          event?.stopPropagation();
+                          onDeleteParent(parent.id);
+                        }}
+                        okText="Да"
+                        cancelText="Нет"
+                      >
+                        <Tooltip title="Удалить">
+                          <Button
+                            danger
+                            size="large"
+                            icon={<DeleteOutlined />}
+                          />
+                        </Tooltip>
+                      </Popconfirm>
+                    </Space>
+                  ))}
               </Flex>
 
               {isOpen && (
-                <Flex style={{ marginLeft: 64 }} gap={8} vertical>
-                  {editingParentId === parent.id && editingParentDraft && renderParentEditor(parent)}
-
-                  <Flex gap={8} vertical>
+                <div className="backlog-parent-content">
+                  {editingParentId === parent.id &&
+                    editingParentDraft &&
+                    renderParentEditor(parent)}
+                  <Space vertical size={10} className="backlog-subtask-list">
                     {parentSubtasks.length === 0 ? (
-                      <Text>Подзадач пока нет.</Text>
+                      <Empty
+                        image={Empty.PRESENTED_IMAGE_SIMPLE}
+                        description="Подзадач пока нет"
+                      />
                     ) : (
                       parentSubtasks.map(renderSubtaskRow)
                     )}
-                  </Flex>
-
-                  {/** Создание подзадач */}
-                  <Flex gap={8} style={{ backgroundColor: 'orange' }} vertical>
-                    <Text>Новая подзадача</Text>
-                    <Input value={subTitle} onChange={(event) => onSubTitleChange(event.target.value)} placeholder="Название подзадачи" />
-                    <Flex gap={8}>
-                      <Select
-                        value={subAssigneeId || "0"}
-                        onChange={(value) => onSubAssigneeChange(String(value))}
-                        options={[
-                          { value: "0", label: "Без ответственного" },
-                          ...selectedTeamMembers.map((id) => ({ value: String(id), label: formatAssigneeName(displayAssigneeLabel(Number(id))) })),
-                        ]}
-                      />
-                      <DatePicker
-                        format="DD.MM.YYYY"
-                        value={subStart}
-                        onChange={(date) => onSubStartChange(date ? date : undefined)}
-                      />
-                      <DatePicker
-                        format="DD.MM.YYYY"
-                        value={subEnd}
-                        onChange={(date) => onSubEndChange(date ? date : undefined)}
-                      />
+                  </Space>
+                  <Card
+                    size="small"
+                    className="backlog-create-card"
+                    title={
+                      <Space>
+                        <PlusOutlined />
+                        Новая подзадача
+                      </Space>
+                    }
+                  >
+                    <Flex gap={12} vertical justify="space-between">
+                      <Flex gap={12}>
+                        <Input
+                          value={subTitle}
+                          onChange={(event) =>
+                            onSubTitleChange(event.target.value)
+                          }
+                          placeholder="Название подзадачи"
+                        />
+                        <Button
+                          type="primary"
+                          icon={<PlusOutlined />}
+                          onClick={onAddSubtask}
+                        >
+                          Создать подзадачу
+                        </Button>
+                      </Flex>
+                      <Flex gap={12}>
+                        <Select
+                          value={subAssigneeId || "0"}
+                          onChange={(value) =>
+                            onSubAssigneeChange(String(value))
+                          }
+                          options={[
+                            { value: "0", label: "Без ответственного" },
+                            ...memberOptions(selectedTeamMembers),
+                          ]}
+                        />
+                        <DatePicker
+                          format="DD.MM.YYYY"
+                          value={subStart}
+                          onChange={(date) =>
+                            onSubStartChange(date ? date : undefined)
+                          }
+                          placeholder="Начало"
+                        />
+                        <DatePicker
+                          format="DD.MM.YYYY"
+                          value={subEnd}
+                          onChange={(date) =>
+                            onSubEndChange(date ? date : undefined)
+                          }
+                          placeholder="Срок"
+                        />
+                      </Flex>
                     </Flex>
-                    <Flex>
-                      <Button onClick={onAddSubtask}>
-                        Создать подзадачу
-                      </Button>
-                    </Flex>
-                  </Flex>
-                </Flex>
+                  </Card>
+                </div>
               )}
-            </Flex>
+            </Card>
           );
         })}
-      </Flex>
+      </div>
 
-      {/* Создание новой большой задачи */}
-      <Flex style={{ backgroundColor: 'green' }} vertical gap={8}>
-        <Flex>
-          <Text>Новая большая задача</Text>
+      <Card
+        className="planner-card backlog-create-card"
+        title={
+          <Space>
+            <FolderOpenOutlined />
+            Новая большая задача
+          </Space>
+        }
+      >
+        <Flex gap={12} vertical justify="space-between">
+          <Flex gap={12}>
+            <Input
+              value={parentTitle}
+              onChange={(event) => onParentTitleChange(event.target.value)}
+              placeholder="Название большой задачи"
+            />
+            <Button
+              type="primary"
+              icon={<PlusOutlined />}
+              onClick={onAddParentTask}
+            >
+              Создать задачу
+            </Button>
+          </Flex>
+          <Flex gap={12}>
+            <Select
+              value={parentAssigneeId || "0"}
+              onChange={(value) => onParentAssigneeChange(String(value))}
+              options={[
+                { value: "0", label: "Без ответственного" },
+                ...memberOptions(activeTeamMembers),
+              ]}
+            />
+            <DatePicker
+              format="DD.MM.YYYY"
+              value={parentStart}
+              onChange={(date) => onParentStartChange(date ? date : undefined)}
+              placeholder="Начало"
+            />
+            <DatePicker
+              format="DD.MM.YYYY"
+              value={parentEnd}
+              onChange={(date) => onParentEndChange(date ? date : undefined)}
+              placeholder="Срок"
+            />
+          </Flex>
         </Flex>
-        <Flex>
-          <Input value={parentTitle} onChange={(event) => onParentTitleChange(event.target.value)} placeholder="Название большой задачи" />
-        </Flex>
-        <Flex gap={8}>
-          <Select
-            value={parentAssigneeId || "0"}
-            onChange={(value) => onParentAssigneeChange(String(value))}
-            options={[
-              { value: "0", label: "Без ответственного" },
-              ...activeTeamMembers.map((id) => ({ value: String(id), label: formatAssigneeName(displayAssigneeLabel(Number(id))) })),
-            ]}
-          />
-          <DatePicker
-            format="DD.MM.YYYY"
-            value={parentStart}
-            onChange={(date) => onParentStartChange(date ? date : undefined)}
-          />
-          <DatePicker
-            format="DD.MM.YYYY"
-            value={parentEnd}
-            onChange={(date) => onParentEndChange(date ? date : undefined)}
-          />
-        </Flex>
-        <Flex>
-          <Button onClick={onAddParentTask}>
-            Создать задачу
-          </Button>
-        </Flex>
-      </Flex>
-    </Flex>
+      </Card>
+    </div>
   );
 }
