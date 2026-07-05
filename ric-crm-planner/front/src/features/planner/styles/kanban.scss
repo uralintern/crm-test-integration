@@ -223,22 +223,17 @@
   transform: rotate(3deg);
 }
 
-.kanban-card-code {
+.kanban-card-title {
   color: #3f4654;
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 700;
   letter-spacing: 0.01em;
 }
 
-.kanban-card-title {
-  color: #4b5563;
-  font-size: 15px;
-  line-height: 1.42;
-  font-weight: 500;
-}
-
 .kanban-card-meta {
   display: flex;
+  flex-direction: column;
+  width: fit-content;
   flex-wrap: wrap;
   gap: 8px;
   font-size: 12px;

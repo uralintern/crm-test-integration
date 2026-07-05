@@ -1,5 +1,10 @@
+import dayjs, { Dayjs } from "dayjs";
 import Modal from "../../../../components/Modal/Modal";
-import type { PlannerParentTask, PlannerSubtask, PlannerTeam } from "../../../../types/planner";
+import type {
+  PlannerParentTask,
+  PlannerSubtask,
+  PlannerTeam,
+} from "../../../../types/planner";
 
 type TaskCardModalProps = {
   isOpen: boolean;
@@ -13,17 +18,8 @@ type TaskCardModalProps = {
   onClose: () => void;
 };
 
-function formatPlannerDate(value?: string) {
-  const raw = String(value || "").trim();
-  if (!raw) return "—";
-
-  const [year, month, day] = raw.split("-");
-  if (year?.length === 4 && month?.length === 2 && day?.length === 2) {
-    return `${day}.${month}.${year}`;
-  }
-
-  return raw;
-}
+const formatDate = (date: Dayjs | undefined): string =>
+  date ? dayjs(date).format("DD.MM.YYYY") : "Нет срока";
 
 export default function TaskCardModal({
   isOpen,
@@ -45,23 +41,31 @@ export default function TaskCardModal({
           <div className="planner-task-card">
             <div className="planner-task-row">
               <div className="planner-task-label">Тип</div>
-              <div className="planner-task-value">{taskCardSubtask ? "Подзадача" : "Большая задача"}</div>
+              <div className="planner-task-value">
+                {taskCardSubtask ? "Подзадача" : "Большая задача"}
+              </div>
             </div>
 
             <div className="planner-task-row">
               <div className="planner-task-label">Название</div>
-              <div className="planner-task-value">{taskCardSubtask?.title || taskCardParent?.title}</div>
+              <div className="planner-task-value">
+                {taskCardSubtask?.title || taskCardParent?.title}
+              </div>
             </div>
 
             <div className="planner-task-row">
               <div className="planner-task-label">Команда</div>
-              <div className="planner-task-value">{taskCardTeam?.name || "—"}</div>
+              <div className="planner-task-value">
+                {taskCardTeam?.name || "—"}
+              </div>
             </div>
 
             {taskCardTeam && sourceLabelForTeam(taskCardTeam) && (
               <div className="planner-task-row">
                 <div className="planner-task-label">Источник</div>
-                <div className="planner-task-value">{sourceLabelForTeam(taskCardTeam)}</div>
+                <div className="planner-task-value">
+                  {sourceLabelForTeam(taskCardTeam)}
+                </div>
               </div>
             )}
 
@@ -69,22 +73,26 @@ export default function TaskCardModal({
               <div className="planner-task-label">Сроки</div>
               <div className="planner-task-value">
                 {taskCardSubtask
-                  ? `${formatPlannerDate(taskCardSubtask.startDate)} — ${formatPlannerDate(taskCardSubtask.endDate)}`
-                  : `${formatPlannerDate(taskCardParent?.startDate)} — ${formatPlannerDate(taskCardParent?.endDate)}`}
+                  ? `${formatDate(taskCardSubtask.startDate)} — ${formatDate(taskCardSubtask.endDate)}`
+                  : `${formatDate(taskCardParent?.startDate)} — ${formatDate(taskCardParent?.endDate)}`}
               </div>
             </div>
 
             {taskCardParent?.description && (
               <div className="planner-task-row">
                 <div className="planner-task-label">Описание</div>
-                <div className="planner-task-value">{taskCardParent.description}</div>
+                <div className="planner-task-value">
+                  {taskCardParent.description}
+                </div>
               </div>
             )}
 
             {taskCardParent && (
               <div className="planner-task-row">
                 <div className="planner-task-label">Подзадач</div>
-                <div className="planner-task-value">{taskCardSubtasksCount}</div>
+                <div className="planner-task-value">
+                  {taskCardSubtasksCount}
+                </div>
               </div>
             )}
 
@@ -92,7 +100,9 @@ export default function TaskCardModal({
               <div className="planner-task-row">
                 <div className="planner-task-label">Ответственный</div>
                 <div className="planner-task-value">
-                  {taskCardParent.assigneeId ? displayAssigneeLabel(taskCardParent.assigneeId) : "—"}
+                  {taskCardParent.assigneeId
+                    ? displayAssigneeLabel(taskCardParent.assigneeId)
+                    : "—"}
                 </div>
               </div>
             )}
@@ -102,23 +112,24 @@ export default function TaskCardModal({
                 <div className="planner-task-row">
                   <div className="planner-task-label">Ответственный</div>
                   <div className="planner-task-value">
-                    {taskCardSubtask.assigneeId ? displayAssigneeLabel(taskCardSubtask.assigneeId) : "—"}
+                    {taskCardSubtask.assigneeId
+                      ? displayAssigneeLabel(taskCardSubtask.assigneeId)
+                      : "—"}
                   </div>
                 </div>
 
                 <div className="planner-task-row">
                   <div className="planner-task-label">Статус</div>
-                  <div className="planner-task-value">{taskCardSubtask.status || "—"}</div>
-                </div>
-
-                <div className="planner-task-row">
-                  <div className="planner-task-label">В спринт</div>
-                  <div className="planner-task-value">{taskCardSubtask.inSprint ? "Да" : "Нет"}</div>
+                  <div className="planner-task-value">
+                    {taskCardSubtask.status || "—"}
+                  </div>
                 </div>
 
                 <div className="planner-task-row">
                   <div className="planner-task-label">Большая задача</div>
-                  <div className="planner-task-value">{taskCardParentForSubtask?.title || "—"}</div>
+                  <div className="planner-task-value">
+                    {taskCardParentForSubtask?.title || "—"}
+                  </div>
                 </div>
               </>
             )}

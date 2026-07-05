@@ -1,9 +1,21 @@
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type FC } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+  type FC,
+} from "react";
 import { Gantt, ViewMode, type Task } from "gantt-task-react";
-import type { PlannerParentTask, PlannerSubtask } from "../../../../types/planner";
+import type {
+  PlannerParentTask,
+  PlannerSubtask,
+} from "../../../../types/planner";
 import { isDoneKanbanStatus } from "../../planner.utils";
 import "gantt-task-react/dist/index.css";
 import AppButton from "../../../../components/UI/Button";
+import { Button } from "antd";
 
 type PlannerGanttTask = Task & {
   plannerType: "parent" | "subtask";
@@ -28,7 +40,7 @@ const viewModes = [
   { id: ViewMode.Month, label: "Месяц" },
 ] as const;
 
-const LIST_CELL_WIDTH = 240;
+const LIST_CELL_WIDTH = 300;
 const MOBILE_LIST_CELL_WIDTH = 148;
 const PRE_STEPS_COUNT = 1;
 
@@ -51,7 +63,10 @@ function parsePlannerDate(value: string): Date {
   return new Date(parsed.getFullYear(), parsed.getMonth(), parsed.getDate());
 }
 
-function normalizeGanttRange(start: Date, end: Date): { start: Date; end: Date } {
+function normalizeGanttRange(
+  start: Date,
+  end: Date,
+): { start: Date; end: Date } {
   let s = new Date(start.getFullYear(), start.getMonth(), start.getDate());
   let e = new Date(end.getFullYear(), end.getMonth(), end.getDate());
   if (Number.isNaN(s.getTime()) || Number.isNaN(e.getTime())) {
@@ -87,17 +102,22 @@ function getColumnWidth(mode: ViewMode): number {
   }
 }
 
-function addToDate(date: Date, quantity: number, scale: "day" | "month" | "year"): Date {
+function addToDate(
+  date: Date,
+  quantity: number,
+  scale: "day" | "month" | "year",
+): Date {
   return new Date(
     date.getFullYear() + (scale === "year" ? quantity : 0),
     date.getMonth() + (scale === "month" ? quantity : 0),
-    date.getDate() + (scale === "day" ? quantity : 0)
+    date.getDate() + (scale === "day" ? quantity : 0),
   );
 }
 
 function startOfDate(date: Date, scale: "day" | "month" | "year"): Date {
   if (scale === "year") return new Date(date.getFullYear(), 0, 1);
-  if (scale === "month") return new Date(date.getFullYear(), date.getMonth(), 1);
+  if (scale === "month")
+    return new Date(date.getFullYear(), date.getMonth(), 1);
   return new Date(date.getFullYear(), date.getMonth(), date.getDate());
 }
 
@@ -108,7 +128,11 @@ function getMonday(date: Date): Date {
   return new Date(result.setDate(diff));
 }
 
-function getGanttDateCount(tasks: PlannerGanttTask[], mode: ViewMode, preStepsCount: number): number {
+function getGanttDateCount(
+  tasks: PlannerGanttTask[],
+  mode: ViewMode,
+  preStepsCount: number,
+): number {
   if (tasks.length === 0) return 1;
 
   let start = tasks[0].start;
@@ -120,11 +144,18 @@ function getGanttDateCount(tasks: PlannerGanttTask[], mode: ViewMode, preStepsCo
 
   switch (mode) {
     case ViewMode.Month:
-      start = startOfDate(addToDate(start, -1 * preStepsCount, "month"), "month");
+      start = startOfDate(
+        addToDate(start, -1 * preStepsCount, "month"),
+        "month",
+      );
       end = startOfDate(addToDate(end, 1, "year"), "year");
       break;
     case ViewMode.Week:
-      start = addToDate(getMonday(startOfDate(start, "day")), -7 * preStepsCount, "day");
+      start = addToDate(
+        getMonday(startOfDate(start, "day")),
+        -7 * preStepsCount,
+        "day",
+      );
       end = startOfDate(addToDate(end, 1.5, "month"), "day");
       break;
     case ViewMode.Day:
@@ -168,45 +199,82 @@ const DONE_GRAY = {
   progressSelectedColor: "#64748b",
 } as const;
 
-const DONE_GANTT_FILLS = new Set(["#94a3b8", "#64748b", "rgb(148, 163, 184)", "rgb(100, 116, 139)"]);
+const DONE_GANTT_FILLS = new Set([
+  "#94a3b8",
+  "#64748b",
+  "rgb(148, 163, 184)",
+  "rgb(100, 116, 139)",
+]);
 
 function isDoneGanttFill(value?: string) {
-  return DONE_GANTT_FILLS.has(String(value || "").trim().toLowerCase());
+  return DONE_GANTT_FILLS.has(
+    String(value || "")
+      .trim()
+      .toLowerCase(),
+  );
 }
 
-const TooltipContent: FC<{ task: Task; fontSize: string; fontFamily: string }> = ({ task, fontFamily, fontSize }) => {
+const TooltipContent: FC<{
+  task: Task;
+  fontSize: string;
+  fontFamily: string;
+}> = ({ task, fontFamily, fontSize }) => {
   const plannerTask = task as PlannerGanttTask;
   return (
     <div className="planner-gantt-tooltip" style={{ fontFamily, fontSize }}>
       <div className="planner-gantt-tooltip__title">{plannerTask.name}</div>
       <div className="planner-gantt-tooltip__row">
-        {plannerTask.start.toLocaleDateString("ru-RU")} - {plannerTask.end.toLocaleDateString("ru-RU")}
+        {plannerTask.start.toLocaleDateString("ru-RU")} -{" "}
+        {plannerTask.end.toLocaleDateString("ru-RU")}
       </div>
-      {plannerTask.assigneeLabel && <div className="planner-gantt-tooltip__row">Ответственный: {plannerTask.assigneeLabel}</div>}
-      {plannerTask.statusLabel && <div className="planner-gantt-tooltip__row">Статус: {plannerTask.statusLabel}</div>}
-      <div className="planner-gantt-tooltip__hint">Кликни по задаче, чтобы открыть карточку.</div>
+      {plannerTask.assigneeLabel && (
+        <div className="planner-gantt-tooltip__row">
+          Ответственный: {plannerTask.assigneeLabel}
+        </div>
+      )}
+      {plannerTask.statusLabel && (
+        <div className="planner-gantt-tooltip__row">
+          Статус: {plannerTask.statusLabel}
+        </div>
+      )}
+      <div className="planner-gantt-tooltip__hint">
+        Кликни по задаче, чтобы открыть карточку.
+      </div>
     </div>
   );
 };
 
-export default function GanttTab({ activeTeamName, parents, subtasks, displayAssigneeLabel, onOpenTaskCard }: GanttTabProps) {
+export default function GanttTab({
+  activeTeamName,
+  parents,
+  subtasks,
+  displayAssigneeLabel,
+  onOpenTaskCard,
+}: GanttTabProps) {
   const surfaceRef = useRef<HTMLDivElement | null>(null);
   const [viewMode, setViewMode] = useState<ViewMode>(ViewMode.Week);
-  const [selectedLabel, setSelectedLabel] = useState("Нажми на строку или полосу задачи, чтобы открыть карточку.");
   const [collapsedParents, setCollapsedParents] = useState<string[]>([]);
   const [surfaceWidth, setSurfaceWidth] = useState(0);
 
   const tasks = useMemo<PlannerGanttTask[]>(() => {
-    const sortedParents = [...parents].sort((a, b) => a.startDate.localeCompare(b.startDate) || a.title.localeCompare(b.title, "ru"));
+    const sortedParents = [...parents].sort(
+      (a, b) =>
+        a.startDate.localeCompare(b.startDate) ||
+        a.title.localeCompare(b.title, "ru"),
+    );
 
     return sortedParents.flatMap((parent, parentIndex) => {
       const childSubtasks = subtasks
         .filter((subtask) => Number(subtask.parentTaskId) === Number(parent.id))
-        .sort((a, b) => a.startDate.localeCompare(b.startDate) || a.title.localeCompare(b.title, "ru"));
+        .sort(
+          (a, b) =>
+            a.startDate.localeCompare(b.startDate) ||
+            a.title.localeCompare(b.title, "ru"),
+        );
 
       const { start: pStart, end: pEnd } = normalizeGanttRange(
         parsePlannerDate(parent.startDate),
-        parsePlannerDate(parent.endDate)
+        parsePlannerDate(parent.endDate),
       );
 
       const parentTask: PlannerGanttTask = {
@@ -225,37 +293,44 @@ export default function GanttTab({ activeTeamName, parents, subtasks, displayAss
         styles: { ...PARENT_BLUE },
       };
 
-      const subtaskTasks = childSubtasks.map<PlannerGanttTask>((subtask, subtaskIndex) => {
-        const { start: sStart, end: sEnd } = normalizeGanttRange(
-          parsePlannerDate(subtask.startDate),
-          parsePlannerDate(subtask.endDate)
-        );
-        const isDone = isDoneKanbanStatus(subtask.status);
-        return {
-          id: `subtask-${subtask.id}`,
-          type: "task",
-          name: subtask.title,
-          start: sStart,
-          end: sEnd,
-          progress: 0,
-          isDisabled: true,
-          project: parentTask.id,
-          displayOrder: (parentIndex + 1) * 100 + subtaskIndex + 1,
-          plannerType: "subtask",
-          plannerId: subtask.id,
-          assigneeLabel: subtask.assigneeId ? displayAssigneeLabel(subtask.assigneeId) : "Не назначен",
-          statusLabel: subtask.status,
-          isDone,
-          styles: isDone ? { ...DONE_GRAY } : { ...SUBTASK_EMERALD },
-        };
-      });
+      const subtaskTasks = childSubtasks.map<PlannerGanttTask>(
+        (subtask, subtaskIndex) => {
+          const { start: sStart, end: sEnd } = normalizeGanttRange(
+            parsePlannerDate(subtask.startDate),
+            parsePlannerDate(subtask.endDate),
+          );
+          const isDone = isDoneKanbanStatus(subtask.status);
+          return {
+            id: `subtask-${subtask.id}`,
+            type: "task",
+            name: subtask.title,
+            start: sStart,
+            end: sEnd,
+            progress: 0,
+            isDisabled: true,
+            project: parentTask.id,
+            displayOrder: (parentIndex + 1) * 100 + subtaskIndex + 1,
+            plannerType: "subtask",
+            plannerId: subtask.id,
+            assigneeLabel: subtask.assigneeId
+              ? displayAssigneeLabel(subtask.assigneeId)
+              : "Не назначен",
+            statusLabel: subtask.status,
+            isDone,
+            styles: isDone ? { ...DONE_GRAY } : { ...SUBTASK_EMERALD },
+          };
+        },
+      );
 
       return [parentTask, ...subtaskTasks];
     });
   }, [collapsedParents, displayAssigneeLabel, parents, subtasks]);
 
   const ganttTasks = useMemo(() => cloneTasksForGanttView(tasks), [tasks]);
-  const listCellWidth = surfaceWidth > 0 && surfaceWidth <= 640 ? MOBILE_LIST_CELL_WIDTH : LIST_CELL_WIDTH;
+  const listCellWidth =
+    surfaceWidth > 0 && surfaceWidth <= 640
+      ? MOBILE_LIST_CELL_WIDTH
+      : LIST_CELL_WIDTH;
 
   const columnWidth = useMemo(() => {
     const baseWidth = getColumnWidth(viewMode);
@@ -281,24 +356,37 @@ export default function GanttTab({ activeTeamName, parents, subtasks, displayAss
     const svg = surfaceRef.current?.querySelector<SVGSVGElement>("svg");
     if (!svg) return;
 
-    svg.querySelectorAll(".planner-gantt-done-line").forEach((node) => node.remove());
+    svg
+      .querySelectorAll(".planner-gantt-done-line")
+      .forEach((node) => node.remove());
 
     const usedRects = new Set<string>();
     svg.querySelectorAll<SVGRectElement>("rect").forEach((rect) => {
-      const fill = rect.getAttribute("fill") || rect.style.fill || window.getComputedStyle(rect).fill;
+      const fill =
+        rect.getAttribute("fill") ||
+        rect.style.fill ||
+        window.getComputedStyle(rect).fill;
       if (!isDoneGanttFill(fill)) return;
 
       const x = Number(rect.getAttribute("x"));
       const y = Number(rect.getAttribute("y"));
       const width = Number(rect.getAttribute("width"));
       const height = Number(rect.getAttribute("height"));
-      if (![x, y, width, height].every(Number.isFinite) || width <= 8 || height <= 4) return;
+      if (
+        ![x, y, width, height].every(Number.isFinite) ||
+        width <= 8 ||
+        height <= 4
+      )
+        return;
 
       const key = `${x}:${y}:${width}:${height}`;
       if (usedRects.has(key)) return;
       usedRects.add(key);
 
-      const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      const line = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "line",
+      );
       line.setAttribute("class", "planner-gantt-done-line");
       line.setAttribute("x1", String(x - 8));
       line.setAttribute("x2", String(x + width + 8));
@@ -314,7 +402,9 @@ export default function GanttTab({ activeTeamName, parents, subtasks, displayAss
 
     let frameId = 0;
     const updateWidth = () => {
-      const nextWidth = Math.floor(element.getBoundingClientRect().width || element.clientWidth || 0);
+      const nextWidth = Math.floor(
+        element.getBoundingClientRect().width || element.clientWidth || 0,
+      );
       if (nextWidth > 0) {
         setSurfaceWidth((prev) => (prev === nextWidth ? prev : nextWidth));
       }
@@ -345,7 +435,11 @@ export default function GanttTab({ activeTeamName, parents, subtasks, displayAss
     replaceWeekLabels();
     const frame = window.requestAnimationFrame(replaceWeekLabels);
     const observer = new MutationObserver(replaceWeekLabels);
-    observer.observe(element, { childList: true, subtree: true, characterData: true });
+    observer.observe(element, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+    });
 
     return () => {
       window.cancelAnimationFrame(frame);
@@ -369,7 +463,11 @@ export default function GanttTab({ activeTeamName, parents, subtasks, displayAss
 
   const handleGanttExpanderClick = useCallback((task: Task) => {
     const taskId = String(task.id);
-    setCollapsedParents((prev) => (task.hideChildren ? [...prev, taskId] : prev.filter((id) => id !== taskId)));
+    setCollapsedParents((prev) =>
+      task.hideChildren
+        ? [...prev, taskId]
+        : prev.filter((id) => id !== taskId),
+    );
   }, []);
 
   const TaskListHeader: FC<{
@@ -401,7 +499,16 @@ export default function GanttTab({ activeTeamName, parents, subtasks, displayAss
     selectedTaskId: string;
     setSelectedTask: (taskId: string) => void;
     onExpanderClick: (task: Task) => void;
-  }> = ({ rowHeight, rowWidth, fontFamily, fontSize, tasks, selectedTaskId, setSelectedTask, onExpanderClick }) => (
+  }> = ({
+    rowHeight,
+    rowWidth,
+    fontFamily,
+    fontSize,
+    tasks,
+    selectedTaskId,
+    setSelectedTask,
+    onExpanderClick,
+  }) => (
     <div
       className="planner-gantt-list"
       style={{
@@ -422,33 +529,31 @@ export default function GanttTab({ activeTeamName, parents, subtasks, displayAss
             : "Без подзадач"
           : plannerTask.statusLabel || "Подзадача";
         return (
-          <AppButton
+          <Button
             key={plannerTask.id}
-            type="button"
             className={`planner-gantt-list-row ${isParent ? "is-parent" : "is-child"} ${isSelected ? "is-selected" : ""}`}
-            style={{ minWidth: rowWidth, height: rowHeight }}
-            onClick={() => {
+            style={{ maxWidth: rowWidth, height: rowHeight }}
+            onClick={(event) => {
+              event.stopPropagation();
               setSelectedTask(plannerTask.id);
-              setSelectedLabel(`Выбрано: ${plannerTask.name}`);
-              onOpenTaskCard(plannerTask.plannerType, plannerTask.plannerId);
+
+              if (canExpand) onExpanderClick(task);
             }}
           >
             <div className="planner-gantt-list-row__title">
               <div className="planner-gantt-list-row__main">
                 <span
                   className={`planner-gantt-expander ${canExpand ? "is-visible" : "is-hidden"}`}
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    if (canExpand) onExpanderClick(task);
-                  }}
                 >
                   {expander || "•"}
                 </span>
-                <span className="planner-gantt-list-row__name">{plannerTask.name}</span>
+                <span className="planner-gantt-list-row__name">
+                  {plannerTask.name}
+                </span>
               </div>
               <span className="planner-gantt-list-row__meta">{metaText}</span>
             </div>
-          </AppButton>
+          </Button>
         );
       })}
     </div>
@@ -459,11 +564,19 @@ export default function GanttTab({ activeTeamName, parents, subtasks, displayAss
       <div className="planner-gantt-head">
         <div className="planner-gantt-head__copy">
           <h3 className="h3">Диаграмма Ганта</h3>
-          {activeTeamName && <div className="planner-current-team">Команда: {activeTeamName}</div>}
+          {activeTeamName && (
+            <div className="planner-current-team">
+              Команда: {activeTeamName}
+            </div>
+          )}
         </div>
 
         <div className="planner-gantt-head__controls">
-          <div className="planner-gantt-switcher" role="tablist" aria-label="Масштаб диаграммы Ганта">
+          <div
+            className="planner-gantt-switcher"
+            role="tablist"
+            aria-label="Масштаб диаграммы Ганта"
+          >
             {viewModes.map((mode) => (
               <AppButton
                 key={mode.id}
@@ -475,7 +588,6 @@ export default function GanttTab({ activeTeamName, parents, subtasks, displayAss
               </AppButton>
             ))}
           </div>
-          <div className="planner-gantt-meta">{selectedLabel}</div>
         </div>
       </div>
 
@@ -491,7 +603,6 @@ export default function GanttTab({ activeTeamName, parents, subtasks, displayAss
             listCellWidth={`${listCellWidth}px`}
             columnWidth={columnWidth}
             rowHeight={44}
-            ganttHeight={420}
             barFill={72}
             preStepsCount={PRE_STEPS_COUNT}
             fontFamily="Inter, sans-serif"
@@ -502,7 +613,6 @@ export default function GanttTab({ activeTeamName, parents, subtasks, displayAss
             onExpanderClick={handleGanttExpanderClick}
             onClick={(task) => {
               const plannerTask = task as PlannerGanttTask;
-              setSelectedLabel(`Выбрано: ${plannerTask.name}`);
               onOpenTaskCard(plannerTask.plannerType, plannerTask.plannerId);
             }}
           />

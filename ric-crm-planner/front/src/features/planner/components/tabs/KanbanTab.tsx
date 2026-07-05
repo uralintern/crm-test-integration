@@ -111,7 +111,7 @@ export default function KanbanTab({
     });
 
     return { dataSource: source, columnTitleById: columnTitleMap };
-  }, [canEditTeam, columns, filteredSubtasks]);
+  }, [canEditTeam, columns, filteredSubtasks, currentUserId]);
 
   const configMap = useMemo<ReactKanbanProps["configMap"]>(
     () => ({

@@ -1,9 +1,4 @@
-import {
-  useState,
-  type Dispatch,
-  type SetStateAction,
-  type MouseEvent,
-} from "react";
+import { useState, type Dispatch, type SetStateAction } from "react";
 import type {
   PlannerParentTask,
   PlannerSubtask,
@@ -23,7 +18,6 @@ import {
   Space,
   Statistic,
   Tag,
-  Tooltip,
   Typography,
 } from "antd";
 import {
@@ -189,12 +183,6 @@ export default function BacklogTab({
     onSelectParent(parentId);
   };
 
-  const runHeaderAction = (event: MouseEvent, action: () => void) => {
-    event.preventDefault();
-    event.stopPropagation();
-    action();
-  };
-
   const formatDate = (date: Dayjs | undefined): string =>
     date ? dayjs(date).format("DD.MM.YYYY") : "Нет срока";
 
@@ -235,6 +223,7 @@ export default function BacklogTab({
       />
       <DatePicker
         format="DD.MM.YYYY"
+        placeholder="Начало"
         value={editingParentDraft?.startDate}
         onChange={(startDate) =>
           setEditingParentDraft((state) =>
@@ -244,6 +233,7 @@ export default function BacklogTab({
       />
       <DatePicker
         format="DD.MM.YYYY"
+        placeholder="Срок"
         value={editingParentDraft?.endDate}
         onChange={(endDate) =>
           setEditingParentDraft((state) =>
@@ -283,6 +273,7 @@ export default function BacklogTab({
       />
       <DatePicker
         format="DD.MM.YYYY"
+        placeholder="Начало"
         value={editingSubtaskDraft?.startDate}
         onChange={(startDate) =>
           setEditingSubtaskDraft((state) =>
@@ -292,6 +283,7 @@ export default function BacklogTab({
       />
       <DatePicker
         format="DD.MM.YYYY"
+        placeholder="Срок"
         value={editingSubtaskDraft?.endDate}
         onChange={(endDate) =>
           setEditingSubtaskDraft((state) =>
@@ -309,11 +301,11 @@ export default function BacklogTab({
 
     return (
       <Card key={subtask.id} className="backlog-subtask-card" size="small">
-        <Flex justify="space-between" gap={12} wrap>
+        <Flex justify="space-between" gap={12}>
           {isEditing ? (
             renderSubtaskEditor(subtask)
           ) : (
-            <div className="backlog-task-copy">
+            <Flex gap={6} vertical>
               <Button
                 type="link"
                 className="backlog-title-link"
@@ -321,7 +313,7 @@ export default function BacklogTab({
               >
                 {subtask.title}
               </Button>
-              <Space size={[6, 6]} wrap>
+              <Flex gap={12} wrap>
                 <Tag icon={<CalendarOutlined />}>
                   {formatDate(subtask.startDate)} —{" "}
                   {formatDate(subtask.endDate)}
@@ -333,13 +325,13 @@ export default function BacklogTab({
                   {assigneeLabel}
                 </Tag>
                 <Tag>{subtask.status}</Tag>
-              </Space>
-            </div>
+              </Flex>
+            </Flex>
           )}
 
           {subtaskEditable &&
             (isEditing ? (
-              <Space>
+              <Flex gap={12}>
                 <Button
                   color="green"
                   variant="solid"
@@ -354,23 +346,29 @@ export default function BacklogTab({
                   icon={<CloseOutlined />}
                   onClick={onCancelEditSubtask}
                 />
-              </Space>
+              </Flex>
             ) : (
-              <Space>
+              <Flex gap={12}>
                 <Button
                   size="large"
                   icon={<EditOutlined />}
-                  onClick={() => onStartEditSubtask(subtask.id)}
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    onStartEditSubtask(subtask.id);
+                  }}
                 />
                 <Popconfirm
                   title="Вы уверены, что хотите удалить эту подзадачу?"
-                  onConfirm={() => onDeleteSubtask(subtask.id)}
+                  onConfirm={(event) => {
+                    event?.stopPropagation();
+                    onDeleteSubtask(subtask.id);
+                  }}
                   okText="Да"
                   cancelText="Нет"
                 >
                   <Button size="large" danger icon={<DeleteOutlined />} />
                 </Popconfirm>
-              </Space>
+              </Flex>
             ))}
         </Flex>
       </Card>
@@ -452,13 +450,12 @@ export default function BacklogTab({
               key={parent.id}
               styles={{ body: { padding: 8 } }}
               className={`backlog-parent-card ${isOpen ? "is-open" : ""}`}
+              onClick={(event) => {
+                event.stopPropagation();
+                toggleParent(parent.id);
+              }}
             >
-              <Flex
-                justify="space-between"
-                gap={12}
-                wrap
-                onClick={() => toggleParent(parent.id)}
-              >
+              <Flex justify="space-between" gap={12}>
                 <Flex gap={12}>
                   <span className="backlog-expander">
                     {isOpen ? <CaretDownFilled /> : <CaretRightFilled />}
@@ -468,11 +465,10 @@ export default function BacklogTab({
                       <Text
                         strong
                         className="backlog-parent-title"
-                        onClick={(event) =>
-                          runHeaderAction(event, () =>
-                            onOpenTaskCard("parent", parent.id),
-                          )
-                        }
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          onOpenTaskCard("parent", parent.id);
+                        }}
                       >
                         {parent.title}
                       </Text>
@@ -482,7 +478,7 @@ export default function BacklogTab({
                         color="#2563eb"
                       />
                     </Flex>
-                    <Space size={[6, 6]} wrap>
+                    <Flex gap={12} wrap>
                       <Tag icon={<CalendarOutlined />}>
                         {formatDate(parent.startDate)} —{" "}
                         {formatDate(parent.endDate)}
@@ -493,49 +489,43 @@ export default function BacklogTab({
                       >
                         {parentAssignee}
                       </Tag>
-                    </Space>
+                    </Flex>
                   </span>
                 </Flex>
                 {editable &&
                   (editingParentId === parent.id ? (
-                    <Space>
-                      <Tooltip title="Сохранить">
-                        <Button
-                          color="green"
-                          size="large"
-                          variant="solid"
-                          icon={<SaveFilled />}
-                          onClick={(event) => {
-                            event.stopPropagation();
-                            runHeaderAction(event, onSaveEditedParent);
-                          }}
-                        />
-                      </Tooltip>
-                      <Tooltip title="Отменить">
-                        <Button
-                          color="red"
-                          size="large"
-                          variant="solid"
-                          icon={<CloseOutlined />}
-                          onClick={(event) => {
-                            event.stopPropagation();
-                            runHeaderAction(event, onCancelEditParent);
-                          }}
-                        />
-                      </Tooltip>
-                    </Space>
+                    <Flex gap={12}>
+                      <Button
+                        color="green"
+                        size="large"
+                        variant="solid"
+                        icon={<SaveFilled />}
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          onSaveEditedParent();
+                        }}
+                      />
+                      <Button
+                        color="red"
+                        size="large"
+                        variant="solid"
+                        icon={<CloseOutlined />}
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          onCancelEditParent();
+                        }}
+                      />
+                    </Flex>
                   ) : (
-                    <Space>
-                      <Tooltip title="Редактировать">
-                        <Button
-                          size="large"
-                          icon={<EditOutlined />}
-                          onClick={(event) => {
-                            event.stopPropagation();
-                            onStartEditParent(parent.id);
-                          }}
-                        />
-                      </Tooltip>
+                    <Flex gap={12}>
+                      <Button
+                        size="large"
+                        icon={<EditOutlined />}
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          onStartEditParent(parent.id);
+                        }}
+                      />
                       <Popconfirm
                         title="Вы уверены, что хотите удалить эту задачу?"
                         onConfirm={(event) => {
@@ -545,20 +535,17 @@ export default function BacklogTab({
                         okText="Да"
                         cancelText="Нет"
                       >
-                        <Tooltip title="Удалить">
-                          <Button
-                            danger
-                            size="large"
-                            icon={<DeleteOutlined />}
-                          />
-                        </Tooltip>
+                        <Button danger size="large" icon={<DeleteOutlined />} />
                       </Popconfirm>
-                    </Space>
+                    </Flex>
                   ))}
               </Flex>
 
               {isOpen && (
-                <div className="backlog-parent-content">
+                <div
+                  className="backlog-parent-content"
+                  onClick={(event) => event.stopPropagation()}
+                >
                   {editingParentId === parent.id &&
                     editingParentDraft &&
                     renderParentEditor(parent)}
@@ -581,6 +568,7 @@ export default function BacklogTab({
                         Новая подзадача
                       </Space>
                     }
+                    onClick={(event) => event.stopPropagation()}
                   >
                     <Flex gap={12} vertical justify="space-between">
                       <Flex gap={12}>
