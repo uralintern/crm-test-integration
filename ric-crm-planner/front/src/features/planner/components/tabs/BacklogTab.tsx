@@ -17,6 +17,7 @@ import {
   Select,
   Space,
   Statistic,
+  Switch,
   Tag,
   Typography,
 } from "antd";
@@ -164,6 +165,8 @@ export default function BacklogTab({
   visibleTeams,
   teamFilter,
   onTeamFilterChange,
+  subInSprint,
+  onSubInSprintChange,
 }: BacklogTabProps) {
   const [openParentById, setOpenParentById] = useState<Record<number, boolean>>(
     {},
@@ -245,7 +248,7 @@ export default function BacklogTab({
   );
 
   const renderSubtaskEditor = (subtask: PlannerSubtask) => (
-    <Flex gap={12} wrap>
+    <Flex gap={12} align="center" wrap>
       <Input
         value={editingSubtaskDraft?.title ?? ""}
         onChange={(event) =>
@@ -291,6 +294,16 @@ export default function BacklogTab({
           )
         }
       />
+      <Switch
+        checked={Boolean(editingSubtaskDraft?.inSprint)}
+        onChange={(checked) =>
+          setEditingSubtaskDraft((prev) =>
+            prev ? { ...prev, inSprint: checked } : prev,
+          )
+        }
+        checkedChildren="В спринт"
+        unCheckedChildren="Не в спринт"
+      />
     </Flex>
   );
 
@@ -324,6 +337,11 @@ export default function BacklogTab({
                 >
                   {assigneeLabel}
                 </Tag>
+                {subtask.inSprint && (
+                  <Tag color={"green"} variant="solid">
+                    В спринте
+                  </Tag>
+                )}
                 <Tag>{subtask.status}</Tag>
               </Flex>
             </Flex>
@@ -391,8 +409,8 @@ export default function BacklogTab({
           </Space>
         </Flex>
 
-        <Flex style={{ marginTop: 16 }} gap={12}>
-          <Flex style={{ width: "50%" }} vertical>
+        <Flex wrap style={{ marginTop: 16 }} gap={12}>
+          <Flex style={{ width: "100%" }} vertical>
             <span>
               <TeamOutlined /> Команда
             </span>
@@ -410,7 +428,7 @@ export default function BacklogTab({
               }
             />
           </Flex>
-          <Flex style={{ width: "50%" }} vertical>
+          <Flex style={{ width: "100%" }} vertical>
             <span>
               <FilterOutlined /> Исполнитель
             </span>
@@ -587,7 +605,7 @@ export default function BacklogTab({
                           Создать подзадачу
                         </Button>
                       </Flex>
-                      <Flex gap={12}>
+                      <Flex gap={12} align="center">
                         <Select
                           value={subAssigneeId || "0"}
                           onChange={(value) =>
@@ -613,6 +631,12 @@ export default function BacklogTab({
                             onSubEndChange(date ? date : undefined)
                           }
                           placeholder="Срок"
+                        />
+                        <Switch
+                          checked={subInSprint}
+                          onChange={onSubInSprintChange}
+                          checkedChildren="В спринт"
+                          unCheckedChildren="Не в спринт"
                         />
                       </Flex>
                     </Flex>

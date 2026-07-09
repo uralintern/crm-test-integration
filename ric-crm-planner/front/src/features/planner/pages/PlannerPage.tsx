@@ -152,7 +152,7 @@ export default function PlannerPage() {
   const [subAssigneeId, setSubAssigneeId] = useState("0");
   const [subStart, setSubStart] = useState<Dayjs | undefined>();
   const [subEnd, setSubEnd] = useState<Dayjs | undefined>();
-  const [subInSprint, setSubInSprint] = useState(false);
+  const [subInSprint, setSubInSprint] = useState(true);
   const [newColumn, setNewColumn] = useState("");
   const [closeEnrollmentTarget, setCloseEnrollmentTarget] = useState<{
     eventId: number;
@@ -972,7 +972,7 @@ export default function PlannerPage() {
       startDate: subStart,
       endDate: subEnd,
       status: plannedColumn,
-      inSprint: true,
+      inSprint: subInSprint,
       createdBy: userId || undefined,
       updatedAt: currentTimestamp(),
     };

@@ -258,7 +258,7 @@ export default function KanbanTab({
             />
           </Flex>
         </Flex>
-        <Flex style={{width:'25%', marginTop: 16}}>
+        <Flex style={{width:'40%', marginTop: 16}}>
           <Space.Compact block>
             <Input
               value={newColumn}

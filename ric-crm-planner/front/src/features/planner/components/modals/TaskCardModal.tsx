@@ -39,12 +39,12 @@ export default function TaskCardModal({
           <div className="confirm-text">Задача не найдена.</div>
         ) : (
           <div className="planner-task-card">
-            <div className="planner-task-row">
+            {/* <div className="planner-task-row">
               <div className="planner-task-label">Тип</div>
               <div className="planner-task-value">
                 {taskCardSubtask ? "Подзадача" : "Большая задача"}
               </div>
-            </div>
+            </div> */}
 
             <div className="planner-task-row">
               <div className="planner-task-label">Название</div>
@@ -53,6 +53,15 @@ export default function TaskCardModal({
               </div>
             </div>
 
+            {taskCardParent?.description && (
+              <div className="planner-task-row">
+                <div className="planner-task-label">Описание</div>
+                <div className="planner-task-value">
+                  {taskCardParent.description}
+                </div>
+              </div>
+            )}
+            
             <div className="planner-task-row">
               <div className="planner-task-label">Команда</div>
               <div className="planner-task-value">
@@ -78,14 +87,7 @@ export default function TaskCardModal({
               </div>
             </div>
 
-            {taskCardParent?.description && (
-              <div className="planner-task-row">
-                <div className="planner-task-label">Описание</div>
-                <div className="planner-task-value">
-                  {taskCardParent.description}
-                </div>
-              </div>
-            )}
+
 
             {taskCardParent && (
               <div className="planner-task-row">
