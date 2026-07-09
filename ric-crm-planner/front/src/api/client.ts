@@ -94,12 +94,19 @@ let refreshingPromise: Promise<boolean> | null = null;
 async function doRefresh(): Promise<boolean> {
   if (!localStorage.getItem(LS_CURRENT_USER)) return false;
   if (refreshingPromise) return refreshingPromise;
+  
   refreshingPromise = (async () => {
     try {
+      const csrf = getCookie("csrftoken")
+      if (!csrf) {
+        refreshingPromise = null;
+        return false;
+      }
+
       const r = await fetch(API_BASE + "/api/users/refresh/", {
         method: "POST",
         credentials: "include",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "X-CSRFToken": csrf },
       });
       refreshingPromise = null;
       return r.ok;
