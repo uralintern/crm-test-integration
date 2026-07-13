@@ -24,6 +24,7 @@ import {
 } from "../storage/planner";
 import { getAllUsers } from "../../../storage/storage";
 import type {
+  PlannerParentTask,
   PlannerState,
   PlannerSubtask,
   PlannerTeam,
@@ -727,6 +728,46 @@ export default function PlannerPage() {
   const closeTaskCard = () => {
     setTaskCardOpen(false);
     setTaskCard(null);
+  };
+
+  const updateTaskCardParent = (
+    taskId: number,
+    updates: Partial<
+      Pick<
+        PlannerParentTask,
+        "title" | "description" | "checklist" | "startDate" | "endDate"
+      >
+    >,
+  ) => {
+    setState((prev) => ({
+      ...prev,
+      parentTasks: prev.parentTasks.map((task) =>
+        Number(task.id) === Number(taskId)
+          ? { ...task, ...updates, updatedAt: currentTimestamp() }
+          : task,
+      ),
+    }));
+    notifySuccess("Большая задача обновлена");
+  };
+
+  const updateTaskCardSubtask = (
+    subtaskId: number,
+    updates: Partial<
+      Pick<
+        PlannerSubtask,
+        "title" | "description" | "checklist" | "startDate" | "endDate"
+      >
+    >,
+  ) => {
+    setState((prev) => ({
+      ...prev,
+      subtasks: prev.subtasks.map((subtask) =>
+        Number(subtask.id) === Number(subtaskId)
+          ? { ...subtask, ...updates, updatedAt: currentTimestamp() }
+          : subtask,
+      ),
+    }));
+    notifySuccess("Подзадача обновлена");
   };
   const openCloseEnrollment = (eventId: number, eventTitle: string) => {
     setCloseEnrollmentTarget({ eventId, eventTitle });
@@ -1692,6 +1733,8 @@ export default function PlannerPage() {
         displayAssigneeLabel={displayAssigneeLabel}
         sourceLabelForTeam={sourceLabelForTeam}
         onClose={closeTaskCard}
+        onUpdateParentTask={updateTaskCardParent}
+        onUpdateSubtask={updateTaskCardSubtask}
       />
       <AntModal
         open={automationOpen}
