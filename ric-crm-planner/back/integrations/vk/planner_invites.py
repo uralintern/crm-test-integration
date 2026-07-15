@@ -148,6 +148,17 @@ def send_planner_invite(application: Application, *, message: str = "", keyboard
         keyboard=keyboard or build_planner_invite_keyboard(application.id),
     )
 
+def send_start_message(application: Application, *, message: str = "", keyboard: dict[str, Any] | None = None) -> int:
+    vk_user_id = resolve_vk_application_user_id(application)
+    if not vk_user_id:
+        raise ValueError("проектант не подтвердил VK-бота или указал некорректный VK")
+
+    return send_vk_message(
+        user_id=vk_user_id,
+        message=message or build_planner_invite_message(application),
+        keyboard=keyboard or build_planner_invite_keyboard(application.id),
+    )
+
 
 def send_planner_invites_for_event(
     event_id: int,
