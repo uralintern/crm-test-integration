@@ -90,6 +90,20 @@ PLANNER_ROBOTS = [
         "subject": "Задача завершена",
         "message": "Задача «{task}» отмечена как готовая.",
     },
+    {
+        "id": "planner-remove-done-from-sprint",
+        "stageId": "done",
+        "title": "Убрать готовые задачи из спринта",
+        "description": (
+            "В начале новой недели убирает из спринта подзадачи, оставшиеся в статусе «Готово». "
+            "Задачи остаются в бэклоге и пропадают с канбана."
+        ),
+        "action": "sprint.remove_done",
+        "enabled": True,
+        "settings": deepcopy(DEFAULT_AUTOMATION_SETTINGS),
+        "subject": "Задача убрана из спринта",
+        "message": "Задача «{task}» завершена и убрана из спринта по итогам недели.",
+    },
 ]
 
 PLANNER_TRIGGERS = [
