@@ -8,11 +8,10 @@ import {
 import "./internships.scss";
 
 const DIRECTIONS = ["Разработка", "Тестирование", "Безопасность", "Аналитика"];
+const PAGE_SIZE = 20;
 
 export default function InternshipsPage() {
-    const [items, setItems] = useState<InternshipListItem[]>([]);
-    const [page, setPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
+    const [allItems, setAllItems] = useState<InternshipListItem[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
@@ -21,22 +20,32 @@ export default function InternshipsPage() {
     const [selectedFormats, setSelectedFormats] = useState<WorkFormatCode[]>([]);
     const [city, setCity] = useState("");
     const [sort, setSort] = useState<"new" | "salary">("new");
+    const [page, setPage] = useState(1);
 
     useEffect(() => {
         let cancelled = false;
 
-        async function load() {
+        async function loadAll() {
             setLoading(true);
             setError("");
             try {
-                const response = await getInternships({
-                    page,
-                    format: selectedFormats.length ? selectedFormats : undefined,
-                    city: city.trim() ? [city.trim()] : undefined,
-                });
-                if (cancelled) return;
-                setItems(response.data);
-                setTotalPages(response.pagination.total_pages);
+                const collected: InternshipListItem[] = [];
+                let currentPage = 1;
+                let totalPages = 1;
+
+                do {
+                    const response = await getInternships({
+                        page: currentPage,
+                        format: selectedFormats.length ? selectedFormats : undefined,
+                        city: city.trim() ? [city.trim()] : undefined,
+                    });
+                    if (cancelled) return;
+                    collected.push(...response.data);
+                    totalPages = response.pagination.total_pages;
+                    currentPage += 1;
+                } while (currentPage <= totalPages);
+
+                if (!cancelled) setAllItems(collected);
             } catch {
                 if (!cancelled) setError("Не удалось загрузить список стажировок");
             } finally {
@@ -44,15 +53,15 @@ export default function InternshipsPage() {
             }
         }
 
-        void load();
+        void loadAll();
         return () => {
             cancelled = true;
         };
-    }, [page, selectedFormats, city]);
+    }, [selectedFormats, city]);
 
     useEffect(() => {
         setPage(1);
-    }, [selectedFormats, city]);
+    }, [selectedFormats, city, search, selectedDirections, sort]);
 
     const toggleDirection = (direction: string) => {
         setSelectedDirections((prev) =>
@@ -64,8 +73,8 @@ export default function InternshipsPage() {
         setSelectedFormats((prev) => (prev.includes(code) ? prev.filter((f) => f !== code) : [...prev, code]));
     };
 
-    const visibleItems = useMemo(() => {
-        const filtered = items.filter((item) => {
+    const filteredAndSorted = useMemo(() => {
+        const filtered = allItems.filter((item) => {
             const matchesSearch =
                 !search.trim() ||
                 item.title.toLowerCase().includes(search.trim().toLowerCase()) ||
@@ -78,13 +87,17 @@ export default function InternshipsPage() {
             if (sort === "salary") return (b.salary_from ?? 0) - (a.salary_from ?? 0);
             return 0;
         });
-    }, [items, search, selectedDirections, sort]);
+    }, [allItems, search, selectedDirections, sort]);
+
+    const totalPages = Math.max(1, Math.ceil(filteredAndSorted.length / PAGE_SIZE));
+    const visibleItems = filteredAndSorted.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
     const avatarLetter = (company: string) => company.trim().charAt(0).toUpperCase() || "?";
 
     return (
         <div className="internships-page">
             <div className="container">
+                <header className="top-block" />
 
                 <section className="title-block">
                     <h1>Стажировки</h1>

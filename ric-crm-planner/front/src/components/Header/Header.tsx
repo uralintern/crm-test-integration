@@ -335,24 +335,12 @@ export default function Header() {
                 <span>{isProjectant ? HEADER_TEXT.myRequests : HEADER_TEXT.requests}</span>
               </AppButton>
 
-              <AppButton className={`head-btn head-btn--muted${isActivePath("/internships") ? " is-active" : ""}`} onClick={() => navigate("/internships")}>
-                <RocketOutlined />
-                <span>{HEADER_TEXT.internships}</span>
-              </AppButton>
-              <AppButton className={`head-btn head-btn--muted${isActivePath("/internships/admin") ? " is-active" : ""}`} onClick={() => navigate("/internships/admin")}>
-                <TeamOutlined />
-                <span>Админ. стажировки</span>
-              </AppButton>
-
               {canManageAutomation && (
                 <AppButton className={`head-btn head-btn--automation${isActivePath("/automation") ? " is-active" : ""}`} onClick={() => navigate("/automation")}>
                   <SaveOutlined />
                   <span>{HEADER_TEXT.automation}</span>
                 </AppButton>
               )}
-
-
-
 
               <AppButton className={`head-btn head-btn--planner${isActivePath("/planner") ? " is-active" : ""}`} onClick={() => navigate("/planner")}>
                 <TeamOutlined />
@@ -366,6 +354,16 @@ export default function Header() {
                   <ExportOutlined className="head-btn__external-icon" />
                 </AppButton>
               )}
+
+              <AppButton className={`head-btn head-btn--muted${isActivePath("/internships") ? " is-active" : ""}`} onClick={() => navigate("/internships")}>
+                <RocketOutlined />
+                <span>{HEADER_TEXT.internships}</span>
+              </AppButton>
+
+              <AppButton className={`head-btn head-btn--muted${isActivePath("/internships/admin") ? " is-active" : ""}`} onClick={() => navigate("/internships/admin")}>
+                <TeamOutlined />
+                <span>Админ. стажировки</span>
+              </AppButton>
             </>
           )}
         </div>
