@@ -1,0 +1,140 @@
+[
+    {
+        "status": "<p>Набор открыт</p>",
+        "title": "<p>Аналитик</p>",
+        "desc": "<p>Штурмуйте проблемы, выдвигайте гипотезы и&nbsp;тестируйте их</p>",
+        "link": "https://education.tbank.ru/start/analyst/"
+    },
+    {
+        "status": "<p>Набор открыт</p>",
+        "title": "<p><nobr>ИТ-аналитик</nobr></p>",
+        "desc": "<p>Оптимизируйте работу с&nbsp;данными для&nbsp;обработки и&nbsp;хранения информации</p>",
+        "link": "https://education.tbank.ru/start/dwh/"
+    },
+    {
+        "status": "<p>Набор открыт</p>",
+        "title": "<div class=\"text_2\">QA-инженер</div>",
+        "desc": "<p>Отвечайте за&nbsp;качество продукта на&nbsp;всех этапах разработки: тестируйте, работайте с&nbsp;кодом, ведите документацию, выявляйте дефекты, сопровождайте релизы и&nbsp;совершенствуйте процессы разработки</p>",
+        "link": "https://education.tbank.ru/start/quality_engineer/"
+    },
+    {
+        "status": "<p>Набор открыт</p>",
+        "title": "<div class=\"text_2\"><nobr>Frontend-разработчик</nobr></div>",
+        "desc": "<p>Angular | React | Node.js | Vue.js</p>\n<p>Придумывайте, как создавать удобные сервисы и&nbsp;приложения для&nbsp;клиентов</p>",
+        "link": "https://education.tbank.ru/start/frontend/"
+    },
+    {
+        "status": "<p>Набор открыт</p>",
+        "title": "<p><nobr>Go-разработчик</nobr></p>",
+        "desc": "<p>Создавайте новые продукты с&nbsp;помощью Golang, PostgreSQL и&nbsp;Kafka</p>",
+        "link": "https://education.tbank.ru/start/go/"
+    },
+    {
+        "status": "<p>Набор открыт</p>",
+        "title": "<p>Системный инженер&nbsp;— SRE</p>",
+        "desc": "<p>Отвечайте за&nbsp;надежность работы платформ Т‑Банка, мониторьте сбои и&nbsp;реагируйте на&nbsp;них</p>",
+        "link": "https://education.tbank.ru/start/sre_engineer/"
+    },
+    {
+        "status": "<p>Набор открыт</p>",
+        "title": "<p><nobr>Java-разработчик</nobr></p>",
+        "desc": "<p>Решайте задачи по&nbsp;оптимизации и&nbsp;автоматизируйте процессы</p>",
+        "link": "https://education.tbank.ru/start/java/"
+    },
+    {
+        "status": "<p>Набор открыт</p>",
+        "title": "<div class=\"text_2\"><nobr>Python-разработчик</nobr></div>",
+        "desc": "<p>Разрабатывайте API для&nbsp;платформы базовых технологий</p>",
+        "link": "https://education.tbank.ru/start/python/"
+    },
+    {
+        "status": "<p>Набор открыт</p>",
+        "title": "<p>Разработчик .NET</p>",
+        "desc": "<p>Развивайте систему для&nbsp;автоматизации найма сотрудников</p>",
+        "link": "https://education.tbank.ru/start/dotnet/"
+    },
+    {
+        "status": "<p>Набор открыт</p>",
+        "title": "<p><nobr>Scala-разработчик</nobr></p>",
+        "desc": "<p>Разрабатывайте бэкенд для&nbsp;вертикали малого и&nbsp;среднего бизнеса</p>",
+        "link": "https://education.tbank.ru/start/scala/"
+    },
+    {
+        "status": "<p>Набор открыт</p>",
+        "title": "<p><nobr>Android-разработчик</nobr></p>",
+        "desc": "<p>Разрабатывайте и&nbsp;улучшайте наши банковские мобильные приложения</p>",
+        "link": "https://education.tbank.ru/start/android/"
+    },
+    {
+        "status": "<p>Набор открыт</p>",
+        "title": "<p><nobr>iOS-разработчик</nobr></p>",
+        "desc": "<p>Развивайте мобильные продукты для&nbsp;клиентов <nobr>Т-Банка</nobr></p>",
+        "link": "https://education.tbank.ru/start/ios/"
+    },
+    {
+        "status": "<p>Набор открыт</p>",
+        "title": "<p><nobr>ML-инженер</nobr></p>",
+        "desc": "<p>Обучайте искусственный интеллект обрабатывать данные и&nbsp;предсказывать результаты</p>",
+        "link": "https://education.tbank.ru/start/ml_engineer/"
+    },
+    {
+        "status": "<p>Набор открыт</p>",
+        "title": "<p><nobr>Support-инженер</nobr></p>",
+        "desc": "<p>Диагностируйте и&nbsp;решайте технические проблемы клиентов и&nbsp;сотрудников, расследуйте их&nbsp;причины и&nbsp;погружайтесь в&nbsp;работу большой <nobr>ИТ-компании</nobr></p>",
+        "link": "https://education.tbank.ru/start/support/"
+    },
+    {
+        "status": "<p>Набор закрыт</p>",
+        "title": "<p>1С-разработчик</p>",
+        "desc": "<p>Работайте с&nbsp;внутренней системой для&nbsp;автоматизации найма</p>",
+        "link": "https://education.tbank.ru/start/1C_developer/"
+    },
+    {
+        "status": "<p>Набор закрыт</p>",
+        "title": "<p>R&amp;<nobr>D-инженер</nobr></p>",
+        "desc": "<p>Исследуйте, проверяйте гипотезы и&nbsp;находите решения в&nbsp;наукоемких задачах</p>",
+        "link": "https://education.tbank.ru/start/rnd/"
+    },
+    {
+        "status": "<p>Набор открыт</p>",
+        "title": "<p>Координатор образовательных проектов</p>",
+        "desc": "<p>Разрабатывайте образовательные проекты и&nbsp;организовывайте мероприятия для&nbsp;школьников и&nbsp;студентов</p>",
+        "link": "https://education.tbank.ru/start/intern_education/"
+    },
+    {
+        "status": "<p>Набор открыт</p>",
+        "title": "<p>Преподаватель</p>",
+        "desc": "<p>Обучайте школьников информационным технологиям в&nbsp;Московской школе программистов</p>",
+        "link": "https://education.tbank.ru/start/mshp/"
+    },
+    {
+        "status": "<p>Набор открыт</p>",
+        "title": "<p>Маркетолог</p>",
+        "desc": "<p>Создавайте контент, изучайте аналитику и&nbsp;продвигайте продукты</p>",
+        "link": "https://education.tbank.ru/start/intern_marketing/"
+    },
+    {
+        "status": "<p>Набор закрыт</p>",
+        "title": "<p>Редактор</p>",
+        "desc": "<p>Готовьте тексты для&nbsp;продуктов, сторис в&nbsp;мобильном банке или&nbsp;интерфейсов</p>",
+        "link": "https://education.tbank.ru/start/content_writer/"
+    },
+    {
+        "status": "<p>Набор закрыт</p>",
+        "title": "<p>Дизайнер</p>",
+        "desc": "<p>Создавайте визуальные концепции вместе с&nbsp;продуктовой командой</p>",
+        "link": "https://education.tbank.ru/start/designer/"
+    },
+    {
+        "status": "<p>Набор закрыт</p>",
+        "title": "<p><nobr>Стажер по&nbsp;связям с&nbsp;общественностью</nobr></p>",
+        "desc": "<p>Помогайте в&nbsp;написании <nobr>пресс-релизов</nobr>, генерируйте темы для&nbsp;исследований, участвуйте в&nbsp;реализации креативных <nobr>PR-кампаний</nobr></p>",
+        "link": "https://education.tbank.ru/start/pr-manager"
+    },
+    {
+        "status": "<p>Набор закрыт</p>",
+        "title": "<p>Strategy and New Ventures</p>",
+        "desc": "<p><span style=\"color: rgb(63, 67, 80)\">Работайте на&nbsp;стыке стратегии, инвестиций и&nbsp;операционной эффективности&nbsp;— развивайте экосистему с&nbsp;нами</span></p>",
+        "link": "https://education.tbank.ru/start/strategy-and-new-ventures/"
+    }
+]

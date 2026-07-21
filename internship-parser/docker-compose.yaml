@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  postgres-db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      # Официальный образ postgres понимает только POSTGRES_*,
+      # поэтому мэппим наши DB_* переменные из .env в нужные имена
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "${DB_PORT}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker-init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      # Внутри docker-сети БД доступна по имени сервиса, а не localhost,
+      # поэтому переопределяем то, что пришло из .env
+      DB_HOST: postgres-db
+      DB_PORT: 5432
+      # RELOAD: "true"   # раскомментируйте для режима разработки с автоперезагрузкой
+    ports:
+      - "${APP_PORT}:${APP_PORT}"
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+    volumes:
+      - .:/app
+
+volumes:
+  postgres_data:

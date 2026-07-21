@@ -1,0 +1,162 @@
+[
+  {
+    "title": "Бэкенд",
+    "direction": "Разработка",
+    "company": "Яндекс",
+    "city": "Москва",
+    "work_format": null,
+    "salary_from": null,
+    "description": "Занимайтесь инфраструктурными и продуктовыми задачами нагруженных систем",
+    "link": "https://yandex.ru/yaintern/backend"
+  },
+  {
+    "title": "Фронтенд и фулстек",
+    "direction": "Разработка",
+    "company": "Яндекс",
+    "city": "Москва",
+    "work_format": null,
+    "salary_from": null,
+    "description": "Улучшайте интерфейсы сервисов, присоединившись к одной из фронтенд или фулстек‑команд в Яндексе",
+    "link": "https://yandex.ru/yaintern/frontend"
+  },
+  {
+    "title": "Мобильная разработка",
+    "direction": "Разработка",
+    "company": "Яндекс",
+    "city": "Москва",
+    "work_format": null,
+    "salary_from": null,
+    "description": "Участвуйте в создании приложений на Android и iOS для продуктов Яндекса",
+    "link": "https://yandex.ru/yaintern/mobile"
+  },
+  {
+    "title": "DevOps",
+    "direction": "Разработка",
+    "company": "Яндекс",
+    "city": "Москва",
+    "work_format": null,
+    "salary_from": null,
+    "description": "Освойте инструменты для создания отказоустойчивых распределённых систем",
+    "link": "https://yandex.ru/yaintern/devops"
+  },
+  {
+    "title": "ML",
+    "direction": "Машинное обучение",
+    "company": "Яндекс",
+    "city": "Москва",
+    "work_format": null,
+    "salary_from": null,
+    "description": "Обучайте нейросети и улучшайте алгоритмы машинного обучения для сервисов Яндекса",
+    "link": "https://yandex.ru/yaintern/ml"
+  },
+  {
+    "title": "Yandex Research ML Residency",
+    "direction": "Машинное обучение",
+    "company": "Яндекс",
+    "city": "Москва",
+    "work_format": null,
+    "salary_from": null,
+    "description": "Принимайте участие в исследованиях мирового уровня в сфере машинного обучения",
+    "link": "https://yandex.ru/yaintern/research_ml_residency"
+  },
+  {
+    "title": "Аналитика данных",
+    "direction": "Аналитика данных",
+    "company": "Яндекс",
+    "city": "Москва",
+    "work_format": null,
+    "salary_from": null,
+    "description": "Прогнозируйте события на основе данных, занимайтесь их сбором и интерпретацией",
+    "link": "https://yandex.ru/yaintern/analytics"
+  },
+  {
+    "title": "Security Engineering",
+    "direction": "Информационная безопасность",
+    "company": "Яндекс",
+    "city": "Москва",
+    "work_format": null,
+    "salary_from": null,
+    "description": "Участвуйте в архитектурных ревью и защищайте пользовательские данные",
+    "link": "https://yandex.ru/yaintern/security"
+  },
+  {
+    "title": "Автоматизированное тестирование",
+    "direction": "Тестирование",
+    "company": "Яндекс",
+    "city": "Москва",
+    "work_format": null,
+    "salary_from": null,
+    "description": "Создавайте и применяйте скрипты для автоматической проверки продукта, чтобы ускорить выпуск версий и повысить надёжность системы",
+    "link": "https://yandex.ru/jobs/vacancies?pro_levels=intern&professions=tester"
+  },
+  {
+    "title": "Ручное тестирование",
+    "direction": "Тестирование",
+    "company": "Яндекс",
+    "city": "Москва",
+    "work_format": null,
+    "salary_from": null,
+    "description": "Исследуйте продукт вручную, находите неочевидные ошибки и обеспечивайте высокое качество пользовательского опыта перед каждым релизом",
+    "link": "https://yandex.ru/yaintern/qa"
+  },
+  {
+    "title": "Go Management",
+    "direction": "Менеджмент",
+    "company": "Яндекс",
+    "city": "Москва",
+    "work_format": null,
+    "salary_from": null,
+    "description": "Запускаем продукты и проекты на стажировке в Городских сервисах Яндекса",
+    "link": "https://yandex.ru/yaintern/go-management"
+  },
+  {
+    "title": "Специалист по работе с клиентами",
+    "direction": "Бизнес",
+    "company": "Яндекс",
+    "city": "Москва",
+    "work_format": null,
+    "salary_from": null,
+    "description": "Решайте задачи бизнеса с помощью маркетинговых стратегий",
+    "link": "https://yandex.ru/yaintern/business_development"
+  },
+  {
+    "title": "Развитие бизнеса и продажи",
+    "direction": "Бизнес",
+    "company": "Яндекс",
+    "city": "Москва",
+    "work_format": null,
+    "salary_from": null,
+    "description": "Находите новых клиентов и партнеров, развивайте отношения и увеличивайте доходы компании",
+    "link": "https://yandex.ru/yaintern/go-commerce?utm_source=yaintern&utm_medium=social&utm_campaign=yaintern26&utm_content=page&utm_term=internship"
+  },
+  {
+    "title": "SMM-менеджер",
+    "direction": "Маркетинг",
+    "company": "Яндекс",
+    "city": "Москва",
+    "work_format": null,
+    "salary_from": null,
+    "description": "Создавайте и ведите стратегию присутствия бренда в соцсетях, вовлекая аудиторию через контент и взаимодействие",
+    "link": "https://yandex.ru/jobs/vacancies?professions=smm&pro_levels=intern"
+  },
+  {
+    "title": "UX-дизайнер",
+    "direction": "Дизайн",
+    "company": "Яндекс",
+    "city": "Москва",
+    "work_format": null,
+    "salary_from": null,
+    "description": "Создавайте удобный, интуитивно понятный и визуально привлекательный интерфейс для сайтов, приложений и других цифровых продуктов",
+    "link": "https://yandex.ru/jobs/vacancies?professions=designer-uxui&pro_levels=intern"
+  },
+  {
+    "title": "Инженер",
+    "direction": "Инженерия",
+    "company": "Яндекс",
+    "city": "Москва",
+    "work_format": null,
+    "salary_from": null,
+    "description": "Создавайте, улучшайте и обеспечивайте бесперебойную работу технических систем и оборудования, превращая идеи в реальные решения",
+    "link": "https://yandex.ru/jobs/vacancies?pro_levels=intern&professions=engineer&professions=operating-engineer&professions=engineer-constructor"
+  }
+]

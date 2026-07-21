@@ -1,0 +1,232 @@
+[
+  {
+    "title": "Разработчик",
+    "direction": "Разработка",
+    "company": "ВКонтакте",
+    "city": "Санкт-Петербург",
+    "work_format": "Гибрид",
+    "salary_from": null,
+    "description": null,
+    "link": "https://vk.company/careers/internship/1396"
+  },
+  {
+    "title": "Менеджер продукта",
+    "direction": "Управление продуктом",
+    "company": "ВКонтакте",
+    "city": "Москва",
+    "work_format": "Гибрид",
+    "salary_from": null,
+    "description": null,
+    "link": "https://vk.company/careers/internship/1395"
+  },
+  {
+    "title": "Go-разработчик",
+    "direction": "Разработка",
+    "company": "ВКонтакте",
+    "city": "Москва, СПб",
+    "work_format": "Гибрид",
+    "salary_from": null,
+    "description": null,
+    "link": "https://vk.company/careers/internship/1394"
+  },
+  {
+    "title": "Менеджер продукта (OneData)",
+    "direction": "Управление продуктом",
+    "company": "ВКонтакте",
+    "city": "Москва",
+    "work_format": "Гибрид",
+    "salary_from": null,
+    "description": null,
+    "link": "https://vk.company/careers/internship/1392"
+  },
+  {
+    "title": "Ручной тестировщик",
+    "direction": "Тестирование",
+    "company": "ВКонтакте",
+    "city": "Любой",
+    "work_format": "Удалённая работа",
+    "salary_from": null,
+    "description": null,
+    "link": "https://vk.company/careers/internship/1391"
+  },
+  {
+    "title": "Go-разработчик",
+    "direction": "Разработка",
+    "company": "ВКонтакте",
+    "city": "Любой",
+    "work_format": "Удалённая работа",
+    "salary_from": null,
+    "description": null,
+    "link": "https://vk.company/careers/internship/1390"
+  },
+  {
+    "title": "Go developer",
+    "direction": "Разработка",
+    "company": "ВКонтакте",
+    "city": "Москва",
+    "work_format": "Гибрид",
+    "salary_from": null,
+    "description": null,
+    "link": "https://vk.company/careers/internship/1389"
+  },
+  {
+    "title": "Android developer",
+    "direction": "Разработка",
+    "company": "ВКонтакте",
+    "city": "Санкт-Петербург",
+    "work_format": "Гибрид",
+    "salary_from": null,
+    "description": null,
+    "link": "https://vk.company/careers/internship/1388"
+  },
+  {
+    "title": "Android-разработчик",
+    "direction": "Разработка",
+    "company": "ВКонтакте",
+    "city": "Любой",
+    "work_format": "Удалённая работа",
+    "salary_from": null,
+    "description": null,
+    "link": "https://vk.company/careers/internship/1385"
+  },
+  {
+    "title": "Frontend Developer",
+    "direction": "Разработка",
+    "company": "ВКонтакте",
+    "city": "Любой",
+    "work_format": "Удалённая работа",
+    "salary_from": null,
+    "description": null,
+    "link": "https://vk.company/careers/internship/1384"
+  },
+  {
+    "title": "Фронтенд-разработчик",
+    "direction": "Разработка",
+    "company": "ВКонтакте",
+    "city": "Москва",
+    "work_format": "Гибрид",
+    "salary_from": null,
+    "description": null,
+    "link": "https://vk.company/careers/internship/1383"
+  },
+  {
+    "title": "Продуктовый аналитик",
+    "direction": "Аналитика",
+    "company": "ВКонтакте",
+    "city": "Москва",
+    "work_format": "Гибрид",
+    "salary_from": null,
+    "description": null,
+    "link": "https://vk.company/careers/internship/1379"
+  },
+  {
+    "title": "Python-разработчик",
+    "direction": "Разработка",
+    "company": "ВКонтакте",
+    "city": "Москва",
+    "work_format": "Гибрид",
+    "salary_from": null,
+    "description": null,
+    "link": "https://vk.company/careers/internship/1378"
+  },
+  {
+    "title": "Go-разработчик ML-инфраструктуры",
+    "direction": "Разработка",
+    "company": "ВКонтакте",
+    "city": "Москва",
+    "work_format": "Гибрид",
+    "salary_from": null,
+    "description": null,
+    "link": "https://vk.company/careers/internship/1376"
+  },
+  {
+    "title": "Менеджер продукта",
+    "direction": "Управление продуктом",
+    "company": "ВКонтакте",
+    "city": "Москва",
+    "work_format": "Гибрид",
+    "salary_from": null,
+    "description": null,
+    "link": "https://vk.company/careers/internship/1375"
+  },
+  {
+    "title": "Python-разработчик",
+    "direction": "Разработка",
+    "company": "ВКонтакте",
+    "city": "Любой",
+    "work_format": "Удалённая работа",
+    "salary_from": null,
+    "description": null,
+    "link": "https://vk.company/careers/internship/1373"
+  },
+  {
+    "title": "Java-разработчик",
+    "direction": "Разработка",
+    "company": "ВКонтакте",
+    "city": "Москва",
+    "work_format": "Гибрид",
+    "salary_from": null,
+    "description": null,
+    "link": "https://vk.company/careers/internship/1372"
+  },
+  {
+    "title": "Разработчик ML-инфраструктуры",
+    "direction": "Машинное обучение",
+    "company": "ВКонтакте",
+    "city": "Москва",
+    "work_format": "Гибрид",
+    "salary_from": null,
+    "description": null,
+    "link": "https://vk.company/careers/internship/1370"
+  },
+  {
+    "title": "ML-инженер (recsys)",
+    "direction": "Машинное обучение",
+    "company": "ВКонтакте",
+    "city": "Москва",
+    "work_format": "Гибрид",
+    "salary_from": null,
+    "description": null,
+    "link": "https://vk.company/careers/internship/1365"
+  },
+  {
+    "title": "ML Engineer",
+    "direction": "Машинное обучение",
+    "company": "ВКонтакте",
+    "city": "Москва",
+    "work_format": "Гибрид",
+    "salary_from": null,
+    "description": null,
+    "link": "https://vk.company/careers/internship/1356"
+  },
+  {
+    "title": "ML-инженер (Audio/Deep Learning)",
+    "direction": "Машинное обучение",
+    "company": "ВКонтакте",
+    "city": "Москва",
+    "work_format": "Гибрид",
+    "salary_from": null,
+    "description": null,
+    "link": "https://vk.company/careers/internship/1354"
+  },
+  {
+    "title": "ML-инженер",
+    "direction": "Машинное обучение",
+    "company": "ВКонтакте",
+    "city": "Москва, СПб",
+    "work_format": "Гибрид",
+    "salary_from": null,
+    "description": null,
+    "link": "https://vk.company/careers/internship/1351"
+  },
+  {
+    "title": "Backend-разработчик",
+    "direction": "Разработка",
+    "company": "ВКонтакте",
+    "city": "Любой",
+    "work_format": "Удалённая работа",
+    "salary_from": null,
+    "description": null,
+    "link": "https://vk.company/careers/internship/1350"
+  }
+]

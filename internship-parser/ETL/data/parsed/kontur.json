@@ -1,0 +1,52 @@
+[
+    {
+        "title": "Data Science",
+        "desc": "Собирайте, анализируйте данные и создавайте модели для оптимизации процессов.",
+        "link": "https://kontur.ru/education/internship/internship-datascience"
+    },
+    {
+        "title": "Анализ данных",
+        "desc": "Помогайте собирать данные для инфраструктурных, управленческих и маркетинговых проектов.",
+        "link": "https://kontur.ru/education/internship/internship-data-analytics"
+    },
+    {
+        "title": "Системный анализ",
+        "desc": "Выявляйте проблемы пользователей, генерируйте и выбирайте оптимальные решения для создания программных продуктов.",
+        "link": "https://kontur.ru/education/internship/internship-analytics"
+    },
+    {
+        "title": "Тестирование ПО",
+        "desc": "Тестируйте продукты, находите ошибки и помогайте делать сервисы надёжнее.",
+        "link": "https://kontur.ru/education/internship/internship-testing"
+    },
+    {
+        "title": "Фронтенд‑разработка",
+        "desc": "Получите опыт разработки пользовательских интерфейсов сайтов и приложений.",
+        "link": "https://kontur.ru/education/internship/internship-frontend"
+    },
+    {
+        "title": "Бэкенд‑разработка",
+        "desc": "Получите опыт коммерческой разработки и поддержки серверной части приложений и сервисов Контура.\r\n\r\nОсновной стек бэкенда в Контуре — С#.",
+        "link": "https://kontur.ru/education/internship/internship-backend"
+    },
+    {
+        "title": "Помощник продакт-менеджера",
+        "desc": "Создавайте IT-продукты, которые помогают бизнесу расти и развиваться.",
+        "link": "https://kontur.ru/education/internship/stazhirovka-dlya-pomoschnika-prodakta"
+    },
+    {
+        "title": "CRM‑маркетолог",
+        "desc": "Разберитесь, как устроена «кухня» CRM-маркетинга — от проработки гипотез до тестирования их в разных каналах коммуникаций.",
+        "link": "https://kontur.ru/education/internship/crm-marketing-specialist"
+    },
+    {
+        "title": "Контент-редактор",
+        "desc": "Управляйте контентом сайтов Контура: от технической сборки до публикации.",
+        "link": "https://kontur.ru/education/internship/content-editor"
+    },
+    {
+        "title": "Специалист по организации мероприятий для клиентов",
+        "desc": "Создавайте эффективные мероприятия, продвигайте компанию, ее продукты и услуги.",
+        "link": "https://kontur.ru/education/internship/event-manager"
+    }
+]

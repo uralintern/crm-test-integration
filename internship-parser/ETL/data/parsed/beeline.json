@@ -1,0 +1,17 @@
+[
+    {
+        "id": "2db038bd-c786-46b9-aa8d-6f7eff548b6b",
+        "name": "Cтажер",
+        "grade": "Без опыта",
+        "gross_salary_from": "",
+        "gross_salary_to": "",
+        "location_address": null,
+        "supervisor": false,
+        "role": "Аналитик",
+        "work_format": [
+            "Дистанционный"
+        ],
+        "city": [],
+        "link": "https://job.beeline.ru/vacancies/2db038bd-c786-46b9-aa8d-6f7eff548b6b"
+    }
+]
