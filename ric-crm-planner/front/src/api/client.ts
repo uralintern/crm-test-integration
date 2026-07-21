@@ -99,6 +99,7 @@ async function doRefresh(): Promise<boolean> {
     try {
       const csrf = getCookie("csrftoken")
       if (!csrf) {
+        refreshingPromise = null;
         return false;
       }
 
