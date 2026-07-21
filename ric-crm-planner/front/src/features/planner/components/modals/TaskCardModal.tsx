@@ -14,8 +14,11 @@ import {
   DatePicker,
   Modal,
   Checkbox,
+  Switch,
+  Select,
 } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
+import { DONE_KANBAN_STATUS, PLANNED_KANBAN_STATUS } from "../../planner.utils";
 
 const { TextArea } = Input;
 const { Text, Title } = Typography;
@@ -27,27 +30,54 @@ type TaskCardModalProps = {
   taskCardTeam: PlannerTeam | null;
   taskCardParentForSubtask: PlannerParentTask | null;
   taskCardSubtasksCount: number;
+  selectedTeamMembers: number[];
   displayAssigneeLabel: (id: number) => string;
   sourceLabelForTeam: (team: PlannerTeam) => string;
   onClose: () => void;
   onUpdateParentTask: (
     taskId: number,
-    updates: Partial<Pick<PlannerParentTask, "title" | "description" | "checklist" | "startDate" | "endDate">>,
+    updates: Partial<
+      Pick<
+        PlannerParentTask,
+        | "title"
+        | "description"
+        | "checklist"
+        | "startDate"
+        | "endDate"
+        | "assigneeId"
+        | "status"
+      >
+    >,
   ) => void;
   onUpdateSubtask: (
     subtaskId: number,
-    updates: Partial<Pick<PlannerSubtask, "title" | "description" | "checklist" | "startDate" | "endDate">>,
+    updates: Partial<
+      Pick<
+        PlannerSubtask,
+        | "title"
+        | "description"
+        | "checklist"
+        | "startDate"
+        | "endDate"
+        | "assigneeId"
+        | "inSprint"
+        | "status"
+      >
+    >,
   ) => void;
+  onCreateSubtaskFromChecklistItem: (parentTaskId: number, title: string) => void;
 };
 
 export default function TaskCardModal({
   isOpen,
   taskCardParent,
   taskCardSubtask,
-  displayAssigneeLabel,
   onClose,
   onUpdateParentTask,
   onUpdateSubtask,
+  onCreateSubtaskFromChecklistItem,
+  displayAssigneeLabel,
+  selectedTeamMembers,
 }: TaskCardModalProps) {
   const activeTask = taskCardSubtask || taskCardParent;
   const startDate = taskCardSubtask?.startDate || taskCardParent?.startDate;
@@ -58,7 +88,15 @@ export default function TaskCardModal({
   const [start, setStart] = useState<Dayjs | undefined>();
   const [end, setEnd] = useState<Dayjs | undefined>();
   const [checklistInput, setChecklistInput] = useState("");
+  const [inSprint, setInSprint] = useState<boolean | undefined>();
   const [checklist, setChecklist] = useState<PlannerTaskChecklistItem[]>([]);
+  const [assignee, setAssignee] = useState<number | undefined>();
+
+  const memberOptions = (ids: number[]) =>
+    ids.map((id) => ({
+      value: id,
+      label: displayAssigneeLabel(id),
+    }));
 
   useEffect(() => {
     if (!isOpen || !activeTask) return;
@@ -69,7 +107,9 @@ export default function TaskCardModal({
     setEnd(endDate ? dayjs(endDate) : undefined);
     setChecklistInput("");
     setChecklist(activeTask.checklist || []);
-  }, [activeTask, endDate, isOpen, startDate]);
+    setInSprint(taskCardSubtask?.inSprint);
+    setAssignee(activeTask?.assigneeId);
+  }, [activeTask, endDate, isOpen, startDate, taskCardSubtask?.inSprint]);
 
   const addChecklistItem = () => {
     const text = checklistInput.trim();
@@ -84,11 +124,28 @@ export default function TaskCardModal({
   };
 
   const toggleChecklistItem = (itemId: number) => {
-    setChecklist((items) =>
-      items.map((item) =>
-        item.id === itemId ? { ...item, completed: !item.completed } : item,
-      ),
+    const nextChecklist = checklist.map((item) =>
+      item.id === itemId ? { ...item, completed: !item.completed } : item,
     );
+
+    const allCompleted = nextChecklist.every((item) => item.completed);
+    const nextStatus = allCompleted ? DONE_KANBAN_STATUS : undefined;
+
+    setChecklist(nextChecklist);
+
+    if (taskCardSubtask) {
+      onUpdateSubtask(taskCardSubtask.id, {
+        checklist: nextChecklist,
+        status: allCompleted
+          ? DONE_KANBAN_STATUS
+          : taskCardSubtask.status || PLANNED_KANBAN_STATUS,
+      });
+    } else if (taskCardParent) {
+      onUpdateParentTask(taskCardParent.id, {
+        checklist: nextChecklist,
+        status: nextStatus,
+      });
+    }
   };
 
   const removeChecklistItem = (itemId: number) => {
@@ -101,12 +158,20 @@ export default function TaskCardModal({
       return;
     }
 
+    const allChecklistCompleted = checklist.length > 0 && checklist.every((item) => item.completed);
     const updates = {
       title: title.trim() || activeTask.title,
       description: description.trim(),
       checklist,
       startDate: start,
       endDate: end,
+      inSprint: inSprint,
+      assigneeId: assignee,
+      status: allChecklistCompleted
+        ? DONE_KANBAN_STATUS
+        : taskCardSubtask
+          ? taskCardSubtask.status || PLANNED_KANBAN_STATUS
+          : undefined,
     };
 
     if (taskCardSubtask) {
@@ -119,7 +184,13 @@ export default function TaskCardModal({
   };
 
   return (
-    <Modal open={isOpen} onCancel={onClose} onOk={saveTaskCard} okText="Сохранить" cancelText="Отмена">
+    <Modal
+      open={isOpen}
+      onCancel={onClose}
+      onOk={saveTaskCard}
+      okText="Сохранить"
+      cancelText="Отмена"
+    >
       {!activeTask ? (
         <Text>Задача не найдена.</Text>
       ) : (
@@ -135,9 +206,17 @@ export default function TaskCardModal({
             >
               {title}
             </Title>
-            {activeTask.assigneeId && (
-              <Text type="secondary">Исполнитель: {displayAssigneeLabel(activeTask.assigneeId)}</Text>
-            )}
+            <Select
+              value={displayAssigneeLabel(assignee || 0)}
+              onChange={(value) => setAssignee(Number(value))}
+              options={[
+                {
+                  value: 0,
+                  label: "Без ответственного",
+                },
+                ...memberOptions(selectedTeamMembers),
+              ]}
+            />
           </Flex>
 
           <Flex vertical>
@@ -164,7 +243,7 @@ export default function TaskCardModal({
               <Button onClick={addChecklistItem}>Добавить</Button>
             </Flex>
 
-            <Flex gap={4} vertical>
+            <Flex gap={8} vertical>
               {checklist.map((item) => (
                 <Flex justify="space-between" align="center" key={item.id}>
                   <Flex gap={4}>
@@ -174,13 +253,26 @@ export default function TaskCardModal({
                     />
                     <Text delete={item.completed}>{item.text}</Text>
                   </Flex>
-                  <Button
-                    variant="outlined"
-                    color="red"
-                    size="small"
-                    onClick={() => removeChecklistItem(item.id)}
-                    icon={<CloseOutlined />}
-                  />
+                  <Flex gap={4}>
+                    <Button
+                      size="small"
+                      onClick={() => {
+                        const parentTaskId = taskCardSubtask?.parentTaskId || taskCardParent?.id;
+                        if (parentTaskId) {
+                          onCreateSubtaskFromChecklistItem(parentTaskId, item.text);
+                        }
+                      }}
+                    >
+                      Создать подзадачу
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      color="red"
+                      size="small"
+                      onClick={() => removeChecklistItem(item.id)}
+                      icon={<CloseOutlined />}
+                    />
+                  </Flex>
                 </Flex>
               ))}
             </Flex>
@@ -205,6 +297,14 @@ export default function TaskCardModal({
                 onChange={(value) => setEnd(value ?? undefined)}
                 getPopupContainer={(node) => node.parentNode as HTMLElement}
               />
+              {taskCardSubtask && (
+                <Switch
+                  checked={inSprint}
+                  onChange={(checked) => setInSprint(checked)}
+                  checkedChildren="В спринт"
+                  unCheckedChildren="Не в спринт"
+                />
+              )}
             </Flex>
           </Flex>
         </Flex>

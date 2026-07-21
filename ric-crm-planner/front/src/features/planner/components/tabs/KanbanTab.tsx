@@ -56,6 +56,7 @@ type KanbanTabProps = {
   onOpenTaskCard: (type: "parent" | "subtask", id: number) => void;
   onMoveSubtask: (subtaskId: number, column: string, position: number) => void;
   onMoveColumn: (sourceTitle: string, targetTitle: string) => void;
+  onCompleteSubtask: (subtaskId: number) => void;
 
   visibleTeams: PlannerTeam[];
   teamFilter: string;
@@ -79,6 +80,7 @@ export default function KanbanTab({
   onOpenTaskCard,
   onMoveSubtask,
   onMoveColumn,
+  onCompleteSubtask,
   visibleTeams,
   teamFilter,
   onTeamFilterChange,
@@ -156,6 +158,7 @@ export default function KanbanTab({
             isDraggable,
             displayAssigneeLabel,
             currentUserId,
+            onCompleteSubtask,
           ),
       },
     }),
@@ -355,6 +358,7 @@ export default function KanbanTab({
             true,
             displayAssigneeLabel,
             currentUserId,
+            onCompleteSubtask,
             "drag-preview",
           )
         }

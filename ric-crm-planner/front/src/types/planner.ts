@@ -35,6 +35,7 @@ export interface PlannerParentTask {
   assigneeId?: number;
   startDate?: Dayjs;
   endDate?: Dayjs;
+  status?: string;
   createdBy?: number;
   updatedAt?: string;
 }

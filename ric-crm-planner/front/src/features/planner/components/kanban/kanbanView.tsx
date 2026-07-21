@@ -4,6 +4,7 @@ import type { PlannerSubtask } from "../../../../types/planner";
 import { isDoneKanbanStatus } from "../../planner.utils";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
+import { Button, Flex, Tag } from "antd";
 
 export const ROOT_ID = "root";
 export const COLUMN_DRAG_TYPE = "application/x-ric-kanban-column";
@@ -27,9 +28,17 @@ const getCardTheme = (parentTaskId: number) => {
   return { accent, soft };
 };
 
-const columnThemes = ["#2563eb", "#f59e0b", "#8b5cf6", "#22c55e", "#ef4444", "#0f766e"];
+const columnThemes = [
+  "#2563eb",
+  "#f59e0b",
+  "#8b5cf6",
+  "#22c55e",
+  "#ef4444",
+  "#0f766e",
+];
 
-export const getColumnId = (title: string) => `${COLUMN_PREFIX}${encodeURIComponent(title)}`;
+export const getColumnId = (title: string) =>
+  `${COLUMN_PREFIX}${encodeURIComponent(title)}`;
 export const getCardId = (id: number) => `${CARD_PREFIX}${id}`;
 
 export const getSubtaskIdFromCardId = (cardId: string) => {
@@ -48,32 +57,28 @@ export const getColumnTitle = (column: BoardItem) => {
   return content?.title || column.title;
 };
 
-const getInitials = (label: string) => {
-  const name = label.split("-")[0]?.trim() || label.trim();
-  const parts = name.split(/\s+/).filter(Boolean);
-  if (parts.length === 0) return "?";
-
-  return parts
-    .slice(0, 2)
-    .map((part) => part[0]?.toUpperCase())
-    .join("");
-};
-
 const formatDate = (date: Dayjs | undefined): string =>
-    date ? dayjs(date).format("DD.MM.YYYY") : "Нет срока";
+  date ? dayjs(date).format("DD.MM.YYYY") : "Нет срока";
 
-export const getColumnTheme = (title: string, index: number) => columnThemes[(title.length + index) % columnThemes.length];
+export const getColumnTheme = (title: string, index: number) =>
+  columnThemes[(title.length + index) % columnThemes.length];
 
 export function renderSubtaskCard(
   card: BoardItem,
   isDraggable: boolean,
   displayAssigneeLabel: (id: number) => string,
-  currentUserId: number,
-  extraClass = ""
+  _currentUserId: number,
+  onCompleteSubtask?: (subtaskId: number) => void,
+  extraClass = "",
 ) {
   const subtask = getCardSubtask(card);
   const isDone = isDoneKanbanStatus(subtask?.status);
-  const className = ["kanban-card", isDone ? "is-done" : "", !isDraggable ? "is-locked" : "", extraClass]
+  const className = [
+    "kanban-card",
+    isDone ? "is-done" : "",
+    !isDraggable ? "is-locked" : "",
+    extraClass,
+  ]
     .filter(Boolean)
     .join(" ");
 
@@ -86,8 +91,9 @@ export function renderSubtaskCard(
   }
 
   const theme = getCardTheme(subtask.parentTaskId ?? subtask.id);
-  const assigneeLabel = subtask.assigneeId ? displayAssigneeLabel(subtask.assigneeId) : "Не назначен";
-  const isCurrentAssignee = Boolean(subtask.assigneeId && Number(subtask.assigneeId) === Number(currentUserId));
+  const assigneeLabel = subtask.assigneeId
+    ? displayAssigneeLabel(subtask.assigneeId)
+    : "Не назначен";
   const style = {
     "--kanban-card-accent": theme.accent,
     "--kanban-card-soft": theme.soft,
@@ -100,14 +106,25 @@ export function renderSubtaskCard(
         <span>{formatDate(subtask.startDate)}</span>
         <span>{formatDate(subtask.endDate)}</span>
       </div>
-      <div className="kanban-card-footer">
-        <div className="kanban-card-tags">
-          <span>{subtask.status}</span>
-        </div>
-        <div className={`kanban-card-assignee${isCurrentAssignee ? " is-current-assignee" : ""}`} title={assigneeLabel}>
-          {getInitials(assigneeLabel)}
-        </div>
-      </div>
+      <Flex>
+        <Flex gap={8} vertical>
+          <Tag color={theme.accent}>{subtask.status}</Tag>
+          <Tag>{assigneeLabel}</Tag>
+          <Button
+            onClick={(e) => {
+              e.stopPropagation();
+              if (onCompleteSubtask) {
+                onCompleteSubtask(subtask.id);
+              }
+            }}
+            disabled={isDone}
+            color={isDone ? undefined : "green"}
+            variant={isDone ? undefined : "solid"}
+          >
+            {isDone ? "Завершено" : "Завершить задачу"}
+          </Button>
+        </Flex>
+      </Flex>
     </div>
   );
 }

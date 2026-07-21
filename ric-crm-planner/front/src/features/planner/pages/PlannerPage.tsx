@@ -59,6 +59,7 @@ import {
   buildProjectApplicantGroups,
 } from "../planner.applicants";
 import {
+  DONE_KANBAN_STATUS,
   fullName,
   isFallbackParticipantName,
   PLANNED_KANBAN_STATUS,
@@ -735,7 +736,7 @@ export default function PlannerPage() {
     updates: Partial<
       Pick<
         PlannerParentTask,
-        "title" | "description" | "checklist" | "startDate" | "endDate"
+        "title" | "description" | "checklist" | "startDate" | "endDate" | "status"
       >
     >,
   ) => {
@@ -755,7 +756,7 @@ export default function PlannerPage() {
     updates: Partial<
       Pick<
         PlannerSubtask,
-        "title" | "description" | "checklist" | "startDate" | "endDate"
+        "title" | "description" | "checklist" | "startDate" | "endDate" | "status"
       >
     >,
   ) => {
@@ -769,6 +770,49 @@ export default function PlannerPage() {
     }));
     notifySuccess("Подзадача обновлена");
   };
+  const createSubtaskFromChecklistItem = (parentTaskId: number, title: string) => {
+    const parentTask = state.parentTasks.find(
+      (task) => Number(task.id) === Number(parentTaskId),
+    );
+
+    if (!parentTask) {
+      notifyError("Не удалось определить большую задачу для подзадачи");
+      return;
+    }
+    if (!canEditTeam(parentTask.teamId)) {
+      notifyError("Нет прав на создание подзадач этой команды");
+      return;
+    }
+
+    const trimmedTitle = title.trim();
+    if (!trimmedTitle) {
+      notifyError("Проверьте название подзадачи");
+      return;
+    }
+
+    const created: PlannerSubtask = {
+      id: nextPlannerId(state.subtasks),
+      teamId: parentTask.teamId,
+      parentTaskId: parentTask.id,
+      title: trimmedTitle,
+      role: "",
+      assigneeId: undefined,
+      startDate: undefined,
+      endDate: undefined,
+      status: plannedColumn,
+      inSprint: true,
+      createdBy: userId || undefined,
+      updatedAt: currentTimestamp(),
+    };
+
+    setState((prev) => ({
+      ...prev,
+      subtasks: [...prev.subtasks, created],
+    }));
+    openTaskCard("subtask", created.id);
+    notifySuccess("Подзадача создана");
+  };
+
   const openCloseEnrollment = (eventId: number, eventTitle: string) => {
     setCloseEnrollmentTarget({ eventId, eventTitle });
   };
@@ -1140,6 +1184,23 @@ export default function PlannerPage() {
     }));
     cancelEditSubtask();
     notifySuccess("Подзадача обновлена");
+  };
+
+  const completeSubtask = (subtaskId: number) => {
+    setState((prev) => ({
+      ...prev,
+      subtasks: prev.subtasks.map((subtask) =>
+        Number(subtask.id) === Number(subtaskId)
+          ? {
+              ...subtask,
+              status: DONE_KANBAN_STATUS,
+              inSprint: false,
+              updatedAt: currentTimestamp(),
+            }
+          : subtask,
+      ),
+    }));
+    notifySuccess("Подзадача завершена");
   };
 
   const removeKanbanColumn = (title: string) => {
@@ -1634,6 +1695,7 @@ export default function PlannerPage() {
               ),
             }))
           }
+          onCompleteSubtask={completeSubtask}
           visibleTeams={visibleTeams}
           teamFilter={teamFilter}
           onTeamFilterChange={setTeamFilter}
@@ -1672,6 +1734,7 @@ export default function PlannerPage() {
           onOpenTaskCard={openTaskCard}
           onMoveSubtask={moveKanbanSubtask}
           onMoveColumn={moveKanbanColumn}
+          onCompleteSubtask={completeSubtask}
           visibleTeams={visibleTeams}
           teamFilter={teamFilter}
           onTeamFilterChange={setTeamFilter}
@@ -1725,6 +1788,7 @@ export default function PlannerPage() {
       />
       <TaskCardModal
         isOpen={taskCardOpen}
+        selectedTeamMembers={selectedTeamMembers}
         taskCardParent={taskCardParent}
         taskCardSubtask={taskCardSubtask}
         taskCardTeam={taskCardTeam}
@@ -1735,6 +1799,7 @@ export default function PlannerPage() {
         onClose={closeTaskCard}
         onUpdateParentTask={updateTaskCardParent}
         onUpdateSubtask={updateTaskCardSubtask}
+        onCreateSubtaskFromChecklistItem={createSubtaskFromChecklistItem}
       />
       <AntModal
         open={automationOpen}
