@@ -13,6 +13,7 @@ import {
   SaveOutlined,
   TeamOutlined,
   UserOutlined,
+  RocketOutlined,
 } from "@ant-design/icons";
 import "../../styles/header.scss";
 import { AuthContext } from "../../context/AuthContext";
@@ -31,6 +32,7 @@ const HEADER_TEXT = {
   delete: "Удалить",
   deleteAllNotifications: "Удалить все",
   guest: "Гость",
+  internships: "Стажировки",
   login: "Войти",
   logout: "Выйти",
   myRequests: "Мои заявки",
@@ -127,70 +129,70 @@ export default function Header() {
 
   const mobileMenuItems: MenuProps["items"] = user
     ? [
-        {
-          key: "/requests",
-          label: (
-            <span className="mobile-menu-entry">
-              <span className="mobile-menu-entry__icon">
-                <BarsOutlined />
-              </span>
-              <span>{isProjectant ? HEADER_TEXT.myRequests : HEADER_TEXT.requests}</span>
+      {
+        key: "/requests",
+        label: (
+          <span className="mobile-menu-entry">
+            <span className="mobile-menu-entry__icon">
+              <BarsOutlined />
             </span>
-          ),
-        },
-        ...(canManageAutomation
-          ? [
-              {
-                key: "/automation",
-                label: (
-                  <span className="mobile-menu-entry">
-                    <span className="mobile-menu-entry__icon">
-                      <SaveOutlined />
-                    </span>
-                    <span>{HEADER_TEXT.automation}</span>
-                  </span>
-                ),
-              },
-            ]
-          : []),
-        {
-          key: "/planner",
-          label: (
-            <span className="mobile-menu-entry">
-              <span className="mobile-menu-entry__icon">
-                <TeamOutlined />
+            <span>{isProjectant ? HEADER_TEXT.myRequests : HEADER_TEXT.requests}</span>
+          </span>
+        ),
+      },
+      ...(canManageAutomation
+        ? [
+          {
+            key: "/automation",
+            label: (
+              <span className="mobile-menu-entry">
+                <span className="mobile-menu-entry__icon">
+                  <SaveOutlined />
+                </span>
+                <span>{HEADER_TEXT.automation}</span>
               </span>
-              <span>{HEADER_TEXT.planner}</span>
+            ),
+          },
+        ]
+        : []),
+      {
+        key: "/planner",
+        label: (
+          <span className="mobile-menu-entry">
+            <span className="mobile-menu-entry__icon">
+              <TeamOutlined />
             </span>
-          ),
-        },
-        ...(TESTING_MODULE_URL
-          ? [
-              {
-                key: "__testing",
-                label: (
-                  <span className="mobile-menu-entry">
-                    <span className="mobile-menu-entry__icon">
-                      <ContainerOutlined />
-                    </span>
-                    <span>{HEADER_TEXT.testing}</span>
-                  </span>
-                ),
-              },
-            ]
-          : []),
-        {
-          key: "/profile",
-          label: (
-            <span className="mobile-menu-entry">
-              <span className="mobile-menu-entry__icon">
-                <UserOutlined />
+            <span>{HEADER_TEXT.planner}</span>
+          </span>
+        ),
+      },
+      ...(TESTING_MODULE_URL
+        ? [
+          {
+            key: "__testing",
+            label: (
+              <span className="mobile-menu-entry">
+                <span className="mobile-menu-entry__icon">
+                  <ContainerOutlined />
+                </span>
+                <span>{HEADER_TEXT.testing}</span>
               </span>
-              <span>{HEADER_TEXT.profile}</span>
+            ),
+          },
+        ]
+        : []),
+      {
+        key: "/profile",
+        label: (
+          <span className="mobile-menu-entry">
+            <span className="mobile-menu-entry__icon">
+              <UserOutlined />
             </span>
-          ),
-        },
-      ]
+            <span>{HEADER_TEXT.profile}</span>
+          </span>
+        ),
+      },
+    ]
     : [];
 
   const onMobileMenuClick: MenuProps["onClick"] = ({ key }) => {
@@ -253,50 +255,50 @@ export default function Header() {
 
   const mobileBottomItems = user
     ? [
-        {
-          key: "requests",
-          label: isProjectant ? HEADER_TEXT.myRequests : HEADER_TEXT.requests,
-          icon: <BarsOutlined />,
-          active: isActivePath("/requests"),
-          onClick: () => goTo("/requests"),
-        },
-        ...(canManageAutomation
-          ? [
-              {
-                key: "automation",
-                label: HEADER_TEXT.automation,
-                icon: <SaveOutlined />,
-                active: isActivePath("/automation"),
-                onClick: () => goTo("/automation"),
-              },
-            ]
-          : []),
-        {
-          key: "planner",
-          label: HEADER_TEXT.planner,
-          icon: <TeamOutlined />,
-          active: isActivePath("/planner"),
-          onClick: () => goTo("/planner"),
-        },
-        ...(TESTING_MODULE_URL
-          ? [
-              {
-                key: "testing",
-                label: HEADER_TEXT.testing,
-                icon: <ContainerOutlined />,
-                active: false,
-                onClick: () => void openTestingModule(),
-              },
-            ]
-          : []),
-        {
-          key: "profile",
-          label: HEADER_TEXT.profile,
-          icon: <UserOutlined />,
-          active: isActivePath("/profile"),
-          onClick: () => goTo("/profile"),
-        },
-      ]
+      {
+        key: "requests",
+        label: isProjectant ? HEADER_TEXT.myRequests : HEADER_TEXT.requests,
+        icon: <BarsOutlined />,
+        active: isActivePath("/requests"),
+        onClick: () => goTo("/requests"),
+      },
+      ...(canManageAutomation
+        ? [
+          {
+            key: "automation",
+            label: HEADER_TEXT.automation,
+            icon: <SaveOutlined />,
+            active: isActivePath("/automation"),
+            onClick: () => goTo("/automation"),
+          },
+        ]
+        : []),
+      {
+        key: "planner",
+        label: HEADER_TEXT.planner,
+        icon: <TeamOutlined />,
+        active: isActivePath("/planner"),
+        onClick: () => goTo("/planner"),
+      },
+      ...(TESTING_MODULE_URL
+        ? [
+          {
+            key: "testing",
+            label: HEADER_TEXT.testing,
+            icon: <ContainerOutlined />,
+            active: false,
+            onClick: () => void openTestingModule(),
+          },
+        ]
+        : []),
+      {
+        key: "profile",
+        label: HEADER_TEXT.profile,
+        icon: <UserOutlined />,
+        active: isActivePath("/profile"),
+        onClick: () => goTo("/profile"),
+      },
+    ]
     : [];
 
   return (
@@ -333,12 +335,24 @@ export default function Header() {
                 <span>{isProjectant ? HEADER_TEXT.myRequests : HEADER_TEXT.requests}</span>
               </AppButton>
 
+              <AppButton className={`head-btn head-btn--muted${isActivePath("/internships") ? " is-active" : ""}`} onClick={() => navigate("/internships")}>
+                <RocketOutlined />
+                <span>{HEADER_TEXT.internships}</span>
+              </AppButton>
+              <AppButton className={`head-btn head-btn--muted${isActivePath("/internships/admin") ? " is-active" : ""}`} onClick={() => navigate("/internships/admin")}>
+                <TeamOutlined />
+                <span>Админ. стажировки</span>
+              </AppButton>
+
               {canManageAutomation && (
                 <AppButton className={`head-btn head-btn--automation${isActivePath("/automation") ? " is-active" : ""}`} onClick={() => navigate("/automation")}>
                   <SaveOutlined />
                   <span>{HEADER_TEXT.automation}</span>
                 </AppButton>
               )}
+
+
+
 
               <AppButton className={`head-btn head-btn--planner${isActivePath("/planner") ? " is-active" : ""}`} onClick={() => navigate("/planner")}>
                 <TeamOutlined />

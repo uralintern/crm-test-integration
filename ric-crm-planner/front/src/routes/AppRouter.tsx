@@ -9,6 +9,8 @@ const EventsPage = lazy(() => import("../features/events/pages/EventsPage"));
 const DirectionsPage = lazy(() => import("../features/events/pages/DirectionsPage"));
 const ProjectsPage = lazy(() => import("../features/events/pages/ProjectsPage"));
 const RequestsPage = lazy(() => import("../features/requests/pages/RequestsPage"));
+const InternshipsPage = lazy(() => import("../features/internships/pages/InternshipsPage"));
+const InternshipsAdminPage = lazy(() => import("../features/internships/pages/InternshipsAdminPage"));
 const PlannerPage = lazy(() => import("../features/planner/pages/PlannerPage"));
 const ArchivePage = lazy(() => import("../features/events/pages/ArchivePage"));
 const ProfilePage = lazy(() => import("../features/profile/ProfilePage"));
@@ -41,6 +43,8 @@ export default function AppRouter() {
               <Route path="/automation" element={<ArchivePage />} />
               <Route path="/profile" element={<ProfilePage />} />
               <Route path="/requests" element={<RequestsPage />} />
+              <Route path="/internships" element={<InternshipsPage />} />
+              <Route path="/internships/admin" element={<InternshipsAdminPage />} />
               <Route path="*" element={<Navigate to="/events" replace />} />
             </>
           )}
