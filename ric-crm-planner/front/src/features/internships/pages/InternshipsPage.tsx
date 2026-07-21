@@ -1,36 +1,58 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import {
+    getInternships,
+    WORK_FORMAT_OPTIONS,
+    type InternshipListItem,
+    type WorkFormatCode,
+} from "../api";
 import "./internships.scss";
 
-interface Internship {
-    id: number;
-    company: string;
-    avatarLetter: string;
-    avatarClass: "yandex" | "sber" | "vk" | "tbank";
-    title: string;
-    direction: string;
-    format: "Офис" | "Удалённо" | "Гибрид";
-    salary: number;
-    publishedAt: string;
-    deadline: string;
-}
-
-const MOCK_INTERNSHIPS: Internship[] = [
-    { id: 1, company: "Яндекс", avatarLetter: "Я", avatarClass: "yandex", title: "Стажёр-аналитик данных (ETL)", direction: "Data science", format: "Офис", salary: 25000, publishedAt: "2026-07-04", deadline: "2026-08-04" },
-    { id: 2, company: "Сбер", avatarLetter: "С", avatarClass: "sber", title: "ML-инженер (NLP / парсинг)", direction: "Backend-разработка", format: "Гибрид", salary: 30000, publishedAt: "2026-07-04", deadline: "2026-08-04" },
-    { id: 3, company: "ВКонтакте", avatarLetter: "VK", avatarClass: "vk", title: "Frontend-разработчик (React)", direction: "Frontend-разработка", format: "Удалённо", salary: 25000, publishedAt: "2026-07-04", deadline: "2026-08-04" },
-    { id: 4, company: "Т-банк", avatarLetter: "Т", avatarClass: "tbank", title: "DevOps-инженер", direction: "DevOps", format: "Офис", salary: 30000, publishedAt: "2026-07-04", deadline: "2026-08-04" },
-];
-
-const DIRECTIONS = ["Data science", "Backend-разработка", "Frontend-разработка", "DevOps", "Продуктовый менеджмент"];
-const FORMATS: Internship["format"][] = ["Офис", "Удалённо", "Гибрид"];
-type SortKey = "new" | "deadline" | "salary";
+const DIRECTIONS = ["Разработка", "Тестирование", "Безопасность", "Аналитика"];
 
 export default function InternshipsPage() {
+    const [items, setItems] = useState<InternshipListItem[]>([]);
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
+
     const [search, setSearch] = useState("");
-    const [selectedDirections, setSelectedDirections] = useState<string[]>(["Data science"]);
-    const [format, setFormat] = useState<Internship["format"] | null>("Офис");
-    const [city, setCity] = useState("Екатеринбург");
-    const [sort, setSort] = useState<SortKey>("new");
+    const [selectedDirections, setSelectedDirections] = useState<string[]>([]);
+    const [selectedFormats, setSelectedFormats] = useState<WorkFormatCode[]>([]);
+    const [city, setCity] = useState("");
+    const [sort, setSort] = useState<"new" | "salary">("new");
+
+    useEffect(() => {
+        let cancelled = false;
+
+        async function load() {
+            setLoading(true);
+            setError("");
+            try {
+                const response = await getInternships({
+                    page,
+                    format: selectedFormats.length ? selectedFormats : undefined,
+                    city: city.trim() ? [city.trim()] : undefined,
+                });
+                if (cancelled) return;
+                setItems(response.data);
+                setTotalPages(response.pagination.total_pages);
+            } catch {
+                if (!cancelled) setError("Не удалось загрузить список стажировок");
+            } finally {
+                if (!cancelled) setLoading(false);
+            }
+        }
+
+        void load();
+        return () => {
+            cancelled = true;
+        };
+    }, [page, selectedFormats, city]);
+
+    useEffect(() => {
+        setPage(1);
+    }, [selectedFormats, city]);
 
     const toggleDirection = (direction: string) => {
         setSelectedDirections((prev) =>
@@ -38,25 +60,27 @@ export default function InternshipsPage() {
         );
     };
 
-    const filtered = useMemo(() => {
-        let list = MOCK_INTERNSHIPS.filter((item) => {
+    const toggleFormat = (code: WorkFormatCode) => {
+        setSelectedFormats((prev) => (prev.includes(code) ? prev.filter((f) => f !== code) : [...prev, code]));
+    };
+
+    const visibleItems = useMemo(() => {
+        const filtered = items.filter((item) => {
             const matchesSearch =
                 !search.trim() ||
                 item.title.toLowerCase().includes(search.trim().toLowerCase()) ||
                 item.company.toLowerCase().includes(search.trim().toLowerCase());
             const matchesDirection = selectedDirections.length === 0 || selectedDirections.includes(item.direction);
-            const matchesFormat = !format || item.format === format;
-            return matchesSearch && matchesDirection && matchesFormat;
+            return matchesSearch && matchesDirection;
         });
 
-        list = [...list].sort((a, b) => {
-            if (sort === "salary") return b.salary - a.salary;
-            if (sort === "deadline") return a.deadline.localeCompare(b.deadline);
-            return b.publishedAt.localeCompare(a.publishedAt);
+        return [...filtered].sort((a, b) => {
+            if (sort === "salary") return (b.salary_from ?? 0) - (a.salary_from ?? 0);
+            return 0;
         });
+    }, [items, search, selectedDirections, sort]);
 
-        return list;
-    }, [search, selectedDirections, format, sort]);
+    const avatarLetter = (company: string) => company.trim().charAt(0).toUpperCase() || "?";
 
     return (
         <div className="internships-page">
@@ -88,7 +112,6 @@ export default function InternshipsPage() {
                         <div className="checkbox-list">
                             {DIRECTIONS.map((direction) => (
                                 <label className="checkbox-item" key={direction}>
-
                                     <input
                                         type="checkbox"
                                         checked={selectedDirections.includes(direction)}
@@ -103,14 +126,14 @@ export default function InternshipsPage() {
 
                         <div className="sidebar-label">ФОРМАТ</div>
                         <div className="format-list">
-                            {FORMATS.map((f) => (
+                            {WORK_FORMAT_OPTIONS.map((opt) => (
                                 <button
-                                    key={f}
+                                    key={opt.code}
                                     type="button"
-                                    className={`format-option${format === f ? " active" : ""}`}
-                                    onClick={() => setFormat(format === f ? null : f)}
+                                    className={`format-option${selectedFormats.includes(opt.code) ? " active" : ""}`}
+                                    onClick={() => toggleFormat(opt.code)}
                                 >
-                                    {f}
+                                    {opt.label}
                                 </button>
                             ))}
                         </div>
@@ -121,58 +144,87 @@ export default function InternshipsPage() {
                         <input
                             type="text"
                             className="city-input"
-                            placeholder="Введите город"
+                            placeholder="Например, Екатеринбург"
                             value={city}
                             onChange={(e) => setCity(e.target.value)}
                         />
-                        <button type="button" className="format-option active">
-                            {city || "Екатеринбург"}
-                        </button>
                     </aside>
 
                     <section className="main-content">
                         <div className="sort-block">
                             <span className="sort-label">Сортировка:</span>
-                            <button type="button" className={`sort-option${sort === "new" ? " active" : ""}`} onClick={() => setSort("new")}>
+                            <button
+                                type="button"
+                                className={`sort-option${sort === "new" ? " active" : ""}`}
+                                onClick={() => setSort("new")}
+                            >
                                 Новые
                             </button>
-                            <button type="button" className={`sort-option${sort === "deadline" ? " active" : ""}`} onClick={() => setSort("deadline")}>
-                                По дедлайну
-                            </button>
-                            <button type="button" className={`sort-option${sort === "salary" ? " active" : ""}`} onClick={() => setSort("salary")}>
+                            <button
+                                type="button"
+                                className={`sort-option${sort === "salary" ? " active" : ""}`}
+                                onClick={() => setSort("salary")}
+                            >
                                 По зарплате
                             </button>
                         </div>
 
                         <div className="cards-wrapper">
-                            {filtered.length === 0 ? (
-                                <div>Ничего не найдено по заданным фильтрам</div>
-                            ) : (
-                                <div className="cards">
-                                    {filtered.map((item) => (
-                                        <div className="card" key={item.id}>
-                                            <div className="card-top">
-                                                <div className={`avatar ${item.avatarClass}`}>{item.avatarLetter}</div>
-                                                <div className="card-heading">
-                                                    <span className="company">{item.company}</span>
-                                                    <span className="job-title">{item.title}</span>
+                            {loading && <div>Загрузка...</div>}
+                            {!loading && error && <div>{error}</div>}
+                            {!loading && !error && visibleItems.length === 0 && <div>Ничего не найдено по заданным фильтрам</div>}
+
+                            {!loading && !error && visibleItems.length > 0 && (
+                                <>
+                                    <div className="cards">
+                                        {visibleItems.map((item) => (
+                                            <div className="card" key={item.id}>
+                                                <div className="card-top">
+                                                    <div className="avatar yandex">{avatarLetter(item.company)}</div>
+                                                    <div className="card-heading">
+                                                        <span className="company">{item.company}</span>
+                                                        <span className="job-title">{item.title}</span>
+                                                    </div>
+                                                </div>
+                                                <div className="tags">
+                                                    <span>{item.direction}</span>
+                                                    {item.work_format && <span>{item.work_format}</span>}
+                                                    {item.city && <span>{item.city}</span>}
+                                                </div>
+                                                {item.salary_from != null && (
+                                                    <div className="salary">от {item.salary_from.toLocaleString("ru-RU")} ₽</div>
+                                                )}
+                                                <div className="card-bottom">
+                                                    <a className="source-btn source-link" href={item.link} target="_blank" rel="noopener noreferrer">
+                                                        К источнику
+                                                    </a>
                                                 </div>
                                             </div>
-                                            <div className="tags">
-                                                <span>{item.direction}</span>
-                                                <span>{item.format}</span>
-                                            </div>
-                                            <div className="salary">{item.salary.toLocaleString("ru-RU")} ₽</div>
-                                            <div className="card-bottom">
-                                                <span className="date-badge">{item.publishedAt}</span>
-                                                <span className="date-badge">{item.deadline}</span>
-                                                <button type="button" className="source-btn">
-                                                    К источнику
-                                                </button>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
+                                        ))}
+                                    </div>
+
+                                    <div className="pagination-controls">
+                                        <button
+                                            type="button"
+                                            className="format-option"
+                                            disabled={page <= 1}
+                                            onClick={() => setPage((p) => Math.max(1, p - 1))}
+                                        >
+                                            Назад
+                                        </button>
+                                        <span className="pagination-label">
+                                            Страница {page} из {totalPages}
+                                        </span>
+                                        <button
+                                            type="button"
+                                            className="format-option"
+                                            disabled={page >= totalPages}
+                                            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                                        >
+                                            Вперёд
+                                        </button>
+                                    </div>
+                                </>
                             )}
                         </div>
                     </section>
