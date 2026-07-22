@@ -63,15 +63,6 @@
         "slug": "data-analysis"
     },
     {
-        "link": "https://yandex.ru/yaintern/security",
-        "status": "Набор открыт",
-        "statusInvert": false,
-        "heading": "Security Engineering",
-        "description": "Участвуйте в архитектурных ревью и защищайте пользовательские данные",
-        "title": "Информационная безопасность",
-        "slug": "security"
-    },
-    {
         "link": "https://yandex.ru/jobs/vacancies?pro_levels=intern&professions=tester",
         "status": "Набор открыт",
         "statusInvert": false,
@@ -90,15 +81,6 @@
         "slug": "testing"
     },
     {
-        "link": "https://yandex.ru/yaintern/go-management",
-        "status": "Набор открыт",
-        "statusInvert": false,
-        "heading": "Go Management",
-        "description": "Запускаем продукты и проекты на стажировке в Городских сервисах Яндекса",
-        "title": "Менеджмент",
-        "slug": "it-management"
-    },
-    {
         "link": "https://yandex.ru/yaintern/business_development",
         "status": "Набор открыт",
         "statusInvert": false,
@@ -108,8 +90,8 @@
         "slug": "business"
     },
     {
-        "link": "https://yandex.ru/yaintern/go-commerce?utm_source=yaintern&utm_medium=social&utm_campaign=yaintern26&utm_content=page&utm_term=internship",
-        "status": "Набор открыт",
+        "link": "https://yandex.ru/jobs/vacancies?profession=sales-manager&profession=client-manager&profession=bis-dev-manager&profession=partner-manager&profession=sales-bis-dev-manager&profession=sales-support-manager&profession=sales-project-manager&from=cp_header&pro_levels=intern",
+        "status": "",
         "statusInvert": false,
         "heading": "Развитие бизнеса и продажи",
         "description": "Находите новых клиентов и партнеров, развивайте отношения и увеличивайте доходы компании",

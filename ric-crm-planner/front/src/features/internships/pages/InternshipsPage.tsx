@@ -97,7 +97,6 @@ export default function InternshipsPage() {
     return (
         <div className="internships-page">
             <div className="container">
-                <header className="top-block" />
 
                 <section className="title-block">
                     <h1>Стажировки</h1>

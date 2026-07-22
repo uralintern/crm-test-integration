@@ -1,12 +1,102 @@
 [
   {
-    "title": "Cтажер",
-    "direction": "Аналитик",
+    "title": "Аналитик данных (Стажер)",
+    "direction": "Data аналитик",
+    "company": "Beeline",
+    "city": "Москва",
+    "work_format": "Гибридный",
+    "salary_from": null,
+    "description": null,
+    "link": "https://job.beeline.ru/vacancies/ca1582b6-b9f2-48bb-918f-5b32d5140d32"
+  },
+  {
+    "title": "Стажер по ручному тестированию (мобильное приложение)",
+    "direction": "Тестировщик",
     "company": "Beeline",
     "city": "Москва",
     "work_format": "Дистанционный",
     "salary_from": null,
     "description": null,
-    "link": "https://job.beeline.ru/vacancies/2db038bd-c786-46b9-aa8d-6f7eff548b6b"
+    "link": "https://job.beeline.ru/vacancies/ea8464e2-284c-4771-98af-346f32b9fb69"
+  },
+  {
+    "title": "Frontend разработчик, стажер",
+    "direction": "Разработчик Frontend",
+    "company": "Beeline",
+    "city": "Москва",
+    "work_format": "Дистанционный",
+    "salary_from": null,
+    "description": null,
+    "link": "https://job.beeline.ru/vacancies/c8ddd2cb-552d-4db5-a5b3-8fcdc72b2daa"
+  },
+  {
+    "title": "BI-разработчик (Стажер)",
+    "direction": "BI разработчик",
+    "company": "Beeline",
+    "city": "Москва",
+    "work_format": "Дистанционный",
+    "salary_from": null,
+    "description": null,
+    "link": "https://job.beeline.ru/vacancies/42ed6ce6-759c-4b5d-9282-c62ec07bf714"
+  },
+  {
+    "title": "Инженер эксплуатации (Стажер)",
+    "direction": "Data инженер",
+    "company": "Beeline",
+    "city": "Москва",
+    "work_format": "Дистанционный",
+    "salary_from": null,
+    "description": null,
+    "link": "https://job.beeline.ru/vacancies/e2fd5ca9-fe3c-4dc0-9a78-1dce3fa0c73e"
+  },
+  {
+    "title": "Помощник project-менеджера (Стажер)",
+    "direction": "Управление проектами",
+    "company": "Beeline",
+    "city": "Москва",
+    "work_format": "Дистанционный",
+    "salary_from": null,
+    "description": null,
+    "link": "https://job.beeline.ru/vacancies/e9c5deaf-6952-41b5-9517-bd2dac678e74"
+  },
+  {
+    "title": "Инженер сопровождения (Стажер)",
+    "direction": "ИТ-инфраструктура",
+    "company": "Beeline",
+    "city": "Москва",
+    "work_format": "Дистанционный",
+    "salary_from": null,
+    "description": null,
+    "link": "https://job.beeline.ru/vacancies/9e269caa-7b97-4389-bbda-fcd454e3ca0e"
+  },
+  {
+    "title": "Тестировщик (Стажер)",
+    "direction": "Тестировщик",
+    "company": "Beeline",
+    "city": "Москва",
+    "work_format": "Дистанционный",
+    "salary_from": null,
+    "description": null,
+    "link": "https://job.beeline.ru/vacancies/05d613bd-88fd-4c75-9fb1-6106a9467838"
+  },
+  {
+    "title": "Администратор приложения/ инженер сопровождения, стажер",
+    "direction": "Администрирование и поддержка ИТ-решений",
+    "company": "Beeline",
+    "city": "Москва",
+    "work_format": "Дистанционный",
+    "salary_from": null,
+    "description": null,
+    "link": "https://job.beeline.ru/vacancies/ec86813d-ecd3-4f62-a448-9c649207de63"
+  },
+  {
+    "title": "Системный аналитик, стажер",
+    "direction": "Системный аналитик",
+    "company": "Beeline",
+    "city": "Москва",
+    "work_format": "Дистанционный",
+    "salary_from": null,
+    "description": null,
+    "link": "https://job.beeline.ru/vacancies/340cc69d-7883-443f-bf27-8fa7061da46d"
   }
 ]

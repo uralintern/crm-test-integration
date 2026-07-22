@@ -190,14 +190,14 @@
     "link": "https://education.tbank.ru/start/intern_marketing/"
   },
   {
-    "title": "Редактор",
+    "title": "Стажер по связям с общественностью",
     "direction": "Информационные технологии",
     "company": "Т-Банк",
     "city": "Москва",
     "work_format": null,
     "salary_from": null,
-    "description": "Готовьте тексты для продуктов, сторис в мобильном банке или интерфейсов",
-    "link": "https://education.tbank.ru/start/content_writer/"
+    "description": "Помогайте в написании пресс-релизов, генерируйте темы для исследований, участвуйте в реализации креативных PR-кампаний",
+    "link": "https://education.tbank.ru/start/pr-manager"
   },
   {
     "title": "Дизайнер",
@@ -210,14 +210,14 @@
     "link": "https://education.tbank.ru/start/designer/"
   },
   {
-    "title": "Стажер по связям с общественностью",
+    "title": "Редактор",
     "direction": "Информационные технологии",
     "company": "Т-Банк",
     "city": "Москва",
     "work_format": null,
     "salary_from": null,
-    "description": "Помогайте в написании пресс-релизов, генерируйте темы для исследований, участвуйте в реализации креативных PR-кампаний",
-    "link": "https://education.tbank.ru/start/pr-manager"
+    "description": "Готовьте тексты для продуктов, сторис в мобильном банке или интерфейсов",
+    "link": "https://education.tbank.ru/start/content_writer/"
   },
   {
     "title": "Strategy and New Ventures",

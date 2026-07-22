@@ -22,7 +22,6 @@ app/
 ├── __init__.py              # Инициализация пакета
 ├── main.py                  # Точка входа FastAPI приложения
 ├── schemas.py               # Pydantic модели для ответов
-├── test_examples.py         # Примеры и curl команды
 ├── api/
 │   ├── __init__.py
 │   └── routes/
@@ -265,12 +264,6 @@ GET /api/internship?page=3  # Третья страница
 ```
 
 ## Разработка
-
-### Запуск тестов примеров
-
-```bash
-python app/test_examples.py
-```
 
 ### Логирование
 

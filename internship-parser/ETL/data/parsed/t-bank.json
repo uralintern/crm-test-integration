@@ -84,7 +84,7 @@
         "link": "https://education.tbank.ru/start/support/"
     },
     {
-        "status": "<p>Набор закрыт</p>",
+        "status": "<p>Набор открыт</p>",
         "title": "<p>1С-разработчик</p>",
         "desc": "<p>Работайте с&nbsp;внутренней системой для&nbsp;автоматизации найма</p>",
         "link": "https://education.tbank.ru/start/1C_developer/"
@@ -114,10 +114,10 @@
         "link": "https://education.tbank.ru/start/intern_marketing/"
     },
     {
-        "status": "<p>Набор закрыт</p>",
-        "title": "<p>Редактор</p>",
-        "desc": "<p>Готовьте тексты для&nbsp;продуктов, сторис в&nbsp;мобильном банке или&nbsp;интерфейсов</p>",
-        "link": "https://education.tbank.ru/start/content_writer/"
+        "status": "<p>Набор открыт</p>",
+        "title": "<p><nobr>Стажер по&nbsp;связям с&nbsp;общественностью</nobr></p>",
+        "desc": "<p>Помогайте в&nbsp;написании <nobr>пресс-релизов</nobr>, генерируйте темы для&nbsp;исследований, участвуйте в&nbsp;реализации креативных <nobr>PR-кампаний</nobr></p>",
+        "link": "https://education.tbank.ru/start/pr-manager"
     },
     {
         "status": "<p>Набор закрыт</p>",
@@ -127,12 +127,12 @@
     },
     {
         "status": "<p>Набор закрыт</p>",
-        "title": "<p><nobr>Стажер по&nbsp;связям с&nbsp;общественностью</nobr></p>",
-        "desc": "<p>Помогайте в&nbsp;написании <nobr>пресс-релизов</nobr>, генерируйте темы для&nbsp;исследований, участвуйте в&nbsp;реализации креативных <nobr>PR-кампаний</nobr></p>",
-        "link": "https://education.tbank.ru/start/pr-manager"
+        "title": "<p>Редактор</p>",
+        "desc": "<p>Готовьте тексты для&nbsp;продуктов, сторис в&nbsp;мобильном банке или&nbsp;интерфейсов</p>",
+        "link": "https://education.tbank.ru/start/content_writer/"
     },
     {
-        "status": "<p>Набор закрыт</p>",
+        "status": "<p>Набор открыт</p>",
         "title": "<p>Strategy and New Ventures</p>",
         "desc": "<p><span style=\"color: rgb(63, 67, 80)\">Работайте на&nbsp;стыке стратегии, инвестиций и&nbsp;операционной эффективности&nbsp;— развивайте экосистему с&nbsp;нами</span></p>",
         "link": "https://education.tbank.ru/start/strategy-and-new-ventures/"

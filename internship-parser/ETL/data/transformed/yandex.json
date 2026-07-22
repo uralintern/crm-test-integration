@@ -70,16 +70,6 @@
     "link": "https://yandex.ru/yaintern/analytics"
   },
   {
-    "title": "Security Engineering",
-    "direction": "Информационная безопасность",
-    "company": "Яндекс",
-    "city": "Москва",
-    "work_format": null,
-    "salary_from": null,
-    "description": "Участвуйте в архитектурных ревью и защищайте пользовательские данные",
-    "link": "https://yandex.ru/yaintern/security"
-  },
-  {
     "title": "Автоматизированное тестирование",
     "direction": "Тестирование",
     "company": "Яндекс",
@@ -100,16 +90,6 @@
     "link": "https://yandex.ru/yaintern/qa"
   },
   {
-    "title": "Go Management",
-    "direction": "Менеджмент",
-    "company": "Яндекс",
-    "city": "Москва",
-    "work_format": null,
-    "salary_from": null,
-    "description": "Запускаем продукты и проекты на стажировке в Городских сервисах Яндекса",
-    "link": "https://yandex.ru/yaintern/go-management"
-  },
-  {
     "title": "Специалист по работе с клиентами",
     "direction": "Бизнес",
     "company": "Яндекс",
@@ -127,7 +107,7 @@
     "work_format": null,
     "salary_from": null,
     "description": "Находите новых клиентов и партнеров, развивайте отношения и увеличивайте доходы компании",
-    "link": "https://yandex.ru/yaintern/go-commerce?utm_source=yaintern&utm_medium=social&utm_campaign=yaintern26&utm_content=page&utm_term=internship"
+    "link": "https://yandex.ru/jobs/vacancies?profession=sales-manager&profession=client-manager&profession=bis-dev-manager&profession=partner-manager&profession=sales-bis-dev-manager&profession=sales-support-manager&profession=sales-project-manager&from=cp_header&pro_levels=intern"
   },
   {
     "title": "SMM-менеджер",

@@ -56,34 +56,6 @@
         "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=a50c4974-e296-4faf-9864-74308414c9d2"
     },
     {
-        "uuid": "6663f76d-0d24-45c3-8197-36eccc300724",
-        "externalId": 2816,
-        "name": "Стажёр в команду профессионального подбора",
-        "type": "INTERNSHIP",
-        "direction": {
-            "id": 12,
-            "name": "Рекрутмент"
-        },
-        "city": {
-            "id": 604,
-            "name": "Москва (Москва)"
-        },
-        "workType": {
-            "id": 2,
-            "name": "Частичная занятость"
-        },
-        "workFormat": {
-            "id": 2,
-            "name": "Гибрид"
-        },
-        "workExperience": {
-            "id": 1,
-            "name": "Без опыта"
-        },
-        "updatedAt": "2026-04-21T10:40:10.133974Z",
-        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=6663f76d-0d24-45c3-8197-36eccc300724"
-    },
-    {
         "uuid": "dee07910-27c9-4364-8ffc-2bea735935d5",
         "externalId": 2840,
         "name": "Стажёр по операционно-сервисной поддержке",
@@ -168,62 +140,6 @@
         "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=2bc8b913-6be6-452f-807c-fee4d7b67802"
     },
     {
-        "uuid": "6a1201f1-19a5-4b15-8c60-927a634bd276",
-        "externalId": 3079,
-        "name": "Стажёр в департамент продаж и развития малого и микробизнеса",
-        "type": "INTERNSHIP",
-        "direction": {
-            "id": 36,
-            "name": "Розничные продажи"
-        },
-        "city": {
-            "id": 410,
-            "name": "Киров (Кировская область)"
-        },
-        "workType": {
-            "id": 1,
-            "name": "Полная занятость"
-        },
-        "workFormat": {
-            "id": 3,
-            "name": "Офис"
-        },
-        "workExperience": {
-            "id": 1,
-            "name": "Без опыта"
-        },
-        "updatedAt": "2026-06-09T13:26:33.794152Z",
-        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=6a1201f1-19a5-4b15-8c60-927a634bd276"
-    },
-    {
-        "uuid": "5a912fb7-378d-4ca6-9214-eebb4483ba2d",
-        "externalId": 3080,
-        "name": "Стажёр в департамент продаж и развития малого и микробизнеса",
-        "type": "INTERNSHIP",
-        "direction": {
-            "id": 36,
-            "name": "Розничные продажи"
-        },
-        "city": {
-            "id": 614,
-            "name": "Набережные Челны (Татарстан)"
-        },
-        "workType": {
-            "id": 1,
-            "name": "Полная занятость"
-        },
-        "workFormat": {
-            "id": 3,
-            "name": "Офис"
-        },
-        "workExperience": {
-            "id": 1,
-            "name": "Без опыта"
-        },
-        "updatedAt": "2026-06-09T13:31:50.552093Z",
-        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=5a912fb7-378d-4ca6-9214-eebb4483ba2d"
-    },
-    {
         "uuid": "a9d7484f-a877-4852-9816-fec7ffb45ccb",
         "externalId": 3086,
         "name": "Стажёр в отдел продаж",
@@ -250,62 +166,6 @@
         },
         "updatedAt": "2026-06-10T08:36:07.607092Z",
         "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=a9d7484f-a877-4852-9816-fec7ffb45ccb"
-    },
-    {
-        "uuid": "86d52371-00d3-474c-8640-635d4ab2950f",
-        "externalId": 3092,
-        "name": "Стажёр в дирекцию развития процессов сопровождения терминального оборудования",
-        "type": "INTERNSHIP",
-        "direction": {
-            "id": 2,
-            "name": "Аналитика бизнес-процессов"
-        },
-        "city": {
-            "id": 604,
-            "name": "Москва (Москва)"
-        },
-        "workType": {
-            "id": 1,
-            "name": "Полная занятость"
-        },
-        "workFormat": {
-            "id": 2,
-            "name": "Гибрид"
-        },
-        "workExperience": {
-            "id": 1,
-            "name": "Без опыта"
-        },
-        "updatedAt": "2026-06-11T16:16:54.293884Z",
-        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=86d52371-00d3-474c-8640-635d4ab2950f"
-    },
-    {
-        "uuid": "e92cc630-23c7-4c6f-8cdd-8daf33539620",
-        "externalId": 3098,
-        "name": "Стажёр в отдел развития эквайринга и платежных сервисов",
-        "type": "INTERNSHIP",
-        "direction": {
-            "id": 19,
-            "name": "Финансы"
-        },
-        "city": {
-            "id": 604,
-            "name": "Москва (Москва)"
-        },
-        "workType": {
-            "id": 1,
-            "name": "Полная занятость"
-        },
-        "workFormat": {
-            "id": 3,
-            "name": "Офис"
-        },
-        "workExperience": {
-            "id": 1,
-            "name": "Без опыта"
-        },
-        "updatedAt": "2026-06-15T12:23:32.703522Z",
-        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=e92cc630-23c7-4c6f-8cdd-8daf33539620"
     },
     {
         "uuid": "6049dd58-aab5-412a-9c12-8a333b4090ca",
@@ -336,146 +196,6 @@
         "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=6049dd58-aab5-412a-9c12-8a333b4090ca"
     },
     {
-        "uuid": "d03727c0-fb1d-45b3-ac4d-4092a7774770",
-        "externalId": 3105,
-        "name": "Стажёр - юрист в управление специальных проектов",
-        "type": "INTERNSHIP",
-        "direction": {
-            "id": 6,
-            "name": "Комплаенс"
-        },
-        "city": {
-            "id": 604,
-            "name": "Москва (Москва)"
-        },
-        "workType": {
-            "id": 1,
-            "name": "Полная занятость"
-        },
-        "workFormat": {
-            "id": 1,
-            "name": "Удалённо"
-        },
-        "workExperience": {
-            "id": 1,
-            "name": "Без опыта"
-        },
-        "updatedAt": "2026-06-16T10:40:45.202091Z",
-        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=d03727c0-fb1d-45b3-ac4d-4092a7774770"
-    },
-    {
-        "uuid": "6cf4e90b-10d5-4e7a-b15f-8cbf6a3a8065",
-        "externalId": 3117,
-        "name": "Стажёр по операционно-сервисной поддержке",
-        "type": "INTERNSHIP",
-        "direction": {
-            "id": 7,
-            "name": "Корпоративные продажи"
-        },
-        "city": {
-            "id": 819,
-            "name": "Рязань (Рязанская область)"
-        },
-        "workType": {
-            "id": 2,
-            "name": "Частичная занятость"
-        },
-        "workFormat": {
-            "id": 3,
-            "name": "Офис"
-        },
-        "workExperience": {
-            "id": 1,
-            "name": "Без опыта"
-        },
-        "updatedAt": "2026-06-17T08:07:35.850721Z",
-        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=6cf4e90b-10d5-4e7a-b15f-8cbf6a3a8065"
-    },
-    {
-        "uuid": "3de1de44-bf2c-4c99-9f8f-65d420250c85",
-        "externalId": 3127,
-        "name": "Стажёр Data Scientist в департамент по разработке моделей",
-        "type": "INTERNSHIP",
-        "direction": {
-            "id": 25,
-            "name": "Data Science"
-        },
-        "city": {
-            "id": 604,
-            "name": "Москва (Москва)"
-        },
-        "workType": {
-            "id": 1,
-            "name": "Полная занятость"
-        },
-        "workFormat": {
-            "id": 2,
-            "name": "Гибрид"
-        },
-        "workExperience": {
-            "id": 1,
-            "name": "Без опыта"
-        },
-        "updatedAt": "2026-06-18T11:11:06.381965Z",
-        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=3de1de44-bf2c-4c99-9f8f-65d420250c85"
-    },
-    {
-        "uuid": "32b8a0d6-1b0f-4b9f-9c01-8e12c7397f9b",
-        "externalId": 3128,
-        "name": "Стажер по операционно-сервисной поддержке (м. Автозаводская)",
-        "type": "INTERNSHIP",
-        "direction": {
-            "id": 7,
-            "name": "Корпоративные продажи"
-        },
-        "city": {
-            "id": 604,
-            "name": "Москва (Москва)"
-        },
-        "workType": {
-            "id": 1,
-            "name": "Полная занятость"
-        },
-        "workFormat": {
-            "id": 3,
-            "name": "Офис"
-        },
-        "workExperience": {
-            "id": 1,
-            "name": "Без опыта"
-        },
-        "updatedAt": "2026-06-18T11:11:33.438575Z",
-        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=32b8a0d6-1b0f-4b9f-9c01-8e12c7397f9b"
-    },
-    {
-        "uuid": "711ae2b7-71f3-4c67-8f15-fcaebd3d6694",
-        "externalId": 3150,
-        "name": "Стажёр в отдел развития вторичных цифровых продаж",
-        "type": "INTERNSHIP",
-        "direction": {
-            "id": 2,
-            "name": "Аналитика бизнес-процессов"
-        },
-        "city": {
-            "id": 604,
-            "name": "Москва (Москва)"
-        },
-        "workType": {
-            "id": 1,
-            "name": "Полная занятость"
-        },
-        "workFormat": {
-            "id": 2,
-            "name": "Гибрид"
-        },
-        "workExperience": {
-            "id": 1,
-            "name": "Без опыта"
-        },
-        "updatedAt": "2026-06-19T09:19:24.696841Z",
-        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=711ae2b7-71f3-4c67-8f15-fcaebd3d6694"
-    },
-    {
         "uuid": "236a8e48-d176-4761-9f18-8d513661a32d",
         "externalId": 3156,
         "name": "Стажёр в департамент разработки и развития расчётных продуктов",
@@ -502,34 +222,6 @@
         },
         "updatedAt": "2026-06-19T18:03:08.172706Z",
         "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=236a8e48-d176-4761-9f18-8d513661a32d"
-    },
-    {
-        "uuid": "d92866d4-e47b-4f56-8ff6-fb62cfb75aa6",
-        "externalId": 3157,
-        "name": "Стажер канала привлечение в департамент продаж и развития малого и микробизнеса",
-        "type": "INTERNSHIP",
-        "direction": {
-            "id": 35,
-            "name": "Работа в отделении"
-        },
-        "city": {
-            "id": 665,
-            "name": "Новокузнецк (Кемеровская область)"
-        },
-        "workType": {
-            "id": 1,
-            "name": "Полная занятость"
-        },
-        "workFormat": {
-            "id": 3,
-            "name": "Офис"
-        },
-        "workExperience": {
-            "id": 1,
-            "name": "Без опыта"
-        },
-        "updatedAt": "2026-06-19T18:13:01.613490Z",
-        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=d92866d4-e47b-4f56-8ff6-fb62cfb75aa6"
     },
     {
         "uuid": "1f9c56d2-8a85-4d06-87de-d64dead90627",
@@ -588,118 +280,6 @@
         "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=584f8728-09a9-4442-9633-e5ae44c7b5d8"
     },
     {
-        "uuid": "d735052a-4103-4669-8462-3599e5cf148f",
-        "externalId": 3160,
-        "name": "Стажёр в управление технологий ядровых систем",
-        "type": "INTERNSHIP",
-        "direction": {
-            "id": 14,
-            "name": "Системная аналитика"
-        },
-        "city": {
-            "id": 604,
-            "name": "Москва (Москва)"
-        },
-        "workType": {
-            "id": 1,
-            "name": "Полная занятость"
-        },
-        "workFormat": {
-            "id": 1,
-            "name": "Удалённо"
-        },
-        "workExperience": {
-            "id": 1,
-            "name": "Без опыта"
-        },
-        "updatedAt": "2026-06-22T13:28:56.958445Z",
-        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=d735052a-4103-4669-8462-3599e5cf148f"
-    },
-    {
-        "uuid": "44fb1fa7-2645-4b45-9c5a-c9234628f046",
-        "externalId": 3176,
-        "name": "Стажёр в управление по аналитике продаж",
-        "type": "INTERNSHIP",
-        "direction": {
-            "id": 3,
-            "name": "Аналитика данных"
-        },
-        "city": {
-            "id": 604,
-            "name": "Москва (Москва)"
-        },
-        "workType": {
-            "id": 1,
-            "name": "Полная занятость"
-        },
-        "workFormat": {
-            "id": 2,
-            "name": "Гибрид"
-        },
-        "workExperience": {
-            "id": 1,
-            "name": "Без опыта"
-        },
-        "updatedAt": "2026-06-24T07:29:38.951024Z",
-        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=44fb1fa7-2645-4b45-9c5a-c9234628f046"
-    },
-    {
-        "uuid": "0878a426-8c57-4db6-88ad-fe50f2b6cabe",
-        "externalId": 3177,
-        "name": "Стажёр в отдел оценки капитала под кредитный риск",
-        "type": "INTERNSHIP",
-        "direction": {
-            "id": 13,
-            "name": "Риск-аналитика"
-        },
-        "city": {
-            "id": 604,
-            "name": "Москва (Москва)"
-        },
-        "workType": {
-            "id": 1,
-            "name": "Полная занятость"
-        },
-        "workFormat": {
-            "id": 2,
-            "name": "Гибрид"
-        },
-        "workExperience": {
-            "id": 1,
-            "name": "Без опыта"
-        },
-        "updatedAt": "2026-06-24T09:56:28.874490Z",
-        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=0878a426-8c57-4db6-88ad-fe50f2b6cabe"
-    },
-    {
-        "uuid": "f8b14c9e-6b24-47d7-bcf4-90e74efcee6b",
-        "externalId": 3178,
-        "name": "Стажёр в департамент продаж и развития малого и микробизнеса",
-        "type": "INTERNSHIP",
-        "direction": {
-            "id": 7,
-            "name": "Корпоративные продажи"
-        },
-        "city": {
-            "id": 604,
-            "name": "Москва (Москва)"
-        },
-        "workType": {
-            "id": 1,
-            "name": "Полная занятость"
-        },
-        "workFormat": {
-            "id": 3,
-            "name": "Офис"
-        },
-        "workExperience": {
-            "id": 1,
-            "name": "Без опыта"
-        },
-        "updatedAt": "2026-06-24T10:13:59.358002Z",
-        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=f8b14c9e-6b24-47d7-bcf4-90e74efcee6b"
-    },
-    {
         "uuid": "354141b6-8082-4ed6-925b-c3c508c45a19",
         "externalId": 3180,
         "name": "Стажёр в управление развития API",
@@ -726,118 +306,6 @@
         },
         "updatedAt": "2026-06-25T15:46:23.145366Z",
         "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=354141b6-8082-4ed6-925b-c3c508c45a19"
-    },
-    {
-        "uuid": "058dfdde-1f72-465f-9e81-18b209b7465b",
-        "externalId": 3192,
-        "name": "Стажёр в департамент разработки и развития расчетных продуктов корпоративного бизнеса",
-        "type": "INTERNSHIP",
-        "direction": {
-            "id": 19,
-            "name": "Финансы"
-        },
-        "city": {
-            "id": 604,
-            "name": "Москва (Москва)"
-        },
-        "workType": {
-            "id": 1,
-            "name": "Полная занятость"
-        },
-        "workFormat": {
-            "id": 2,
-            "name": "Гибрид"
-        },
-        "workExperience": {
-            "id": 1,
-            "name": "Без опыта"
-        },
-        "updatedAt": "2026-06-30T07:29:00.987430Z",
-        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=058dfdde-1f72-465f-9e81-18b209b7465b"
-    },
-    {
-        "uuid": "51cb1b77-8b39-4d45-b2de-d8295152417c",
-        "externalId": 3207,
-        "name": "Стажёр в управление сопровождения кредитных сделок строительного комплекса",
-        "type": "INTERNSHIP",
-        "direction": {
-            "id": 7,
-            "name": "Корпоративные продажи"
-        },
-        "city": {
-            "id": 604,
-            "name": "Москва (Москва)"
-        },
-        "workType": {
-            "id": 1,
-            "name": "Полная занятость"
-        },
-        "workFormat": {
-            "id": 3,
-            "name": "Офис"
-        },
-        "workExperience": {
-            "id": 1,
-            "name": "Без опыта"
-        },
-        "updatedAt": "2026-06-30T12:34:04.195989Z",
-        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=51cb1b77-8b39-4d45-b2de-d8295152417c"
-    },
-    {
-        "uuid": "0894badc-9f84-4479-af48-7551d2640c5f",
-        "externalId": 3208,
-        "name": "Стажёр в центр разработки MLops сервисов",
-        "type": "INTERNSHIP",
-        "direction": {
-            "id": 26,
-            "name": "DevOps"
-        },
-        "city": {
-            "id": 604,
-            "name": "Москва (Москва)"
-        },
-        "workType": {
-            "id": 1,
-            "name": "Полная занятость"
-        },
-        "workFormat": {
-            "id": 2,
-            "name": "Гибрид"
-        },
-        "workExperience": {
-            "id": 1,
-            "name": "Без опыта"
-        },
-        "updatedAt": "2026-06-30T13:45:16.765332Z",
-        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=0894badc-9f84-4479-af48-7551d2640c5f"
-    },
-    {
-        "uuid": "562a4b30-c751-423f-a0b9-cb4f5f5f3fbd",
-        "externalId": 3212,
-        "name": "Стажер по операционно-сервисной поддержке",
-        "type": "INTERNSHIP",
-        "direction": {
-            "id": 35,
-            "name": "Работа в отделении"
-        },
-        "city": {
-            "id": 735,
-            "name": "Пенза (Пензенская область)"
-        },
-        "workType": {
-            "id": 1,
-            "name": "Полная занятость"
-        },
-        "workFormat": {
-            "id": 3,
-            "name": "Офис"
-        },
-        "workExperience": {
-            "id": 1,
-            "name": "Без опыта"
-        },
-        "updatedAt": "2026-07-01T09:25:45.793860Z",
-        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=562a4b30-c751-423f-a0b9-cb4f5f5f3fbd"
     },
     {
         "uuid": "14c96ecd-b5b3-40ef-aa97-94cfc71b9786",
@@ -868,62 +336,6 @@
         "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=14c96ecd-b5b3-40ef-aa97-94cfc71b9786"
     },
     {
-        "uuid": "4e767af3-426b-46c8-b52a-7875a436d36c",
-        "externalId": 3219,
-        "name": "Стажёр комьюнити-менеджер",
-        "type": "INTERNSHIP",
-        "direction": {
-            "id": 29,
-            "name": "HR-Бренд"
-        },
-        "city": {
-            "id": 604,
-            "name": "Москва (Москва)"
-        },
-        "workType": {
-            "id": 1,
-            "name": "Полная занятость"
-        },
-        "workFormat": {
-            "id": 3,
-            "name": "Офис"
-        },
-        "workExperience": {
-            "id": 1,
-            "name": "Без опыта"
-        },
-        "updatedAt": "2026-07-01T14:43:53.307201Z",
-        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=4e767af3-426b-46c8-b52a-7875a436d36c"
-    },
-    {
-        "uuid": "5b9a8c38-9e3c-46f8-a5b8-c9723d6508aa",
-        "externalId": 3225,
-        "name": "Стажёр по работе с мотивацией сотрудников",
-        "type": "INTERNSHIP",
-        "direction": {
-            "id": 6,
-            "name": "Комплаенс"
-        },
-        "city": {
-            "id": 604,
-            "name": "Москва (Москва)"
-        },
-        "workType": {
-            "id": 1,
-            "name": "Полная занятость"
-        },
-        "workFormat": {
-            "id": 3,
-            "name": "Офис"
-        },
-        "workExperience": {
-            "id": 1,
-            "name": "Без опыта"
-        },
-        "updatedAt": "2026-07-02T12:27:46.752204Z",
-        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=5b9a8c38-9e3c-46f8-a5b8-c9723d6508aa"
-    },
-    {
         "uuid": "432e0b42-2711-41c4-a42f-856f4a2b600d",
         "externalId": 3233,
         "name": "Стажёр в департамент кредитования корпоративного бизнеса",
@@ -952,34 +364,6 @@
         "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=432e0b42-2711-41c4-a42f-856f4a2b600d"
     },
     {
-        "uuid": "91862263-f534-4b87-9172-1e47533892fc",
-        "externalId": 3236,
-        "name": "Стажёр маркетинг-направление",
-        "type": "INTERNSHIP",
-        "direction": {
-            "id": 8,
-            "name": "Маркетинг"
-        },
-        "city": {
-            "id": 604,
-            "name": "Москва (Москва)"
-        },
-        "workType": {
-            "id": 1,
-            "name": "Полная занятость"
-        },
-        "workFormat": {
-            "id": 2,
-            "name": "Гибрид"
-        },
-        "workExperience": {
-            "id": 1,
-            "name": "Без опыта"
-        },
-        "updatedAt": "2026-07-06T09:51:28.666211Z",
-        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=91862263-f534-4b87-9172-1e47533892fc"
-    },
-    {
         "uuid": "4ca2d8c2-4e43-4d1c-9a43-b9172818b5b6",
         "externalId": 3237,
         "name": "Стажёр аналитик данных в департамент повышения эффективности операционной деятельности",
@@ -1006,34 +390,6 @@
         },
         "updatedAt": "2026-07-06T10:27:17.480123Z",
         "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=4ca2d8c2-4e43-4d1c-9a43-b9172818b5b6"
-    },
-    {
-        "uuid": "f6aea439-4166-4d9f-b9fa-ab692b09c9e0",
-        "externalId": 3240,
-        "name": "Стажёр в дирекцию бизнес-маркетинга розничного бизнеса",
-        "type": "INTERNSHIP",
-        "direction": {
-            "id": 8,
-            "name": "Маркетинг"
-        },
-        "city": {
-            "id": 604,
-            "name": "Москва (Москва)"
-        },
-        "workType": {
-            "id": 1,
-            "name": "Полная занятость"
-        },
-        "workFormat": {
-            "id": 2,
-            "name": "Гибрид"
-        },
-        "workExperience": {
-            "id": 1,
-            "name": "Без опыта"
-        },
-        "updatedAt": "2026-07-07T08:45:16.523004Z",
-        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=f6aea439-4166-4d9f-b9fa-ab692b09c9e0"
     },
     {
         "uuid": "2f6614c3-31cf-40b1-9056-045e301c5ac8",
@@ -1092,8 +448,624 @@
         "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=1cd81b52-2fcf-4444-b2ac-aacf84ad81b0"
     },
     {
-        "uuid": "d4856255-197e-4784-b1d5-85f7a2700cdf",
-        "externalId": 3211,
+        "uuid": "9521ad62-0722-473b-9940-708d27be9919",
+        "externalId": 3247,
+        "name": "Стажер канала привлечения клиентов",
+        "type": "INTERNSHIP",
+        "direction": {
+            "id": 35,
+            "name": "Работа в отделении"
+        },
+        "city": {
+            "id": 604,
+            "name": "Москва (Москва)"
+        },
+        "workType": {
+            "id": 1,
+            "name": "Полная занятость"
+        },
+        "workFormat": {
+            "id": 2,
+            "name": "Гибрид"
+        },
+        "workExperience": {
+            "id": 1,
+            "name": "Без опыта"
+        },
+        "updatedAt": "2026-07-10T10:46:50.196201Z",
+        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=9521ad62-0722-473b-9940-708d27be9919"
+    },
+    {
+        "uuid": "bbca26cf-4fb6-4769-a413-d69defe5aba8",
+        "externalId": 3248,
+        "name": "Стажёр дизайнер презентаций в департамент развития процессов сервиса и взыскания",
+        "type": "INTERNSHIP",
+        "direction": {
+            "id": 3,
+            "name": "Аналитика данных"
+        },
+        "city": {
+            "id": 604,
+            "name": "Москва (Москва)"
+        },
+        "workType": {
+            "id": 1,
+            "name": "Полная занятость"
+        },
+        "workFormat": {
+            "id": 1,
+            "name": "Удалённо"
+        },
+        "workExperience": {
+            "id": 1,
+            "name": "Без опыта"
+        },
+        "updatedAt": "2026-07-10T14:30:29.610985Z",
+        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=bbca26cf-4fb6-4769-a413-d69defe5aba8"
+    },
+    {
+        "uuid": "ad1a5fca-f54f-42ab-9a1f-3cddc4824746",
+        "externalId": 3282,
+        "name": "Стажёр канала привлечения клиентов",
+        "type": "INTERNSHIP",
+        "direction": {
+            "id": 7,
+            "name": "Корпоративные продажи"
+        },
+        "city": {
+            "id": 604,
+            "name": "Москва (Москва)"
+        },
+        "workType": {
+            "id": 1,
+            "name": "Полная занятость"
+        },
+        "workFormat": {
+            "id": 3,
+            "name": "Офис"
+        },
+        "workExperience": {
+            "id": 1,
+            "name": "Без опыта"
+        },
+        "updatedAt": "2026-07-13T07:39:21.387953Z",
+        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=ad1a5fca-f54f-42ab-9a1f-3cddc4824746"
+    },
+    {
+        "uuid": "094bd159-279d-41d7-b0d9-ec9ec7e2afcb",
+        "externalId": 3284,
+        "name": "Стажёр канала привлечения в департамент продаж и развития малого и микробизнеса",
+        "type": "INTERNSHIP",
+        "direction": {
+            "id": 7,
+            "name": "Корпоративные продажи"
+        },
+        "city": {
+            "id": 359,
+            "name": "Калуга (Калужская область)"
+        },
+        "workType": {
+            "id": 1,
+            "name": "Полная занятость"
+        },
+        "workFormat": {
+            "id": 3,
+            "name": "Офис"
+        },
+        "workExperience": {
+            "id": 1,
+            "name": "Без опыта"
+        },
+        "updatedAt": "2026-07-13T13:39:18.120038Z",
+        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=094bd159-279d-41d7-b0d9-ec9ec7e2afcb"
+    },
+    {
+        "uuid": "2d3f7a3f-b6e3-4bc9-bdfd-1c03fbc99c07",
+        "externalId": 3291,
+        "name": "Стажёр в департамент продаж и развития малого и микробизнеса",
+        "type": "INTERNSHIP",
+        "direction": {
+            "id": 36,
+            "name": "Розничные продажи"
+        },
+        "city": {
+            "id": 614,
+            "name": "Набережные Челны (Татарстан)"
+        },
+        "workType": {
+            "id": 1,
+            "name": "Полная занятость"
+        },
+        "workFormat": {
+            "id": 3,
+            "name": "Офис"
+        },
+        "workExperience": {
+            "id": 1,
+            "name": "Без опыта"
+        },
+        "updatedAt": "2026-07-14T09:46:36.925505Z",
+        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=2d3f7a3f-b6e3-4bc9-bdfd-1c03fbc99c07"
+    },
+    {
+        "uuid": "a6ba69c8-f963-4c01-b4c3-f93cdddfcc66",
+        "externalId": 3292,
+        "name": "Стажер канала привлечение в департамент продаж и развития малого и микробизнеса",
+        "type": "INTERNSHIP",
+        "direction": {
+            "id": 35,
+            "name": "Работа в отделении"
+        },
+        "city": {
+            "id": 665,
+            "name": "Новокузнецк (Кемеровская область)"
+        },
+        "workType": {
+            "id": 1,
+            "name": "Полная занятость"
+        },
+        "workFormat": {
+            "id": 3,
+            "name": "Офис"
+        },
+        "workExperience": {
+            "id": 1,
+            "name": "Без опыта"
+        },
+        "updatedAt": "2026-07-14T09:46:54.492862Z",
+        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=a6ba69c8-f963-4c01-b4c3-f93cdddfcc66"
+    },
+    {
+        "uuid": "16cd98b5-40d0-4b72-bbf0-b8ec358d6a78",
+        "externalId": 3294,
+        "name": "Стажёр в команду CRM и персонализации",
+        "type": "INTERNSHIP",
+        "direction": {
+            "id": 23,
+            "name": "CRM-аналитика"
+        },
+        "city": {
+            "id": 604,
+            "name": "Москва (Москва)"
+        },
+        "workType": {
+            "id": 1,
+            "name": "Полная занятость"
+        },
+        "workFormat": {
+            "id": 2,
+            "name": "Гибрид"
+        },
+        "workExperience": {
+            "id": 1,
+            "name": "Без опыта"
+        },
+        "updatedAt": "2026-07-14T14:23:58.572700Z",
+        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=16cd98b5-40d0-4b72-bbf0-b8ec358d6a78"
+    },
+    {
+        "uuid": "651849c8-fcbd-47d1-93f8-732d069602b6",
+        "externalId": 3296,
+        "name": "Стажёр  в отдел оценки и прогнозирования ожидаемых потерь",
+        "type": "INTERNSHIP",
+        "direction": {
+            "id": 13,
+            "name": "Риск-аналитика"
+        },
+        "city": {
+            "id": 604,
+            "name": "Москва (Москва)"
+        },
+        "workType": {
+            "id": 1,
+            "name": "Полная занятость"
+        },
+        "workFormat": {
+            "id": 1,
+            "name": "Удалённо"
+        },
+        "workExperience": {
+            "id": 1,
+            "name": "Без опыта"
+        },
+        "updatedAt": "2026-07-14T14:27:02.261853Z",
+        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=651849c8-fcbd-47d1-93f8-732d069602b6"
+    },
+    {
+        "uuid": "d5676914-6bae-45f3-bb3d-baa1027c2722",
+        "externalId": 3297,
+        "name": "Стажёр AI разработчик в дирекцию развития казначейства",
+        "type": "INTERNSHIP",
+        "direction": {
+            "id": 21,
+            "name": "Backend-разработка"
+        },
+        "city": {
+            "id": 604,
+            "name": "Москва (Москва)"
+        },
+        "workType": {
+            "id": 1,
+            "name": "Полная занятость"
+        },
+        "workFormat": {
+            "id": 2,
+            "name": "Гибрид"
+        },
+        "workExperience": {
+            "id": 1,
+            "name": "Без опыта"
+        },
+        "updatedAt": "2026-07-14T15:54:55.450236Z",
+        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=d5676914-6bae-45f3-bb3d-baa1027c2722"
+    },
+    {
+        "uuid": "156452bf-c959-48f5-ac25-bee582560e18",
+        "externalId": 3569,
+        "name": "Стажёр в Управление по работе с партнерами",
+        "type": "INTERNSHIP",
+        "direction": {
+            "id": 3,
+            "name": "Аналитика данных"
+        },
+        "city": {
+            "id": 604,
+            "name": "Москва (Москва)"
+        },
+        "workType": {
+            "id": 1,
+            "name": "Полная занятость"
+        },
+        "workFormat": {
+            "id": 2,
+            "name": "Гибрид"
+        },
+        "workExperience": {
+            "id": 1,
+            "name": "Без опыта"
+        },
+        "updatedAt": "2026-07-16T10:24:52.225034Z",
+        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=156452bf-c959-48f5-ac25-bee582560e18"
+    },
+    {
+        "uuid": "9861cc43-f1e8-4327-a755-fe4cd41db4b6",
+        "externalId": 3575,
+        "name": "Стажёр в отдел повышения эффективности сети и фронт-решений",
+        "type": "INTERNSHIP",
+        "direction": {
+            "id": 2,
+            "name": "Аналитика бизнес-процессов"
+        },
+        "city": {
+            "id": 604,
+            "name": "Москва (Москва)"
+        },
+        "workType": {
+            "id": 1,
+            "name": "Полная занятость"
+        },
+        "workFormat": {
+            "id": 2,
+            "name": "Гибрид"
+        },
+        "workExperience": {
+            "id": 1,
+            "name": "Без опыта"
+        },
+        "updatedAt": "2026-07-17T09:39:36.377929Z",
+        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=9861cc43-f1e8-4327-a755-fe4cd41db4b6"
+    },
+    {
+        "uuid": "be4e40ef-d622-494f-abe9-c4c68cf4f804",
+        "externalId": 3576,
+        "name": "Стажёр аналитик данных в департамент клиентского опыта и координации розничного бизнеса",
+        "type": "INTERNSHIP",
+        "direction": {
+            "id": 3,
+            "name": "Аналитика данных"
+        },
+        "city": {
+            "id": 604,
+            "name": "Москва (Москва)"
+        },
+        "workType": {
+            "id": 1,
+            "name": "Полная занятость"
+        },
+        "workFormat": {
+            "id": 2,
+            "name": "Гибрид"
+        },
+        "workExperience": {
+            "id": 1,
+            "name": "Без опыта"
+        },
+        "updatedAt": "2026-07-17T10:44:28.426229Z",
+        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=be4e40ef-d622-494f-abe9-c4c68cf4f804"
+    },
+    {
+        "uuid": "db213687-e02a-4944-abfe-957167394e0c",
+        "externalId": 3579,
+        "name": "Стажёр тестировщик мобильного приложения  в департамент развития цифровых каналов юридических лиц",
+        "type": "INTERNSHIP",
+        "direction": {
+            "id": 16,
+            "name": "Тестирование"
+        },
+        "city": {
+            "id": 604,
+            "name": "Москва (Москва)"
+        },
+        "workType": {
+            "id": 1,
+            "name": "Полная занятость"
+        },
+        "workFormat": {
+            "id": 2,
+            "name": "Гибрид"
+        },
+        "workExperience": {
+            "id": 1,
+            "name": "Без опыта"
+        },
+        "updatedAt": "2026-07-17T11:09:31.962842Z",
+        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=db213687-e02a-4944-abfe-957167394e0c"
+    },
+    {
+        "uuid": "bc3669dc-ca46-4822-bcf1-841d1388bf98",
+        "externalId": 3581,
+        "name": "Стажёр в управление оценки и прогнозирования ожидаемых потерь",
+        "type": "INTERNSHIP",
+        "direction": {
+            "id": 3,
+            "name": "Аналитика данных"
+        },
+        "city": {
+            "id": 604,
+            "name": "Москва (Москва)"
+        },
+        "workType": {
+            "id": 1,
+            "name": "Полная занятость"
+        },
+        "workFormat": {
+            "id": 2,
+            "name": "Гибрид"
+        },
+        "workExperience": {
+            "id": 1,
+            "name": "Без опыта"
+        },
+        "updatedAt": "2026-07-17T12:28:04.259806Z",
+        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=bc3669dc-ca46-4822-bcf1-841d1388bf98"
+    },
+    {
+        "uuid": "843097eb-ed13-4d76-910b-c4c840f6f489",
+        "externalId": 3582,
+        "name": "Стажёр аналитик в Офис инноваций",
+        "type": "INTERNSHIP",
+        "direction": {
+            "id": 3,
+            "name": "Аналитика данных"
+        },
+        "city": {
+            "id": 604,
+            "name": "Москва (Москва)"
+        },
+        "workType": {
+            "id": 1,
+            "name": "Полная занятость"
+        },
+        "workFormat": {
+            "id": 2,
+            "name": "Гибрид"
+        },
+        "workExperience": {
+            "id": 1,
+            "name": "Без опыта"
+        },
+        "updatedAt": "2026-07-17T12:41:44.072135Z",
+        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=843097eb-ed13-4d76-910b-c4c840f6f489"
+    },
+    {
+        "uuid": "c3f0aa42-a3ff-4c4c-9805-79dca5583602",
+        "externalId": 3584,
+        "name": "Стажёр риск-аналитикв департмент рисков малого бизнеса и поточного кредитования",
+        "type": "INTERNSHIP",
+        "direction": {
+            "id": 13,
+            "name": "Риск-аналитика"
+        },
+        "city": {
+            "id": 604,
+            "name": "Москва (Москва)"
+        },
+        "workType": {
+            "id": 1,
+            "name": "Полная занятость"
+        },
+        "workFormat": {
+            "id": 2,
+            "name": "Гибрид"
+        },
+        "workExperience": {
+            "id": 1,
+            "name": "Без опыта"
+        },
+        "updatedAt": "2026-07-18T12:50:07.457620Z",
+        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=c3f0aa42-a3ff-4c4c-9805-79dca5583602"
+    },
+    {
+        "uuid": "1d4de1b1-83f5-417a-a200-9874d289571d",
+        "externalId": 3587,
+        "name": "Стажёр по операционно-сервисной поддержке",
+        "type": "INTERNSHIP",
+        "direction": {
+            "id": 7,
+            "name": "Корпоративные продажи"
+        },
+        "city": {
+            "id": 1012,
+            "name": "Уфа (Башкортостан)"
+        },
+        "workType": {
+            "id": 1,
+            "name": "Полная занятость"
+        },
+        "workFormat": {
+            "id": 3,
+            "name": "Офис"
+        },
+        "workExperience": {
+            "id": 1,
+            "name": "Без опыта"
+        },
+        "updatedAt": "2026-07-20T11:21:41.363831Z",
+        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=1d4de1b1-83f5-417a-a200-9874d289571d"
+    },
+    {
+        "uuid": "a669246c-47cf-4803-b586-974c7225929e",
+        "externalId": 3590,
+        "name": "Стажёр - аналитик в отдел по работе с мотивацией сотрудников",
+        "type": "INTERNSHIP",
+        "direction": {
+            "id": 2,
+            "name": "Аналитика бизнес-процессов"
+        },
+        "city": {
+            "id": 604,
+            "name": "Москва (Москва)"
+        },
+        "workType": {
+            "id": 1,
+            "name": "Полная занятость"
+        },
+        "workFormat": {
+            "id": 2,
+            "name": "Гибрид"
+        },
+        "workExperience": {
+            "id": 1,
+            "name": "Без опыта"
+        },
+        "updatedAt": "2026-07-20T12:36:34.078916Z",
+        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=a669246c-47cf-4803-b586-974c7225929e"
+    },
+    {
+        "uuid": "3e8bc481-f2c3-4163-8f37-9d57e101a655",
+        "externalId": 3598,
+        "name": "Стажёр продуктовый менеджер в департамент транзакционного бизнеса и сегментов",
+        "type": "INTERNSHIP",
+        "direction": {
+            "id": 10,
+            "name": "Продуктовый менеджмент"
+        },
+        "city": {
+            "id": 604,
+            "name": "Москва (Москва)"
+        },
+        "workType": {
+            "id": 1,
+            "name": "Полная занятость"
+        },
+        "workFormat": {
+            "id": 2,
+            "name": "Гибрид"
+        },
+        "workExperience": {
+            "id": 1,
+            "name": "Без опыта"
+        },
+        "updatedAt": "2026-07-20T16:27:48.811765Z",
+        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=3e8bc481-f2c3-4163-8f37-9d57e101a655"
+    },
+    {
+        "uuid": "03d740f3-39a8-496e-a291-e442a9a26916",
+        "externalId": 3599,
+        "name": "Стажёр маркетинг-направление",
+        "type": "INTERNSHIP",
+        "direction": {
+            "id": 8,
+            "name": "Маркетинг"
+        },
+        "city": {
+            "id": 604,
+            "name": "Москва (Москва)"
+        },
+        "workType": {
+            "id": 1,
+            "name": "Полная занятость"
+        },
+        "workFormat": {
+            "id": 2,
+            "name": "Гибрид"
+        },
+        "workExperience": {
+            "id": 1,
+            "name": "Без опыта"
+        },
+        "updatedAt": "2026-07-20T17:13:37.680446Z",
+        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=03d740f3-39a8-496e-a291-e442a9a26916"
+    },
+    {
+        "uuid": "9e23fa5a-91d7-495d-851c-fa1501110fc1",
+        "externalId": 3745,
+        "name": "Стажёр DevOps в департамент сопровождения информационных технологий",
+        "type": "INTERNSHIP",
+        "direction": {
+            "id": 26,
+            "name": "DevOps"
+        },
+        "city": {
+            "id": 604,
+            "name": "Москва (Москва)"
+        },
+        "workType": {
+            "id": 1,
+            "name": "Полная занятость"
+        },
+        "workFormat": {
+            "id": 2,
+            "name": "Гибрид"
+        },
+        "workExperience": {
+            "id": 1,
+            "name": "Без опыта"
+        },
+        "updatedAt": "2026-07-21T12:24:40.087229Z",
+        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=9e23fa5a-91d7-495d-851c-fa1501110fc1"
+    },
+    {
+        "uuid": "88ff180e-fe7a-4354-bcd3-236c4d4c5f7b",
+        "externalId": 3748,
+        "name": "Стажёр в продуктовое направление дирекции развития накопительных продуктов",
+        "type": "INTERNSHIP",
+        "direction": {
+            "id": 10,
+            "name": "Продуктовый менеджмент"
+        },
+        "city": {
+            "id": 604,
+            "name": "Москва (Москва)"
+        },
+        "workType": {
+            "id": 1,
+            "name": "Полная занятость"
+        },
+        "workFormat": {
+            "id": 1,
+            "name": "Удалённо"
+        },
+        "workExperience": {
+            "id": 1,
+            "name": "Без опыта"
+        },
+        "updatedAt": "2026-07-21T13:03:37.125431Z",
+        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=88ff180e-fe7a-4354-bcd3-236c4d4c5f7b"
+    },
+    {
+        "uuid": "5766fb61-c77c-4e97-820c-12bf6626d332",
+        "externalId": 3789,
         "name": "Стажёр в Дирекцию сопровождения клиентов по комплаенс-рискам",
         "type": "INTERNSHIP",
         "direction": {
@@ -1116,7 +1088,119 @@
             "id": 1,
             "name": "Без опыта"
         },
-        "updatedAt": "2026-07-08T14:47:40.272221Z",
-        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=d4856255-197e-4784-b1d5-85f7a2700cdf"
+        "updatedAt": "2026-07-22T08:48:02.258416Z",
+        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=5766fb61-c77c-4e97-820c-12bf6626d332"
+    },
+    {
+        "uuid": "491b362f-8ed7-4434-8e4d-48f86fd451b9",
+        "externalId": 3790,
+        "name": "Стажёр в дирекцию сложного кредитования и структурного финансирования",
+        "type": "INTERNSHIP",
+        "direction": {
+            "id": 19,
+            "name": "Финансы"
+        },
+        "city": {
+            "id": 604,
+            "name": "Москва (Москва)"
+        },
+        "workType": {
+            "id": 1,
+            "name": "Полная занятость"
+        },
+        "workFormat": {
+            "id": 3,
+            "name": "Офис"
+        },
+        "workExperience": {
+            "id": 1,
+            "name": "Без опыта"
+        },
+        "updatedAt": "2026-07-22T09:15:35.288673Z",
+        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=491b362f-8ed7-4434-8e4d-48f86fd451b9"
+    },
+    {
+        "uuid": "4e96092e-6527-42e4-af00-f63222239e37",
+        "externalId": 3791,
+        "name": "Стажёр в департамент зарплатного бизнеса",
+        "type": "INTERNSHIP",
+        "direction": {
+            "id": 6,
+            "name": "Комплаенс"
+        },
+        "city": {
+            "id": 604,
+            "name": "Москва (Москва)"
+        },
+        "workType": {
+            "id": 1,
+            "name": "Полная занятость"
+        },
+        "workFormat": {
+            "id": 3,
+            "name": "Офис"
+        },
+        "workExperience": {
+            "id": 1,
+            "name": "Без опыта"
+        },
+        "updatedAt": "2026-07-22T10:32:36.392720Z",
+        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=4e96092e-6527-42e4-af00-f63222239e37"
+    },
+    {
+        "uuid": "e5f40a34-99cd-4483-8404-e732c4d3d61d",
+        "externalId": 3792,
+        "name": "Стажёр NLP инженер в департамент по разработке моделей",
+        "type": "INTERNSHIP",
+        "direction": {
+            "id": 25,
+            "name": "Data Science"
+        },
+        "city": {
+            "id": 604,
+            "name": "Москва (Москва)"
+        },
+        "workType": {
+            "id": 1,
+            "name": "Полная занятость"
+        },
+        "workFormat": {
+            "id": 1,
+            "name": "Удалённо"
+        },
+        "workExperience": {
+            "id": 1,
+            "name": "Без опыта"
+        },
+        "updatedAt": "2026-07-22T11:09:50.791476Z",
+        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=e5f40a34-99cd-4483-8404-e732c4d3d61d"
+    },
+    {
+        "uuid": "a472096a-cf4a-40f5-bc2a-12b5eda8fc34",
+        "externalId": 3794,
+        "name": "Стажёр в управление продуктового дизайна",
+        "type": "INTERNSHIP",
+        "direction": {
+            "id": 31,
+            "name": "UX-редактор"
+        },
+        "city": {
+            "id": 604,
+            "name": "Москва (Москва)"
+        },
+        "workType": {
+            "id": 1,
+            "name": "Полная занятость"
+        },
+        "workFormat": {
+            "id": 1,
+            "name": "Удалённо"
+        },
+        "workExperience": {
+            "id": 1,
+            "name": "Без опыта"
+        },
+        "updatedAt": "2026-07-22T12:29:16.261158Z",
+        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=a472096a-cf4a-40f5-bc2a-12b5eda8fc34"
     }
 ]

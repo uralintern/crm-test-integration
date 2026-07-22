@@ -31,9 +31,6 @@ print("Не удалось дождаться PostgreSQL.", file=sys.stderr)
 sys.exit(1)
 PYEOF
 
-echo "Загружаю данные в БД..."
-python ETL/loader.py
-
 echo "Запускаю uvicorn..."
 if [ "$RELOAD" = "true" ]; then
     exec uvicorn app.main:app --host "${APP_HOST}" --port "${APP_PORT}" --reload

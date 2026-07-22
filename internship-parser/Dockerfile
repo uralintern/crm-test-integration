@@ -3,7 +3,10 @@ FROM python:3.12-slim
 # Не создавать .pyc и не буферизовать вывод — удобнее для логов в докере
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
-    PYTHONPATH=/app
+    PYTHONPATH=/app \
+    POETRY_NO_INTERACTION=1 \
+    POETRY_VIRTUALENVS_CREATE=false \
+    PIP_DEFAULT_TIMEOUT=120
 
 WORKDIR /app
 
@@ -14,10 +17,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         libpq-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Сначала копируем только requirements — так слой с зависимостями кешируется
+# Сначала копируем только файлы зависимостей — так слой с зависимостями кешируется
 # и не пересобирается при каждом изменении кода
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY pyproject.toml poetry.lock ./
+RUN pip install --no-cache-dir poetry \
+    && poetry install --no-ansi --without dev
 
 # Теперь копируем остальной код
 COPY . .

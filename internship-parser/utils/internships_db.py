@@ -116,6 +116,28 @@ class InternshipsDB:
             if session:
                 session.close()
     
+    def clear(self) -> int:
+        """Удаляет все записи из таблицы стажировок.
+
+        Returns:
+            int: Количество удалённых записей.
+        """
+        session: Optional[Session] = None
+        try:
+            session = self._get_session()
+            count = session.query(Internship).delete()
+            session.commit()
+            logger.info(f"Очищено {count} записей из БД")
+            return count
+        except SQLAlchemyError as e:
+            if session:
+                session.rollback()
+            logger.error(f"Ошибка при очистке БД: {e}")
+            return 0
+        finally:
+            if session:
+                session.close()
+
     def close(self) -> None:
         """Закрытие пула соединений"""
         try:

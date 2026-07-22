@@ -2,8 +2,8 @@
     "props": {
         "currentYear": 2026,
         "pageProps": {
-            "_sentryTraceData": "96e538dcb99042c48a17097facee05c1-b27470068d2d3fe8-0",
-            "_sentryBaggage": "sentry-environment=careerhub_prod_serverside,sentry-release=1.5.43,sentry-public_key=92b9ee07598343c0aca4ab9dfa267abb,sentry-trace_id=96e538dcb99042c48a17097facee05c1,sentry-transaction=%2Finternship,sentry-sampled=false",
+            "_sentryTraceData": "b3e81035eef54be7a1981335a44fd097-a0638a46189de95d-0",
+            "_sentryBaggage": "sentry-environment=careerhub_prod_serverside,sentry-release=1.5.43,sentry-public_key=92b9ee07598343c0aca4ab9dfa267abb,sentry-trace_id=b3e81035eef54be7a1981335a44fd097,sentry-transaction=%2Finternship,sentry-sampled=false",
             "page": {
                 "faq_items": [
                     {
@@ -357,16 +357,19 @@
                                 "name": "Все варианты"
                             },
                             {
-                                "id": "Санкт-Петербург"
+                                "id": "Нижний Новгород, Москва"
                             },
                             {
-                                "id": "Москва, СПб"
+                                "id": "Москва"
                             },
                             {
                                 "id": "Любой"
                             },
                             {
-                                "id": "Москва"
+                                "id": "Москва, СПб"
+                            },
+                            {
+                                "id": "Санкт-Петербург"
                             }
                         ]
                     },
@@ -375,8 +378,12 @@
                         "label": "Направление",
                         "options": [
                             {
-                                "id": 6,
-                                "name": "Аналитика"
+                                "id": 20,
+                                "name": "Digital"
+                            },
+                            {
+                                "id": 10,
+                                "name": "Дизайн"
                             },
                             {
                                 "id": 4,
@@ -419,10 +426,6 @@
                         "label": "Теги",
                         "options": [
                             {
-                                "id": 1824,
-                                "name": "API"
-                            },
-                            {
                                 "id": 2777,
                                 "name": "DDP"
                             },
@@ -433,10 +436,6 @@
                             {
                                 "id": 2775,
                                 "name": "DeepSpeed"
-                            },
-                            {
-                                "id": 98,
-                                "name": "Docker"
                             },
                             {
                                 "id": 502,
@@ -471,8 +470,8 @@
                                 "name": "PyTorch Lightning"
                             },
                             {
-                                "id": 559,
-                                "name": "Rest API"
+                                "id": 537,
+                                "name": "Swift"
                             },
                             {
                                 "id": 2778,
@@ -493,6 +492,10 @@
                             {
                                 "id": 2638,
                                 "name": "YTSaurus"
+                            },
+                            {
+                                "id": 525,
+                                "name": "С++"
                             }
                         ]
                     },
@@ -509,14 +512,6 @@
                                 "name": "VK Видео"
                             },
                             {
-                                "id": 283,
-                                "name": "VK Музыка"
-                            },
-                            {
-                                "id": 288,
-                                "name": "Учи.ру"
-                            },
-                            {
                                 "id": 330,
                                 "name": "Блок AI"
                             },
@@ -525,16 +520,12 @@
                                 "name": "Блок технологий"
                             },
                             {
-                                "id": 76,
-                                "name": "ВКонтакте"
+                                "id": 83,
+                                "name": "Департамент персонала"
                             },
                             {
                                 "id": 173,
                                 "name": "Дзен"
-                            },
-                            {
-                                "id": 326,
-                                "name": "Юла"
                             }
                         ]
                     },
@@ -576,22 +567,6 @@
                         "color": "blue"
                     },
                     {
-                        "id": 6,
-                        "name": "Аналитика",
-                        "order": 2,
-                        "skills": [
-                            1881,
-                            1883,
-                            1884,
-                            1885,
-                            1886,
-                            1974
-                        ],
-                        "card_order": 2,
-                        "is_landing_card": true,
-                        "color": "violet"
-                    },
-                    {
                         "id": 4,
                         "name": "Машинное обучение",
                         "order": 3,
@@ -601,6 +576,21 @@
                         "color": "violet"
                     },
                     {
+                        "id": 20,
+                        "name": "Digital",
+                        "order": 4,
+                        "skills": [
+                            1847,
+                            1848,
+                            1849,
+                            1850,
+                            1851
+                        ],
+                        "card_order": 4,
+                        "is_landing_card": true,
+                        "color": "pink"
+                    },
+                    {
                         "id": 12,
                         "name": "Тестирование",
                         "order": 5,
@@ -608,6 +598,15 @@
                         "card_order": 8,
                         "is_landing_card": true,
                         "color": "violet"
+                    },
+                    {
+                        "id": 10,
+                        "name": "Дизайн",
+                        "order": 100,
+                        "skills": [],
+                        "card_order": 100,
+                        "is_landing_card": false,
+                        "color": "blue"
                     },
                     {
                         "id": 13,
@@ -620,6 +619,133 @@
                     }
                 ],
                 "vacancies": [
+                    {
+                        "id": 1405,
+                        "title": "Backend-разработчик",
+                        "business_unit": 339,
+                        "direction": 5,
+                        "city": "Санкт-Петербург",
+                        "format": "hybrid",
+                        "employment": "part_time",
+                        "skills": [
+                            201
+                        ],
+                        "date_work_starts": "июль 2026",
+                        "date_work_ends": "декабрь 2026",
+                        "is_opened": true,
+                        "internship_type": "internship",
+                        "for_only_students": false
+                    },
+                    {
+                        "id": 1404,
+                        "title": "Go Developer",
+                        "business_unit": 173,
+                        "direction": 5,
+                        "city": "Нижний Новгород, Москва",
+                        "format": "hybrid",
+                        "employment": "part_time",
+                        "skills": [
+                            502,
+                            525
+                        ],
+                        "date_work_starts": "август 2026",
+                        "date_work_ends": "январь 2027",
+                        "is_opened": true,
+                        "internship_type": "internship",
+                        "for_only_students": false
+                    },
+                    {
+                        "id": 1403,
+                        "title": "Golang-разработчик",
+                        "business_unit": 263,
+                        "direction": 5,
+                        "city": "Москва",
+                        "format": "hybrid",
+                        "employment": "full_time",
+                        "skills": [],
+                        "date_work_starts": "июль 2026",
+                        "date_work_ends": "декабрь 2026",
+                        "is_opened": true,
+                        "internship_type": "internship",
+                        "for_only_students": false
+                    },
+                    {
+                        "id": 1402,
+                        "title": "Дизайнер",
+                        "business_unit": 339,
+                        "direction": 10,
+                        "city": "Москва",
+                        "format": "hybrid",
+                        "employment": "full_time",
+                        "skills": [],
+                        "date_work_starts": "июль 2026",
+                        "date_work_ends": "декабрь 2026",
+                        "is_opened": true,
+                        "internship_type": "internship",
+                        "for_only_students": false
+                    },
+                    {
+                        "id": 1401,
+                        "title": "Продуктовый дизайнер",
+                        "business_unit": 339,
+                        "direction": 10,
+                        "city": "Москва",
+                        "format": "hybrid",
+                        "employment": "full_time",
+                        "skills": [],
+                        "date_work_starts": "июль 2026",
+                        "date_work_ends": "декабрь 2026",
+                        "is_opened": true,
+                        "internship_type": "internship",
+                        "for_only_students": false
+                    },
+                    {
+                        "id": 1400,
+                        "title": "DevRel-менеджер",
+                        "business_unit": 83,
+                        "direction": 20,
+                        "city": "Москва",
+                        "format": "hybrid",
+                        "employment": "full_time",
+                        "skills": [],
+                        "date_work_starts": "июль 2026",
+                        "date_work_ends": "декабрь 2026",
+                        "is_opened": true,
+                        "internship_type": "internship",
+                        "for_only_students": false
+                    },
+                    {
+                        "id": 1399,
+                        "title": "Разработчик iOS",
+                        "business_unit": 263,
+                        "direction": 5,
+                        "city": "Любой",
+                        "format": "remote",
+                        "employment": "full_time",
+                        "skills": [
+                            537
+                        ],
+                        "date_work_starts": "июль 2026",
+                        "date_work_ends": "декабрь 2026",
+                        "is_opened": true,
+                        "internship_type": "internship",
+                        "for_only_students": false
+                    },
+                    {
+                        "id": 1398,
+                        "title": "ML-инженер в рекомендательные системы",
+                        "business_unit": 330,
+                        "direction": 5,
+                        "city": "Москва",
+                        "format": "hybrid",
+                        "employment": "full_time",
+                        "skills": [],
+                        "date_work_starts": "июль 2026",
+                        "date_work_ends": "декабрь 2026",
+                        "is_opened": true,
+                        "internship_type": "internship",
+                        "for_only_students": false
+                    },
                     {
                         "id": 1396,
                         "title": "Разработчик",
@@ -714,26 +840,8 @@
                         "for_only_students": false
                     },
                     {
-                        "id": 1389,
-                        "title": "Go developer",
-                        "business_unit": 283,
-                        "direction": 5,
-                        "city": "Москва",
-                        "format": "hybrid",
-                        "employment": "full_time",
-                        "skills": [
-                            502,
-                            559
-                        ],
-                        "date_work_starts": "июль 2026",
-                        "date_work_ends": "декабрь 2026",
-                        "is_opened": true,
-                        "internship_type": "internship",
-                        "for_only_students": false
-                    },
-                    {
                         "id": 1388,
-                        "title": "Android developer",
+                        "title": "Android Developer",
                         "business_unit": 338,
                         "direction": 5,
                         "city": "Санкт-Петербург",
@@ -750,188 +858,16 @@
                         "for_only_students": false
                     },
                     {
-                        "id": 1385,
-                        "title": "Android-разработчик",
-                        "business_unit": 283,
-                        "direction": 5,
-                        "city": "Любой",
-                        "format": "remote",
-                        "employment": "full_time",
-                        "skills": [],
-                        "date_work_starts": "июль 2026",
-                        "date_work_ends": "декабрь 2026",
-                        "is_opened": true,
-                        "internship_type": "internship",
-                        "for_only_students": false
-                    },
-                    {
-                        "id": 1384,
-                        "title": "Frontend Developer",
-                        "business_unit": 76,
-                        "direction": 5,
-                        "city": "Любой",
-                        "format": "remote",
-                        "employment": "full_time",
-                        "skills": [],
-                        "date_work_starts": "июль 2026",
-                        "date_work_ends": "декабрь 2026",
-                        "is_opened": true,
-                        "internship_type": "internship",
-                        "for_only_students": false
-                    },
-                    {
-                        "id": 1383,
-                        "title": "Фронтенд-разработчик",
-                        "business_unit": 263,
-                        "direction": 5,
-                        "city": "Москва",
-                        "format": "hybrid",
-                        "employment": "part_time",
-                        "skills": [],
-                        "date_work_starts": "июль 2026",
-                        "date_work_ends": "декабрь 2026",
-                        "is_opened": true,
-                        "internship_type": "internship",
-                        "for_only_students": false
-                    },
-                    {
-                        "id": 1379,
-                        "title": "Продуктовый аналитик",
-                        "business_unit": 288,
-                        "direction": 6,
-                        "city": "Москва",
-                        "format": "hybrid",
-                        "employment": "full_time",
-                        "skills": [],
-                        "date_work_starts": "июль 2026",
-                        "date_work_ends": "декабрь 2026",
-                        "is_opened": true,
-                        "internship_type": "internship",
-                        "for_only_students": false
-                    },
-                    {
-                        "id": 1378,
-                        "title": "Python-разработчик",
-                        "business_unit": 330,
-                        "direction": 5,
-                        "city": "Москва",
-                        "format": "hybrid",
-                        "employment": "full_time",
-                        "skills": [],
-                        "date_work_starts": "июнь 2026",
-                        "date_work_ends": "ноябрь 2026",
-                        "is_opened": true,
-                        "internship_type": "internship",
-                        "for_only_students": false
-                    },
-                    {
-                        "id": 1376,
-                        "title": "Go-разработчик ML-инфраструктуры",
-                        "business_unit": 330,
-                        "direction": 5,
-                        "city": "Москва",
-                        "format": "hybrid",
-                        "employment": "full_time",
-                        "skills": [
-                            502
-                        ],
-                        "date_work_starts": "июнь 2026",
-                        "date_work_ends": "ноябрь 2026",
-                        "is_opened": true,
-                        "internship_type": "internship",
-                        "for_only_students": false
-                    },
-                    {
-                        "id": 1375,
-                        "title": "Менеджер продукта",
-                        "business_unit": 263,
-                        "direction": 13,
-                        "city": "Москва",
-                        "format": "hybrid",
-                        "employment": "full_time",
-                        "skills": [],
-                        "date_work_starts": "июнь 2026",
-                        "date_work_ends": "ноябрь 2026",
-                        "is_opened": true,
-                        "internship_type": "internship",
-                        "for_only_students": false
-                    },
-                    {
-                        "id": 1373,
-                        "title": "Python-разработчик",
-                        "business_unit": 339,
-                        "direction": 5,
-                        "city": "Любой",
-                        "format": "remote",
-                        "employment": "full_time",
-                        "skills": [],
-                        "date_work_starts": "июнь 2026",
-                        "date_work_ends": "ноябрь 2026",
-                        "is_opened": true,
-                        "internship_type": "internship",
-                        "for_only_students": false
-                    },
-                    {
-                        "id": 1372,
+                        "id": 1387,
                         "title": "Java-разработчик",
-                        "business_unit": 173,
+                        "business_unit": 330,
                         "direction": 5,
-                        "city": "Москва",
-                        "format": "hybrid",
-                        "employment": "full_time",
-                        "skills": [
-                            98,
-                            201
-                        ],
-                        "date_work_starts": "июнь 2026",
-                        "date_work_ends": "ноябрь 2026",
-                        "is_opened": true,
-                        "internship_type": "internship",
-                        "for_only_students": false
-                    },
-                    {
-                        "id": 1370,
-                        "title": "Разработчик ML-инфраструктуры",
-                        "business_unit": 330,
-                        "direction": 4,
-                        "city": "Москва",
-                        "format": "hybrid",
-                        "employment": "full_time",
-                        "skills": [
-                            502
-                        ],
-                        "date_work_starts": "июнь 2026",
-                        "date_work_ends": "ноябрь 2026",
-                        "is_opened": true,
-                        "internship_type": "internship",
-                        "for_only_students": false
-                    },
-                    {
-                        "id": 1365,
-                        "title": "ML-инженер (recsys)",
-                        "business_unit": 330,
-                        "direction": 4,
-                        "city": "Москва",
+                        "city": "Санкт-Петербург",
                         "format": "hybrid",
                         "employment": "full_time",
                         "skills": [],
-                        "date_work_starts": "июнь 2026",
-                        "date_work_ends": "ноябрь 2026",
-                        "is_opened": true,
-                        "internship_type": "internship",
-                        "for_only_students": false
-                    },
-                    {
-                        "id": 1356,
-                        "title": "ML Engineer",
-                        "business_unit": 330,
-                        "direction": 4,
-                        "city": "Москва",
-                        "format": "hybrid",
-                        "employment": "full_time",
-                        "skills": [],
-                        "date_work_starts": "июнь 2026",
-                        "date_work_ends": "ноябрь 2026",
+                        "date_work_starts": "июль 2026",
+                        "date_work_ends": "декабрь 2026",
                         "is_opened": true,
                         "internship_type": "internship",
                         "for_only_students": false
@@ -979,25 +915,6 @@
                         "is_opened": true,
                         "internship_type": "internship",
                         "for_only_students": false
-                    },
-                    {
-                        "id": 1350,
-                        "title": "Backend-разработчик",
-                        "business_unit": 326,
-                        "direction": 5,
-                        "city": "Любой",
-                        "format": "remote",
-                        "employment": "full_time",
-                        "skills": [
-                            318,
-                            502,
-                            1824
-                        ],
-                        "date_work_starts": "июнь 2026",
-                        "date_work_ends": "ноябрь 2026",
-                        "is_opened": true,
-                        "internship_type": "internship",
-                        "for_only_students": false
                     }
                 ],
                 "units": [
@@ -1016,20 +933,6 @@
                         "alt_logo": "https://internship.vk.company/static/core/priv/default/img/placeholder_vk_white.png"
                     },
                     {
-                        "id": 283,
-                        "name": "VK Музыка",
-                        "order": 100,
-                        "logo": "https://internship.vk.company/static/core/priv/default/img/placeholder_vk_200.png",
-                        "alt_logo": "https://internship.vk.company/static/core/priv/default/img/placeholder_vk_white.png"
-                    },
-                    {
-                        "id": 288,
-                        "name": "Учи.ру",
-                        "order": 100,
-                        "logo": "https://davmedia.gtp.tech-mail.ru/career/business_units/logos/Vector.jpg",
-                        "alt_logo": "https://davmedia.gtp.tech-mail.ru/career/business_units/logos/Vector.jpg"
-                    },
-                    {
                         "id": 330,
                         "name": "Блок AI",
                         "order": 100,
@@ -1044,11 +947,11 @@
                         "alt_logo": "https://internship.vk.company/static/core/priv/default/img/placeholder_vk_white.png"
                     },
                     {
-                        "id": 76,
-                        "name": "ВКонтакте",
+                        "id": 83,
+                        "name": "Департамент персонала",
                         "order": 100,
-                        "logo": "https://davmedia.gtp.tech-mail.ru/career/business_units/logos/БЂГвҐГавЂмГбвм_ВКГвв.png",
-                        "alt_logo": "https://davmedia.gtp.tech-mail.ru/career/business_units/logos/БЂГвҐГавЂмГбвм_ВКГвв.png"
+                        "logo": "https://internship.vk.company/static/core/priv/default/img/placeholder_vk_200.png",
+                        "alt_logo": "https://internship.vk.company/static/core/priv/default/img/placeholder_vk_white.png"
                     },
                     {
                         "id": 173,
@@ -1056,19 +959,9 @@
                         "order": 100,
                         "logo": "https://internship.vk.company/static/core/priv/default/img/placeholder_vk_200.png",
                         "alt_logo": "https://internship.vk.company/static/core/priv/default/img/placeholder_vk_white.png"
-                    },
-                    {
-                        "id": 326,
-                        "name": "Юла",
-                        "order": 100,
-                        "logo": "https://davmedia.gtp.tech-mail.ru/career/business_units/logos/142166d1-d27b-4d2d-b5f9-8e14b081af7e.webp",
-                        "alt_logo": "https://davmedia.gtp.tech-mail.ru/career/business_units/logos/142166d1-d27b-4d2d-b5f9-8e14b081af7e.webp"
                     }
                 ],
                 "skills": {
-                    "98": {
-                        "name": "Docker"
-                    },
                     "201": {
                         "name": "Java"
                     },
@@ -1087,11 +980,11 @@
                     "513": {
                         "name": "PyTorch"
                     },
-                    "559": {
-                        "name": "Rest API"
+                    "525": {
+                        "name": "С++"
                     },
-                    "1824": {
-                        "name": "API"
+                    "537": {
+                        "name": "Swift"
                     },
                     "2638": {
                         "name": "YTSaurus"
@@ -1128,14 +1021,14 @@
             "user": null,
             "vkid": {
                 "app_id": "51842845",
-                "state": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwcm9qZWN0X2lkIjoxNiwicmVxdWVzdF9pcCI6Ijk1LjE2My41MC4xODAiLCJleHBpcmVzX2luIjoxNzgzNzAxNjA4LjI1NTYxM30.PpEef99cXtApToGpMnCGIrfeIbgp_Thzsv3P7V_HEp8"
+                "state": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwcm9qZWN0X2lkIjoxNiwicmVxdWVzdF9pcCI6Ijk1LjE2My41MC4xODAiLCJleHBpcmVzX2luIjoxNzg0ODI3NDgyLjEzMjQwOH0.XAeiV-hXlK1gkQNsDf7cwVsJTe_D1UXCjARECLBZOfM"
             },
             "setCookie": [
                 {
                     "name": "csrftoken",
-                    "value": "kxPYDX1Iy9VCVqnPxwtCc7pdJwraTB8PQgIKCwexYGnVNg7waiSYwcjtRGVgwYU6",
-                    "csrftoken": "kxPYDX1Iy9VCVqnPxwtCc7pdJwraTB8PQgIKCwexYGnVNg7waiSYwcjtRGVgwYU6",
-                    "expires": "Thu, 08 Jul 2027 16:40:08 GMT",
+                    "value": "NhklGYUmpqZY9QZx2e7hG3PQin0dJrXdjHrOrX3oUBYZ4XFfUR3TOLA4jJ0uYPY4",
+                    "csrftoken": "NhklGYUmpqZY9QZx2e7hG3PQin0dJrXdjHrOrX3oUBYZ4XFfUR3TOLA4jJ0uYPY4",
+                    "expires": "Wed, 21 Jul 2027 17:24:42 GMT",
                     "max-age": "31449600",
                     "path": "/",
                     "samesite": "Lax",
@@ -1143,9 +1036,9 @@
                 },
                 {
                     "name": "sessionid_gtp",
-                    "value": "j3d3g0ld93fr5n88dj79yydjq84oeslp",
-                    "sessionid_gtp": "j3d3g0ld93fr5n88dj79yydjq84oeslp",
-                    "expires": "Thu, 06 Aug 2026 16:40:08 GMT",
+                    "value": "qxf0dxiooidcw5f41zv2itym6y3kx3wh",
+                    "sessionid_gtp": "qxf0dxiooidcw5f41zv2itym6y3kx3wh",
+                    "expires": "Wed, 19 Aug 2026 17:24:42 GMT",
                     "httponly": true,
                     "max-age": "2419200",
                     "path": "/",
