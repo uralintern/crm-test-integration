@@ -19,7 +19,6 @@ export default function InternshipsPage() {
     const [selectedDirections, setSelectedDirections] = useState<string[]>([]);
     const [selectedFormats, setSelectedFormats] = useState<WorkFormatCode[]>([]);
     const [city, setCity] = useState("");
-    const [sort, setSort] = useState<"new" | "salary">("new");
     const [page, setPage] = useState(1);
 
     useEffect(() => {
@@ -61,7 +60,7 @@ export default function InternshipsPage() {
 
     useEffect(() => {
         setPage(1);
-    }, [selectedFormats, city, search, selectedDirections, sort]);
+    }, [selectedFormats, city, search, selectedDirections]);
 
     const toggleDirection = (direction: string) => {
         setSelectedDirections((prev) =>
@@ -73,8 +72,8 @@ export default function InternshipsPage() {
         setSelectedFormats((prev) => (prev.includes(code) ? prev.filter((f) => f !== code) : [...prev, code]));
     };
 
-    const filteredAndSorted = useMemo(() => {
-        const filtered = allItems.filter((item) => {
+    const filteredItems = useMemo(() => {
+        return allItems.filter((item) => {
             const matchesSearch =
                 !search.trim() ||
                 item.title.toLowerCase().includes(search.trim().toLowerCase()) ||
@@ -82,15 +81,10 @@ export default function InternshipsPage() {
             const matchesDirection = selectedDirections.length === 0 || selectedDirections.includes(item.direction);
             return matchesSearch && matchesDirection;
         });
+    }, [allItems, search, selectedDirections]);
 
-        return [...filtered].sort((a, b) => {
-            if (sort === "salary") return (b.salary_from ?? 0) - (a.salary_from ?? 0);
-            return 0;
-        });
-    }, [allItems, search, selectedDirections, sort]);
-
-    const totalPages = Math.max(1, Math.ceil(filteredAndSorted.length / PAGE_SIZE));
-    const visibleItems = filteredAndSorted.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+    const totalPages = Math.max(1, Math.ceil(filteredItems.length / PAGE_SIZE));
+    const visibleItems = filteredItems.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
     const avatarLetter = (company: string) => company.trim().charAt(0).toUpperCase() || "?";
 
@@ -163,23 +157,7 @@ export default function InternshipsPage() {
                     </aside>
 
                     <section className="main-content">
-                        <div className="sort-block">
-                            <span className="sort-label">Сортировка:</span>
-                            <button
-                                type="button"
-                                className={`sort-option${sort === "new" ? " active" : ""}`}
-                                onClick={() => setSort("new")}
-                            >
-                                Новые
-                            </button>
-                            <button
-                                type="button"
-                                className={`sort-option${sort === "salary" ? " active" : ""}`}
-                                onClick={() => setSort("salary")}
-                            >
-                                По зарплате
-                            </button>
-                        </div>
+
 
                         <div className="cards-wrapper">
                             {loading && <div>Загрузка...</div>}

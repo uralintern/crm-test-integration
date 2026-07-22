@@ -20,7 +20,6 @@
     .top-block,
     .title-block,
     .sidebar,
-    .sort-block,
     .main-content,
     .card {
         border: 1px solid #d8d8d8;
@@ -172,36 +171,6 @@
 
         &:focus {
             border-color: #2f7bf6;
-        }
-    }
-
-    .sort-block {
-        height: 60px;
-        flex-shrink: 0;
-        margin-bottom: 12px;
-        display: flex;
-        align-items: center;
-        gap: 28px;
-        padding: 0 30px;
-    }
-
-    .sort-label {
-        color: #9a9a9a;
-        font-size: 15px;
-        margin-right: 4px;
-    }
-
-    .sort-option {
-        font-size: 15px;
-        color: #1a1a1a;
-        cursor: pointer;
-        background: none;
-        border: none;
-        font-family: inherit;
-
-        &.active {
-            color: #2f7bf6;
-            font-weight: 700;
         }
     }
 
