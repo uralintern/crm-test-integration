@@ -1,10 +1,15 @@
+from datetime import datetime, timezone as dt_timezone
+from io import StringIO
+
 from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.models import ContentType
+from django.core.management import call_command
 from django.test import TestCase, override_settings
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
 
+from planner.automation_engine import SPRINT_SWEEP_ROBOT_ID, sprint_week_key, sweep_done_subtasks_from_sprint
 from planner.models import PlannerAutomationConfig, PlannerAutomationExecutionLog, PlannerWorkspaceState, TeamPlannerDesk
 from django.utils import timezone
 
@@ -551,3 +556,145 @@ class PlannerDeskViewTests(TestCase):
         self.assertEqual(subtasks_by_id[1]["assigneeId"], self.user.id + 1)
         self.assertEqual(subtasks_by_id[2]["title"], "Teammate task changed")
         self.assertEqual(subtasks_by_id[3]["title"], "Foreign keep")
+
+
+@override_settings(PLANNER_SPRINT_WEEK_UTC_OFFSET_HOURS=3)
+class PlannerSprintWeekKeyTests(TestCase):
+    def test_week_key_rolls_over_at_monday_midnight_moscow(self):
+        # 2026-07-19 21:00 UTC is exactly Monday 00:00 in Moscow.
+        sunday_late = datetime(2026, 7, 19, 20, 59, tzinfo=dt_timezone.utc)
+        monday_start = datetime(2026, 7, 19, 21, 0, tzinfo=dt_timezone.utc)
+
+        self.assertEqual(sprint_week_key(sunday_late), "2026-W29")
+        self.assertEqual(sprint_week_key(monday_start), "2026-W30")
+
+    def test_week_key_is_stable_within_a_week(self):
+        monday = datetime(2026, 7, 20, 9, 0, tzinfo=dt_timezone.utc)
+        friday = datetime(2026, 7, 24, 9, 0, tzinfo=dt_timezone.utc)
+
+        self.assertEqual(sprint_week_key(monday), sprint_week_key(friday))
+
+
+@override_settings(PLANNER_SPRINT_WEEK_UTC_OFFSET_HOURS=3)
+class PlannerSprintSweepTests(TestCase):
+    WEEK_ONE = datetime(2026, 7, 15, 9, 0, tzinfo=dt_timezone.utc)
+    WEEK_TWO = datetime(2026, 7, 20, 9, 0, tzinfo=dt_timezone.utc)
+
+    def setUp(self):
+        self.event = Event.objects.create(
+            name="Sprint event",
+            description="",
+            stage="active",
+            start_date=timezone.now().date(),
+            end_date=timezone.now().date(),
+            end_app_date=timezone.now(),
+        )
+        self.workspace = PlannerWorkspaceState.objects.create(
+            teams=[{"id": 17, "name": "Team", "eventId": self.event.id, "memberIds": []}],
+            parent_tasks=[],
+            subtasks=[
+                self.build_subtask(1, "Готово", in_sprint=True),
+                self.build_subtask(2, "В работе", in_sprint=True),
+                self.build_subtask(3, "Готово", in_sprint=False),
+            ],
+        )
+
+    def build_subtask(self, subtask_id, status_value, *, in_sprint):
+        return {
+            "id": subtask_id,
+            "teamId": 17,
+            "parentTaskId": 1,
+            "title": f"Task {subtask_id}",
+            "role": "Backend",
+            "startDate": "2026-07-13",
+            "endDate": "2026-07-17",
+            "inSprint": in_sprint,
+            "status": status_value,
+        }
+
+    def subtasks_by_id(self):
+        self.workspace.refresh_from_db()
+        return {item["id"]: item for item in self.workspace.subtasks}
+
+    def set_robot_enabled(self, enabled):
+        config = PlannerAutomationConfig.objects.get(event_id=self.event.id)
+        robots = config.robots
+        for robot in robots:
+            if robot.get("id") == SPRINT_SWEEP_ROBOT_ID:
+                robot["enabled"] = enabled
+        config.robots = robots
+        config.save(update_fields=["robots"])
+
+    def test_first_run_only_records_baseline_week(self):
+        result = sweep_done_subtasks_from_sprint(now=self.WEEK_ONE)
+
+        self.assertEqual(result["changed"], 0)
+        self.assertTrue(self.subtasks_by_id()[1]["inSprint"])
+        log = PlannerAutomationExecutionLog.objects.get(rule_id=SPRINT_SWEEP_ROBOT_ID)
+        self.assertEqual(log.status, PlannerAutomationExecutionLog.STATUS_SKIPPED)
+
+    def test_new_week_removes_only_done_subtasks_from_sprint(self):
+        sweep_done_subtasks_from_sprint(now=self.WEEK_ONE)
+
+        result = sweep_done_subtasks_from_sprint(now=self.WEEK_TWO)
+
+        self.assertEqual(result["changed"], 1)
+        subtasks = self.subtasks_by_id()
+        self.assertFalse(subtasks[1]["inSprint"])
+        self.assertEqual(subtasks[1]["status"], "Готово")
+        self.assertTrue(subtasks[2]["inSprint"])
+        self.assertFalse(subtasks[3]["inSprint"])
+
+    def test_sweep_runs_once_per_week(self):
+        sweep_done_subtasks_from_sprint(now=self.WEEK_ONE)
+        sweep_done_subtasks_from_sprint(now=self.WEEK_TWO)
+
+        # A task finished later in the same week must survive until the next Monday.
+        subtasks = self.workspace.subtasks
+        subtasks[1]["status"] = "Готово"
+        self.workspace.subtasks = subtasks
+        self.workspace.save(update_fields=["subtasks"])
+
+        result = sweep_done_subtasks_from_sprint(now=self.WEEK_TWO)
+
+        self.assertEqual(result["events"], 0)
+        self.assertEqual(result["changed"], 0)
+        self.assertTrue(self.subtasks_by_id()[2]["inSprint"])
+
+    def test_disabled_robot_keeps_tasks_in_sprint(self):
+        sweep_done_subtasks_from_sprint(now=self.WEEK_ONE)
+        self.set_robot_enabled(False)
+
+        result = sweep_done_subtasks_from_sprint(now=self.WEEK_TWO)
+
+        self.assertEqual(result["changed"], 0)
+        self.assertTrue(self.subtasks_by_id()[1]["inSprint"])
+        self.assertTrue(
+            PlannerAutomationExecutionLog.objects.filter(
+                rule_id=SPRINT_SWEEP_ROBOT_ID,
+                status=PlannerAutomationExecutionLog.STATUS_SKIPPED,
+                message="Робот выключен.",
+            ).exists()
+        )
+
+    def test_sweep_updates_team_desk(self):
+        desk = TeamPlannerDesk.objects.create(
+            team_id=17,
+            subtasks=[self.build_subtask(1, "Готово", in_sprint=True)],
+        )
+        sweep_done_subtasks_from_sprint(now=self.WEEK_ONE)
+
+        sweep_done_subtasks_from_sprint(now=self.WEEK_TWO)
+
+        desk.refresh_from_db()
+        self.assertFalse(desk.subtasks[0]["inSprint"])
+
+    def test_automation_worker_command_runs_the_sweep(self):
+        output = StringIO()
+
+        call_command("run_automation", stdout=output)
+
+        self.assertIn("Planner sprint sweep", output.getvalue())
+        self.assertTrue(
+            PlannerAutomationExecutionLog.objects.filter(rule_id=SPRINT_SWEEP_ROBOT_ID).exists()
+        )

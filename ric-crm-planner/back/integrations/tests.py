@@ -20,7 +20,13 @@ from integrations.vk.planner_invites import (
     handle_vk_start_message,
     send_planner_invites_for_event,
 )
-from integrations.vk.services import VKAPIError, extract_vk_screen_name, normalize_vk_group_id, send_vk_message
+from integrations.vk.services import (
+    VKAPIError,
+    VKConfigurationError,
+    extract_vk_screen_name,
+    normalize_vk_group_id,
+    send_vk_message,
+)
 from users.automation_engine import run_crm_automation
 from users.models import Application, CRMAutomationConfig, Event, Profile, Status
 
@@ -496,3 +502,120 @@ class VKCRMNotificationTests(TestCase):
         self.application.refresh_from_db()
         self.assertEqual(self.application.status.name, "Отказался от ПШ")
         send_vk_message_mock.assert_called_once()
+
+
+class VKStartConfirmationPromptViewTests(TestCase):
+    URL = "/api/integrations/vk/confirm-prompt/"
+
+    def setUp(self):
+        self.client = APIClient()
+        self.user = get_user_model().objects.create_user(
+            email="student@example.com",
+            username="student@example.com",
+            password="StrongPass123",
+            is_active=True,
+        )
+        self.profile, _ = Profile.objects.update_or_create(
+            user=self.user,
+            defaults={
+                "surname": "Иванов",
+                "name": "Иван",
+                "email": "student@example.com",
+                "course": 1,
+                "vk": "https://vk.com/id777",
+                "vk_user_id": 777,
+                "vk_confirmed_at": None,
+            },
+        )
+        self.client.force_authenticate(user=self.user)
+
+    @override_settings(VK_ENABLED=True)
+    @patch("integrations.vk.planner_invites.send_vk_message")
+    def test_sends_message_with_start_button(self, send_vk_message_mock):
+        send_vk_message_mock.return_value = 42
+
+        response = self.client.post(self.URL, {}, format="json")
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertTrue(response.data["sent"])
+        self.assertEqual(response.data["message_id"], 42)
+
+        send_vk_message_mock.assert_called_once()
+        kwargs = send_vk_message_mock.call_args.kwargs
+        self.assertEqual(kwargs["user_id"], 777)
+        button = kwargs["keyboard"]["buttons"][0][0]["action"]
+        self.assertEqual(button["type"], "text")
+        self.assertEqual(button["label"], "Начать")
+        self.assertEqual(json.loads(button["payload"]), {"command": "start"})
+
+    @patch("integrations.vk.planner_invites.send_vk_message")
+    def test_button_payload_is_recognized_as_start_command(self, send_vk_message_mock):
+        # Guards the contract between the sent button and the inbound handler:
+        # pressing this button must confirm the profile.
+        from integrations.vk.planner_invites import build_start_confirmation_keyboard, is_vk_start_message
+
+        payload = build_start_confirmation_keyboard()["buttons"][0][0]["action"]["payload"]
+        self.assertTrue(is_vk_start_message({"text": "", "payload": payload}))
+
+    @override_settings(VK_ENABLED=True)
+    @patch("integrations.vk.planner_invites.send_vk_message")
+    def test_requires_vk_in_profile(self, send_vk_message_mock):
+        self.profile.vk = ""
+        self.profile.vk_user_id = None
+        self.profile.save(update_fields=["vk", "vk_user_id"])
+
+        response = self.client.post(self.URL, {}, format="json")
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        send_vk_message_mock.assert_not_called()
+
+    @override_settings(VK_ENABLED=True)
+    @patch("integrations.vk.planner_invites.send_vk_message")
+    def test_skips_when_already_confirmed(self, send_vk_message_mock):
+        self.profile.vk_confirmed_at = timezone.now()
+        self.profile.save(update_fields=["vk_confirmed_at"])
+
+        response = self.client.post(self.URL, {}, format="json")
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertTrue(response.data["confirmed"])
+        send_vk_message_mock.assert_not_called()
+
+    @override_settings(VK_ENABLED=True)
+    @patch("integrations.vk.planner_invites.send_vk_message")
+    def test_dialog_not_opened_returns_conflict(self, send_vk_message_mock):
+        send_vk_message_mock.side_effect = VKAPIError(901, "Can't send messages for users without permission")
+
+        response = self.client.post(self.URL, {}, format="json")
+
+        self.assertEqual(response.status_code, status.HTTP_409_CONFLICT)
+
+    @override_settings(VK_ENABLED=True)
+    @patch("integrations.vk.planner_invites.send_vk_message")
+    def test_vk_disabled_returns_service_unavailable(self, send_vk_message_mock):
+        send_vk_message_mock.side_effect = VKConfigurationError("VK integration is disabled.")
+
+        response = self.client.post(self.URL, {}, format="json")
+
+        self.assertEqual(response.status_code, status.HTTP_503_SERVICE_UNAVAILABLE)
+
+    @override_settings(VK_ENABLED=False)
+    @patch("integrations.vk.planner_invites.send_vk_message")
+    def test_unresolved_vk_user_id_returns_400(self, send_vk_message_mock):
+        # vk is a screen name (not idNNN) with no stored id and VK disabled, so it
+        # cannot be resolved offline -> ValueError path -> 400.
+        self.profile.vk = "https://vk.com/durov"
+        self.profile.vk_user_id = None
+        self.profile.save(update_fields=["vk", "vk_user_id"])
+
+        response = self.client.post(self.URL, {}, format="json")
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        send_vk_message_mock.assert_not_called()
+
+    def test_requires_authentication(self):
+        self.client.force_authenticate(user=None)
+
+        response = self.client.post(self.URL, {}, format="json")
+
+        self.assertIn(response.status_code, (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN))

@@ -1,9 +1,17 @@
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import { getVKBotStatus, type VKBotStatus } from "../../api/vk";
+import { getVKBotStatus, sendVKConfirmationPrompt, type VKBotStatus } from "../../api/vk";
 import Modal from "../Modal/Modal";
 import AppButton from "../UI/Button";
 import { useToast } from "../Toast/ToastProvider";
+
+function extractErrorDetail(error: unknown, fallback: string): string {
+  if (error && typeof error === "object" && "detail" in error) {
+    const detail = (error as { detail?: unknown }).detail;
+    if (typeof detail === "string" && detail.trim()) return detail;
+  }
+  return fallback;
+}
 
 export const VK_BOT_CONFIRMATION_REQUIRED_KEY = "vk_bot_confirmation_required_v1";
 
@@ -47,6 +55,8 @@ export default function VKBotConfirmationGuard() {
     }
   }, [refreshUser, showToast, user]);
 
+  const promptSentRef = useRef(false);
+
   useEffect(() => {
     if (!shouldCheck) {
       setOpen(false);
@@ -61,6 +71,29 @@ export default function VKBotConfirmationGuard() {
     return () => window.clearInterval(timer);
   }, [refresh, shouldCheck]);
 
+  // Send the VK message with a «Начать» button once, as soon as the modal is
+  // needed, so the user does not depend on the native start button appearing.
+  useEffect(() => {
+    if (!shouldCheck || promptSentRef.current) return;
+    promptSentRef.current = true;
+
+    void (async () => {
+      try {
+        const result = await sendVKConfirmationPrompt();
+        if (result.confirmed) {
+          await refreshUser();
+          setOpen(false);
+          return;
+        }
+        if (result.sent) {
+          showToast("info", "Отправили в VK сообщение с кнопкой «Начать». Откройте бота и нажмите её.");
+        }
+      } catch (error) {
+        showToast("error", extractErrorDetail(error, "Не удалось отправить сообщение в VK."));
+      }
+    })();
+  }, [shouldCheck, refreshUser, showToast]);
+
   if (!shouldCheck) return null;
 
   const botUrl = status?.botUrl || user?.vkBotUrl || "";
@@ -69,8 +102,9 @@ export default function VKBotConfirmationGuard() {
     <Modal isOpen={open} onClose={() => setOpen(false)} title="Подтвердите VK-бота" hideActions>
       <div className="vk-bot-confirmation">
         <p>
-          Чтобы получать сообщения по заявке и организационному чату, перейдите в VK-бота и нажмите кнопку «Начать».
-          Окно будет появляться раз в минуту, пока бот не подтвердит ваш VK.
+          Мы отправили вам в VK сообщение с кнопкой «Начать». Откройте диалог с ботом и нажмите её, чтобы
+          получать сообщения по заявке и организационному чату. Окно будет появляться раз в минуту, пока бот
+          не подтвердит ваш VK.
         </p>
         <div className="vk-bot-confirmation__actions">
           {botUrl && (

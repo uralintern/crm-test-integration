@@ -25,7 +25,12 @@ from .crm_notifications import (
     notify_organizers_about_vk_error,
     send_application_vk_message,
 )
-from .planner_invites import handle_vk_message_event, handle_vk_message_new_event, send_planner_invites_for_event
+from .planner_invites import (
+    handle_vk_message_event,
+    handle_vk_message_new_event,
+    send_planner_invites_for_event,
+    send_vk_start_confirmation,
+)
 from .serializers import VKApplicationMessageSerializer, VKPlannerInviteSerializer, VKSendTestSerializer
 from .services import VKAPIError, VKConfigurationError, normalize_vk_group_id, send_vk_message
 
@@ -187,6 +192,57 @@ class VKBotStatusView(APIView):
                 "bot_url": get_vk_bot_url(),
             }
         )
+
+
+class VKStartConfirmationPromptView(APIView):
+    @swagger_auto_schema(
+        operation_summary="Send VK start-confirmation button to current user",
+        operation_description=(
+            "Sends the authenticated user a VK message with a «Начать» button so they can "
+            "confirm their VK without the native start button. Requires the user to have "
+            "opened the dialog with the community first."
+        ),
+        responses={
+            200: openapi.Response("VK message id"),
+            400: "VK is not set in profile or cannot be resolved",
+            409: "User has not opened the dialog with the community yet",
+            503: "VK is disabled or not configured",
+        },
+    )
+    def post(self, request):
+        profile = Profile.objects.filter(user=request.user).first()
+        if not profile or not (profile.vk or "").strip():
+            return Response(
+                {"detail": "В вашем профиле не указан VK."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        if profile.vk_confirmed_at:
+            return Response({"detail": "VK уже подтвержден.", "confirmed": True}, status=status.HTTP_200_OK)
+
+        try:
+            message_id = send_vk_start_confirmation(profile)
+        except VKConfigurationError as exc:
+            return Response({"detail": str(exc)}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
+        except ValueError:
+            return Response(
+                {"detail": "Не удалось определить ваш VK ID. Проверьте ссылку на VK в профиле."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        except VKAPIError as exc:
+            if exc.code == 901:
+                return Response(
+                    {
+                        "detail": (
+                            "Сначала откройте диалог с ботом в VK и разрешите сообщения, "
+                            "затем повторите."
+                        )
+                    },
+                    status=status.HTTP_409_CONFLICT,
+                )
+            return Response({"detail": exc.message, "code": exc.code}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({"message_id": message_id, "sent": True}, status=status.HTTP_200_OK)
 
 
 class VKChatLinkRedirectView(APIView):

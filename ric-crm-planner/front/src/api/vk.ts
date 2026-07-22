@@ -25,3 +25,21 @@ export async function getVKBotStatus(): Promise<VKBotStatus> {
     botUrl: raw.botUrl || raw.bot_url || "",
   };
 }
+
+export type VKConfirmationPromptResult = {
+  sent: boolean;
+  messageId?: number;
+  confirmed?: boolean;
+};
+
+export async function sendVKConfirmationPrompt(): Promise<VKConfirmationPromptResult> {
+  const raw = await client.post<{ sent?: boolean; message_id?: number; confirmed?: boolean }>(
+    "/api/integrations/vk/confirm-prompt/",
+    {},
+  );
+  return {
+    sent: Boolean(raw?.sent),
+    messageId: raw?.message_id,
+    confirmed: Boolean(raw?.confirmed),
+  };
+}
