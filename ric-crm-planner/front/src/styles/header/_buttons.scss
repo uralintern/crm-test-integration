@@ -3,6 +3,7 @@
   align-items: center;
   gap: 10px;
   min-height: 46px;
+  flex-shrink: 0;
 
   padding: 8px 12px;
   border-radius: 10px;
@@ -10,11 +11,29 @@
 
   background: white;
   cursor: pointer;
+  font-size: 14px;
+  line-height: 1.2;
+  white-space: nowrap;
+
+  > span:not(.anticon):not(.ant-badge):not(.notification-badge) {
+    font-size: inherit;
+    line-height: inherit;
+  }
 
   .anticon {
     font-size: 18px;
     line-height: 1;
+    flex-shrink: 0;
   }
+}
+
+.head-btn.ant-btn {
+  color: inherit;
+}
+
+.head-btn.ant-btn:not(:disabled):hover,
+.head-btn.ant-btn:not(:disabled):focus-visible {
+  color: inherit;
 }
 
 .head-btn.ant-btn:focus:not(:focus-visible) {
@@ -33,38 +52,50 @@
 }
 
 .head-btn--muted:hover,
-.head-btn--muted:focus-visible {
-  background: var(--event-color) !important;
+.head-btn--muted:focus-visible,
+.head-btn--muted.ant-btn:not(:disabled):hover,
+.head-btn--muted.ant-btn:not(:disabled):focus-visible {
+  background: var(--event-color, #6495ed) !important;
   color: #fff !important;
-  border-color: var(--event-color) !important;
+  border-color: var(--event-color, #6495ed) !important;
 }
 
 .head-btn--muted:hover .anticon,
-.head-btn--muted:focus-visible .anticon {
-  color: #fff;
+.head-btn--muted:focus-visible .anticon,
+.head-btn--muted.ant-btn:not(:disabled):hover .anticon,
+.head-btn--muted.ant-btn:not(:disabled):focus-visible .anticon,
+.head-btn--muted.ant-btn:not(:disabled):hover > span,
+.head-btn--muted.ant-btn:not(:disabled):focus-visible > span {
+  color: #fff !important;
 }
 
 .head-btn--planner {
-  border-color: var(--event-color) !important;
+  border-color: var(--event-color, #6495ed) !important;
   background: #fff !important;
-  color: var(--event-color) !important;
+  color: var(--event-color, #6495ed) !important;
   transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 }
 
 .head-btn--planner .anticon {
-  color: var(--event-color);
+  color: var(--event-color, #6495ed);
 }
 
 .head-btn--planner:hover,
-.head-btn--planner:focus-visible {
-  background: var(--event-color) !important;
+.head-btn--planner:focus-visible,
+.head-btn--planner.ant-btn:not(:disabled):hover,
+.head-btn--planner.ant-btn:not(:disabled):focus-visible {
+  background: var(--event-color, #6495ed) !important;
   color: #fff !important;
-  border-color: var(--event-color) !important;
+  border-color: var(--event-color, #6495ed) !important;
 }
 
 .head-btn--planner:hover .anticon,
-.head-btn--planner:focus-visible .anticon {
-  color: #fff;
+.head-btn--planner:focus-visible .anticon,
+.head-btn--planner.ant-btn:not(:disabled):hover .anticon,
+.head-btn--planner.ant-btn:not(:disabled):focus-visible .anticon,
+.head-btn--planner.ant-btn:not(:disabled):hover > span,
+.head-btn--planner.ant-btn:not(:disabled):focus-visible > span {
+  color: #fff !important;
 }
 
 .head-btn--testing {
@@ -80,39 +111,58 @@
 }
 
 .head-btn--testing:hover,
-.head-btn--testing:focus-visible {
+.head-btn--testing:focus-visible,
+.head-btn--testing.ant-btn:not(:disabled):hover,
+.head-btn--testing.ant-btn:not(:disabled):focus-visible {
   background: #0284c7 !important;
   color: #fff !important;
   border-color: #0284c7 !important;
 }
 
 .head-btn--testing:hover .anticon,
-.head-btn--testing:focus-visible .anticon {
-  color: #fff;
+.head-btn--testing:focus-visible .anticon,
+.head-btn--testing.ant-btn:not(:disabled):hover .anticon,
+.head-btn--testing.ant-btn:not(:disabled):focus-visible .anticon,
+.head-btn--testing.ant-btn:not(:disabled):hover > span,
+.head-btn--testing.ant-btn:not(:disabled):focus-visible > span {
+  color: #fff !important;
 }
 
 .head-btn--muted.is-active,
 .head-btn--muted.is-active:hover,
 .head-btn--muted.is-active:focus-visible,
+.head-btn--muted.is-active.ant-btn,
+.head-btn--muted.is-active.ant-btn:hover,
+.head-btn--muted.is-active.ant-btn:focus-visible,
 .head-btn--planner.is-active,
 .head-btn--planner.is-active:hover,
 .head-btn--planner.is-active:focus-visible,
+.head-btn--planner.is-active.ant-btn,
+.head-btn--planner.is-active.ant-btn:hover,
+.head-btn--planner.is-active.ant-btn:focus-visible,
 .head-btn--automation.is-active,
 .head-btn--automation.is-active:hover,
-.head-btn--automation.is-active:focus-visible {
-  background: var(--event-color, #2563eb) !important;
-  border-color: var(--event-color, #2563eb) !important;
+.head-btn--automation.is-active:focus-visible,
+.head-btn--automation.is-active.ant-btn,
+.head-btn--automation.is-active.ant-btn:hover,
+.head-btn--automation.is-active.ant-btn:focus-visible {
+  background: var(--event-color, #6495ed) !important;
+  border-color: var(--event-color, #6495ed) !important;
   color: #fff !important;
 }
 
 .head-btn--automation.is-active,
 .head-btn--automation.is-active:hover,
-.head-btn--automation.is-active:focus-visible {
+.head-btn--automation.is-active:focus-visible,
+.head-btn--automation.is-active.ant-btn,
+.head-btn--automation.is-active.ant-btn:hover,
+.head-btn--automation.is-active.ant-btn:focus-visible {
   background: #1d4ed8 !important;
   border-color: #1d4ed8 !important;
 }
 
-.head-btn.is-active .anticon {
+.head-btn.is-active .anticon,
+.head-btn.is-active > span {
   color: #fff !important;
 }
 
@@ -136,15 +186,21 @@
 }
 
 .head-btn--automation:hover,
-.head-btn--automation:focus-visible {
+.head-btn--automation:focus-visible,
+.head-btn--automation.ant-btn:not(:disabled):hover,
+.head-btn--automation.ant-btn:not(:disabled):focus-visible {
   background: #1d4ed8 !important;
   color: #fff !important;
   border-color: #1d4ed8 !important;
 }
 
 .head-btn--automation:hover .anticon,
-.head-btn--automation:focus-visible .anticon {
-  color: #fff;
+.head-btn--automation:focus-visible .anticon,
+.head-btn--automation.ant-btn:not(:disabled):hover .anticon,
+.head-btn--automation.ant-btn:not(:disabled):focus-visible .anticon,
+.head-btn--automation.ant-btn:not(:disabled):hover > span,
+.head-btn--automation.ant-btn:not(:disabled):focus-visible > span {
+  color: #fff !important;
 }
 
 .head-btn--danger {
@@ -179,9 +235,18 @@
 }
 
 .head-btn--notify:hover,
-.head-btn--notify:focus-visible {
-  border-color: var(--event-color) !important;
-  background: var(--event-color) !important;
+.head-btn--notify:focus-visible,
+.head-btn--notify.ant-btn:not(:disabled):hover,
+.head-btn--notify.ant-btn:not(:disabled):focus-visible {
+  border-color: var(--event-color, #6495ed) !important;
+  background: var(--event-color, #6495ed) !important;
+  color: #fff !important;
+}
+
+.head-btn--notify.ant-btn:not(:disabled):hover .anticon,
+.head-btn--notify.ant-btn:not(:disabled):focus-visible .anticon,
+.head-btn--notify.ant-btn:not(:disabled):hover > span,
+.head-btn--notify.ant-btn:not(:disabled):focus-visible > span {
   color: #fff !important;
 }
 

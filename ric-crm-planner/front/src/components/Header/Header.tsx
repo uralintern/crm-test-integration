@@ -33,6 +33,7 @@ const HEADER_TEXT = {
   deleteAllNotifications: "Удалить все",
   guest: "Гость",
   internships: "Стажировки",
+  internshipsAdmin: "Админ. стажировки",
   login: "Войти",
   logout: "Выйти",
   myRequests: "Мои заявки",
@@ -140,6 +141,30 @@ export default function Header() {
           </span>
         ),
       },
+      {
+        key: "/internships",
+        label: (
+          <span className="mobile-menu-entry">
+            <span className="mobile-menu-entry__icon">
+              <RocketOutlined />
+            </span>
+            <span>{HEADER_TEXT.internships}</span>
+          </span>
+        ),
+      },
+
+      {
+        key: "/internships/admin",
+        label: (
+          <span className="mobile-menu-entry">
+            <span className="mobile-menu-entry__icon">
+              <TeamOutlined />
+            </span>
+            <span>{HEADER_TEXT.internshipsAdmin}</span>
+          </span>
+        ),
+      },
+
       ...(canManageAutomation
         ? [
           {
@@ -205,7 +230,9 @@ export default function Header() {
   };
 
   const activeMobileMenuKey =
-    ["/planner", "/automation", "/requests", "/profile"].find((path) => location.pathname.startsWith(path)) ?? "";
+    ["/planner", "/automation", "/requests", "/internships/admin", "/internships", "/profile"].find((path) =>
+      location.pathname.startsWith(path)
+    ) ?? "";
 
   const openNotifications = () => {
     setMobileMenuOpen(false);
@@ -252,6 +279,8 @@ export default function Header() {
   };
 
   const isActivePath = (path: string) => location.pathname.startsWith(path);
+  const isInternshipsListActive = location.pathname === "/internships";
+  const isInternshipsAdminActive = location.pathname.startsWith("/internships/admin");
 
   const mobileBottomItems = user
     ? [
@@ -262,6 +291,24 @@ export default function Header() {
         active: isActivePath("/requests"),
         onClick: () => goTo("/requests"),
       },
+      {
+        key: "internships",
+        label: HEADER_TEXT.internships,
+        icon: <RocketOutlined />,
+        active: isInternshipsListActive,
+        onClick: () => goTo("/internships"),
+      },
+      ...(canManageAutomation
+        ? [
+          {
+            key: "internships-admin",
+            label: HEADER_TEXT.internshipsAdmin,
+            icon: <TeamOutlined />,
+            active: isInternshipsAdminActive,
+            onClick: () => goTo("/internships/admin"),
+          },
+        ]
+        : []),
       ...(canManageAutomation
         ? [
           {
@@ -355,15 +402,17 @@ export default function Header() {
                 </AppButton>
               )}
 
-              <AppButton className={`head-btn head-btn--muted${isActivePath("/internships") ? " is-active" : ""}`} onClick={() => navigate("/internships")}>
+              <AppButton className={`head-btn head-btn--muted${isInternshipsListActive ? " is-active" : ""}`} onClick={() => navigate("/internships")}>
                 <RocketOutlined />
                 <span>{HEADER_TEXT.internships}</span>
               </AppButton>
 
-              <AppButton className={`head-btn head-btn--muted${isActivePath("/internships/admin") ? " is-active" : ""}`} onClick={() => navigate("/internships/admin")}>
+
+              <AppButton className={`head-btn head-btn--muted${isInternshipsAdminActive ? " is-active" : ""}`} onClick={() => navigate("/internships/admin")}>
                 <TeamOutlined />
-                <span>Админ. стажировки</span>
+                <span>{HEADER_TEXT.internshipsAdmin}</span>
               </AppButton>
+
             </>
           )}
         </div>
