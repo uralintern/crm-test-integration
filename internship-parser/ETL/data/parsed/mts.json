@@ -1,0 +1,1188 @@
+[
+    {
+        "id": "vw04715t80ixkl3mx2zys41w",
+        "slug": "frontend-developer-mws-octapi-686479322822738213",
+        "title": "Стажер Frontend developer [MWS Octapi]",
+        "displayTitle": "Стажер Frontend developer [MWS Octapi]",
+        "summary": null,
+        "cities": [
+            {
+                "id": "h0scutr0ddllx6rcc8r7xv0q",
+                "slug": "552794318700651-552794318700651",
+                "title": "Москва"
+            }
+        ],
+        "employer": {
+            "id": "ujd4lub7njzy8afu6kxavqcw",
+            "slug": "v-60375004784623705",
+            "title": "АО МТС Веб Сервисы",
+            "logoUrl": null
+        },
+        "professionalRoles": [
+            {
+                "id": "v6h8jo6w5y2gn0a8xg02jsef",
+                "slug": "it-60376693377859705",
+                "title": "Работа в IT"
+            },
+            {
+                "id": "cf3ikgr8dehw57xkwsvtsxvo",
+                "slug": "frontend-295882384589471820",
+                "title": "Frontend"
+            }
+        ],
+        "experience": {
+            "id": "v217he2d0yyhyu2jd3vldr64",
+            "slug": "v-NOT",
+            "title": "Без опыта",
+            "code": "NOT"
+        },
+        "workFormats": [
+            {
+                "id": "ehylbxl5f3s9phvtopwbzabb",
+                "slug": "v-hybrid",
+                "title": "Гибридный",
+                "code": "hybrid"
+            }
+        ],
+        "employmentForms": [
+            {
+                "id": "pj9v4kg6kbmey0fkwx79wf17",
+                "slug": "v-FULL",
+                "title": "Полный день",
+                "code": "FULL"
+            }
+        ],
+        "isRemote": false,
+        "isInternship": true,
+        "startLeto": false,
+        "isMass": false,
+        "isReferal": false,
+        "salary": null,
+        "externalUrl": "https://job.mts.ru/jobs/686479322822738213",
+        "publishedAt": "2026-07-22T08:32:16.763Z",
+        "imageUrl": null,
+        "tags": []
+    },
+    {
+        "id": "al7gb8c6h0w0b7d7hkcphyw1",
+        "slug": "intern-system-analyst-automation-of-sales-b2b-684737376978734306",
+        "title": "Intern System Analyst [Automation of sales B2B]",
+        "displayTitle": "Intern System Analyst [Automation of sales B2B]",
+        "summary": null,
+        "cities": [
+            {
+                "id": "h0scutr0ddllx6rcc8r7xv0q",
+                "slug": "552794318700651-552794318700651",
+                "title": "Москва"
+            }
+        ],
+        "employer": {
+            "id": "b767rtkqq1uvenv2pcvghp53",
+            "slug": "v-60374715453145167",
+            "title": "ООО МТС Веб Сервисы",
+            "logoUrl": null
+        },
+        "professionalRoles": [
+            {
+                "id": "uu7fa0zico2f11umo13vtjcn",
+                "slug": "v-60377545291333713",
+                "title": "Аналитика"
+            },
+            {
+                "id": "hw1zmayplwod3dzj3vjza1g6",
+                "slug": "v-60378652839247957",
+                "title": "Системная аналитика"
+            }
+        ],
+        "experience": {
+            "id": "v217he2d0yyhyu2jd3vldr64",
+            "slug": "v-NOT",
+            "title": "Без опыта",
+            "code": "NOT"
+        },
+        "workFormats": [
+            {
+                "id": "kbd8hdjlf9ifcf7d8mu8kcvm",
+                "slug": "v-remote",
+                "title": "Удалённая работа",
+                "code": "remote"
+            }
+        ],
+        "employmentForms": [
+            {
+                "id": "pj9v4kg6kbmey0fkwx79wf17",
+                "slug": "v-FULL",
+                "title": "Полный день",
+                "code": "FULL"
+            }
+        ],
+        "isRemote": false,
+        "isInternship": true,
+        "startLeto": false,
+        "isMass": false,
+        "isReferal": false,
+        "salary": null,
+        "externalUrl": "https://job.mts.ru/jobs/684737376978734306",
+        "publishedAt": "2026-07-22T08:07:43.246Z",
+        "imageUrl": null,
+        "tags": []
+    },
+    {
+        "id": "nmkjjmkhc3u7kwsji6dvpbei",
+        "slug": "ml-engineer-684046522425278867",
+        "title": "Стажер ML Engineer [Команда продуктов корпоративных сервисов]",
+        "displayTitle": "Стажер ML Engineer [Команда продуктов корпоративных сервисов]",
+        "summary": null,
+        "cities": [
+            {
+                "id": "h0scutr0ddllx6rcc8r7xv0q",
+                "slug": "552794318700651-552794318700651",
+                "title": "Москва"
+            }
+        ],
+        "employer": {
+            "id": "b767rtkqq1uvenv2pcvghp53",
+            "slug": "v-60374715453145167",
+            "title": "ООО МТС Веб Сервисы",
+            "logoUrl": null
+        },
+        "professionalRoles": [
+            {
+                "id": "v6h8jo6w5y2gn0a8xg02jsef",
+                "slug": "it-60376693377859705",
+                "title": "Работа в IT"
+            },
+            {
+                "id": "dindixdsepfx8sdrcieu127s",
+                "slug": "ml-295882384589504588",
+                "title": "ML"
+            }
+        ],
+        "experience": {
+            "id": "v217he2d0yyhyu2jd3vldr64",
+            "slug": "v-NOT",
+            "title": "Без опыта",
+            "code": "NOT"
+        },
+        "workFormats": [
+            {
+                "id": "ehylbxl5f3s9phvtopwbzabb",
+                "slug": "v-hybrid",
+                "title": "Гибридный",
+                "code": "hybrid"
+            }
+        ],
+        "employmentForms": [
+            {
+                "id": "pj9v4kg6kbmey0fkwx79wf17",
+                "slug": "v-FULL",
+                "title": "Полный день",
+                "code": "FULL"
+            }
+        ],
+        "isRemote": false,
+        "isInternship": true,
+        "startLeto": false,
+        "isMass": false,
+        "isReferal": false,
+        "salary": null,
+        "externalUrl": "https://job.mts.ru/jobs/684046522425278867",
+        "publishedAt": "2026-07-22T08:07:18.146Z",
+        "imageUrl": null,
+        "tags": []
+    },
+    {
+        "id": "x9zyad23h8lp5bghne6ktbqh",
+        "slug": "devops-683584311718314071",
+        "title": "DevOps-инженер (стажер)",
+        "displayTitle": "DevOps-инженер (стажер)",
+        "summary": null,
+        "cities": [
+            {
+                "id": "h0scutr0ddllx6rcc8r7xv0q",
+                "slug": "552794318700651-552794318700651",
+                "title": "Москва"
+            }
+        ],
+        "employer": {
+            "id": "x6dmumxfiqy69fvmt73qosyl",
+            "slug": "v-60374775695933556",
+            "title": "ПАО МТС-Банк",
+            "logoUrl": null
+        },
+        "professionalRoles": [
+            {
+                "id": "v6h8jo6w5y2gn0a8xg02jsef",
+                "slug": "it-60376693377859705",
+                "title": "Работа в IT"
+            },
+            {
+                "id": "v9dmgh89u3vkdtwse4svr8zx",
+                "slug": "v-60377929682518099",
+                "title": "Поддержка"
+            }
+        ],
+        "experience": {
+            "id": "v217he2d0yyhyu2jd3vldr64",
+            "slug": "v-NOT",
+            "title": "Без опыта",
+            "code": "NOT"
+        },
+        "workFormats": [
+            {
+                "id": "wqr3qrdqiwqtzw3xysoxibfx",
+                "slug": "v-office",
+                "title": "В офисе",
+                "code": "office"
+            }
+        ],
+        "employmentForms": [
+            {
+                "id": "pj9v4kg6kbmey0fkwx79wf17",
+                "slug": "v-FULL",
+                "title": "Полный день",
+                "code": "FULL"
+            }
+        ],
+        "isRemote": false,
+        "isInternship": true,
+        "startLeto": false,
+        "isMass": false,
+        "isReferal": false,
+        "salary": null,
+        "externalUrl": "https://job.mts.ru/jobs/683584311718314071",
+        "publishedAt": "2026-07-22T08:06:53.582Z",
+        "imageUrl": null,
+        "tags": []
+    },
+    {
+        "id": "v5zpt33v2aqd43ddjo76g7b7",
+        "slug": "data-scientist-big-data-681120150077835316",
+        "title": "Стажер Data Scientist в Платформу поиска и рекомендаций [Big Data, МТС Веб Сервисы]",
+        "displayTitle": "Стажер Data Scientist в Платформу поиска и рекомендаций [Big Data, МТС Веб Сервисы]",
+        "summary": null,
+        "cities": [
+            {
+                "id": "h0scutr0ddllx6rcc8r7xv0q",
+                "slug": "552794318700651-552794318700651",
+                "title": "Москва"
+            }
+        ],
+        "employer": {
+            "id": "b767rtkqq1uvenv2pcvghp53",
+            "slug": "v-60374715453145167",
+            "title": "ООО МТС Веб Сервисы",
+            "logoUrl": null
+        },
+        "professionalRoles": [
+            {
+                "id": "v6h8jo6w5y2gn0a8xg02jsef",
+                "slug": "it-60376693377859705",
+                "title": "Работа в IT"
+            },
+            {
+                "id": "dindixdsepfx8sdrcieu127s",
+                "slug": "ml-295882384589504588",
+                "title": "ML"
+            }
+        ],
+        "experience": {
+            "id": "v217he2d0yyhyu2jd3vldr64",
+            "slug": "v-NOT",
+            "title": "Без опыта",
+            "code": "NOT"
+        },
+        "workFormats": [
+            {
+                "id": "ehylbxl5f3s9phvtopwbzabb",
+                "slug": "v-hybrid",
+                "title": "Гибридный",
+                "code": "hybrid"
+            }
+        ],
+        "employmentForms": [
+            {
+                "id": "xyo8yvl3n56ku7zbovr07f4s",
+                "slug": "v-FLEXIBLE",
+                "title": "Гибкий график",
+                "code": "FLEXIBLE"
+            }
+        ],
+        "isRemote": false,
+        "isInternship": true,
+        "startLeto": false,
+        "isMass": false,
+        "isReferal": false,
+        "salary": null,
+        "externalUrl": "https://job.mts.ru/jobs/681120150077835316",
+        "publishedAt": "2026-07-22T08:05:27.653Z",
+        "imageUrl": null,
+        "tags": []
+    },
+    {
+        "id": "ewoc170lv7eavnp7tsbbc4a1",
+        "slug": "python-developer-big-data-681118712966676894",
+        "title": "Стажер Python developer в Контент Крафт [Big Data, МТС Веб Сервисы]",
+        "displayTitle": "Стажер Python developer в Контент Крафт [Big Data, МТС Веб Сервисы]",
+        "summary": null,
+        "cities": [
+            {
+                "id": "h0scutr0ddllx6rcc8r7xv0q",
+                "slug": "552794318700651-552794318700651",
+                "title": "Москва"
+            }
+        ],
+        "employer": {
+            "id": "b767rtkqq1uvenv2pcvghp53",
+            "slug": "v-60374715453145167",
+            "title": "ООО МТС Веб Сервисы",
+            "logoUrl": null
+        },
+        "professionalRoles": [
+            {
+                "id": "v6h8jo6w5y2gn0a8xg02jsef",
+                "slug": "it-60376693377859705",
+                "title": "Работа в IT"
+            },
+            {
+                "id": "v6uuvlqcngbvu08b67xomo4k",
+                "slug": "backend-295882384589455436",
+                "title": "Backend"
+            }
+        ],
+        "experience": {
+            "id": "v217he2d0yyhyu2jd3vldr64",
+            "slug": "v-NOT",
+            "title": "Без опыта",
+            "code": "NOT"
+        },
+        "workFormats": [
+            {
+                "id": "ehylbxl5f3s9phvtopwbzabb",
+                "slug": "v-hybrid",
+                "title": "Гибридный",
+                "code": "hybrid"
+            }
+        ],
+        "employmentForms": [
+            {
+                "id": "xyo8yvl3n56ku7zbovr07f4s",
+                "slug": "v-FLEXIBLE",
+                "title": "Гибкий график",
+                "code": "FLEXIBLE"
+            }
+        ],
+        "isRemote": false,
+        "isInternship": true,
+        "startLeto": false,
+        "isMass": false,
+        "isReferal": false,
+        "salary": null,
+        "externalUrl": "https://job.mts.ru/jobs/681118712966676894",
+        "publishedAt": "2026-07-22T08:05:27.060Z",
+        "imageUrl": null,
+        "tags": []
+    },
+    {
+        "id": "p6rhm1esuetjt6pitr76kmg9",
+        "slug": "java-trademarksystem-679604654727759932",
+        "title": "Стажер Java разработчик [TrademarkSystem, МТС Веб Сервисы]",
+        "displayTitle": "Стажер Java разработчик [TrademarkSystem, МТС Веб Сервисы]",
+        "summary": null,
+        "cities": [
+            {
+                "id": "h0scutr0ddllx6rcc8r7xv0q",
+                "slug": "552794318700651-552794318700651",
+                "title": "Москва"
+            }
+        ],
+        "employer": {
+            "id": "b767rtkqq1uvenv2pcvghp53",
+            "slug": "v-60374715453145167",
+            "title": "ООО МТС Веб Сервисы",
+            "logoUrl": null
+        },
+        "professionalRoles": [
+            {
+                "id": "v6h8jo6w5y2gn0a8xg02jsef",
+                "slug": "it-60376693377859705",
+                "title": "Работа в IT"
+            }
+        ],
+        "experience": {
+            "id": "v217he2d0yyhyu2jd3vldr64",
+            "slug": "v-NOT",
+            "title": "Без опыта",
+            "code": "NOT"
+        },
+        "workFormats": [
+            {
+                "id": "ehylbxl5f3s9phvtopwbzabb",
+                "slug": "v-hybrid",
+                "title": "Гибридный",
+                "code": "hybrid"
+            }
+        ],
+        "employmentForms": [
+            {
+                "id": "pj9v4kg6kbmey0fkwx79wf17",
+                "slug": "v-FULL",
+                "title": "Полный день",
+                "code": "FULL"
+            }
+        ],
+        "isRemote": false,
+        "isInternship": true,
+        "startLeto": false,
+        "isMass": false,
+        "isReferal": false,
+        "salary": null,
+        "externalUrl": "https://job.mts.ru/jobs/679604654727759932",
+        "publishedAt": "2026-07-22T08:04:44.223Z",
+        "imageUrl": null,
+        "tags": []
+    },
+    {
+        "id": "tvfoxphnmhw0l4sc4v7vf08p",
+        "slug": "product-analyst-premium-677090914404925848",
+        "title": "Стажер Product Analyst [МТС Premium]",
+        "displayTitle": "Стажер Product Analyst [МТС Premium]",
+        "summary": null,
+        "cities": [
+            {
+                "id": "h0scutr0ddllx6rcc8r7xv0q",
+                "slug": "552794318700651-552794318700651",
+                "title": "Москва"
+            }
+        ],
+        "employer": {
+            "id": "b767rtkqq1uvenv2pcvghp53",
+            "slug": "v-60374715453145167",
+            "title": "ООО МТС Веб Сервисы",
+            "logoUrl": null
+        },
+        "professionalRoles": [
+            {
+                "id": "uu7fa0zico2f11umo13vtjcn",
+                "slug": "v-60377545291333713",
+                "title": "Аналитика"
+            },
+            {
+                "id": "w8gu6z70zd7nms8vrr329cve",
+                "slug": "v-60378626381578361",
+                "title": "Продуктовая аналитика"
+            }
+        ],
+        "experience": {
+            "id": "v217he2d0yyhyu2jd3vldr64",
+            "slug": "v-NOT",
+            "title": "Без опыта",
+            "code": "NOT"
+        },
+        "workFormats": [
+            {
+                "id": "ehylbxl5f3s9phvtopwbzabb",
+                "slug": "v-hybrid",
+                "title": "Гибридный",
+                "code": "hybrid"
+            }
+        ],
+        "employmentForms": [
+            {
+                "id": "pj9v4kg6kbmey0fkwx79wf17",
+                "slug": "v-FULL",
+                "title": "Полный день",
+                "code": "FULL"
+            }
+        ],
+        "isRemote": false,
+        "isInternship": true,
+        "startLeto": false,
+        "isMass": false,
+        "isReferal": false,
+        "salary": null,
+        "externalUrl": "https://job.mts.ru/jobs/677090914404925848",
+        "publishedAt": "2026-07-22T08:03:52.523Z",
+        "imageUrl": null,
+        "tags": []
+    },
+    {
+        "id": "y3hh52rzqj8gxtwvhah0bux0",
+        "slug": "intern-frontend-dev-governance-676760121979701260",
+        "title": "Intern Frontend dev [Governance]",
+        "displayTitle": "Intern Frontend dev [Governance]",
+        "summary": null,
+        "cities": [
+            {
+                "id": "h0scutr0ddllx6rcc8r7xv0q",
+                "slug": "552794318700651-552794318700651",
+                "title": "Москва"
+            }
+        ],
+        "employer": {
+            "id": "b767rtkqq1uvenv2pcvghp53",
+            "slug": "v-60374715453145167",
+            "title": "ООО МТС Веб Сервисы",
+            "logoUrl": null
+        },
+        "professionalRoles": [
+            {
+                "id": "v6h8jo6w5y2gn0a8xg02jsef",
+                "slug": "it-60376693377859705",
+                "title": "Работа в IT"
+            },
+            {
+                "id": "cf3ikgr8dehw57xkwsvtsxvo",
+                "slug": "frontend-295882384589471820",
+                "title": "Frontend"
+            }
+        ],
+        "experience": {
+            "id": "v217he2d0yyhyu2jd3vldr64",
+            "slug": "v-NOT",
+            "title": "Без опыта",
+            "code": "NOT"
+        },
+        "workFormats": [
+            {
+                "id": "kbd8hdjlf9ifcf7d8mu8kcvm",
+                "slug": "v-remote",
+                "title": "Удалённая работа",
+                "code": "remote"
+            }
+        ],
+        "employmentForms": [
+            {
+                "id": "pj9v4kg6kbmey0fkwx79wf17",
+                "slug": "v-FULL",
+                "title": "Полный день",
+                "code": "FULL"
+            }
+        ],
+        "isRemote": false,
+        "isInternship": true,
+        "startLeto": false,
+        "isMass": false,
+        "isReferal": false,
+        "salary": null,
+        "externalUrl": "https://job.mts.ru/jobs/676760121979701260",
+        "publishedAt": "2026-07-22T08:03:46.877Z",
+        "imageUrl": null,
+        "tags": []
+    },
+    {
+        "id": "y28truvfyt5awdtz79d6qs0q",
+        "slug": "data-engineer-datagovernance-big-data-676711284363755935",
+        "title": "Стажер Data Engineer в Аналитика Datagovernance [Big Data, МТС Веб Сервисы]",
+        "displayTitle": "Стажер Data Engineer в Аналитика Datagovernance [Big Data, МТС Веб Сервисы]",
+        "summary": null,
+        "cities": [
+            {
+                "id": "h0scutr0ddllx6rcc8r7xv0q",
+                "slug": "552794318700651-552794318700651",
+                "title": "Москва"
+            }
+        ],
+        "employer": {
+            "id": "b767rtkqq1uvenv2pcvghp53",
+            "slug": "v-60374715453145167",
+            "title": "ООО МТС Веб Сервисы",
+            "logoUrl": null
+        },
+        "professionalRoles": [
+            {
+                "id": "v6h8jo6w5y2gn0a8xg02jsef",
+                "slug": "it-60376693377859705",
+                "title": "Работа в IT"
+            }
+        ],
+        "experience": {
+            "id": "v217he2d0yyhyu2jd3vldr64",
+            "slug": "v-NOT",
+            "title": "Без опыта",
+            "code": "NOT"
+        },
+        "workFormats": [
+            {
+                "id": "ehylbxl5f3s9phvtopwbzabb",
+                "slug": "v-hybrid",
+                "title": "Гибридный",
+                "code": "hybrid"
+            }
+        ],
+        "employmentForms": [
+            {
+                "id": "xyo8yvl3n56ku7zbovr07f4s",
+                "slug": "v-FLEXIBLE",
+                "title": "Гибкий график",
+                "code": "FLEXIBLE"
+            }
+        ],
+        "isRemote": false,
+        "isInternship": true,
+        "startLeto": false,
+        "isMass": false,
+        "isReferal": false,
+        "salary": null,
+        "externalUrl": "https://job.mts.ru/jobs/676711284363755935",
+        "publishedAt": "2026-07-22T08:03:43.151Z",
+        "imageUrl": null,
+        "tags": []
+    },
+    {
+        "id": "yivhwkh1qxtb2o8hqpu9pgbx",
+        "slug": "fullstack-developer-net-react-mws-chatbot-676098203845656985",
+        "title": "Стажер Fullstack developer (.NET, React) [MWS ChatBot]",
+        "displayTitle": "Стажер Fullstack developer (.NET, React) [MWS ChatBot]",
+        "summary": null,
+        "cities": [
+            {
+                "id": "at159k3qj11jwmnq6ve9paz3",
+                "slug": "552798278123643-552798278123643",
+                "title": "Самара"
+            }
+        ],
+        "employer": {
+            "id": "b767rtkqq1uvenv2pcvghp53",
+            "slug": "v-60374715453145167",
+            "title": "ООО МТС Веб Сервисы",
+            "logoUrl": null
+        },
+        "professionalRoles": [
+            {
+                "id": "v6h8jo6w5y2gn0a8xg02jsef",
+                "slug": "it-60376693377859705",
+                "title": "Работа в IT"
+            },
+            {
+                "id": "v6uuvlqcngbvu08b67xomo4k",
+                "slug": "backend-295882384589455436",
+                "title": "Backend"
+            }
+        ],
+        "experience": {
+            "id": "v217he2d0yyhyu2jd3vldr64",
+            "slug": "v-NOT",
+            "title": "Без опыта",
+            "code": "NOT"
+        },
+        "workFormats": [
+            {
+                "id": "ehylbxl5f3s9phvtopwbzabb",
+                "slug": "v-hybrid",
+                "title": "Гибридный",
+                "code": "hybrid"
+            }
+        ],
+        "employmentForms": [
+            {
+                "id": "pj9v4kg6kbmey0fkwx79wf17",
+                "slug": "v-FULL",
+                "title": "Полный день",
+                "code": "FULL"
+            }
+        ],
+        "isRemote": false,
+        "isInternship": true,
+        "startLeto": false,
+        "isMass": false,
+        "isReferal": false,
+        "salary": null,
+        "externalUrl": "https://job.mts.ru/jobs/676098203845656985",
+        "publishedAt": "2026-07-22T08:03:27.041Z",
+        "imageUrl": null,
+        "tags": []
+    },
+    {
+        "id": "nn5iortcd20s6yiicwcbyqzu",
+        "slug": "chatbot-team-675995579511210421",
+        "title": "Стажер Бизнес аналитик [ChatBot Team, МТС Веб Сервисы]",
+        "displayTitle": "Стажер Бизнес аналитик [ChatBot Team, МТС Веб Сервисы]",
+        "summary": null,
+        "cities": [
+            {
+                "id": "at159k3qj11jwmnq6ve9paz3",
+                "slug": "552798278123643-552798278123643",
+                "title": "Самара"
+            }
+        ],
+        "employer": {
+            "id": "b767rtkqq1uvenv2pcvghp53",
+            "slug": "v-60374715453145167",
+            "title": "ООО МТС Веб Сервисы",
+            "logoUrl": null
+        },
+        "professionalRoles": [
+            {
+                "id": "uu7fa0zico2f11umo13vtjcn",
+                "slug": "v-60377545291333713",
+                "title": "Аналитика"
+            },
+            {
+                "id": "of9arlrzqz3782r3smo847xp",
+                "slug": "v-295882384589602892",
+                "title": "Бизнес аналитика"
+            }
+        ],
+        "experience": {
+            "id": "v217he2d0yyhyu2jd3vldr64",
+            "slug": "v-NOT",
+            "title": "Без опыта",
+            "code": "NOT"
+        },
+        "workFormats": [
+            {
+                "id": "ehylbxl5f3s9phvtopwbzabb",
+                "slug": "v-hybrid",
+                "title": "Гибридный",
+                "code": "hybrid"
+            }
+        ],
+        "employmentForms": [
+            {
+                "id": "pj9v4kg6kbmey0fkwx79wf17",
+                "slug": "v-FULL",
+                "title": "Полный день",
+                "code": "FULL"
+            }
+        ],
+        "isRemote": false,
+        "isInternship": true,
+        "startLeto": false,
+        "isMass": false,
+        "isReferal": false,
+        "salary": null,
+        "externalUrl": "https://job.mts.ru/jobs/675995579511210421",
+        "publishedAt": "2026-07-22T08:03:23.207Z",
+        "imageUrl": null,
+        "tags": []
+    },
+    {
+        "id": "rlv1npgejtz8f2aibw8y4is0",
+        "slug": "data-analyst-big-data-668801831677203574",
+        "title": "Стажер Data Analyst в Скоринг [Big Data, МТС Веб Сервисы]",
+        "displayTitle": "Стажер Data Analyst в Скоринг [Big Data, МТС Веб Сервисы]",
+        "summary": null,
+        "cities": [
+            {
+                "id": "h0scutr0ddllx6rcc8r7xv0q",
+                "slug": "552794318700651-552794318700651",
+                "title": "Москва"
+            }
+        ],
+        "employer": {
+            "id": "b767rtkqq1uvenv2pcvghp53",
+            "slug": "v-60374715453145167",
+            "title": "ООО МТС Веб Сервисы",
+            "logoUrl": null
+        },
+        "professionalRoles": [
+            {
+                "id": "v6h8jo6w5y2gn0a8xg02jsef",
+                "slug": "it-60376693377859705",
+                "title": "Работа в IT"
+            }
+        ],
+        "experience": {
+            "id": "v217he2d0yyhyu2jd3vldr64",
+            "slug": "v-NOT",
+            "title": "Без опыта",
+            "code": "NOT"
+        },
+        "workFormats": [
+            {
+                "id": "ehylbxl5f3s9phvtopwbzabb",
+                "slug": "v-hybrid",
+                "title": "Гибридный",
+                "code": "hybrid"
+            }
+        ],
+        "employmentForms": [
+            {
+                "id": "xyo8yvl3n56ku7zbovr07f4s",
+                "slug": "v-FLEXIBLE",
+                "title": "Гибкий график",
+                "code": "FLEXIBLE"
+            }
+        ],
+        "isRemote": false,
+        "isInternship": true,
+        "startLeto": false,
+        "isMass": false,
+        "isReferal": false,
+        "salary": null,
+        "externalUrl": "https://job.mts.ru/jobs/668801831677203574",
+        "publishedAt": "2026-07-22T08:01:56.822Z",
+        "imageUrl": null,
+        "tags": []
+    },
+    {
+        "id": "oic2ww4dso4iuh96jj2hpjov",
+        "slug": "data-analyst-big-data-668795601361568293",
+        "title": "Стажер Data Analyst в Аналитику для сервиса Заявки Телеком данных [Big Data, МТС Веб Сервисы]",
+        "displayTitle": "Стажер Data Analyst в Аналитику для сервиса Заявки Телеком данных [Big Data, МТС Веб Сервисы]",
+        "summary": null,
+        "cities": [
+            {
+                "id": "h0scutr0ddllx6rcc8r7xv0q",
+                "slug": "552794318700651-552794318700651",
+                "title": "Москва"
+            }
+        ],
+        "employer": {
+            "id": "b767rtkqq1uvenv2pcvghp53",
+            "slug": "v-60374715453145167",
+            "title": "ООО МТС Веб Сервисы",
+            "logoUrl": null
+        },
+        "professionalRoles": [
+            {
+                "id": "v6h8jo6w5y2gn0a8xg02jsef",
+                "slug": "it-60376693377859705",
+                "title": "Работа в IT"
+            }
+        ],
+        "experience": {
+            "id": "v217he2d0yyhyu2jd3vldr64",
+            "slug": "v-NOT",
+            "title": "Без опыта",
+            "code": "NOT"
+        },
+        "workFormats": [
+            {
+                "id": "ehylbxl5f3s9phvtopwbzabb",
+                "slug": "v-hybrid",
+                "title": "Гибридный",
+                "code": "hybrid"
+            }
+        ],
+        "employmentForms": [
+            {
+                "id": "xyo8yvl3n56ku7zbovr07f4s",
+                "slug": "v-FLEXIBLE",
+                "title": "Гибкий график",
+                "code": "FLEXIBLE"
+            }
+        ],
+        "isRemote": false,
+        "isInternship": true,
+        "startLeto": false,
+        "isMass": false,
+        "isReferal": false,
+        "salary": null,
+        "externalUrl": "https://job.mts.ru/jobs/668795601361568293",
+        "publishedAt": "2026-07-22T08:01:56.345Z",
+        "imageUrl": null,
+        "tags": []
+    },
+    {
+        "id": "rje2qdyhuvkgk1gv3paruwx5",
+        "slug": "python-mws-octapi-668452853467059327",
+        "title": "Стажер Python разработчик [MWS Octapi, МТС Веб Сервисы]",
+        "displayTitle": "Стажер Python разработчик [MWS Octapi, МТС Веб Сервисы]",
+        "summary": null,
+        "cities": [
+            {
+                "id": "h0scutr0ddllx6rcc8r7xv0q",
+                "slug": "552794318700651-552794318700651",
+                "title": "Москва"
+            }
+        ],
+        "employer": {
+            "id": "b767rtkqq1uvenv2pcvghp53",
+            "slug": "v-60374715453145167",
+            "title": "ООО МТС Веб Сервисы",
+            "logoUrl": null
+        },
+        "professionalRoles": [
+            {
+                "id": "v6h8jo6w5y2gn0a8xg02jsef",
+                "slug": "it-60376693377859705",
+                "title": "Работа в IT"
+            },
+            {
+                "id": "v6uuvlqcngbvu08b67xomo4k",
+                "slug": "backend-295882384589455436",
+                "title": "Backend"
+            }
+        ],
+        "experience": {
+            "id": "v217he2d0yyhyu2jd3vldr64",
+            "slug": "v-NOT",
+            "title": "Без опыта",
+            "code": "NOT"
+        },
+        "workFormats": [
+            {
+                "id": "ehylbxl5f3s9phvtopwbzabb",
+                "slug": "v-hybrid",
+                "title": "Гибридный",
+                "code": "hybrid"
+            }
+        ],
+        "employmentForms": [
+            {
+                "id": "pj9v4kg6kbmey0fkwx79wf17",
+                "slug": "v-FULL",
+                "title": "Полный день",
+                "code": "FULL"
+            }
+        ],
+        "isRemote": false,
+        "isInternship": true,
+        "startLeto": false,
+        "isMass": false,
+        "isReferal": false,
+        "salary": null,
+        "externalUrl": "https://job.mts.ru/jobs/668452853467059327",
+        "publishedAt": "2026-07-22T08:01:42.366Z",
+        "imageUrl": null,
+        "tags": []
+    },
+    {
+        "id": "bkja4bv3mvsrjpk2tqs0u9ku",
+        "slug": "aqa-python-neo-666680127412769866",
+        "title": "Стажер AQA Python [NEO]",
+        "displayTitle": "Стажер AQA Python [NEO]",
+        "summary": null,
+        "cities": [
+            {
+                "id": "h0scutr0ddllx6rcc8r7xv0q",
+                "slug": "552794318700651-552794318700651",
+                "title": "Москва"
+            }
+        ],
+        "employer": {
+            "id": "b767rtkqq1uvenv2pcvghp53",
+            "slug": "v-60374715453145167",
+            "title": "ООО МТС Веб Сервисы",
+            "logoUrl": null
+        },
+        "professionalRoles": [
+            {
+                "id": "v6h8jo6w5y2gn0a8xg02jsef",
+                "slug": "it-60376693377859705",
+                "title": "Работа в IT"
+            }
+        ],
+        "experience": {
+            "id": "v217he2d0yyhyu2jd3vldr64",
+            "slug": "v-NOT",
+            "title": "Без опыта",
+            "code": "NOT"
+        },
+        "workFormats": [
+            {
+                "id": "wqr3qrdqiwqtzw3xysoxibfx",
+                "slug": "v-office",
+                "title": "В офисе",
+                "code": "office"
+            }
+        ],
+        "employmentForms": [
+            {
+                "id": "xyo8yvl3n56ku7zbovr07f4s",
+                "slug": "v-FLEXIBLE",
+                "title": "Гибкий график",
+                "code": "FLEXIBLE"
+            }
+        ],
+        "isRemote": false,
+        "isInternship": true,
+        "startLeto": false,
+        "isMass": false,
+        "isReferal": false,
+        "salary": null,
+        "externalUrl": "https://job.mts.ru/jobs/666680127412769866",
+        "publishedAt": "2026-07-22T08:01:23.945Z",
+        "imageUrl": null,
+        "tags": []
+    },
+    {
+        "id": "tuwbzbu16yvtucqlschn48k8",
+        "slug": "qa-manual-discovery-portal-650219432806713541",
+        "title": "Стажер QA Manual [Discovery Portal]",
+        "displayTitle": "Стажер QA Manual [Discovery Portal]",
+        "summary": null,
+        "cities": [
+            {
+                "id": "h0scutr0ddllx6rcc8r7xv0q",
+                "slug": "552794318700651-552794318700651",
+                "title": "Москва"
+            }
+        ],
+        "employer": {
+            "id": "b767rtkqq1uvenv2pcvghp53",
+            "slug": "v-60374715453145167",
+            "title": "ООО МТС Веб Сервисы",
+            "logoUrl": null
+        },
+        "professionalRoles": [
+            {
+                "id": "v6h8jo6w5y2gn0a8xg02jsef",
+                "slug": "it-60376693377859705",
+                "title": "Работа в IT"
+            },
+            {
+                "id": "c0fr25yr8997qfl6p4xrgwac",
+                "slug": "v-60377900922175580",
+                "title": "Тестирование"
+            }
+        ],
+        "experience": {
+            "id": "v217he2d0yyhyu2jd3vldr64",
+            "slug": "v-NOT",
+            "title": "Без опыта",
+            "code": "NOT"
+        },
+        "workFormats": [
+            {
+                "id": "ehylbxl5f3s9phvtopwbzabb",
+                "slug": "v-hybrid",
+                "title": "Гибридный",
+                "code": "hybrid"
+            }
+        ],
+        "employmentForms": [
+            {
+                "id": "pj9v4kg6kbmey0fkwx79wf17",
+                "slug": "v-FULL",
+                "title": "Полный день",
+                "code": "FULL"
+            }
+        ],
+        "isRemote": false,
+        "isInternship": true,
+        "startLeto": false,
+        "isMass": false,
+        "isReferal": false,
+        "salary": null,
+        "externalUrl": "https://job.mts.ru/jobs/650219432806713541",
+        "publishedAt": "2026-07-22T07:59:08.145Z",
+        "imageUrl": null,
+        "tags": []
+    },
+    {
+        "id": "itdvq03o8bx32lw9oncmg1yu",
+        "slug": "big-data-646312253687074147",
+        "title": "Стажер Дата аналитик Гео [Big Data, МТС Веб Сервисы]",
+        "displayTitle": "Стажер Дата аналитик Гео [Big Data, МТС Веб Сервисы]",
+        "summary": null,
+        "cities": [
+            {
+                "id": "h0scutr0ddllx6rcc8r7xv0q",
+                "slug": "552794318700651-552794318700651",
+                "title": "Москва"
+            }
+        ],
+        "employer": {
+            "id": "b767rtkqq1uvenv2pcvghp53",
+            "slug": "v-60374715453145167",
+            "title": "ООО МТС Веб Сервисы",
+            "logoUrl": null
+        },
+        "professionalRoles": [
+            {
+                "id": "uu7fa0zico2f11umo13vtjcn",
+                "slug": "v-60377545291333713",
+                "title": "Аналитика"
+            },
+            {
+                "id": "gy3aonu47t4u51xtjp4d3tu8",
+                "slug": "v-295882384589619276",
+                "title": "Аналитика данных"
+            }
+        ],
+        "experience": {
+            "id": "v217he2d0yyhyu2jd3vldr64",
+            "slug": "v-NOT",
+            "title": "Без опыта",
+            "code": "NOT"
+        },
+        "workFormats": [
+            {
+                "id": "ehylbxl5f3s9phvtopwbzabb",
+                "slug": "v-hybrid",
+                "title": "Гибридный",
+                "code": "hybrid"
+            }
+        ],
+        "employmentForms": [
+            {
+                "id": "xyo8yvl3n56ku7zbovr07f4s",
+                "slug": "v-FLEXIBLE",
+                "title": "Гибкий график",
+                "code": "FLEXIBLE"
+            }
+        ],
+        "isRemote": false,
+        "isInternship": true,
+        "startLeto": false,
+        "isMass": false,
+        "isReferal": false,
+        "salary": null,
+        "externalUrl": "https://job.mts.ru/jobs/646312253687074147",
+        "publishedAt": "2026-07-22T07:58:45.649Z",
+        "imageUrl": null,
+        "tags": []
+    },
+    {
+        "id": "f9c2m8nkd390u3evw4wj5sw4",
+        "slug": "fix-big-data-375278270398071619",
+        "title": "Стажер Аналитик МТС FIX (Big Data)",
+        "displayTitle": "Стажер Аналитик МТС FIX (Big Data)",
+        "summary": null,
+        "cities": [
+            {
+                "id": "c3jkuiyran3zstzsvokwg0lu",
+                "slug": "552797212770425-552797212770425",
+                "title": "Псков"
+            }
+        ],
+        "employer": {
+            "id": "b767rtkqq1uvenv2pcvghp53",
+            "slug": "v-60374715453145167",
+            "title": "ООО МТС Веб Сервисы",
+            "logoUrl": null
+        },
+        "professionalRoles": [
+            {
+                "id": "v6h8jo6w5y2gn0a8xg02jsef",
+                "slug": "it-60376693377859705",
+                "title": "Работа в IT"
+            }
+        ],
+        "experience": {
+            "id": "v217he2d0yyhyu2jd3vldr64",
+            "slug": "v-NOT",
+            "title": "Без опыта",
+            "code": "NOT"
+        },
+        "workFormats": [
+            {
+                "id": "wqr3qrdqiwqtzw3xysoxibfx",
+                "slug": "v-office",
+                "title": "В офисе",
+                "code": "office"
+            }
+        ],
+        "employmentForms": [
+            {
+                "id": "pj9v4kg6kbmey0fkwx79wf17",
+                "slug": "v-FULL",
+                "title": "Полный день",
+                "code": "FULL"
+            }
+        ],
+        "isRemote": false,
+        "isInternship": true,
+        "startLeto": false,
+        "isMass": false,
+        "isReferal": false,
+        "salary": null,
+        "externalUrl": "https://job.mts.ru/jobs/375278270398071619",
+        "publishedAt": "2026-07-22T07:51:49.929Z",
+        "imageUrl": null,
+        "tags": []
+    }
+]

@@ -1,0 +1,55 @@
+version: '3'
+
+dotenv: ['.env']
+
+tasks:
+  default:
+    desc: Список доступных команд
+    cmds:
+      - task --list
+
+  init:
+    desc: Инициализация проекта — установка зависимостей и создание .env
+    cmds:
+      - poetry install
+      - task: init:env
+
+  init:env:
+    internal: true
+    desc: Создание .env из .env.example, если файл ещё не существует
+    cmds:
+      - cmd: '[ -f .env ] || cp .env.example .env'
+
+  run:
+    desc: Запуск FastAPI приложения
+    cmds:
+      - poetry run python -m app.main
+
+  parse:
+    desc: Запуск парсинга данных со всех источников
+    dir: ETL
+    cmds:
+      - poetry run python parsers/alfabank.py
+      - poetry run python parsers/beeline.py
+      - poetry run python parsers/kontur.py
+      - poetry run python parsers/mts.py
+      - poetry run python parsers/ozon.py
+      - poetry run python parsers/rostelekom.py
+      - poetry run python parsers/t-bank.py
+      - poetry run python parsers/vk.py
+      - poetry run python parsers/yandex.py
+
+  transform:
+    desc: Трансформация распарсенных данных
+    cmds:
+      - poetry run python ETL/transforms/run_transformers.py
+
+  load:
+    desc: Загрузка трансформированных данных в БД
+    cmds:
+      - poetry run python ETL/loader.py
+
+  build:
+    desc: Развёртывание проекта через Docker Compose
+    cmds:
+      - docker compose up -d --build

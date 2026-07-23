@@ -91,6 +91,120 @@ services:
     depends_on:
       - testing-backend
 
+  parser-db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${PARSER_DB_NAME}
+      POSTGRES_USER: ${PARSER_DB_USER}
+      POSTGRES_PASSWORD: ${PARSER_DB_PASSWORD}
+    volumes:
+      - parser_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  parser-api:
+    image: ${IMAGE_PREFIX:?Set IMAGE_PREFIX}-parser-api:${IMAGE_TAG:-latest}
+    restart: unless-stopped
+    environment:
+      DB_HOST: parser-db
+      DB_PORT: 5432
+      DB_NAME: ${PARSER_DB_NAME}
+      DB_USER: ${PARSER_DB_USER}
+      DB_PASSWORD: ${PARSER_DB_PASSWORD}
+      APP_HOST: 0.0.0.0
+      APP_PORT: ${PARSER_APP_PORT:-8080}
+    depends_on:
+      parser-db:
+        condition: service_healthy
+
+  airflow-init:
+    image: ${IMAGE_PREFIX:?Set IMAGE_PREFIX}-parser-airflow:${IMAGE_TAG:-latest}
+    restart: "no"
+    environment: &airflow-common-env
+      AIRFLOW_HOME: /opt/airflow
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: "false"
+      AIRFLOW__CORE__EXECUTION_API_SERVER_URL: http://airflow-api-server:8080/execution/
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://${PARSER_DB_USER}:${PARSER_DB_PASSWORD}@parser-db:5432/${PARSER_DB_NAME}
+      AIRFLOW__CORE__FERNET_KEY: ${AIRFLOW_FERNET_KEY:-}
+      AIRFLOW__API_AUTH__JWT_SECRET: ${AIRFLOW_JWT_SECRET:-change-this-before-production}
+      AIRFLOW__CORE__SIMPLE_AUTH_MANAGER_USERS: ${AIRFLOW_ADMIN_USERNAME:-airflow}:admin
+      AIRFLOW__CORE__SIMPLE_AUTH_MANAGER_PASSWORDS_FILE: /opt/airflow/simple_auth_manager_passwords.json.generated
+      AIRFLOW_ADMIN_PASSWORD: ${AIRFLOW_ADMIN_PASSWORD:-}
+      DB_HOST: parser-db
+      DB_PORT: 5432
+      DB_USER: ${PARSER_DB_USER}
+      DB_PASSWORD: ${PARSER_DB_PASSWORD}
+      DB_NAME: ${PARSER_DB_NAME}
+      PYTHONPATH: /opt/airflow/project
+    command:
+      - bash
+      - -c
+      - |
+        python - <<'PYEOF'
+        import json
+        import os
+        from pathlib import Path
+
+        password = os.environ.get("AIRFLOW_ADMIN_PASSWORD")
+        if password:
+            username = os.environ.get("AIRFLOW_ADMIN_USERNAME", "airflow")
+            passwords_file = Path(
+                os.environ["AIRFLOW__CORE__SIMPLE_AUTH_MANAGER_PASSWORDS_FILE"]
+            )
+            passwords = {}
+            if passwords_file.exists():
+                passwords = json.loads(passwords_file.read_text() or "{}")
+            passwords[username] = password
+            passwords_file.write_text(json.dumps(passwords))
+            passwords_file.chmod(0o600)
+        PYEOF
+        airflow db migrate
+    depends_on:
+      parser-db:
+        condition: service_healthy
+    volumes: &airflow-common-volumes
+      - ./internship-parser/airflow/dags:/opt/airflow/dags
+      - ./internship-parser:/opt/airflow/project
+      - airflow_data:/opt/airflow
+
+  airflow-api-server:
+    image: ${IMAGE_PREFIX:?Set IMAGE_PREFIX}-parser-airflow:${IMAGE_TAG:-latest}
+    restart: unless-stopped
+    environment: *airflow-common-env
+    command: api-server
+    ports:
+      - "${AIRFLOW_PORT:-8081}:8080"
+    depends_on:
+      airflow-init:
+        condition: service_completed_successfully
+    volumes: *airflow-common-volumes
+
+  airflow-scheduler:
+    image: ${IMAGE_PREFIX:?Set IMAGE_PREFIX}-parser-airflow:${IMAGE_TAG:-latest}
+    restart: unless-stopped
+    environment: *airflow-common-env
+    command: scheduler
+    depends_on:
+      airflow-init:
+        condition: service_completed_successfully
+    volumes: *airflow-common-volumes
+
+  airflow-dag-processor:
+    image: ${IMAGE_PREFIX:?Set IMAGE_PREFIX}-parser-airflow:${IMAGE_TAG:-latest}
+    restart: unless-stopped
+    environment: *airflow-common-env
+    command: dag-processor
+    depends_on:
+      airflow-init:
+        condition: service_completed_successfully
+    volumes: *airflow-common-volumes
+
   web:
     image: ${IMAGE_PREFIX:?Set IMAGE_PREFIX}-web:${IMAGE_TAG:-latest}
     restart: unless-stopped
@@ -100,6 +214,7 @@ services:
     depends_on:
       - backend
       - testing-web
+      - parser-api
     ports:
       - "80:80"
       - "443:443"
@@ -114,3 +229,5 @@ volumes:
   django_static:
   caddy_data:
   caddy_config:
+  parser_postgres_data:
+  airflow_data:

@@ -18,6 +18,10 @@
         reverse_proxy backend:8000
     }
 
+    handle_path /parser/* {
+        reverse_proxy parser-api:8080
+    }
+
     handle /swagger* {
         reverse_proxy backend:8000
     }

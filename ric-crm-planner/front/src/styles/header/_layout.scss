@@ -24,15 +24,34 @@
   position: relative;
 }
 
+
+
 .mobile-menu-spacer {
   display: none;
   width: 40px;
   height: 40px;
   flex: 0 0 40px;
+
+  @media (max-width: 900px) {
+    display: block;
+  }
 }
 
 .mobile-bottom-nav {
   display: none;
+
+  @media (max-width: 900px) {
+    display: flex;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    background: #ffffff;
+    border-top: 1px solid #e6e6e6;
+    padding: 6px 8px;
+    justify-content: space-around;
+  }
 }
 
 .mobile-menu-btn {
@@ -123,4 +142,15 @@
   line-height: 1;
 }
 
+@media (max-width: 1800px) {
+  .header-left {
+    display: none !important;
+  }
 
+  .mobile-menu,
+  .mobile-menu-spacer {
+
+    display: flex !important;
+    align-items: center;
+  }
+}

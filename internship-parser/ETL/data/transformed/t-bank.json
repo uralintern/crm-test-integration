@@ -1,0 +1,232 @@
+[
+  {
+    "title": "Аналитик",
+    "direction": "Информационные технологии",
+    "company": "Т-Банк",
+    "city": "Москва",
+    "work_format": null,
+    "salary_from": null,
+    "description": "Штурмуйте проблемы, выдвигайте гипотезы и тестируйте их",
+    "link": "https://education.tbank.ru/start/analyst/"
+  },
+  {
+    "title": "ИТ-аналитик",
+    "direction": "Информационные технологии",
+    "company": "Т-Банк",
+    "city": "Москва",
+    "work_format": null,
+    "salary_from": null,
+    "description": "Оптимизируйте работу с данными для обработки и хранения информации",
+    "link": "https://education.tbank.ru/start/dwh/"
+  },
+  {
+    "title": "QA-инженер",
+    "direction": "Информационные технологии",
+    "company": "Т-Банк",
+    "city": "Москва",
+    "work_format": null,
+    "salary_from": null,
+    "description": "Отвечайте за качество продукта на всех этапах разработки: тестируйте, работайте с кодом, ведите документацию, выявляйте дефекты, сопровождайте релизы и совершенствуйте процессы разработки",
+    "link": "https://education.tbank.ru/start/quality_engineer/"
+  },
+  {
+    "title": "Frontend-разработчик",
+    "direction": "Информационные технологии",
+    "company": "Т-Банк",
+    "city": "Москва",
+    "work_format": null,
+    "salary_from": null,
+    "description": "Angular | React | Node.js | Vue.js Придумывайте, как создавать удобные сервисы и приложения для клиентов",
+    "link": "https://education.tbank.ru/start/frontend/"
+  },
+  {
+    "title": "Go-разработчик",
+    "direction": "Информационные технологии",
+    "company": "Т-Банк",
+    "city": "Москва",
+    "work_format": null,
+    "salary_from": null,
+    "description": "Создавайте новые продукты с помощью Golang, PostgreSQL и Kafka",
+    "link": "https://education.tbank.ru/start/go/"
+  },
+  {
+    "title": "Системный инженер — SRE",
+    "direction": "Информационные технологии",
+    "company": "Т-Банк",
+    "city": "Москва",
+    "work_format": null,
+    "salary_from": null,
+    "description": "Отвечайте за надежность работы платформ Т‑Банка, мониторьте сбои и реагируйте на них",
+    "link": "https://education.tbank.ru/start/sre_engineer/"
+  },
+  {
+    "title": "Java-разработчик",
+    "direction": "Информационные технологии",
+    "company": "Т-Банк",
+    "city": "Москва",
+    "work_format": null,
+    "salary_from": null,
+    "description": "Решайте задачи по оптимизации и автоматизируйте процессы",
+    "link": "https://education.tbank.ru/start/java/"
+  },
+  {
+    "title": "Python-разработчик",
+    "direction": "Информационные технологии",
+    "company": "Т-Банк",
+    "city": "Москва",
+    "work_format": null,
+    "salary_from": null,
+    "description": "Разрабатывайте API для платформы базовых технологий",
+    "link": "https://education.tbank.ru/start/python/"
+  },
+  {
+    "title": "Разработчик .NET",
+    "direction": "Информационные технологии",
+    "company": "Т-Банк",
+    "city": "Москва",
+    "work_format": null,
+    "salary_from": null,
+    "description": "Развивайте систему для автоматизации найма сотрудников",
+    "link": "https://education.tbank.ru/start/dotnet/"
+  },
+  {
+    "title": "Scala-разработчик",
+    "direction": "Информационные технологии",
+    "company": "Т-Банк",
+    "city": "Москва",
+    "work_format": null,
+    "salary_from": null,
+    "description": "Разрабатывайте бэкенд для вертикали малого и среднего бизнеса",
+    "link": "https://education.tbank.ru/start/scala/"
+  },
+  {
+    "title": "Android-разработчик",
+    "direction": "Информационные технологии",
+    "company": "Т-Банк",
+    "city": "Москва",
+    "work_format": null,
+    "salary_from": null,
+    "description": "Разрабатывайте и улучшайте наши банковские мобильные приложения",
+    "link": "https://education.tbank.ru/start/android/"
+  },
+  {
+    "title": "iOS-разработчик",
+    "direction": "Информационные технологии",
+    "company": "Т-Банк",
+    "city": "Москва",
+    "work_format": null,
+    "salary_from": null,
+    "description": "Развивайте мобильные продукты для клиентов Т-Банка",
+    "link": "https://education.tbank.ru/start/ios/"
+  },
+  {
+    "title": "ML-инженер",
+    "direction": "Информационные технологии",
+    "company": "Т-Банк",
+    "city": "Москва",
+    "work_format": null,
+    "salary_from": null,
+    "description": "Обучайте искусственный интеллект обрабатывать данные и предсказывать результаты",
+    "link": "https://education.tbank.ru/start/ml_engineer/"
+  },
+  {
+    "title": "Support-инженер",
+    "direction": "Информационные технологии",
+    "company": "Т-Банк",
+    "city": "Москва",
+    "work_format": null,
+    "salary_from": null,
+    "description": "Диагностируйте и решайте технические проблемы клиентов и сотрудников, расследуйте их причины и погружайтесь в работу большой ИТ-компании",
+    "link": "https://education.tbank.ru/start/support/"
+  },
+  {
+    "title": "1С-разработчик",
+    "direction": "Информационные технологии",
+    "company": "Т-Банк",
+    "city": "Москва",
+    "work_format": null,
+    "salary_from": null,
+    "description": "Работайте с внутренней системой для автоматизации найма",
+    "link": "https://education.tbank.ru/start/1C_developer/"
+  },
+  {
+    "title": "R&D-инженер",
+    "direction": "Информационные технологии",
+    "company": "Т-Банк",
+    "city": "Москва",
+    "work_format": null,
+    "salary_from": null,
+    "description": "Исследуйте, проверяйте гипотезы и находите решения в наукоемких задачах",
+    "link": "https://education.tbank.ru/start/rnd/"
+  },
+  {
+    "title": "Координатор образовательных проектов",
+    "direction": "Информационные технологии",
+    "company": "Т-Банк",
+    "city": "Москва",
+    "work_format": null,
+    "salary_from": null,
+    "description": "Разрабатывайте образовательные проекты и организовывайте мероприятия для школьников и студентов",
+    "link": "https://education.tbank.ru/start/intern_education/"
+  },
+  {
+    "title": "Преподаватель",
+    "direction": "Информационные технологии",
+    "company": "Т-Банк",
+    "city": "Москва",
+    "work_format": null,
+    "salary_from": null,
+    "description": "Обучайте школьников информационным технологиям в Московской школе программистов",
+    "link": "https://education.tbank.ru/start/mshp/"
+  },
+  {
+    "title": "Маркетолог",
+    "direction": "Информационные технологии",
+    "company": "Т-Банк",
+    "city": "Москва",
+    "work_format": null,
+    "salary_from": null,
+    "description": "Создавайте контент, изучайте аналитику и продвигайте продукты",
+    "link": "https://education.tbank.ru/start/intern_marketing/"
+  },
+  {
+    "title": "Стажер по связям с общественностью",
+    "direction": "Информационные технологии",
+    "company": "Т-Банк",
+    "city": "Москва",
+    "work_format": null,
+    "salary_from": null,
+    "description": "Помогайте в написании пресс-релизов, генерируйте темы для исследований, участвуйте в реализации креативных PR-кампаний",
+    "link": "https://education.tbank.ru/start/pr-manager"
+  },
+  {
+    "title": "Дизайнер",
+    "direction": "Информационные технологии",
+    "company": "Т-Банк",
+    "city": "Москва",
+    "work_format": null,
+    "salary_from": null,
+    "description": "Создавайте визуальные концепции вместе с продуктовой командой",
+    "link": "https://education.tbank.ru/start/designer/"
+  },
+  {
+    "title": "Редактор",
+    "direction": "Информационные технологии",
+    "company": "Т-Банк",
+    "city": "Москва",
+    "work_format": null,
+    "salary_from": null,
+    "description": "Готовьте тексты для продуктов, сторис в мобильном банке или интерфейсов",
+    "link": "https://education.tbank.ru/start/content_writer/"
+  },
+  {
+    "title": "Strategy and New Ventures",
+    "direction": "Информационные технологии",
+    "company": "Т-Банк",
+    "city": "Москва",
+    "work_format": null,
+    "salary_from": null,
+    "description": "Работайте на стыке стратегии, инвестиций и операционной эффективности — развивайте экосистему с нами",
+    "link": "https://education.tbank.ru/start/strategy-and-new-ventures/"
+  }
+]

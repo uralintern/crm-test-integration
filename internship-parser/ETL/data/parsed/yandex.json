@@ -1,0 +1,128 @@
+[
+    {
+        "link": "https://yandex.ru/yaintern/backend",
+        "status": "Набор открыт",
+        "statusInvert": false,
+        "heading": "Бэкенд",
+        "description": "Занимайтесь инфраструктурными и продуктовыми задачами нагруженных систем",
+        "title": "Разработка",
+        "slug": "development"
+    },
+    {
+        "link": "https://yandex.ru/yaintern/frontend",
+        "status": "Набор открыт",
+        "statusInvert": false,
+        "heading": "Фронтенд и фулстек",
+        "description": "Улучшайте интерфейсы сервисов, присоединившись к одной из фронтенд или фулстек‑команд в Яндексе",
+        "title": "Разработка",
+        "slug": "development"
+    },
+    {
+        "link": "https://yandex.ru/yaintern/mobile",
+        "status": "Набор открыт",
+        "statusInvert": false,
+        "heading": "Мобильная разработка",
+        "description": "Участвуйте в создании приложений на Android и iOS для продуктов Яндекса",
+        "title": "Разработка",
+        "slug": "development"
+    },
+    {
+        "link": "https://yandex.ru/yaintern/devops",
+        "status": "Набор открыт",
+        "statusInvert": false,
+        "heading": "DevOps",
+        "description": "Освойте инструменты для создания отказоустойчивых распределённых систем",
+        "title": "Разработка",
+        "slug": "development"
+    },
+    {
+        "link": "https://yandex.ru/yaintern/ml",
+        "status": "Набор открыт",
+        "statusInvert": false,
+        "heading": "ML",
+        "description": "Обучайте нейросети и улучшайте алгоритмы машинного обучения для сервисов Яндекса",
+        "title": "Машинное обучение",
+        "slug": "ml"
+    },
+    {
+        "link": "https://yandex.ru/yaintern/research_ml_residency",
+        "status": "Набор открыт",
+        "statusInvert": false,
+        "heading": "Yandex Research ML Residency",
+        "description": "Принимайте участие в исследованиях мирового уровня в сфере машинного обучения",
+        "title": "Машинное обучение",
+        "slug": "ml"
+    },
+    {
+        "link": "https://yandex.ru/yaintern/analytics",
+        "status": "Набор открыт",
+        "statusInvert": false,
+        "heading": "Аналитика данных",
+        "description": "Прогнозируйте события на основе данных, занимайтесь их сбором и интерпретацией",
+        "title": "Аналитика данных",
+        "slug": "data-analysis"
+    },
+    {
+        "link": "https://yandex.ru/jobs/vacancies?pro_levels=intern&professions=tester",
+        "status": "Набор открыт",
+        "statusInvert": false,
+        "heading": "Автоматизированное тестирование",
+        "description": "Создавайте и применяйте скрипты для автоматической проверки продукта, чтобы ускорить выпуск версий и повысить надёжность системы",
+        "title": "Тестирование",
+        "slug": "testing"
+    },
+    {
+        "link": "https://yandex.ru/yaintern/qa",
+        "status": "Набор открыт",
+        "statusInvert": false,
+        "heading": "Ручное тестирование",
+        "description": "Исследуйте продукт вручную, находите неочевидные ошибки и обеспечивайте высокое качество пользовательского опыта перед каждым релизом",
+        "title": "Тестирование",
+        "slug": "testing"
+    },
+    {
+        "link": "https://yandex.ru/yaintern/business_development",
+        "status": "Набор открыт",
+        "statusInvert": false,
+        "heading": "Специалист по работе с клиентами",
+        "description": "Решайте задачи бизнеса с помощью маркетинговых стратегий",
+        "title": "Бизнес",
+        "slug": "business"
+    },
+    {
+        "link": "https://yandex.ru/jobs/vacancies?profession=sales-manager&profession=client-manager&profession=bis-dev-manager&profession=partner-manager&profession=sales-bis-dev-manager&profession=sales-support-manager&profession=sales-project-manager&from=cp_header&pro_levels=intern",
+        "status": "",
+        "statusInvert": false,
+        "heading": "Развитие бизнеса и продажи",
+        "description": "Находите новых клиентов и партнеров, развивайте отношения и увеличивайте доходы компании",
+        "title": "Бизнес",
+        "slug": "business"
+    },
+    {
+        "link": "https://yandex.ru/jobs/vacancies?professions=smm&pro_levels=intern",
+        "status": "",
+        "statusInvert": false,
+        "heading": "SMM-менеджер",
+        "description": "Создавайте и ведите стратегию присутствия бренда в соцсетях, вовлекая аудиторию через контент и взаимодействие",
+        "title": "Маркетинг",
+        "slug": "marketing"
+    },
+    {
+        "link": "https://yandex.ru/jobs/vacancies?professions=designer-uxui&pro_levels=intern",
+        "status": "",
+        "statusInvert": false,
+        "heading": "UX-дизайнер",
+        "description": "Создавайте удобный, интуитивно понятный и визуально привлекательный интерфейс для сайтов, приложений и других цифровых продуктов",
+        "title": "Дизайн",
+        "slug": "design"
+    },
+    {
+        "link": "https://yandex.ru/jobs/vacancies?pro_levels=intern&professions=engineer&professions=operating-engineer&professions=engineer-constructor",
+        "status": "",
+        "statusInvert": false,
+        "heading": "Инженер",
+        "description": "Создавайте, улучшайте и обеспечивайте бесперебойную работу технических систем и оборудования, превращая идеи в реальные решения",
+        "title": "Инженерия",
+        "slug": "engineering"
+    }
+]

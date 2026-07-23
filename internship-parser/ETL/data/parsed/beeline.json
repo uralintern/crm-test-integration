@@ -1,0 +1,156 @@
+[
+    {
+        "id": "ca1582b6-b9f2-48bb-918f-5b32d5140d32",
+        "name": "Аналитик данных (Стажер)",
+        "grade": "Без опыта",
+        "gross_salary_from": "",
+        "gross_salary_to": "",
+        "location_address": null,
+        "supervisor": false,
+        "role": "Data аналитик",
+        "work_format": [
+            "Гибридный"
+        ],
+        "city": [
+            "Москва"
+        ],
+        "link": "https://job.beeline.ru/vacancies/ca1582b6-b9f2-48bb-918f-5b32d5140d32"
+    },
+    {
+        "id": "ea8464e2-284c-4771-98af-346f32b9fb69",
+        "name": "Стажер по ручному тестированию (мобильное приложение)",
+        "grade": "Без опыта",
+        "gross_salary_from": "",
+        "gross_salary_to": "",
+        "location_address": null,
+        "supervisor": false,
+        "role": "Тестировщик",
+        "work_format": [
+            "Дистанционный"
+        ],
+        "city": [],
+        "link": "https://job.beeline.ru/vacancies/ea8464e2-284c-4771-98af-346f32b9fb69"
+    },
+    {
+        "id": "c8ddd2cb-552d-4db5-a5b3-8fcdc72b2daa",
+        "name": "Frontend разработчик, стажер",
+        "grade": "До 2 лет",
+        "gross_salary_from": "",
+        "gross_salary_to": "",
+        "location_address": null,
+        "supervisor": false,
+        "role": "Разработчик Frontend",
+        "work_format": [
+            "Дистанционный"
+        ],
+        "city": [
+            "Москва"
+        ],
+        "link": "https://job.beeline.ru/vacancies/c8ddd2cb-552d-4db5-a5b3-8fcdc72b2daa"
+    },
+    {
+        "id": "42ed6ce6-759c-4b5d-9282-c62ec07bf714",
+        "name": "BI-разработчик (Стажер)",
+        "grade": "До 2 лет",
+        "gross_salary_from": "",
+        "gross_salary_to": "",
+        "location_address": null,
+        "supervisor": false,
+        "role": "BI разработчик",
+        "work_format": [
+            "Дистанционный"
+        ],
+        "city": [],
+        "link": "https://job.beeline.ru/vacancies/42ed6ce6-759c-4b5d-9282-c62ec07bf714"
+    },
+    {
+        "id": "e2fd5ca9-fe3c-4dc0-9a78-1dce3fa0c73e",
+        "name": "Инженер эксплуатации (Стажер)",
+        "grade": "До 2 лет",
+        "gross_salary_from": "",
+        "gross_salary_to": "",
+        "location_address": null,
+        "supervisor": false,
+        "role": "Data инженер",
+        "work_format": [
+            "Дистанционный"
+        ],
+        "city": [],
+        "link": "https://job.beeline.ru/vacancies/e2fd5ca9-fe3c-4dc0-9a78-1dce3fa0c73e"
+    },
+    {
+        "id": "e9c5deaf-6952-41b5-9517-bd2dac678e74",
+        "name": "Помощник project-менеджера (Стажер)",
+        "grade": "До 2 лет",
+        "gross_salary_from": "",
+        "gross_salary_to": "",
+        "location_address": null,
+        "supervisor": false,
+        "role": "Управление проектами",
+        "work_format": [
+            "Дистанционный"
+        ],
+        "city": [],
+        "link": "https://job.beeline.ru/vacancies/e9c5deaf-6952-41b5-9517-bd2dac678e74"
+    },
+    {
+        "id": "9e269caa-7b97-4389-bbda-fcd454e3ca0e",
+        "name": "Инженер сопровождения (Стажер)",
+        "grade": "Без опыта",
+        "gross_salary_from": "",
+        "gross_salary_to": "",
+        "location_address": null,
+        "supervisor": false,
+        "role": "ИТ-инфраструктура",
+        "work_format": [
+            "Дистанционный"
+        ],
+        "city": [],
+        "link": "https://job.beeline.ru/vacancies/9e269caa-7b97-4389-bbda-fcd454e3ca0e"
+    },
+    {
+        "id": "05d613bd-88fd-4c75-9fb1-6106a9467838",
+        "name": "Тестировщик (Стажер)",
+        "grade": "Без опыта",
+        "gross_salary_from": "",
+        "gross_salary_to": "",
+        "location_address": null,
+        "supervisor": false,
+        "role": "Тестировщик",
+        "work_format": [
+            "Дистанционный"
+        ],
+        "city": [],
+        "link": "https://job.beeline.ru/vacancies/05d613bd-88fd-4c75-9fb1-6106a9467838"
+    },
+    {
+        "id": "ec86813d-ecd3-4f62-a448-9c649207de63",
+        "name": "Администратор приложения/ инженер сопровождения, стажер",
+        "grade": "До 2 лет",
+        "gross_salary_from": "",
+        "gross_salary_to": "",
+        "location_address": null,
+        "supervisor": false,
+        "role": "Администрирование и поддержка ИТ-решений",
+        "work_format": [
+            "Дистанционный"
+        ],
+        "city": [],
+        "link": "https://job.beeline.ru/vacancies/ec86813d-ecd3-4f62-a448-9c649207de63"
+    },
+    {
+        "id": "340cc69d-7883-443f-bf27-8fa7061da46d",
+        "name": "Системный аналитик, стажер",
+        "grade": "До 2 лет",
+        "gross_salary_from": "",
+        "gross_salary_to": "",
+        "location_address": null,
+        "supervisor": false,
+        "role": "Системный аналитик",
+        "work_format": [
+            "Дистанционный"
+        ],
+        "city": [],
+        "link": "https://job.beeline.ru/vacancies/340cc69d-7883-443f-bf27-8fa7061da46d"
+    }
+]

@@ -102,10 +102,15 @@
     border-radius: 14px;
     min-height: 46px;
     padding: 8px 10px;
+    font-size: 13px;
   }
 
-  body .head-btn > span:not(.anticon):not(.ant-badge):not(.notification-badge) {
-    font-size: 13px;
+  body .head-btn>span:not(.anticon):not(.ant-badge):not(.notification-badge) {
+    font-size: inherit;
+  }
+
+  body .head-btn .anticon {
+    font-size: 16px;
   }
 
   body .head-btn--notify,
@@ -117,8 +122,8 @@
     justify-content: center;
   }
 
-  body .head-btn--notify > span:not(.anticon):not(.ant-badge):not(.notification-badge),
-  body .head-btn--danger > span:not(.anticon):not(.ant-badge):not(.notification-badge) {
+  body .head-btn--notify>span:not(.anticon):not(.ant-badge):not(.notification-badge),
+  body .head-btn--danger>span:not(.anticon):not(.ant-badge):not(.notification-badge) {
     display: none;
   }
 
@@ -217,15 +222,15 @@
     padding: 8px;
   }
 
-  body .header-right .head-btn > span:not(.anticon):not(.ant-badge):not(.notification-badge) {
+  body .header-right .head-btn>span:not(.anticon):not(.ant-badge):not(.notification-badge) {
     display: none;
   }
 
-  body .header-right .head-btn--notify > span:not(.anticon):not(.ant-badge):not(.notification-badge) {
+  body .header-right .head-btn--notify>span:not(.anticon):not(.ant-badge):not(.notification-badge) {
     display: none;
   }
 
-  body .header-right .head-btn--login > span:not(.anticon) {
+  body .header-right .head-btn--login>span:not(.anticon) {
     display: inline;
   }
 

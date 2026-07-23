@@ -1,111 +1,98 @@
 @media (max-width: 1280px) {
   body .app-header {
-    margin: 8px 10px;
-    padding: 10px 12px;
-    gap: 10px;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   }
 
   body .head-btn {
-    padding: 8px 10px;
-    gap: 8px;
+    min-width: 0;
   }
 
   body .head-btn span {
-    font-size: 13px;
+    white-space: nowrap;
+  }
+
+  body .head-btn .anticon {
+    flex-shrink: 0;
   }
 
   body .profile-box {
-    padding: 8px 10px;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 1500px) {
+  body .header-left {
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  body .header-left .head-btn {
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  body .header-left .head-btn .anticon {
+    flex-shrink: 0;
   }
 }
 
 @media (min-width: 769px) and (max-width: 1240px) {
   body .app-header {
-    grid-template-columns: 46px minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1fr) auto auto;
   }
 
   body .mobile-menu,
   body .mobile-menu-spacer {
-    display: block;
-    grid-column: 1;
-    justify-self: start;
-  }
-
-  body .mobile-menu-btn {
-    width: 46px;
-    min-width: 46px;
-    height: 46px;
-    padding: 0 !important;
-    border-radius: 14px;
-    border-color: transparent !important;
-    background: transparent !important;
-    box-shadow: none !important;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  body .mobile-menu-btn:hover,
-  body .mobile-menu-btn:focus-visible,
-  body .mobile-menu.open .mobile-menu-btn {
-    border-color: transparent !important;
-    background: transparent !important;
-    box-shadow: none !important;
-  }
-
-  body .header-left {
     display: none;
   }
 
-  body .header-center {
-    grid-column: 2;
-    justify-self: center;
+  body .mobile-menu-btn {
+    display: none;
+  }
+
+  body .header-left {
     min-width: 0;
+    overflow: hidden;
+  }
+
+  body .header-center {
+    justify-self: center;
   }
 
   body .header-logo.ant-btn {
-    width: 68px;
-    height: 46px;
+    width: 75px;
+    height: 50px;
   }
 
   body .header-logo-img {
-    width: 68px;
-    height: 46px;
+    width: 75px;
+    height: 50px;
   }
 
   body .header-right {
-    grid-column: 3;
-    justify-content: flex-end;
+    justify-self: end;
     min-width: 0;
-  }
-
-  body .profile-box {
-    max-width: 190px;
-  }
-
-  body .profile-text {
-    min-width: 0;
-  }
-
-  body .profile-text .name {
     overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
   }
 }
 
 @media (min-width: 769px) and (max-width: 980px) {
-  body .header-right .head-btn--notify,
-  body .header-right .head-btn--danger {
-    width: 46px;
-    min-width: 46px;
-    height: 46px;
-    padding: 0 !important;
-    justify-content: center;
+  body .app-header {
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    gap: 8px;
   }
 
-  body .header-right .head-btn--notify > span:not(.anticon):not(.ant-badge):not(.notification-badge),
-  body .header-right .head-btn--danger > span:not(.anticon):not(.ant-badge):not(.notification-badge) {
-    display: none;
+  body .header-left,
+  body .header-right {
+    gap: 6px;
+  }
+
+  body .head-btn {
+    padding: 8px 10px;
+    min-height: 42px;
+  }
+
+  body .head-btn>span:not(.anticon):not(.ant-badge):not(.notification-badge) {
+    font-size: 12px;
   }
 }
