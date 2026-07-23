@@ -16,6 +16,7 @@ from ETL.transforms.beeline import BeelineTransformer
 from ETL.transforms.kontur import KonturTransformer
 from ETL.transforms.rostelekom import RostelekomTransformer
 from ETL.transforms.tbank import TBankTransformer
+from ETL.transforms.naumen import NaumenTransformer
 
 
 # Маппинг: имя компании -> класс трансформатора
@@ -29,6 +30,7 @@ TRANSFORMERS: dict[str, type] = {
     "kontur": KonturTransformer,
     "rostelekom": RostelekomTransformer,
     "t-bank": TBankTransformer,
+    "naumen": NaumenTransformer,
 }
 
 

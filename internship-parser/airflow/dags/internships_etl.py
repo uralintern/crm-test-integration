@@ -20,6 +20,7 @@ COMPANIES = (
     "beeline",
     "kontur",
     "mts",
+    "naumen",
     "ozon",
     "rostelekom",
     "t-bank",
