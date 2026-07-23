@@ -1,9 +1,7 @@
 @use "./styles/base.scss";
 @use "./styles/teams.scss";
-@use "./styles/backlog.scss";
 @use "./styles/kanban.scss";
+@use "./styles/backlog.scss";
 @use "./styles/gantt.scss";
-@use "./styles/task-card.scss";
 @use "./styles/responsive/kanban.scss" as kanbanResponsive;
 @use "./styles/responsive/gantt.scss" as ganttResponsive;
-@use "./styles/responsive/task-card.scss" as taskCardResponsive;

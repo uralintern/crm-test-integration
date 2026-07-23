@@ -98,20 +98,6 @@
   color: #374151;
 }
 
-.planner-card input:not([type="checkbox"]):not([type="radio"]):not(.ant-select-selection-search-input),
-.planner-card select,
-.planner-card textarea,
-.planner-head .planner-label select {
-  width: 100%;
-  border: 1px solid #d1d5db;
-  border-radius: 10px;
-  padding: 8px 10px;
-  background: #fff;
-  color: #111827;
-  font-size: 14px;
-  line-height: 1.25;
-}
-
 .planner-card .ant-picker .ant-picker-input > input,
 .planner-head .ant-picker .ant-picker-input > input {
   width: 100% !important;
@@ -138,15 +124,6 @@
   background-size: 6px 6px, 6px 6px;
   background-repeat: no-repeat;
   padding-right: 28px;
-}
-
-.planner-card input:not([type="checkbox"]):not([type="radio"]):not(.ant-select-selection-search-input):focus,
-.planner-card select:focus,
-.planner-card textarea:focus,
-.planner-head .planner-label select:focus {
-  outline: none;
-  border-color: #6495ed;
-  box-shadow: 0 0 0 3px rgba(100, 149, 237, 0.2);
 }
 
 .planner-card textarea {
