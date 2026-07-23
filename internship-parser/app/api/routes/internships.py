@@ -6,10 +6,12 @@ from typing import Optional
 from uuid import UUID
 
 from fastapi import APIRouter, Query, HTTPException, status
+from fastapi.responses import Response
 from sqlalchemy.orm import Session
 
 from models.internship import Internship
 from utils.internships_db import internships_db
+from utils.export import get_export_csv, get_export_excel, get_export_word, _get_rows
 from app.schemas import (
     InternshipsListResponse,
     InternshipDetailResponse,
@@ -159,7 +161,77 @@ async def get_internships(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Internal server error"
         )
-    
+    finally:
+        if session:
+            session.close()
+
+
+
+@router.get(
+    "/internship/export",
+    status_code=status.HTTP_200_OK,
+    responses={
+        200: {
+            "description": "Экспорт стажировок в файл",
+            "content": {
+                "text/csv": {},
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": {},
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document": {},
+            },
+        },
+        400: {"description": "Некорректный формат"},
+        500: {"description": "Ошибка сервера"},
+    },
+)
+async def export_internships(
+    format: str = Query(
+        ...,
+        regex="^(csv|word|excel)$",
+        description="Формат файла: csv, word или excel",
+    )
+):
+    """
+    Экспорт данных о стажировках в файл.
+    Доступные форматы: csv, excel, word.
+    """
+    session = None
+    try:
+        session = get_session()
+        rows = _get_rows(session)
+
+        if format == "csv":
+            buf = get_export_csv(rows)
+            media_type = "text/csv; charset=utf-8"
+            filename = "internships.csv"
+        elif format == "word":
+            buf = get_export_word(rows)
+            media_type = (
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            )
+            filename = "internships.docx"
+        else:
+            buf = get_export_excel(rows)
+            media_type = (
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            )
+            filename = "internships.xlsx"
+
+        return Response(
+            content=buf.getvalue(),
+            media_type=media_type,
+            headers={"Content-Disposition": f'attachment; filename="{filename}"'},
+        )
+
+    except HTTPException:
+        raise
+
+    except Exception as e:
+        logger.error(f"Error exporting internships: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Internal server error",
+        )
+
     finally:
         if session:
             session.close()
@@ -246,14 +318,14 @@ async def get_internship_by_uuid(internship_uuid: UUID) -> InternshipDetailRespo
     
     except HTTPException:
         raise
-    
+
     except Exception as e:
         logger.error(f"Error retrieving internship {internship_uuid}: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Internal server error"
         )
-    
+
     finally:
         if session:
             session.close()

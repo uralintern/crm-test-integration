@@ -38,9 +38,9 @@ def get_internships() -> list[dict]:
 
     for card in cards:
         card_text = card.get_text(separator=' ', strip=True)
-        # НЕ ЗАБЫТЬ РАСКОММЕНТИРОВАТЬ ПОТОМ!!!
-        # if 'Набор закрыт' in card_text:
-        #     continue
+
+        if 'Набор закрыт' in card_text:
+            continue
 
         info = card.find('a', class_='internships-card-link')
         if not info:

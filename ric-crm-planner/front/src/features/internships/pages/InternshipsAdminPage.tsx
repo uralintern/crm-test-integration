@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { useToast } from "../../../components/Toast/ToastProvider";
+import { exportInternships } from "../api";
 import "./internshipsAdmin.scss";
 
 interface InternshipRow {
@@ -58,8 +59,13 @@ export default function InternshipsAdminPage() {
         showToast("success", "Выбранные стажировки удалены");
     };
 
-    const handleExport = (format: "word" | "csv" | "excel") => {
-        showToast("info", `Экспорт в ${format.toUpperCase()} пока не подключён к бэкенду`);
+    const handleExport = async (format: "word" | "csv" | "excel") => {
+        try {
+            await exportInternships(format);
+            showToast("success", `Файл ${format.toUpperCase()} сформирован`);
+        } catch (error) {
+            showToast("error", `Ошибка экспорта в ${format.toUpperCase()}`);
+        }
     };
 
     const exportButtons = useMemo(

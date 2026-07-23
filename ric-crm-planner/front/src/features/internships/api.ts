@@ -88,3 +88,37 @@ export async function getInternshipById(id: string): Promise<InternshipDetail> {
     });
     return handleResponse<InternshipDetail>(res);
 }
+
+async function downloadFile(path: string, fallbackFilename = "download"): Promise<void> {
+    const res = await fetch(`${API_BASE}${path}`, {
+        method: "GET",
+        headers: { Accept: "*/*" },
+    });
+
+    if (!res.ok) {
+        let detail = res.statusText;
+        try {
+            const body = await res.json();
+            detail = body?.detail || detail;
+        } catch {
+            const text = await res.text().catch(() => "");
+            detail = text || detail;
+        }
+        throw new Error(detail || `Request failed with status ${res.status}`);
+    }
+
+    const blob = await res.blob();
+    const filename = (res.headers.get("Content-Disposition")?.match(/filename="?([^";]+)"?/)?.[1]) || fallbackFilename;
+    const href = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = href;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(href);
+}
+
+export async function exportInternships(format: "csv" | "word" | "excel"): Promise<void> {
+    await downloadFile(`/api/internship/export?format=${format}`, `internships.${format === "excel" ? "xlsx" : format === "word" ? "docx" : "csv"}`);
+}
