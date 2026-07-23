@@ -125,12 +125,19 @@ services:
     image: ${IMAGE_PREFIX:?Set IMAGE_PREFIX}-parser-airflow:${IMAGE_TAG:-latest}
     user: "${AIRFLOW_UID:-50000}:0"
     restart: "no"
+    mem_limit: 192m
+    mem_reservation: 64m
+    cpus: 0.15
+    pids_limit: 50
     environment: &airflow-common-env
       AIRFLOW_HOME: /opt/airflow
       AIRFLOW__CORE__EXECUTOR: LocalExecutor
       AIRFLOW__CORE__LOAD_EXAMPLES: "false"
       AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: "false"
       AIRFLOW__CORE__EXECUTION_API_SERVER_URL: http://airflow-api-server:8080/execution/
+      AIRFLOW__CORE__PARALLELISM: 4
+      AIRFLOW__SCHEDULER__MAX_THREADS: 2
+      AIRFLOW__SCHEDULER__MAX_RUNS_PER_DAG: 1
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://${PARSER_DB_USER}:${PARSER_DB_PASSWORD}@parser-db:5432/${PARSER_DB_NAME}
       AIRFLOW__CORE__FERNET_KEY: ${AIRFLOW_FERNET_KEY:-}
       AIRFLOW__API_AUTH__JWT_SECRET: ${AIRFLOW_JWT_SECRET:-change-this-before-production}
@@ -179,6 +186,10 @@ services:
     image: ${IMAGE_PREFIX:?Set IMAGE_PREFIX}-parser-airflow:${IMAGE_TAG:-latest}
     user: "${AIRFLOW_UID:-50000}:0"
     restart: unless-stopped
+    mem_limit: 256m
+    mem_reservation: 64m
+    cpus: 0.3
+    pids_limit: 100
     environment: *airflow-common-env
     command: api-server
     ports:
@@ -192,6 +203,10 @@ services:
     image: ${IMAGE_PREFIX:?Set IMAGE_PREFIX}-parser-airflow:${IMAGE_TAG:-latest}
     user: "${AIRFLOW_UID:-50000}:0"
     restart: unless-stopped
+    mem_limit: 256m
+    mem_reservation: 64m
+    cpus: 0.3
+    pids_limit: 100
     environment: *airflow-common-env
     command: scheduler
     depends_on:
@@ -203,6 +218,10 @@ services:
     image: ${IMAGE_PREFIX:?Set IMAGE_PREFIX}-parser-airflow:${IMAGE_TAG:-latest}
     user: "${AIRFLOW_UID:-50000}:0"
     restart: unless-stopped
+    mem_limit: 192m
+    mem_reservation: 64m
+    cpus: 0.15
+    pids_limit: 50
     environment: *airflow-common-env
     command: dag-processor
     depends_on:
