@@ -2,8 +2,8 @@
     "props": {
         "currentYear": 2026,
         "pageProps": {
-            "_sentryTraceData": "cc9a7719c69446d0ae7299b011c7c192-9ff9c6b513f33c84-0",
-            "_sentryBaggage": "sentry-environment=careerhub_prod_serverside,sentry-release=1.5.43,sentry-public_key=92b9ee07598343c0aca4ab9dfa267abb,sentry-trace_id=cc9a7719c69446d0ae7299b011c7c192,sentry-transaction=%2Finternship,sentry-sampled=false",
+            "_sentryTraceData": "bae17af7c25541409889313fa93bfa30-b535794b4a3dcb23-0",
+            "_sentryBaggage": "sentry-environment=careerhub_prod_serverside,sentry-release=1.5.43,sentry-public_key=92b9ee07598343c0aca4ab9dfa267abb,sentry-trace_id=bae17af7c25541409889313fa93bfa30,sentry-transaction=%2Finternship,sentry-sampled=false",
             "page": {
                 "faq_items": [
                     {
@@ -357,16 +357,16 @@
                                 "name": "Все варианты"
                             },
                             {
-                                "id": "Москва"
-                            },
-                            {
                                 "id": "Нижний Новгород, Москва"
                             },
                             {
-                                "id": "Москва, СПб"
+                                "id": "Москва"
                             },
                             {
                                 "id": "Любой"
+                            },
+                            {
+                                "id": "Москва, СПб"
                             },
                             {
                                 "id": "Санкт-Петербург"
@@ -1038,14 +1038,14 @@
             "user": null,
             "vkid": {
                 "app_id": "51842845",
-                "state": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwcm9qZWN0X2lkIjoxNiwicmVxdWVzdF9pcCI6Ijk1LjE2My41MC4xODAiLCJleHBpcmVzX2luIjoxNzg0ODczNDAyLjY3MDE5Nn0.3eVC3fSfNQVqsPKvtwI-vQ_3QeACZBHPOM8MM-wRG3w"
+                "state": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwcm9qZWN0X2lkIjoxNiwicmVxdWVzdF9pcCI6Ijk1LjE2My41MC4xODAiLCJleHBpcmVzX2luIjoxNzg0ODc1NjQ0LjAwMTMwOX0.gvNtM06XKU2N0Qh0Sa-0QCtCvq4EWCWwjzQl0CCz27U"
             },
             "setCookie": [
                 {
                     "name": "csrftoken",
-                    "value": "LsDrzsJ1COZKpFB8Ec9Z1J1P8bP2E5llKhUTl28KxG4X6HKk3H0VvbcJsUyZiUUF",
-                    "csrftoken": "LsDrzsJ1COZKpFB8Ec9Z1J1P8bP2E5llKhUTl28KxG4X6HKk3H0VvbcJsUyZiUUF",
-                    "expires": "Thu, 22 Jul 2027 06:10:02 GMT",
+                    "value": "nsHik75vil9Bkx984txuHFf0Z8PMW9pOJT6LSkZ2WKgD1svmraxeQk3PI0dPAuMV",
+                    "csrftoken": "nsHik75vil9Bkx984txuHFf0Z8PMW9pOJT6LSkZ2WKgD1svmraxeQk3PI0dPAuMV",
+                    "expires": "Thu, 22 Jul 2027 06:47:24 GMT",
                     "max-age": "31449600",
                     "path": "/",
                     "samesite": "Lax",
@@ -1053,9 +1053,9 @@
                 },
                 {
                     "name": "sessionid_gtp",
-                    "value": "y6r7tge1w4042enw7200j99anx5ftu8c",
-                    "sessionid_gtp": "y6r7tge1w4042enw7200j99anx5ftu8c",
-                    "expires": "Thu, 20 Aug 2026 06:10:02 GMT",
+                    "value": "5jf026s22fzf51676kmsdncqzv7res0o",
+                    "sessionid_gtp": "5jf026s22fzf51676kmsdncqzv7res0o",
+                    "expires": "Thu, 20 Aug 2026 06:47:24 GMT",
                     "httponly": true,
                     "max-age": "2419200",
                     "path": "/",

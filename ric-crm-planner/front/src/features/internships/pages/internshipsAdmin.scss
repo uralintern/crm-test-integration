@@ -233,4 +233,10 @@
         accent-color: #2f8fe0;
         cursor: pointer;
     }
+
+    .disabled-block {
+        opacity: 0.55;
+        pointer-events: none;
+        user-select: none;
+    }
 }

@@ -85,7 +85,7 @@ export default function InternshipsAdminPage() {
                 </div>
 
                 <div className="row">
-                    <div className="card">
+                    <div className="card disabled-block">
                         <h2 className="section-title">ВКонтакте - интеграция</h2>
                         <hr className="divider" />
                         <label className="field-label" htmlFor="vk-group-id">ID группы ВКонтакте</label>
@@ -108,7 +108,7 @@ export default function InternshipsAdminPage() {
                             className="btn-save"
                             type="button"
                             onClick={handleSaveVkSettings}
-                            disabled={savingVk}
+                            disabled={true}
                         >
                             {savingVk ? "Сохранение..." : "Сохранить настройки"}
                         </button>
@@ -169,14 +169,14 @@ export default function InternshipsAdminPage() {
                     </div>
                 </div>
 
-                <div className="card table-card">
+                <div className="card table-card disabled-block">
                     <div className="table-header">
                         <h2 className="section-title" style={{ margin: 0 }}>Управление стажировками</h2>
                         <button
                             className="btn-delete"
                             type="button"
                             onClick={handleDeleteSelected}
-                            disabled={selectedIds.length === 0}
+                            disabled={true}
                         >
                             Удалить выбранное
                         </button>
