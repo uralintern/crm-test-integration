@@ -148,11 +148,31 @@ export default function BacklogTab({
   const [openParentById, setOpenParentById] = useState<Record<number, boolean>>(
     {},
   );
+  const [searchText, setSearchText] = useState("");
+
+  const normalizedSearchText = searchText.trim().toLowerCase();
 
   const getParentSubtasks = (parentId: number) =>
     filteredSubtasks.filter(
       (subtask) => Number(subtask.parentTaskId) === Number(parentId),
     );
+
+  const matchesSearch = (value?: string) => {
+    if (!normalizedSearchText) return true;
+    return (value ?? "").toLowerCase().includes(normalizedSearchText);
+  };
+
+  const getVisibleParentSubtasks = (parentId: number) => {
+    const parentSubtasks = getParentSubtasks(parentId);
+    if (!normalizedSearchText) return parentSubtasks;
+
+    return parentSubtasks.filter((subtask) => {
+      const assigneeLabel = getSubtaskAssignee(subtask, displayAssigneeLabel);
+      return [subtask.title, subtask.status, subtask.role, assigneeLabel].some(
+        (value) => matchesSearch(value),
+      );
+    });
+  };
 
   const toggleParent = (parentId: number) => {
     const fallbackOpen = Number(selectedParentId) === Number(parentId);
@@ -276,6 +296,18 @@ export default function BacklogTab({
           </Flex>
           <Flex style={{ width: "100%" }} vertical>
             <span>
+              <FilterOutlined /> Поиск
+            </span>
+            <Input
+              size="large"
+              allowClear
+              placeholder="Поиск по задачам и подзадачам"
+              value={searchText}
+              onChange={(event) => setSearchText(event.target.value)}
+            />
+          </Flex>
+          <Flex style={{ width: "100%" }} vertical>
+            <span>
               <FilterOutlined /> Исполнитель
             </span>
             <Select
@@ -297,129 +329,155 @@ export default function BacklogTab({
           />
         )}
 
-        {filteredParents.map((parent) => {
-          const parentSubtasks = getParentSubtasks(parent.id);
-          const isOpen =
-            Boolean(
-              openParentById[parent.id] ??
-              Number(selectedParentId) === Number(parent.id),
-            ) || editingParentId === parent.id;
-          const parentAssignee = parent.assigneeId
-            ? formatAssigneeName(displayAssigneeLabel(parent.assigneeId))
-            : "Исполнитель не назначен";
+        {filteredParents
+          .map((parent) => {
+            const visibleParentSubtasks = getVisibleParentSubtasks(parent.id);
+            const parentMatchesSearch = matchesSearch(parent.title);
+            const isVisible =
+              !normalizedSearchText ||
+              parentMatchesSearch ||
+              visibleParentSubtasks.length > 0;
 
-          return (
-            <Card
-              key={parent.id}
-              styles={{ body: { padding: 8 } }}
-              className={`backlog-parent-card ${isOpen ? "is-open" : ""}`}
-              onClick={(event) => {
-                event.stopPropagation();
-                toggleParent(parent.id);
-              }}
-            >
-              <Flex justify="space-between" gap={12}>
-                <Flex gap={12}>
-                  <span className="backlog-expander">
-                    {isOpen ? <CaretDownFilled /> : <CaretRightFilled />}
-                  </span>
-                  <span className="backlog-task-copy">
-                    <Flex gap={12} align="center">
-                      <Text
-                        strong
-                        className="backlog-parent-title"
-                        onClick={(event) => {
-                          event.stopPropagation();
-                          onOpenTaskCard("parent", parent.id);
-                        }}
-                      >
-                        {parent.title}
-                      </Text>
-                      <Badge
-                        count={parentSubtasks.length}
-                        overflowCount={99}
-                        color="#2563eb"
-                      />
-                    </Flex>
-                    <Flex gap={12} wrap>
-                      <Tag icon={<CalendarOutlined />}>
-                        {formatDate(parent.startDate)} —{" "}
-                        {formatDate(parent.endDate)}
-                      </Tag>
-                      <Tag
-                        icon={<UserOutlined />}
-                        color={parent.assigneeId ? "blue" : "default"}
-                      >
-                        {parentAssignee}
-                      </Tag>
-                    </Flex>
-                  </span>
-                </Flex>
-                <Flex gap={12}>
-                  <Popconfirm
-                    title="Вы уверены, что хотите удалить эту задачу?"
-                    onConfirm={(event) => {
-                      event?.stopPropagation();
-                      onDeleteParent(parent.id);
-                    }}
-                    okText="Да"
-                    cancelText="Нет"
-                  >
-                    <Button danger size="large" icon={<DeleteOutlined />} />
-                  </Popconfirm>
-                </Flex>
-              </Flex>
+            if (!isVisible) return null;
 
-              {isOpen && (
-                <div
-                  className="backlog-parent-content"
-                  onClick={(event) => event.stopPropagation()}
-                >
-                  <Space vertical size={10} className="backlog-subtask-list">
-                    {parentSubtasks.length === 0 ? (
-                      <Empty
-                        image={Empty.PRESENTED_IMAGE_SIMPLE}
-                        description="Подзадач пока нет"
-                      />
-                    ) : (
-                      parentSubtasks.map(renderSubtaskRow)
-                    )}
-                  </Space>
-                  <Card
-                    size="small"
-                    className="backlog-create-card"
-                    title={
-                      <Space>
-                        <PlusOutlined />
-                        Новая подзадача
-                      </Space>
-                    }
+            const isOpen =
+              Boolean(
+                openParentById[parent.id] ??
+                Number(selectedParentId) === Number(parent.id),
+              ) || editingParentId === parent.id;
+
+            const parentAssignee = parent.assigneeId
+              ? formatAssigneeName(displayAssigneeLabel(parent.assigneeId))
+              : "Исполнитель не назначен";
+
+            return (
+              <Card
+                key={parent.id}
+                styles={{ body: { padding: 8 } }}
+                className={`backlog-parent-card ${isOpen ? "is-open" : ""}`}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  toggleParent(parent.id);
+                }}
+              >
+                <Flex justify="space-between" gap={12}>
+                  <Flex gap={12}>
+                    <span className="backlog-expander">
+                      {isOpen ? <CaretDownFilled /> : <CaretRightFilled />}
+                    </span>
+                    <span className="backlog-task-copy">
+                      <Flex gap={12} align="center">
+                        <Text
+                          strong
+                          className="backlog-parent-title"
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            onOpenTaskCard("parent", parent.id);
+                          }}
+                        >
+                          {parent.title}
+                        </Text>
+                        <Badge
+                          count={visibleParentSubtasks.length}
+                          overflowCount={99}
+                          color="#2563eb"
+                        />
+                      </Flex>
+                      <Flex gap={12} wrap>
+                        <Tag icon={<CalendarOutlined />}>
+                          {formatDate(parent.startDate)} —{" "}
+                          {formatDate(parent.endDate)}
+                        </Tag>
+                        <Tag
+                          icon={<UserOutlined />}
+                          color={parent.assigneeId ? "blue" : "default"}
+                        >
+                          {parentAssignee}
+                        </Tag>
+                      </Flex>
+                    </span>
+                  </Flex>
+                  <Flex gap={12}>
+                    <Popconfirm
+                      title="Вы уверены, что хотите удалить эту задачу?"
+                      onConfirm={(event) => {
+                        event?.stopPropagation();
+                        onDeleteParent(parent.id);
+                      }}
+                      okText="Да"
+                      cancelText="Нет"
+                    >
+                      <Button danger size="large" icon={<DeleteOutlined />} />
+                    </Popconfirm>
+                  </Flex>
+                </Flex>
+
+                {isOpen && (
+                  <div
+                    className="backlog-parent-content"
                     onClick={(event) => event.stopPropagation()}
                   >
-                    <Flex gap={12} vertical justify="space-between">
-                      <Flex gap={12}>
-                        <Input
-                          value={subTitle}
-                          onChange={(event) =>
-                            onSubTitleChange(event.target.value)
-                          }
-                          placeholder="Название подзадачи"
+                    <Space vertical size={10} className="backlog-subtask-list">
+                      {visibleParentSubtasks.length === 0 ? (
+                        <Empty
+                          image={Empty.PRESENTED_IMAGE_SIMPLE}
+                          description="Подзадач пока нет"
                         />
-                        <Button
-                          type="primary"
-                          icon={<PlusOutlined />}
-                          onClick={onAddSubtask}
-                        >
-                          Создать подзадачу
-                        </Button>
+                      ) : (
+                        visibleParentSubtasks.map(renderSubtaskRow)
+                      )}
+                    </Space>
+                    <Card
+                      size="small"
+                      className="backlog-create-card"
+                      title={
+                        <Space>
+                          <PlusOutlined />
+                          Новая подзадача
+                        </Space>
+                      }
+                      onClick={(event) => event.stopPropagation()}
+                    >
+                      <Flex gap={12} vertical justify="space-between">
+                        <Flex gap={12}>
+                          <Input
+                            value={subTitle}
+                            onChange={(event) =>
+                              onSubTitleChange(event.target.value)
+                            }
+                            placeholder="Название подзадачи"
+                          />
+                          <Button
+                            type="primary"
+                            icon={<PlusOutlined />}
+                            onClick={onAddSubtask}
+                          >
+                            Создать подзадачу
+                          </Button>
+                        </Flex>
                       </Flex>
-                    </Flex>
-                  </Card>
-                </div>
-              )}
-            </Card>
-          );
-        })}
+                    </Card>
+                  </div>
+                )}
+              </Card>
+            );
+          })
+          .filter((value): value is React.ReactElement => Boolean(value))}
+
+        {normalizedSearchText &&
+          filteredParents.length > 0 &&
+          filteredParents.every((parent) => {
+            const visibleParentSubtasks = getVisibleParentSubtasks(parent.id);
+            return (
+              !matchesSearch(parent.title) && visibleParentSubtasks.length === 0
+            );
+          }) && (
+            <Empty
+              className="planner-card"
+              image={Empty.PRESENTED_IMAGE_SIMPLE}
+              description="Ничего не найдено по запросу"
+            />
+          )}
       </div>
 
       <Card
