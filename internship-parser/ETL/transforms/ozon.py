@@ -1,5 +1,9 @@
 """Трансформатор для Озона"""
+import logging
 from ETL.transforms.base import BaseTransformer, create_internship_record, extract_work_format
+from ETL.logging_config import get_logger
+
+logger = get_logger(__name__)
 
 
 class OzonTransformer(BaseTransformer):
@@ -7,6 +11,7 @@ class OzonTransformer(BaseTransformer):
     
     def transform(self, data: list[dict]) -> list[dict]:
         """Преобразует данные Озона в единый формат"""
+        logger.info("Starting Ozon transformation, input items: %d", len(data))
         result = []
         for item in data:
             work_format = None
@@ -16,7 +21,7 @@ class OzonTransformer(BaseTransformer):
             
             record = create_internship_record(
                 title=item.get('title', ''),
-                direction="Информационные технологии",  # Озон технологический сектор
+                direction="Информационные технологии",
                 company="Озон",
                 link=item.get('link', ''),
                 city=item.get('city', 'Москва'),
@@ -24,4 +29,5 @@ class OzonTransformer(BaseTransformer):
                 description=None
             )
             result.append(record)
+        logger.info("Ozon transformation finished, output records: %d", len(result))
         return result

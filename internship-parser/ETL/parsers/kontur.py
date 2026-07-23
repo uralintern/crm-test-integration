@@ -1,6 +1,11 @@
 from curl_cffi import requests
 import bs4
 import json
+import logging
+
+from ETL.logging_config import get_logger
+
+logger = get_logger(__name__)
 
 URL = 'https://kontur.ru/education/internship'
 
@@ -27,12 +32,16 @@ def init_internship_data() -> dict:
 
 
 def get_internships() -> list[dict]:
+    logger.info("Sending GET request to %s", URL)
     response = requests.get('https://kontur.ru/education/internship', headers=headers, impersonate="firefox")
+    logger.info("Received response with status %s", response.status_code)
+    logger.info("Parsing HTML response")
     soup = bs4.BeautifulSoup(response.text, 'html.parser')
     cards = soup.find_all('div', class_='internships-card')
     if not cards:
         raise ValueError('Divs not found')
-    
+    logger.info("Found %d internship cards", len(cards))
+
     internships = []
     data = init_internship_data()
 
@@ -62,11 +71,20 @@ def get_internships() -> list[dict]:
         internships.append(data)
         data = init_internship_data()
     
+    logger.info("Total valid internships extracted: %d", len(internships))
     return internships
 
 def save_to_json(data: list[dict], filename: str) -> None:
+    logger.info("Opening file for write: %s", filename)
     with open(filename, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
+    logger.info("File written successfully: %s", filename)
 
-data = get_internships()
-save_to_json(data, 'data/parsed/kontur.json')
+logger.info("Starting Kontur parser")
+
+try:
+    data = get_internships()
+    save_to_json(data, 'data/parsed/kontur.json')
+    logger.info("Kontur parsing finished successfully")
+except Exception as e:
+    logger.error("[ERROR] Failed to parse Kontur internships: %s", e)

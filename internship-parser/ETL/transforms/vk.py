@@ -1,5 +1,9 @@
 """Трансформатор для ВКонтакте"""
+import logging
 from ETL.transforms.base import BaseTransformer, create_internship_record
+from ETL.logging_config import get_logger
+
+logger = get_logger(__name__)
 
 
 class VKTransformer(BaseTransformer):
@@ -7,17 +11,15 @@ class VKTransformer(BaseTransformer):
     
     def transform(self, data: dict) -> list[dict]:
         """Преобразует данные ВКонтакте в единый формат"""
+        logger.info("Starting VK transformation")
         result = []
         
-        # Извлекаем вакансии и направления
         page = data.get('props', {}).get('pageProps', {}).get('page', {})
         vacancies = page.get('vacancies', [])
         directions = page.get('directions', [])
         
-        # Создаем словарь направлений для быстрого поиска
         direction_map = {d['id']: d['name'] for d in directions}
         
-        # Преобразуем формат работы из внутреннего кода
         format_map = {
             'office': 'Офис',
             'remote': 'Удалённая работа',
@@ -25,7 +27,6 @@ class VKTransformer(BaseTransformer):
         }
         
         for vacancy in vacancies:
-            # Пропускаем закрытые вакансии
             if not vacancy.get('is_opened', False):
                 continue
             
@@ -50,4 +51,5 @@ class VKTransformer(BaseTransformer):
             )
             result.append(record)
         
+        logger.info("VK transformation finished, output records: %d", len(result))
         return result

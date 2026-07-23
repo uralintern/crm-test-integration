@@ -1,5 +1,10 @@
 from curl_cffi import requests
 import json
+import logging
+
+from ETL.logging_config import get_logger
+
+logger = get_logger(__name__)
 
 cookies = {
     '__Secure-ETC': '3c937b3dda21e19d2f4b0571454e9207',
@@ -36,11 +41,23 @@ json_data = {
 }
 
 def save_to_json(data: list[dict], filename: str) -> None:
+    logger.info("Opening file for write: %s", filename)
     with open(filename, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
+    logger.info("File written successfully: %s", filename)
 
-response = requests.post('https://ozon.tech/p-api/ozon-tech/vacancy/list', cookies=cookies, headers=headers, json=json_data)
-internships = response.json()['items']
-for data in internships:
-    data['link'] = f'https://ozon.tech/vacancies/{data['internal_uuid']}'
-save_to_json(internships, 'data/parsed/ozon.json')
+logger.info("Starting Ozon parser")
+
+try:
+    url = 'https://ozon.tech/p-api/ozon-tech/vacancy/list'
+    logger.info("Sending POST request to %s", url)
+    response = requests.post(url, cookies=cookies, headers=headers, json=json_data)
+    logger.info("Received response with status %s", response.status_code)
+    internships = response.json()['items']
+    logger.info("Parsed %d internships from response", len(internships))
+    for data in internships:
+        data['link'] = f'https://ozon.tech/vacancies/{data['internal_uuid']}'
+    save_to_json(internships, 'data/parsed/ozon.json')
+    logger.info("Ozon parsing finished successfully")
+except Exception as e:
+    logger.error("[ERROR] Failed to parse Ozon internships: %s", e)

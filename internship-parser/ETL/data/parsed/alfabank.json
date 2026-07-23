@@ -560,34 +560,6 @@
         "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=094bd159-279d-41d7-b0d9-ec9ec7e2afcb"
     },
     {
-        "uuid": "2d3f7a3f-b6e3-4bc9-bdfd-1c03fbc99c07",
-        "externalId": 3291,
-        "name": "Стажёр в департамент продаж и развития малого и микробизнеса",
-        "type": "INTERNSHIP",
-        "direction": {
-            "id": 36,
-            "name": "Розничные продажи"
-        },
-        "city": {
-            "id": 614,
-            "name": "Набережные Челны (Татарстан)"
-        },
-        "workType": {
-            "id": 1,
-            "name": "Полная занятость"
-        },
-        "workFormat": {
-            "id": 3,
-            "name": "Офис"
-        },
-        "workExperience": {
-            "id": 1,
-            "name": "Без опыта"
-        },
-        "updatedAt": "2026-07-14T09:46:36.925505Z",
-        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=2d3f7a3f-b6e3-4bc9-bdfd-1c03fbc99c07"
-    },
-    {
         "uuid": "a6ba69c8-f963-4c01-b4c3-f93cdddfcc66",
         "externalId": 3292,
         "name": "Стажер канала привлечение в департамент продаж и развития малого и микробизнеса",
@@ -1202,5 +1174,61 @@
         },
         "updatedAt": "2026-07-22T12:29:16.261158Z",
         "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=a472096a-cf4a-40f5-bc2a-12b5eda8fc34"
+    },
+    {
+        "uuid": "59e826b3-1d31-406c-b2eb-6e1d48e6a46d",
+        "externalId": 3799,
+        "name": "Стажёр канала привлечение lite",
+        "type": "INTERNSHIP",
+        "direction": {
+            "id": 36,
+            "name": "Розничные продажи"
+        },
+        "city": {
+            "id": 352,
+            "name": "Казань (Татарстан)"
+        },
+        "workType": {
+            "id": 1,
+            "name": "Полная занятость"
+        },
+        "workFormat": {
+            "id": 3,
+            "name": "Офис"
+        },
+        "workExperience": {
+            "id": 1,
+            "name": "Без опыта"
+        },
+        "updatedAt": "2026-07-23T10:46:04.533153Z",
+        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=59e826b3-1d31-406c-b2eb-6e1d48e6a46d"
+    },
+    {
+        "uuid": "3565b559-a66e-4f29-bd55-477447f1f289",
+        "externalId": 3800,
+        "name": "Стажёр в департамент розничного инвестиционного бизнеса",
+        "type": "INTERNSHIP",
+        "direction": {
+            "id": 1,
+            "name": "Администрирование баз данных"
+        },
+        "city": {
+            "id": 604,
+            "name": "Москва (Москва)"
+        },
+        "workType": {
+            "id": 1,
+            "name": "Полная занятость"
+        },
+        "workFormat": {
+            "id": 2,
+            "name": "Гибрид"
+        },
+        "workExperience": {
+            "id": 1,
+            "name": "Без опыта"
+        },
+        "updatedAt": "2026-07-23T10:58:29.215045Z",
+        "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=3565b559-a66e-4f29-bd55-477447f1f289"
     }
 ]

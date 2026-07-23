@@ -1,5 +1,10 @@
 from curl_cffi import requests
 import json
+import logging
+
+from ETL.logging_config import get_logger
+
+logger = get_logger(__name__)
 
 
 cookies = {
@@ -28,16 +33,25 @@ headers = {
 }
 
 def save_to_json(data: list[dict], filename: str) -> None:
+    logger.info("Opening file for write: %s", filename)
     with open(filename, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
+    logger.info("File written successfully: %s", filename)
 
-response = requests.get(
-    'https://alfabank.ru/api/v1/alfastudents-internships/internships?limit=100&offset=0&sort=updatedAt%3Aasc&type.eq=INTERNSHIP',
-    cookies=cookies,
-    headers=headers,
-)
-internships = response.json()['data']
-for data in internships:
-    data['link'] = f'https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy={data['uuid']}'
+logger.info("Starting Alfa-Bank parser")
 
-save_to_json(internships, 'data/parsed/alfabank.json')
+try:
+    url = 'https://alfabank.ru/api/v1/alfastudents-internships/internships?limit=100&offset=0&sort=updatedAt%3Aasc&type.eq=INTERNSHIP'
+    logger.info("Sending GET request to %s", url)
+    response = requests.get(url, cookies=cookies, headers=headers)
+    logger.info("Received response with status %s", response.status_code)
+    response.raise_for_status()
+    internships = response.json()['data']
+    logger.info("Parsed %d internships from response", len(internships))
+    for data in internships:
+        data['link'] = f"https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy={data['uuid']}"
+
+    save_to_json(internships, 'data/parsed/alfabank.json')
+    logger.info("Alfa-Bank parsing finished successfully")
+except Exception as e:
+    logger.error("[ERROR] Failed to parse Alfa-Bank internships: %s", e)

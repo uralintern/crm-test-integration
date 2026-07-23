@@ -1,5 +1,9 @@
 """Трансформатор для Beeline"""
+import logging
 from ETL.transforms.base import BaseTransformer, create_internship_record, extract_city
+from ETL.logging_config import get_logger
+
+logger = get_logger(__name__)
 
 
 class BeelineTransformer(BaseTransformer):
@@ -7,14 +11,13 @@ class BeelineTransformer(BaseTransformer):
     
     def transform(self, data: list[dict]) -> list[dict]:
         """Преобразует данные Beeline в единый формат"""
+        logger.info("Starting Beeline transformation, input items: %d", len(data))
         result = []
         for item in data:
-            # Извлекаем город
             city = extract_city(item.get('city', []))
             if not city:
                 city = "Москва"
             
-            # Извлекаем формат работы
             work_format = None
             formats = item.get('work_format', [])
             if formats:
@@ -30,4 +33,5 @@ class BeelineTransformer(BaseTransformer):
                 description=None
             )
             result.append(record)
+        logger.info("Beeline transformation finished, output records: %d", len(result))
         return result

@@ -1,6 +1,11 @@
 import requests
 import bs4
 import json
+import logging
+
+from ETL.logging_config import get_logger
+
+logger = get_logger(__name__)
 
 
 URL = 'https://yandex.ru/yaintern/internship'
@@ -37,7 +42,10 @@ HEADERS = {
 
 
 def get_parsed_data() -> dict:
+    logger.info("Sending GET request to %s", URL)
     response = requests.get(URL, cookies=COOKIES, headers=HEADERS)
+    logger.info("Received response with status %s", response.status_code)
+    logger.info("Parsing HTML response")
     soup = bs4.BeautifulSoup(response.text, 'html.parser')
     section = soup.find('section', id='kastomnyj-html-page_internshiprujson')
     if not section:
@@ -45,23 +53,34 @@ def get_parsed_data() -> dict:
     template = section.find('template')
     if not template:
         raise ValueError('Template not found')
-    return json.loads(template.get_text(strip=True))
+    data = json.loads(template.get_text(strip=True))
+    logger.info("Parsed JSON data from HTML template")
+    return data
 
 def save_to_json(data, filename: str) -> None:
+    logger.info("Opening file for write: %s", filename)
     with open(filename, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
+    logger.info("File written successfully: %s", filename)
 
 
-data = get_parsed_data()
-internships = []
+logger.info("Starting Yandex parser")
 
-for direction in data['fields']['internships']['directions']:
-    for cur_data in direction['list']:
-        if cur_data.get('notFound') or cur_data.get('statusInvert') in (None, True):
-            continue
-        cur_data['title'] = direction['title']
-        cur_data['slug'] = direction['slug']
-        del cur_data['stripes']
-        internships.append(cur_data)
+try:
+    data = get_parsed_data()
+    internships = []
 
-save_to_json(internships, 'data/parsed/yandex.json')
+    for direction in data['fields']['internships']['directions']:
+        for cur_data in direction['list']:
+            if cur_data.get('notFound') or cur_data.get('statusInvert') in (None, True):
+                continue
+            cur_data['title'] = direction['title']
+            cur_data['slug'] = direction['slug']
+            del cur_data['stripes']
+            internships.append(cur_data)
+
+    logger.info("Total internships collected: %d", len(internships))
+    save_to_json(internships, 'data/parsed/yandex.json')
+    logger.info("Yandex parsing finished successfully")
+except Exception as e:
+    logger.error("[ERROR] Failed to parse Yandex internships: %s", e)

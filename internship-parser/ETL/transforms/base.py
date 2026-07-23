@@ -1,9 +1,14 @@
 """Базовый класс для трансформаторов"""
 import json
+import logging
 import re
 from abc import ABC, abstractmethod
 from pathlib import Path
 from typing import Optional
+
+from ETL.logging_config import get_logger
+
+logger = get_logger(__name__)
 
 
 def extract_text_from_html(html_text: str) -> str:
@@ -11,11 +16,8 @@ def extract_text_from_html(html_text: str) -> str:
     if not html_text:
         return ""
     import html
-    # Удаляем теги
     text = re.sub(r'<[^>]+>', '', html_text)
-    # Декодируем HTML сущности
     text = html.unescape(text)
-    # Удаляем лишние пробелы и переносы строк
     text = re.sub(r'\s+', ' ', text).strip()
     return text
 
@@ -59,14 +61,19 @@ class BaseTransformer(ABC):
     
     def load_data(self) -> any:
         """Загружает данные из JSON файла"""
+        logger.info("Opening input file: %s", self.input_path)
         with open(self.input_path, 'r', encoding='utf-8') as f:
-            return json.load(f)
+            data = json.load(f)
+        logger.info("Input file loaded: %s", self.input_path)
+        return data
     
     def save_data(self, data: list[dict]) -> None:
         """Сохраняет данные в JSON файл"""
+        logger.info("Opening output file for write: %s", self.output_path)
         self.output_path.parent.mkdir(parents=True, exist_ok=True)
         with open(self.output_path, 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
+        logger.info("Output file written successfully: %s", self.output_path)
     
     @abstractmethod
     def transform(self, data: any) -> list[dict]:
@@ -75,14 +82,14 @@ class BaseTransformer(ABC):
     
     def run(self) -> None:
         """Выполняет трансформацию"""
-        print(f"Обработка {self.company_name}...")
+        logger.info("Starting transformation for %s", self.company_name)
         try:
             raw_data = self.load_data()
             transformed_data = self.transform(raw_data)
             self.save_data(transformed_data)
-            print(f"[OK] {self.company_name}: {len(transformed_data)} записей трансформировано")
+            logger.info("[OK] %s: %d records transformed", self.company_name, len(transformed_data))
         except Exception as e:
-            print(f"[ERROR] Ошибка при обработке {self.company_name}: {e}")
+            logger.error("[ERROR] Failed to process %s: %s", self.company_name, e)
 
 
 def create_internship_record(

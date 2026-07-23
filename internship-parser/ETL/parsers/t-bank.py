@@ -1,6 +1,11 @@
 from curl_cffi import requests
 import bs4
 import json
+import logging
+
+from ETL.logging_config import get_logger
+
+logger = get_logger(__name__)
 
 
 headers = {
@@ -18,38 +23,50 @@ headers = {
 }
 
 def save_to_json(data: list[dict], filename: str) -> None:
+    logger.info("Opening file for write: %s", filename)
     with open(filename, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
+    logger.info("File written successfully: %s", filename)
 
-response = requests.get('https://education.tbank.ru/start/', headers=headers)
-soup = bs4.BeautifulSoup(response.text, 'html.parser')
-data = soup.find('script', id='__TRAMVAI_STATE__')
-if not data:
-    raise ValueError('Data not found')
+logger.info("Starting T-Bank parser")
 
+try:
+    url = 'https://education.tbank.ru/start/'
+    logger.info("Sending GET request to %s", url)
+    response = requests.get(url, headers=headers)
+    logger.info("Received response with status %s", response.status_code)
+    logger.info("Parsing HTML response")
+    soup = bs4.BeautifulSoup(response.text, 'html.parser')
+    data = soup.find('script', id='__TRAMVAI_STATE__')
+    if not data:
+        raise ValueError('Data not found')
+    logger.info("Found __TRAMVAI_STATE__ script tag")
 
-internships = []
+    internships = []
 
-contents = json.loads(data.text)['stores']['router']['currentRoute']['config']['content']['content'][5]['content']
-for content in contents:
-    for block in content['content']:
-        version = block['version']
-        if version == '6.1':
-            for panel in block['properties']['panels']:
-                status = panel['badges'][0]['title']['text']
-                title = panel['title']['text']
-                desc = panel['subtitle']['text']
-                link = 'https://education.tbank.ru' + panel['slideLink']['onClick']['url']
-                internships.append({
-                    'status': status,
-                    'title': title,
-                    'desc': desc,
-                    'link': link
-                })
-        elif version == '5.1':
-            continue
-        else:
-            raise ValueError('Unknow version')
+    contents = json.loads(data.text)['stores']['router']['currentRoute']['config']['content']['content'][5]['content']
+    for content in contents:
+        for block in content['content']:
+            version = block['version']
+            if version == '6.1':
+                for panel in block['properties']['panels']:
+                    status = panel['badges'][0]['title']['text']
+                    title = panel['title']['text']
+                    desc = panel['subtitle']['text']
+                    link = 'https://education.tbank.ru' + panel['slideLink']['onClick']['url']
+                    internships.append({
+                        'status': status,
+                        'title': title,
+                        'desc': desc,
+                        'link': link
+                    })
+            elif version == '5.1':
+                continue
+            else:
+                raise ValueError('Unknow version')
 
-save_to_json(internships, 'data/parsed/t-bank.json')
-
+    logger.info("Total internships collected: %d", len(internships))
+    save_to_json(internships, 'data/parsed/t-bank.json')
+    logger.info("T-Bank parsing finished successfully")
+except Exception as e:
+    logger.error("[ERROR] Failed to parse T-Bank internships: %s", e)

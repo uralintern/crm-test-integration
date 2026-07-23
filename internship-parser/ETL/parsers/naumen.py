@@ -1,6 +1,11 @@
 from curl_cffi import requests
 import bs4
 import json
+import logging
+
+from ETL.logging_config import get_logger
+
+logger = get_logger(__name__)
 
 
 URL = 'https://www.naumen.ru/career/trainee/'
@@ -22,58 +27,70 @@ HEADERS = {
 
 
 def save_to_json(data: list[dict], filename: str) -> None:
+    logger.info("Opening file for write: %s", filename)
     with open(filename, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
+    logger.info("File written successfully: %s", filename)
 
+logger.info("Starting Naumen parser")
 
-response = requests.get(URL, headers=HEADERS)
-response.raise_for_status()
-soup = bs4.BeautifulSoup(response.text, 'html.parser')
+try:
+    logger.info("Sending GET request to %s", URL)
+    response = requests.get(URL, headers=HEADERS)
+    logger.info("Received response with status %s", response.status_code)
+    response.raise_for_status()
+    logger.info("Parsing HTML response")
+    soup = bs4.BeautifulSoup(response.text, 'html.parser')
 
-internships = []
+    internships = []
 
-tabs = soup.find_all('div', class_='career-task-wrap')
-if not tabs:
-    raise ValueError('Career task wraps not found')
+    tabs = soup.find_all('div', class_='career-task-wrap')
+    if not tabs:
+        raise ValueError('Career task wraps not found')
+    logger.info("Found %d career task wraps", len(tabs))
 
-for tab in tabs:
-    tab_id = tab.get('id', '')
+    for tab in tabs:
+        tab_id = tab.get('id', '')
 
-    city_name = None
-    tab_link = soup.select_one(f'span.career-menu-tab[data-career-tab="{tab_id}"]')
-    if tab_link:
-        city_name = tab_link.get_text(separator=' ', strip=True)
+        city_name = None
+        tab_link = soup.select_one(f'span.career-menu-tab[data-career-tab="{tab_id}"]')
+        if tab_link:
+            city_name = tab_link.get_text(separator=' ', strip=True)
 
-    if not city_name:
-        continue
-
-    cards = tab.find_all('div', class_='trainee-t-title')
-    if not cards:
-        continue
-
-    for card in cards:
-        title = card.get_text(separator=' ', strip=True)
-        if not title:
+        if not city_name:
             continue
 
-        parent = card.find_parent('div')
-        if not parent:
+        cards = tab.find_all('div', class_='trainee-t-title')
+        if not cards:
             continue
 
-        if not any('col-' in c for c in parent.get('class', [])): # type: ignore
-            continue
-
-        status_el = parent.find('div', class_='trainee-close')
-        if status_el:
-            status_text = status_el.get_text(separator=' ', strip=True)
-            if 'Набор закрыт' in status_text:
+        for card in cards:
+            title = card.get_text(separator=' ', strip=True)
+            if not title:
                 continue
 
-        internships.append({
-            'status': 'Набор открыт',
-            'title': title,
-            'city': city_name,
-            'link': URL,
-        })
+            parent = card.find_parent('div')
+            if not parent:
+                continue
 
-save_to_json(internships, 'data/parsed/naumen.json')
+            if not any('col-' in c for c in parent.get('class', [])): # type: ignore
+                continue
+
+            status_el = parent.find('div', class_='trainee-close')
+            if status_el:
+                status_text = status_el.get_text(separator=' ', strip=True)
+                if 'Набор закрыт' in status_text:
+                    continue
+
+            internships.append({
+                'status': 'Набор открыт',
+                'title': title,
+                'city': city_name,
+                'link': URL,
+            })
+
+    logger.info("Total internships collected: %d", len(internships))
+    save_to_json(internships, 'data/parsed/naumen.json')
+    logger.info("Naumen parsing finished successfully")
+except Exception as e:
+    logger.error("[ERROR] Failed to parse Naumen internships: %s", e)

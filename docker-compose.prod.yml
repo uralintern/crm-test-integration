@@ -170,6 +170,7 @@ services:
         condition: service_healthy
     volumes: &airflow-common-volumes
       - ./internship-parser/airflow/dags:/opt/airflow/dags
+      - ./internship-parser/airflow/logs:/opt/airflow/logs
       - ./internship-parser:/opt/airflow/project
       - airflow_data:/opt/airflow
 

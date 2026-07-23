@@ -200,16 +200,6 @@
     "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=094bd159-279d-41d7-b0d9-ec9ec7e2afcb"
   },
   {
-    "title": "Стажёр в департамент продаж и развития малого и микробизнеса",
-    "direction": "Розничные продажи",
-    "company": "Альфа-Банк",
-    "city": "Набережные Челны (Татарстан)",
-    "work_format": "Офис",
-    "salary_from": null,
-    "description": null,
-    "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=2d3f7a3f-b6e3-4bc9-bdfd-1c03fbc99c07"
-  },
-  {
     "title": "Стажер канала привлечение в департамент продаж и развития малого и микробизнеса",
     "direction": "Работа в отделении",
     "company": "Альфа-Банк",
@@ -428,5 +418,25 @@
     "salary_from": null,
     "description": null,
     "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=a472096a-cf4a-40f5-bc2a-12b5eda8fc34"
+  },
+  {
+    "title": "Стажёр канала привлечение lite",
+    "direction": "Розничные продажи",
+    "company": "Альфа-Банк",
+    "city": "Казань (Татарстан)",
+    "work_format": "Офис",
+    "salary_from": null,
+    "description": null,
+    "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=59e826b3-1d31-406c-b2eb-6e1d48e6a46d"
+  },
+  {
+    "title": "Стажёр в департамент розничного инвестиционного бизнеса",
+    "direction": "Администрирование баз данных",
+    "company": "Альфа-Банк",
+    "city": "Москва (Москва)",
+    "work_format": "Гибрид",
+    "salary_from": null,
+    "description": null,
+    "link": "https://alfabank.ru/alfafuture/ichoosealfa/vacancies/?rp-vacancy=3565b559-a66e-4f29-bd55-477447f1f289"
   }
 ]

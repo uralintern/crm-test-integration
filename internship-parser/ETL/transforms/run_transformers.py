@@ -1,11 +1,14 @@
 """Главный скрипт для трансформации данных всех компаний.
 
 Может принимать необязательный аргумент — имя компании.
-Если аргумент передан, трансформирует только одну компанию.
+Если аргумент передан, трансформирует только одну компания.
 Если не передан — трансформирует все компании.
 """
+import logging
 import sys
 from pathlib import Path
+
+from ETL.logging_config import get_logger
 
 from ETL.transforms.yandex import YandexTransformer
 from ETL.transforms.ozon import OzonTransformer
@@ -18,8 +21,9 @@ from ETL.transforms.rostelekom import RostelekomTransformer
 from ETL.transforms.tbank import TBankTransformer
 from ETL.transforms.naumen import NaumenTransformer
 
+logger = get_logger(__name__)
 
-# Маппинг: имя компании -> класс трансформатора
+
 TRANSFORMERS: dict[str, type] = {
     "yandex": YandexTransformer,
     "ozon": OzonTransformer,
@@ -42,14 +46,14 @@ def run_one(company_name: str, parsed_dir: Path, transformed_dir: Path) -> bool:
     """
     transformer_class = TRANSFORMERS.get(company_name)
     if transformer_class is None:
-        print(f"[ERROR] Неизвестная компания: {company_name}")
+        logger.error("[ERROR] Unknown company: %s", company_name)
         return False
 
     input_file = parsed_dir / f"{company_name}.json"
     output_file = transformed_dir / f"{company_name}.json"
 
     if not input_file.exists():
-        print(f"[FAIL] Файл {input_file} не найден")
+        logger.error("[FAIL] File %s not found", input_file)
         return False
 
     transformer = transformer_class(company_name, input_file, output_file)
@@ -57,7 +61,7 @@ def run_one(company_name: str, parsed_dir: Path, transformed_dir: Path) -> bool:
         transformer.run()
         return True
     except Exception as e:
-        print(f"[ERROR] Ошибка при трансформации {company_name}: {e}")
+        logger.error("[ERROR] Failed to transform %s: %s", company_name, e)
         return False
 
 
@@ -70,9 +74,9 @@ def run_all(parsed_dir: Path, transformed_dir: Path) -> tuple[int, int]:
     successful = 0
     failed = 0
 
-    print("=" * 60)
-    print("Запуск трансформации данных компаний")
-    print("=" * 60)
+    logger.info("=" * 60)
+    logger.info("Starting data transformation for companies")
+    logger.info("=" * 60)
 
     for company_name in TRANSFORMERS:
         if run_one(company_name, parsed_dir, transformed_dir):
@@ -80,9 +84,9 @@ def run_all(parsed_dir: Path, transformed_dir: Path) -> tuple[int, int]:
         else:
             failed += 1
 
-    print("=" * 60)
-    print(f"Результаты: {successful} успешно, {failed} ошибок")
-    print("=" * 60)
+    logger.info("=" * 60)
+    logger.info("Results: %d successful, %d errors", successful, failed)
+    logger.info("=" * 60)
 
     return successful, failed
 
@@ -92,12 +96,16 @@ def main():
     parsed_dir = base_path / "data" / "parsed"
     transformed_dir = base_path / "data" / "transformed"
 
-    # Создаём директорию для трансформированных данных
-    transformed_dir.mkdir(parents=True, exist_ok=True)
+    logger.info("Parser base path: %s", base_path)
+    logger.info("Parsed data directory: %s", parsed_dir)
+    logger.info("Transformed data directory: %s", transformed_dir)
 
-    # Если передан аргумент — обрабатываем только одну компанию
+    transformed_dir.mkdir(parents=True, exist_ok=True)
+    logger.info("Transformed directory ensured")
+
     if len(sys.argv) > 1:
         company = sys.argv[1]
+        logger.info("Single company mode: %s", company)
         success = run_one(company, parsed_dir, transformed_dir)
         sys.exit(0 if success else 1)
     else:
@@ -106,4 +114,5 @@ def main():
 
 
 if __name__ == "__main__":
+    logger.info("run_transformers script started")
     main()
