@@ -17,7 +17,7 @@ from integrations.vk.crm_notifications import (
     send_application_vk_message,
     upload_application_vk_documents,
 )
-from integrations.vk.planner_invites import send_planner_invite
+from integrations.vk.planner_invites import send_planner_invite, send_start_message
 from integrations.vk.services import VKAPIError, VKConfigurationError
 from users.automation_defaults import create_default_crm_automation_config
 from users.models import Application, CRMAutomationAttachment, CRMAutomationConfig, CRMAutomationExecutionLog, Event, Notification, Status
@@ -532,6 +532,13 @@ def run_robot_action(
             log_message = "VK-приглашение в планировщик отправлено проектанту."
         except (VKConfigurationError, VKAPIError, ValueError) as exc:
             notify_organizers_about_vk_error(event.application, str(exc))
+            log_message = str(exc)
+    elif action == "planner.start.vk":
+        try:
+            send_start_message(event.application, message=message)
+            success = True
+            log_message = "VK-Сообщение Старта"
+        except (VKConfigurationError, VKAPIError, ValueError) as exc:
             log_message = str(exc)
     elif action == "status.change":
         target_stage_id = normalized_text(robot.get("targetStageId"))

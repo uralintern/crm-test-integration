@@ -99,6 +99,45 @@ def build_welcome_keyboard() -> dict[str, Any] | None:
     )
 
 
+START_CONFIRMATION_MESSAGE = (
+    "Нажмите «Начать», чтобы подтвердить ваш VK для CRM проектной школы.\n\n"
+    "После подтверждения бот сможет присылать вам сообщения по заявке, "
+    "организационному чату и планировщику."
+)
+
+
+def build_start_confirmation_keyboard() -> dict[str, Any]:
+
+    return {
+        "one_time": True,
+        "inline": False,
+        "buttons": [
+            [
+                {
+                    "action": {
+                        "type": "text",
+                        "label": "Начать",
+                        "payload": json.dumps({"command": "start"}, ensure_ascii=False),
+                    },
+                    "color": "primary",
+                }
+            ]
+        ],
+    }
+
+
+def send_vk_start_confirmation(profile: Profile) -> int:
+    vk_user_id = refresh_profile_vk_user_id(profile)
+    if not vk_user_id:
+        raise ValueError("VK user id is not resolved for profile.")
+
+    return send_vk_message(
+        user_id=vk_user_id,
+        message=START_CONFIRMATION_MESSAGE,
+        keyboard=build_start_confirmation_keyboard(),
+    )
+
+
 def planner_invite_payload(application_id: int, action: str) -> dict[str, Any]:
     return {
         "type": PLANNER_INVITE_PAYLOAD_TYPE,
@@ -138,6 +177,17 @@ def build_planner_invite_message(application: Application) -> str:
 
 
 def send_planner_invite(application: Application, *, message: str = "", keyboard: dict[str, Any] | None = None) -> int:
+    vk_user_id = resolve_vk_application_user_id(application)
+    if not vk_user_id:
+        raise ValueError("проектант не подтвердил VK-бота или указал некорректный VK")
+
+    return send_vk_message(
+        user_id=vk_user_id,
+        message=message or build_planner_invite_message(application),
+        keyboard=keyboard or build_planner_invite_keyboard(application.id),
+    )
+
+def send_start_message(application: Application, *, message: str = "", keyboard: dict[str, Any] | None = None) -> int:
     vk_user_id = resolve_vk_application_user_id(application)
     if not vk_user_id:
         raise ValueError("проектант не подтвердил VK-бота или указал некорректный VK")

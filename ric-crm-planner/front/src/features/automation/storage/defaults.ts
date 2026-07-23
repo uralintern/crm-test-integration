@@ -163,6 +163,16 @@ export const ROBOT_TEMPLATES: Record<AutomationScope, Array<Omit<AutomationRobot
       subject: "Задача завершена",
       message: "Задача отмечена как готовая. Проверьте итоговый статус в планировщике.",
     },
+    {
+      id: "planner-remove-done-from-sprint",
+      stageId: "done",
+      title: "Убрать готовые задачи из спринта",
+      description:
+        "В начале новой недели убирает из спринта подзадачи, оставшиеся в статусе «Готово». Задачи остаются в бэклоге и пропадают с канбана.",
+      action: "sprint.remove_done",
+      subject: "Задача убрана из спринта",
+      message: "Задача завершена и убрана из спринта по итогам недели.",
+    },
   ],
   requests: [
     {

@@ -91,6 +91,17 @@ CRM_ROBOTS = [
         "subject": "Переход к работе в планировщике",
         "message": "Набор завершён. Подтвердите, готовы ли вы приступить к работе в планировщике.",
     },
+{
+        "id": "crm-send-start-message",
+        "stageId": "application-enrollment-closed",
+        "title": "Отправить VK-приглашение",
+        "description": "Отправляет проектанту VK-сообщение с кнопкой старта",
+        "action": "planner.start.vk",
+        "enabled": True,
+        "settings": deepcopy(DEFAULT_AUTOMATION_SETTINGS),
+        "subject": "Сообщение в VK",
+        "message": "Сообщение в VK",
+    },
 ]
 
 CRM_TRIGGERS = [
