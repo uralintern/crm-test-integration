@@ -4,7 +4,7 @@ interface InternshipApiImportMetaEnv {
 
 const API_BASE =
     ((import.meta as ImportMeta & { env?: InternshipApiImportMetaEnv }).env?.VITE_INTERNSHIP_API_BASE || "").trim() ||
-    "http://localhost:8080";
+    "/parser";
 
 export interface InternshipListItem {
     id: string;

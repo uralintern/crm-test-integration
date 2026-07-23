@@ -2,8 +2,8 @@
     "props": {
         "currentYear": 2026,
         "pageProps": {
-            "_sentryTraceData": "b3e81035eef54be7a1981335a44fd097-a0638a46189de95d-0",
-            "_sentryBaggage": "sentry-environment=careerhub_prod_serverside,sentry-release=1.5.43,sentry-public_key=92b9ee07598343c0aca4ab9dfa267abb,sentry-trace_id=b3e81035eef54be7a1981335a44fd097,sentry-transaction=%2Finternship,sentry-sampled=false",
+            "_sentryTraceData": "2f7cc5cf98ca4554848750ac6615f714-8e4495011c99f1e1-0",
+            "_sentryBaggage": "sentry-environment=careerhub_prod_serverside,sentry-release=1.5.43,sentry-public_key=92b9ee07598343c0aca4ab9dfa267abb,sentry-trace_id=2f7cc5cf98ca4554848750ac6615f714,sentry-transaction=%2Finternship,sentry-sampled=false",
             "page": {
                 "faq_items": [
                     {
@@ -357,16 +357,16 @@
                                 "name": "Все варианты"
                             },
                             {
-                                "id": "Нижний Новгород, Москва"
-                            },
-                            {
                                 "id": "Москва"
                             },
                             {
-                                "id": "Любой"
+                                "id": "Нижний Новгород, Москва"
                             },
                             {
                                 "id": "Москва, СПб"
+                            },
+                            {
+                                "id": "Любой"
                             },
                             {
                                 "id": "Санкт-Петербург"
@@ -619,6 +619,23 @@
                     }
                 ],
                 "vacancies": [
+                    {
+                        "id": 1407,
+                        "title": "Java Developer ML-инфраструктуры",
+                        "business_unit": 173,
+                        "direction": 5,
+                        "city": "Москва",
+                        "format": "hybrid",
+                        "employment": "full_time",
+                        "skills": [
+                            201
+                        ],
+                        "date_work_starts": "август 2026",
+                        "date_work_ends": "январь 2027",
+                        "is_opened": true,
+                        "internship_type": "internship",
+                        "for_only_students": false
+                    },
                     {
                         "id": 1405,
                         "title": "Backend-разработчик",
@@ -1021,14 +1038,14 @@
             "user": null,
             "vkid": {
                 "app_id": "51842845",
-                "state": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwcm9qZWN0X2lkIjoxNiwicmVxdWVzdF9pcCI6Ijk1LjE2My41MC4xODAiLCJleHBpcmVzX2luIjoxNzg0ODI3NDgyLjEzMjQwOH0.XAeiV-hXlK1gkQNsDf7cwVsJTe_D1UXCjARECLBZOfM"
+                "state": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwcm9qZWN0X2lkIjoxNiwicmVxdWVzdF9pcCI6Ijk1LjE2My41MC4xODAiLCJleHBpcmVzX2luIjoxNzg0ODcyNTAzLjQ3NTcyN30.Iw2Xz3VK5xsULjIPSHAEOAzMVtaVKh62NZNQ7SZuPjE"
             },
             "setCookie": [
                 {
                     "name": "csrftoken",
-                    "value": "NhklGYUmpqZY9QZx2e7hG3PQin0dJrXdjHrOrX3oUBYZ4XFfUR3TOLA4jJ0uYPY4",
-                    "csrftoken": "NhklGYUmpqZY9QZx2e7hG3PQin0dJrXdjHrOrX3oUBYZ4XFfUR3TOLA4jJ0uYPY4",
-                    "expires": "Wed, 21 Jul 2027 17:24:42 GMT",
+                    "value": "A2Hy8g3yDzBKr7zg9nw8qmgB4H4y89TQSvQAeHJaGrZmYLjOsVe2p4BU2awg02gU",
+                    "csrftoken": "A2Hy8g3yDzBKr7zg9nw8qmgB4H4y89TQSvQAeHJaGrZmYLjOsVe2p4BU2awg02gU",
+                    "expires": "Thu, 22 Jul 2027 05:55:03 GMT",
                     "max-age": "31449600",
                     "path": "/",
                     "samesite": "Lax",
@@ -1036,9 +1053,9 @@
                 },
                 {
                     "name": "sessionid_gtp",
-                    "value": "qxf0dxiooidcw5f41zv2itym6y3kx3wh",
-                    "sessionid_gtp": "qxf0dxiooidcw5f41zv2itym6y3kx3wh",
-                    "expires": "Wed, 19 Aug 2026 17:24:42 GMT",
+                    "value": "fbdudhlhiwksvvbvjqc7zc0s1jjesbto",
+                    "sessionid_gtp": "fbdudhlhiwksvvbvjqc7zc0s1jjesbto",
+                    "expires": "Thu, 20 Aug 2026 05:55:03 GMT",
                     "httponly": true,
                     "max-age": "2419200",
                     "path": "/",
