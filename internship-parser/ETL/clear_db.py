@@ -43,7 +43,7 @@ def main():
         db_ok = True
     except Exception as e:
         logger.error("[ERROR] Failed to clear database: %s", e)
-        return 1
+        raise
 
     if db_ok:
         clear_json_dirs()

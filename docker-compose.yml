@@ -135,6 +135,7 @@ services:
     build:
       context: ./internship-parser/airflow
       dockerfile: Dockerfile
+    user: "${AIRFLOW_UID:-50000}:0"
     restart: "no"
     environment: &airflow-common-env
       AIRFLOW_HOME: /opt/airflow
@@ -190,6 +191,7 @@ services:
     build:
       context: ./internship-parser/airflow
       dockerfile: Dockerfile
+    user: "${AIRFLOW_UID:-50000}:0"
     restart: unless-stopped
     environment: *airflow-common-env
     command: api-server
@@ -204,6 +206,7 @@ services:
     build:
       context: ./internship-parser/airflow
       dockerfile: Dockerfile
+    user: "${AIRFLOW_UID:-50000}:0"
     restart: unless-stopped
     environment: *airflow-common-env
     command: scheduler
@@ -216,6 +219,7 @@ services:
     build:
       context: ./internship-parser/airflow
       dockerfile: Dockerfile
+    user: "${AIRFLOW_UID:-50000}:0"
     restart: unless-stopped
     environment: *airflow-common-env
     command: dag-processor

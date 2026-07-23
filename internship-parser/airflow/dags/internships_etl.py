@@ -8,7 +8,10 @@
 from datetime import datetime, timedelta
 
 from airflow.providers.standard.operators.bash import BashOperator
+from airflow.providers.standard.operators.python import PythonOperator
 from airflow.sdk import DAG
+
+from ETL.clear_db import main as clear_db_main
 
 
 PROJECT_ROOT = "/opt/airflow/project"
@@ -43,13 +46,9 @@ with DAG(
 ) as internships_etl:
 
     # Очистка БД перед запуском всех цепочек
-    clear_db = BashOperator(
+    clear_db = PythonOperator(
         task_id="clear_db",
-        bash_command=(
-            "set -euo pipefail\n"
-            f"cd {PROJECT_ROOT}\n"
-            "python ETL/clear_db.py"
-        ),
+        python_callable=clear_db_main,
     )
 
     # Список первых задач (parse) для связывания с clear_db

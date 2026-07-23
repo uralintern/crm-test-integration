@@ -123,6 +123,7 @@ services:
 
   airflow-init:
     image: ${IMAGE_PREFIX:?Set IMAGE_PREFIX}-parser-airflow:${IMAGE_TAG:-latest}
+    user: "${AIRFLOW_UID:-50000}:0"
     restart: "no"
     environment: &airflow-common-env
       AIRFLOW_HOME: /opt/airflow
@@ -176,6 +177,7 @@ services:
 
   airflow-api-server:
     image: ${IMAGE_PREFIX:?Set IMAGE_PREFIX}-parser-airflow:${IMAGE_TAG:-latest}
+    user: "${AIRFLOW_UID:-50000}:0"
     restart: unless-stopped
     environment: *airflow-common-env
     command: api-server
@@ -188,6 +190,7 @@ services:
 
   airflow-scheduler:
     image: ${IMAGE_PREFIX:?Set IMAGE_PREFIX}-parser-airflow:${IMAGE_TAG:-latest}
+    user: "${AIRFLOW_UID:-50000}:0"
     restart: unless-stopped
     environment: *airflow-common-env
     command: scheduler
@@ -198,6 +201,7 @@ services:
 
   airflow-dag-processor:
     image: ${IMAGE_PREFIX:?Set IMAGE_PREFIX}-parser-airflow:${IMAGE_TAG:-latest}
+    user: "${AIRFLOW_UID:-50000}:0"
     restart: unless-stopped
     environment: *airflow-common-env
     command: dag-processor
