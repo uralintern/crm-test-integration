@@ -2,8 +2,8 @@
     "props": {
         "currentYear": 2026,
         "pageProps": {
-            "_sentryTraceData": "2f7cc5cf98ca4554848750ac6615f714-8e4495011c99f1e1-0",
-            "_sentryBaggage": "sentry-environment=careerhub_prod_serverside,sentry-release=1.5.43,sentry-public_key=92b9ee07598343c0aca4ab9dfa267abb,sentry-trace_id=2f7cc5cf98ca4554848750ac6615f714,sentry-transaction=%2Finternship,sentry-sampled=false",
+            "_sentryTraceData": "cc9a7719c69446d0ae7299b011c7c192-9ff9c6b513f33c84-0",
+            "_sentryBaggage": "sentry-environment=careerhub_prod_serverside,sentry-release=1.5.43,sentry-public_key=92b9ee07598343c0aca4ab9dfa267abb,sentry-trace_id=cc9a7719c69446d0ae7299b011c7c192,sentry-transaction=%2Finternship,sentry-sampled=false",
             "page": {
                 "faq_items": [
                     {
@@ -1038,14 +1038,14 @@
             "user": null,
             "vkid": {
                 "app_id": "51842845",
-                "state": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwcm9qZWN0X2lkIjoxNiwicmVxdWVzdF9pcCI6Ijk1LjE2My41MC4xODAiLCJleHBpcmVzX2luIjoxNzg0ODcyNTAzLjQ3NTcyN30.Iw2Xz3VK5xsULjIPSHAEOAzMVtaVKh62NZNQ7SZuPjE"
+                "state": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwcm9qZWN0X2lkIjoxNiwicmVxdWVzdF9pcCI6Ijk1LjE2My41MC4xODAiLCJleHBpcmVzX2luIjoxNzg0ODczNDAyLjY3MDE5Nn0.3eVC3fSfNQVqsPKvtwI-vQ_3QeACZBHPOM8MM-wRG3w"
             },
             "setCookie": [
                 {
                     "name": "csrftoken",
-                    "value": "A2Hy8g3yDzBKr7zg9nw8qmgB4H4y89TQSvQAeHJaGrZmYLjOsVe2p4BU2awg02gU",
-                    "csrftoken": "A2Hy8g3yDzBKr7zg9nw8qmgB4H4y89TQSvQAeHJaGrZmYLjOsVe2p4BU2awg02gU",
-                    "expires": "Thu, 22 Jul 2027 05:55:03 GMT",
+                    "value": "LsDrzsJ1COZKpFB8Ec9Z1J1P8bP2E5llKhUTl28KxG4X6HKk3H0VvbcJsUyZiUUF",
+                    "csrftoken": "LsDrzsJ1COZKpFB8Ec9Z1J1P8bP2E5llKhUTl28KxG4X6HKk3H0VvbcJsUyZiUUF",
+                    "expires": "Thu, 22 Jul 2027 06:10:02 GMT",
                     "max-age": "31449600",
                     "path": "/",
                     "samesite": "Lax",
@@ -1053,9 +1053,9 @@
                 },
                 {
                     "name": "sessionid_gtp",
-                    "value": "fbdudhlhiwksvvbvjqc7zc0s1jjesbto",
-                    "sessionid_gtp": "fbdudhlhiwksvvbvjqc7zc0s1jjesbto",
-                    "expires": "Thu, 20 Aug 2026 05:55:03 GMT",
+                    "value": "y6r7tge1w4042enw7200j99anx5ftu8c",
+                    "sessionid_gtp": "y6r7tge1w4042enw7200j99anx5ftu8c",
+                    "expires": "Thu, 20 Aug 2026 06:10:02 GMT",
                     "httponly": true,
                     "max-age": "2419200",
                     "path": "/",
