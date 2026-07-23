@@ -154,6 +154,30 @@ jobs:
           cache-from: type=gha,scope=testing-web
           cache-to: type=gha,mode=max,scope=testing-web
 
+      - name: Build parser API image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./internship-parser
+          dockerfile: Dockerfile
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: |
+            ${{ steps.image-vars.outputs.prefix }}-parser-api:${{ steps.image-vars.outputs.tag }}
+            ${{ steps.image-vars.outputs.prefix }}-parser-api:latest
+          cache-from: type=gha,scope=parser-api
+          cache-to: type=gha,mode=max,scope=parser-api
+
+      - name: Build parser Airflow image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./internship-parser/airflow
+          dockerfile: Dockerfile
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: |
+            ${{ steps.image-vars.outputs.prefix }}-parser-airflow:${{ steps.image-vars.outputs.tag }}
+            ${{ steps.image-vars.outputs.prefix }}-parser-airflow:latest
+          cache-from: type=gha,scope=parser-airflow
+          cache-to: type=gha,mode=max,scope=parser-airflow
+
   deploy:
     name: Deploy to VPS
     runs-on: ubuntu-latest
