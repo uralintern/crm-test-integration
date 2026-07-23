@@ -1,13 +1,13 @@
-"""
-Генерация файлов экспорта стажировок: CSV, Excel, Word.
-"""
 import csv
 import io
 from datetime import datetime
 from typing import BinaryIO
 
-from models.internship import Internship
+from docx import Document
+from docx.enum.table import WD_TABLE_ALIGNMENT
+from openpyxl import Workbook
 
+from models.internship import Internship
 
 FIELD_MAP = [
     "id",
@@ -64,8 +64,6 @@ def get_export_csv(rows) -> BinaryIO:
 
 
 def get_export_excel(rows) -> BinaryIO:
-    from openpyxl import Workbook
-
     wb = Workbook()
     ws = wb.active
     ws.title = "Стажировки"
@@ -79,9 +77,6 @@ def get_export_excel(rows) -> BinaryIO:
 
 
 def get_export_word(rows) -> BinaryIO:
-    from docx import Document
-    from docx.enum.table import WD_TABLE_ALIGNMENT
-
     doc = Document()
     doc.add_heading("Стажировки", level=1)
     doc.add_paragraph(datetime.now().strftime("Сформировано: %d.%m.%Y %H:%M"))

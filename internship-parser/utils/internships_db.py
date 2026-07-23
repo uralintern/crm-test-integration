@@ -12,66 +12,46 @@ logger = logging.getLogger(__name__)
 
 class InternshipsDB:
     _instance: Optional['InternshipsDB'] = None
-    
+
     def __new__(cls, db_url: str) -> 'InternshipsDB':
-        """Реализация синглтон паттерна"""
         if cls._instance is None:
             cls._instance = super().__new__(cls)
             cls._instance._initialized = False
         return cls._instance
-    
+
     def __init__(self, db_url: str):
-        """Инициализация подключения к БД (выполняется один раз)"""
         if self._initialized:
             return
-        
+
         self._db_url = db_url
-        
-        # Создание engine с пулом соединений для стабильности
         self._engine = create_engine(
             self._db_url,
             pool_size=10,
             max_overflow=20,
-            pool_pre_ping=True,  # Проверка соединения перед использованием
+            pool_pre_ping=True,
             echo=False
         )
-        
-        # Создание SessionLocal для создания сессий
         self._SessionLocal = sessionmaker(
             autocommit=False,
             autoflush=False,
             bind=self._engine
         )
-        
-        # Инициализация таблиц
         self._init_tables()
-        
         self._initialized = True
         logger.info("InternshipsDB инициализирован успешно")
-    
+
     def _init_tables(self) -> None:
-        """Создание таблиц в БД при необходимости"""
         try:
             Base.metadata.create_all(bind=self._engine)
             logger.info("Таблицы инициализированы")
         except SQLAlchemyError as e:
             logger.error(f"Ошибка при инициализации таблиц: {e}")
             raise
-    
+
     def _get_session(self) -> Session:
-        """Получение новой сессии для работы с БД"""
         return self._SessionLocal()
-    
+
     def write(self, data: Internship) -> bool:
-        """
-        Запись данных стажировки в БД
-        
-        Args:
-            data: Объект Internship для записи
-            
-        Returns:
-            bool: True если запись успешна, False в противном случае
-        """
         session: Optional[Session] = None
         try:
             session = self._get_session()
@@ -87,17 +67,8 @@ class InternshipsDB:
         finally:
             if session:
                 session.close()
-    
+
     def write_batch(self, data_list: list[Internship]) -> int:
-        """
-        Запись нескольких записей стажировок в БД
-        
-        Args:
-            data_list: Список объектов Internship для записи
-            
-        Returns:
-            int: Количество успешно записанных записей
-        """
         session: Optional[Session] = None
         count = 0
         try:
@@ -115,13 +86,8 @@ class InternshipsDB:
         finally:
             if session:
                 session.close()
-    
-    def clear(self) -> int:
-        """Удаляет все записи из таблицы стажировок.
 
-        Returns:
-            int: Количество удалённых записей.
-        """
+    def clear(self) -> int:
         session: Optional[Session] = None
         try:
             session = self._get_session()
@@ -139,7 +105,6 @@ class InternshipsDB:
                 session.close()
 
     def close(self) -> None:
-        """Закрытие пула соединений"""
         try:
             self._engine.dispose()
             logger.info("Соединение с БД закрыто")
@@ -147,5 +112,4 @@ class InternshipsDB:
             logger.error(f"Ошибка при закрытии соединения: {e}")
 
 
-# Создание глобального экземпляра синглтона
 internships_db = InternshipsDB(config.db_url)

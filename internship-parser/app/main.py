@@ -1,6 +1,3 @@
-"""
-Основное FastAPI приложение для API стажировок
-"""
 import logging
 from contextlib import asynccontextmanager
 
@@ -11,20 +8,17 @@ from fastapi.responses import JSONResponse
 from app.api.routes import internships as internships_router
 from utils.config import config
 
-# Настройка логирования
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Управление жизненным циклом приложения"""
     logger.info("Application startup")
     yield
     logger.info("Application shutdown")
 
 
-# Создание FastAPI приложения
 app = FastAPI(
     title="Internship API",
     description="API для поиска и фильтрации стажировок",
@@ -32,7 +26,6 @@ app = FastAPI(
     lifespan=lifespan
 )
 
-# Добавление CORS middleware
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -42,7 +35,6 @@ app.add_middleware(
 )
 
 
-# Обработчик для 404
 @app.exception_handler(404)
 async def not_found_handler(request, exc):
     return JSONResponse(
@@ -51,7 +43,6 @@ async def not_found_handler(request, exc):
     )
 
 
-# Обработчик для 500
 @app.exception_handler(500)
 async def internal_error_handler(request, exc):
     logger.error(f"Internal server error: {exc}")
@@ -61,14 +52,11 @@ async def internal_error_handler(request, exc):
     )
 
 
-# Подключение маршрутов
 app.include_router(internships_router.router, prefix="/api", tags=["internships"])
 
 
-# Health check
 @app.get("/health")
 async def health_check():
-    """Проверка здоровья приложения"""
     return {
         "status": "ok",
         "service": "internship-api",
@@ -76,10 +64,8 @@ async def health_check():
     }
 
 
-# Корневой эндпоинт
 @app.get("/")
 async def root():
-    """Корневой эндпоинт API"""
     return {
         "message": "Internship API",
         "version": "1.0.0",

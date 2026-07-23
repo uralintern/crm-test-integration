@@ -40,7 +40,7 @@ for tab in tabs:
     tab_id = tab.get('id', '')
 
     city_name = None
-    tab_link = soup.find('span', class_='career-menu-tab', attrs={'data-career-tab': tab_id})
+    tab_link = soup.select_one(f'span.career-menu-tab[data-career-tab="{tab_id}"]')
     if tab_link:
         city_name = tab_link.get_text(separator=' ', strip=True)
 
@@ -56,8 +56,11 @@ for tab in tabs:
         if not title:
             continue
 
-        parent = card.find_parent('div', class_=lambda x: x and 'col-' in x)
+        parent = card.find_parent('div')
         if not parent:
+            continue
+
+        if not any('col-' in c for c in parent.get('class', [])): # type: ignore
             continue
 
         status_el = parent.find('div', class_='trainee-close')

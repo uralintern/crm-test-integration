@@ -1,7 +1,3 @@
-"""
-Pydantic модели для API ответов
-"""
-from datetime import datetime
 from typing import Optional
 from uuid import UUID
 
@@ -9,7 +5,6 @@ from pydantic import BaseModel, Field
 
 
 class InternshipBase(BaseModel):
-    """Базовая модель стажировки"""
     title: str = Field(..., description="Название должности")
     direction: str = Field(..., description="Направление работы")
     company: str = Field(..., description="Название компании")
@@ -21,23 +16,20 @@ class InternshipBase(BaseModel):
 
 
 class InternshipDetail(InternshipBase):
-    """Полная информация о стажировке"""
     id: UUID = Field(..., description="UUID стажировки")
-    
+
     class Config:
         from_attributes = True
 
 
 class InternshipListItem(InternshipBase):
-    """Элемент в списке стажировок"""
     id: UUID = Field(..., description="UUID стажировки")
-    
+
     class Config:
         from_attributes = True
 
 
 class PaginationMeta(BaseModel):
-    """Метаинформация о пагинации"""
     total: int = Field(..., description="Общее количество записей")
     page: int = Field(..., description="Текущая страница")
     page_size: int = Field(..., description="Размер страницы")
@@ -45,10 +37,9 @@ class PaginationMeta(BaseModel):
 
 
 class InternshipsListResponse(BaseModel):
-    """Ответ со списком стажировок"""
     data: list[InternshipListItem] = Field(..., description="Список стажировок")
     pagination: PaginationMeta = Field(..., description="Метаинформация о пагинации")
-    
+
     class Config:
         json_schema_extra = {
             "example": {
@@ -76,8 +67,6 @@ class InternshipsListResponse(BaseModel):
 
 
 class InternshipDetailResponse(InternshipDetail):
-    """Ответ с полной информацией о стажировке"""
-    
     class Config:
         from_attributes = True
         json_schema_extra = {
@@ -96,10 +85,9 @@ class InternshipDetailResponse(InternshipDetail):
 
 
 class ErrorResponse(BaseModel):
-    """Ошибка в ответе"""
     detail: str = Field(..., description="Описание ошибки")
     status_code: int = Field(..., description="HTTP статус код")
-    
+
     class Config:
         json_schema_extra = {
             "example": {
