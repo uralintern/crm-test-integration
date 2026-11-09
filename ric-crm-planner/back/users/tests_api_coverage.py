@@ -1249,7 +1249,7 @@ class ApplicationsAPITests(APIFixtureMixin, TestCase):
                 Application.objects.all().delete()
                 application = self.create_application()
                 self.auth(self.event_organizer)
-                with patch("users.views.run_crm_automation") as automation_mock:
+                with patch("users.views.applications.run_crm_automation") as automation_mock:
                     response = self.client.patch(
                         reverse("application-detail", kwargs={"application_id": application.id}),
                         {"status": target_status.id},
@@ -1265,7 +1265,7 @@ class ApplicationsAPITests(APIFixtureMixin, TestCase):
         application = self.create_application()
         self.auth(self.event_organizer)
 
-        with patch("users.views.run_crm_automation") as automation_mock:
+        with patch("users.views.applications.run_crm_automation") as automation_mock:
             response = self.client.patch(
                 reverse("application-detail", kwargs={"application_id": application.id}),
                 {"comment": "Без смены статуса"},
@@ -1486,7 +1486,7 @@ class AutomationAPITests(APIFixtureMixin, TestCase):
             url, {"file": SimpleUploadedFile("script.exe", b"MZ")}, format="multipart"
         )
         no_extension = self.client.post(url, {"file": SimpleUploadedFile("README", b"x")}, format="multipart")
-        with patch("users.views.CRM_AUTOMATION_ATTACHMENT_MAX_SIZE", 3):
+        with patch("users.views.automation.CRM_AUTOMATION_ATTACHMENT_MAX_SIZE", 3):
             too_big = self.client.post(
                 url, {"file": SimpleUploadedFile("big.txt", b"12345")}, format="multipart"
             )
@@ -1550,7 +1550,7 @@ class AutomationAPITests(APIFixtureMixin, TestCase):
     def test_run_pending_returns_engine_summary(self):
         self.auth(self.curator)
 
-        with patch("users.views.run_due_crm_automation", return_value={"processed": 0}) as run_mock:
+        with patch("users.views.automation.run_due_crm_automation", return_value={"processed": 0}) as run_mock:
             response = self.client.post(reverse("crm-automation-run-pending"))
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -1652,7 +1652,7 @@ class IntegrationAPITests(APIFixtureMixin, TestCase):
                 self.application.status = self.testing_status
                 self.application.save(update_fields=["status"])
 
-                with patch("users.views.run_crm_automation") as automation_mock:
+                with patch("users.views.testing_integration.run_crm_automation") as automation_mock:
                     response = self.client.post(
                         self.status_url(),
                         {"application_status": name, "reason": "test"},
@@ -1682,7 +1682,7 @@ class IntegrationAPITests(APIFixtureMixin, TestCase):
     def test_status_endpoint_enrollment_closed_runs_extra_trigger(self):
         get_status("Набор завершён")
 
-        with patch("users.views.run_crm_automation") as automation_mock:
+        with patch("users.views.testing_integration.run_crm_automation") as automation_mock:
             response = self.client.post(
                 self.status_url(), {"application_status": "Набор завершён"}, format="json", **self.headers
             )
@@ -1694,7 +1694,7 @@ class IntegrationAPITests(APIFixtureMixin, TestCase):
         )
 
     def test_status_endpoint_same_status_does_not_run_automation(self):
-        with patch("users.views.run_crm_automation") as automation_mock:
+        with patch("users.views.testing_integration.run_crm_automation") as automation_mock:
             response = self.client.post(
                 self.status_url(),
                 {"application_status": self.testing_status.name},

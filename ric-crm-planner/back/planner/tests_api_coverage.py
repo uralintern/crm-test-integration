@@ -264,7 +264,7 @@ class TeamDeskUpdateTests(PlannerApiTestBase):
     def test_put_broadcasts_desk_update(self):
         TeamPlannerDesk.objects.create(team_id=33, member_ids=[self.member.id])
 
-        with mock.patch("planner.views.broadcast_team_desk_update") as broadcast_mock:
+        with mock.patch("planner.views.desks.broadcast_team_desk_update") as broadcast_mock:
             response = self.client.patch(self.desk_url(33), {"team_name": "Эфир"}, format="json")
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)

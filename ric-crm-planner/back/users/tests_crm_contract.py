@@ -439,7 +439,7 @@ class CRMContractTests(TestCase):
         self.assertEqual(application.status.name, high_score_status.name)
 
 
-    @patch("users.automation_engine.send_planner_invite")
+    @patch("users.automation_engine.actions.send_planner_invite")
     def test_enrollment_closed_trigger_runs_planner_invite_robot(self, send_planner_invite_mock):
         enrollment_closed_status = Status.objects.get_or_create(name="Набор завершён")[0]
         joined_status = Status.objects.get_or_create(name="Добавился в орг. чат")[0]
