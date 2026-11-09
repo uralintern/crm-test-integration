@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import include, path
 
 from planner.views import (
     PlannerAutomationConfigView,
@@ -25,4 +25,5 @@ urlpatterns = [
         TeamPlannerDeskDetailView.as_view(),
         name="planner-team-desk-detail",
     ),
+    path("backlog/", include("planner.backlog.urls")),
 ]

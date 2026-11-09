@@ -1,0 +1,17 @@
+[run]
+source =
+    api
+    users
+    planner
+    integrations
+omit =
+    */migrations/*
+    */tests.py
+    */tests_*.py
+    api/asgi.py
+    api/wsgi.py
+    api/settings_test.py
+
+[report]
+show_missing = True
+skip_covered = False

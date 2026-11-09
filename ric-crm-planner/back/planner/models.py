@@ -99,3 +99,14 @@ class PlannerAutomationExecutionLog(models.Model):
 
     def __str__(self):
         return f"{self.rule_kind}:{self.rule_id} — {self.status}"
+
+
+# Модели бэклога живут в planner/backlog/models.py; импорт нужен, чтобы Django их зарегистрировал.
+from planner.backlog.models import (  # noqa: E402,F401
+    BacklogComment,
+    BacklogSprint,
+    BacklogStage,
+    BacklogSubtask,
+    BacklogTask,
+    BacklogWorkItem,
+)
